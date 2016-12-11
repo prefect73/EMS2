@@ -27,11 +27,11 @@ public class Workpackage implements Serializable {
 
 	@NotEmpty
 	@Column(name = "WORK_PACKAGE_NUMBER", unique = true, nullable = false)
-	private String projectNumber;
+	private String workpackageNumber;
 
 	@NotEmpty
 	@Column(name = "WORK_PACKAGE_NAME", unique = true, nullable = false)
-	private String projectName;
+	private String workpackageName;
 
 	@Column(name = "OFFERED_COST", precision = 10, scale = 2)
 	private BigDecimal offeredCost;
@@ -47,20 +47,20 @@ public class Workpackage implements Serializable {
 		this.id = id;
 	}
 
-	public String getProjectNumber() {
-		return projectNumber;
+	public String getWorkpackageNumber() {
+		return workpackageNumber;
 	}
 
-	public void setProjectNumber(String projectNumber) {
-		this.projectNumber = projectNumber;
+	public void setWorkpackageNumber(String workpackageNumber) {
+		this.workpackageNumber = workpackageNumber;
 	}
 
-	public String getProjectName() {
-		return projectName;
+	public String getWorkpackageName() {
+		return workpackageName;
 	}
 
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
+	public void setWorkpackageName(String workpackageName) {
+		this.workpackageName = workpackageName;
 	}
 
 	public BigDecimal getOfferedCost() {
@@ -87,9 +87,9 @@ public class Workpackage implements Serializable {
 		result = prime * result
 				+ ((offeredCost == null) ? 0 : offeredCost.hashCode());
 		result = prime * result
-				+ ((projectName == null) ? 0 : projectName.hashCode());
+				+ ((workpackageName == null) ? 0 : workpackageName.hashCode());
 		result = prime * result
-				+ ((projectNumber == null) ? 0 : projectNumber.hashCode());
+				+ ((workpackageNumber == null) ? 0 : workpackageNumber.hashCode());
 		result = prime * result
 				+ ((totalCost == null) ? 0 : totalCost.hashCode());
 		return result;
@@ -114,15 +114,15 @@ public class Workpackage implements Serializable {
 				return false;
 		} else if (!offeredCost.equals(other.offeredCost))
 			return false;
-		if (projectName == null) {
-			if (other.projectName != null)
+		if (workpackageName == null) {
+			if (other.workpackageName != null)
 				return false;
-		} else if (!projectName.equals(other.projectName))
+		} else if (!workpackageName.equals(other.workpackageName))
 			return false;
-		if (projectNumber == null) {
-			if (other.projectNumber != null)
+		if (workpackageNumber == null) {
+			if (other.workpackageNumber != null)
 				return false;
-		} else if (!projectNumber.equals(other.projectNumber))
+		} else if (!workpackageNumber.equals(other.workpackageNumber))
 			return false;
 		if (totalCost == null) {
 			if (other.totalCost != null)
@@ -134,8 +134,8 @@ public class Workpackage implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Workpackage [id=" + id + ", projectNumber=" + projectNumber
-				+ ", projectName=" + projectName + ", offeredCost="
+		return "Workpackage [id=" + id + ", workpackageNumber=" + workpackageNumber
+				+ ", workpackageName=" + workpackageName + ", offeredCost="
 				+ offeredCost + ", totalCost=" + totalCost + "]";
 	}
 
