@@ -104,7 +104,7 @@ public class ProjectController {
 		// " "+ project.getLastName() + " registered successfully");
 		// model.addAttribute("loggedinproject", getPrincipal());
 		// return "success";
-		return "redirect:/projectslist";
+		return "redirect:/Project/projectslist";
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class ProjectController {
 		// model.addAttribute("success", "Project " + project.getFirstName() +
 		// " "+ project.getLastName() + " updated successfully");
 		// model.addAttribute("loggedinproject", getPrincipal());
-		return "redirect:/projectslist";
+		return "redirect:/Project/projectslist";
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class ProjectController {
 	@RequestMapping(value = { "/delete-project-{projectNumber}" }, method = RequestMethod.GET)
 	public String deleteProject(@PathVariable String projectNumber) {
 		projectService.deleteProjectByProjectNumber(projectNumber);
-		return "redirect:/projectslist";
+		return "redirect:/Project/projectslist";
 	}
 
 	/**

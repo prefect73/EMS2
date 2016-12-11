@@ -44,10 +44,10 @@
 						<td>${project.offeredCost}</td>
 						<td>${project.totalCost}</td>
 						<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-							<td><a href="<c:url value='/Project/edit-user-${project.projectNumber}' />" class="btn btn-success custom-width">edit</a></td>
+							<td><a href="<c:url value='/Project/edit-project-${project.projectNumber}' />" class="btn btn-success custom-width">edit</a></td>
 				        </sec:authorize>
 				        <sec:authorize access="hasRole('ADMIN')">
-							<td><a href="<c:url value='/Project/delete-user-${project.projectNumber}' />" class="btn btn-danger custom-width">delete</a></td>
+							<td><a href="<c:url value='/Project/delete-project-${project.projectNumber}' />" class="btn btn-danger custom-width">delete</a></td>
         				</sec:authorize>
 					</tr>
 				</c:forEach>
