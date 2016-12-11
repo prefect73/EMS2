@@ -15,15 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.websystique.springmvc.model.Project;
-import com.websystique.springmvc.model.Workpackage;
 import com.websystique.springmvc.service.ProjectService;
-import com.websystique.springmvc.service.WorkpackageService;
 
 @Controller
 @RequestMapping("/Project")
@@ -32,8 +29,9 @@ public class ProjectController {
 	@Autowired
 	ProjectService projectService;
 
-	@Autowired
-	WorkpackageService workpackageService;
+	/*
+	 * @Autowired WorkpackageService workpackageService;
+	 */
 
 	@Autowired
 	MessageSource messageSource;
@@ -47,7 +45,7 @@ public class ProjectController {
 	/**
 	 * This method will list all existing projects.
 	 */
-	@RequestMapping(value = { "/projectsList" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/projectslist" }, method = RequestMethod.GET)
 	public String listProjects(ModelMap model) {
 
 		List<Project> projects = projectService.findAllProjects();
@@ -106,7 +104,7 @@ public class ProjectController {
 		// " "+ project.getLastName() + " registered successfully");
 		// model.addAttribute("loggedinproject", getPrincipal());
 		// return "success";
-		return "redirect:/projectsList";
+		return "redirect:/projectslist";
 	}
 
 	/**
@@ -149,7 +147,7 @@ public class ProjectController {
 		// model.addAttribute("success", "Project " + project.getFirstName() +
 		// " "+ project.getLastName() + " updated successfully");
 		// model.addAttribute("loggedinproject", getPrincipal());
-		return "redirect:/projectsList";
+		return "redirect:/projectslist";
 	}
 
 	/**
@@ -158,16 +156,16 @@ public class ProjectController {
 	@RequestMapping(value = { "/delete-project-{projectNumber}" }, method = RequestMethod.GET)
 	public String deleteProject(@PathVariable String projectNumber) {
 		projectService.deleteProjectByProjectNumber(projectNumber);
-		return "redirect:/projectsList";
+		return "redirect:/projectslist";
 	}
 
 	/**
 	 * This method will provide Workpackage list to views
 	 */
-	@ModelAttribute("workpackages")
-	public List<Workpackage> initializeProfiles() {
-		return workpackageService.findAllWorkpackages();
-	}
+	/*
+	 * @ModelAttribute("workpackages") public List<Workpackage>
+	 * initializeProfiles() { return workpackageService.findAllWorkpackages(); }
+	 */
 
 	/**
 	 * This method returns the principal[user-name] of logged-in user.

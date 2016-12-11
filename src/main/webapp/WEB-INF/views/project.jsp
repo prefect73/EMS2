@@ -55,19 +55,6 @@
 					</div>
 				</div>
 			</div>
-			  
-			<%-- <div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="users">Project Lead(s)</label>
-					<div class="col-md-7">
-						<form:select path="users" items="${users.firstName}" multiple="true" itemValue="users.firstName" itemLabel="users.firstName" class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="users" class="help-inline"/>
-						</div>
-					</div>
-				</div>
-			</div> --%>
-			
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-3 control-lable" for="offeredCost">Offered Cost</label>
@@ -90,28 +77,14 @@
 					</div>
 				</div>
 			</div>
-			<!-- 
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-3 control-lable" for="userProfiles">Roles</label>
-					<div class="col-md-7">
-						<form:select path="userProfiles" items="${roles}" multiple="true" itemValue="id" itemLabel="type" class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="userProfiles" class="help-inline"/>
-						</div>
-					</div>
-				</div>
-			</div>
-			-->
-	
 			<div class="row">
 				<div class="form-actions floatRight">
 					<c:choose>
 						<c:when test="${edit}">
-							<input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/projectslist' />">Cancel</a>
+							<input type="submit" value="Update" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/Project/projectslist' />">Cancel</a>
 						</c:when>
 						<c:otherwise>
-							<input type="submit" value="Register" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/projectslist' />">Cancel</a>
+							<input type="submit" value="Register" class="btn btn-primary btn-sm"/> or <a href="<c:url value='/Project/projectslist' />">Cancel</a>
 						</c:otherwise>
 					</c:choose>
 				</div>

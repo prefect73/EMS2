@@ -26,14 +26,12 @@
 				        <th>Customer Name</th>
 				        <th>Offered Cost</th>
 				        <th>Total Cost</th>
-				        <!--  <th>Project Lead</th>-->
-				        <!--<th>SSO ID</th>
 				        <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 				        	<th width="100"></th>
 				        </sec:authorize>
 				        <sec:authorize access="hasRole('ADMIN')">
 				        	<th width="100"></th>
-				        </sec:authorize>-->
+				        </sec:authorize>
 				        
 					</tr>
 		    	</thead>
@@ -43,26 +41,25 @@
 						<td>${project.projectNumber}</td>
 						<td>${project.projectName}</td>
 						<td>${project.customerName}</td>
-						<td>${project.offeredCost}<td>
+						<td>${project.offeredCost}</td>
 						<td>${project.totalCost}</td>
-						<!-- <td>${users.firstName}</td>
 						<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-							<td><a href="<c:url value='/edit-user-${users.firstName}' />" class="btn btn-success custom-width">edit</a></td>
+							<td><a href="<c:url value='/Project/edit-user-${project.projectNumber}' />" class="btn btn-success custom-width">edit</a></td>
 				        </sec:authorize>
 				        <sec:authorize access="hasRole('ADMIN')">
-							<td><a href="<c:url value='/delete-user-${users.firstName}' />" class="btn btn-danger custom-width">delete</a></td>
-        				</sec:authorize>-->
+							<td><a href="<c:url value='/Project/delete-user-${project.projectNumber}' />" class="btn btn-danger custom-width">delete</a></td>
+        				</sec:authorize>
 					</tr>
 				</c:forEach>
 	    		</tbody>
 	    	</table>
 		</div>
-		<!-- 
+		
 		<sec:authorize access="hasRole('ADMIN')">
 		 	<div class="well">
-		 		<a href="<c:url value='/newuser' />">Add New Project</a>
+		 		<a href="<c:url value='/Project/newproject' />">Add New Project</a>
 		 	</div>
-	 	</sec:authorize>-->
+	 	</sec:authorize>
    	</div>
 </body>
 </html>

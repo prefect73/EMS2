@@ -54,7 +54,7 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements Projec
 
 	@SuppressWarnings("unchecked")
 	public List<Project> findAllProjects() {
-		Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
+		Criteria criteria = createEntityCriteria().addOrder(Order.asc("projectNumber"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
 		List<Project> projects = (List<Project>) criteria.list();
 		
