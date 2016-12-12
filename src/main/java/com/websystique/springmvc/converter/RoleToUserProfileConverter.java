@@ -13,7 +13,7 @@ import com.websystique.springmvc.service.UserProfileService;
  * A converter class used in views to map id's to actual userProfile objects.
  */
 @Component
-public class RoleToUserProfileConverter implements Converter<Object, UserProfile>{
+public class RoleToUserProfileConverter implements Converter<String, UserProfile>{
 
 	static final Logger logger = LoggerFactory.getLogger(RoleToUserProfileConverter.class);
 	
@@ -24,8 +24,10 @@ public class RoleToUserProfileConverter implements Converter<Object, UserProfile
 	 * Gets UserProfile by Id
 	 * @see org.springframework.core.convert.converter.Converter#convert(java.lang.Object)
 	 */
-	public UserProfile convert(Object element) {
-		Integer id = Integer.parseInt((String)element);
+	public UserProfile convert(String element) {
+		
+		//Integer id = Integer.parseInt((String)element);
+		Integer id = Integer.parseInt(element);
 		UserProfile profile= userProfileService.findById(id);
 		logger.info("Profile : {}",profile);
 		return profile;

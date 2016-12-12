@@ -14,7 +14,7 @@ import com.websystique.springmvc.service.ProjectService;
  */
 @Component
 public class ProjectsListToProjectConverter implements
-		Converter<Object, Project> {
+		Converter<String, Project> {
 
 	static final Logger logger = LoggerFactory
 			.getLogger(ProjectsListToProjectConverter.class);
@@ -27,8 +27,9 @@ public class ProjectsListToProjectConverter implements
 	 * 
 	 * @see org.springframework.core.convert.converter.Converter#convert(java.lang.Object)
 	 */
-	public Project convert(Object element) {
-		Integer id = Integer.parseInt((String) element);
+	public Project convert(String element) {
+//		Integer id = Integer.parseInt((String) element);
+		Integer id = Integer.parseInt(element);
 		Project projectsList = projectService.findById(id);
 		logger.info("Projects List : {}", projectsList);
 		return projectsList;

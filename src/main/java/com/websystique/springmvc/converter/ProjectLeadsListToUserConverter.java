@@ -13,7 +13,7 @@ import com.websystique.springmvc.service.UserService;
  * A converter class used in views to map id's to actual user objects.
  */
 @Component
-public class ProjectLeadsListToUserConverter implements Converter<Object, User> {
+public class ProjectLeadsListToUserConverter implements Converter<String, User> {
 
 	static final Logger logger = LoggerFactory
 			.getLogger(ProjectLeadsListToUserConverter.class);
@@ -26,8 +26,9 @@ public class ProjectLeadsListToUserConverter implements Converter<Object, User> 
 	 * 
 	 * @see org.springframework.core.convert.converter.Converter#convert(java.lang.Object)
 	 */
-	public User convert(Object element) {
-		Integer id = Integer.parseInt((String) element);
+	public User convert(String element) {
+		//Integer id = Integer.parseInt((String) element);
+		Integer id = Integer.parseInt(element);
 		User leadsList = userService.findById(id);
 		logger.info("Project Leads List : {}", leadsList);
 		return leadsList;
