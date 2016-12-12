@@ -16,7 +16,7 @@ import com.websystique.springmvc.service.UserService;
 public class ProjectLeadsListToUserConverter implements Converter<Object, User> {
 
 	static final Logger logger = LoggerFactory
-			.getLogger(RoleToUserProfileConverter.class);
+			.getLogger(ProjectLeadsListToUserConverter.class);
 
 	@Autowired
 	UserService userService;

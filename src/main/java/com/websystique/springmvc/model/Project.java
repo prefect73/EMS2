@@ -22,112 +22,117 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name = "PROJECT")
 public class Project implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+ /**
+  * 
+  */
+ private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+ @Id
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
+ private Integer id;
 
-	@NotEmpty
-	@Column(name = "PROJECT_NUMBER", unique = true, nullable = false)
-	private String projectNumber;
+ @NotEmpty
+ @Column(name = "PROJECT_NUMBER", unique = true, nullable = false)
+ private String projectNumber;
 
-	@NotEmpty
-	@Column(name = "PROJECT_NAME", unique = true, nullable = false)
-	private String projectName;
+ @NotEmpty
+ @Column(name = "PROJECT_NAME", unique = true, nullable = false)
+ private String projectName;
 
-	@NotEmpty
-	@Column(name = "CUSTOMER_NAME", nullable = false)
-	private String customerName;
+ @NotEmpty
+ @Column(name = "CUSTOMER_NAME", nullable = false)
+ private String customerName;
 
-	@Column(name = "OFFERED_COST", precision = 10, scale = 2)
-	private BigDecimal offeredCost;
+ @Column(name = "OFFERED_COST", precision = 10, scale = 2)
+ private BigDecimal offeredCost;
 
-	@Column(name = "TOTAL_COST", precision = 10, scale = 2)
-	private BigDecimal totalCost;
+ @Column(name = "TOTAL_COST", precision = 10, scale = 2)
+ private BigDecimal totalCost;
 
-	@NotEmpty
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "PROJECT_APP_USER", joinColumns = { @JoinColumn(name = "PROJECT_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
-	private Set<User> users = new HashSet<User>();
+ @NotEmpty
+ @ManyToMany(fetch = FetchType.LAZY)
+ @JoinTable(name = "PROJECT_APP_USER", joinColumns = { @JoinColumn(name ="PROJECT_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
+ private Set<User> users = new HashSet<User>();
 
-	// @NotEmpty
+ 
+ 
+ /*
+    
+  * //@NotEmpty
+  * 
+  * @OneToMany(fetch = FetchType.LAZY)
+  * 
+  * @JoinTable(name = "PROJECT_WORK_PACKAGE", joinColumns = {
+  * @JoinColumn(name = "PROJECT_ID") }, inverseJoinColumns = {
+  * @JoinColumn(name = "WORK_PACKAGE_ID") }) private Set<Workpackage>
+  * workPackages = new HashSet<Workpackage>();
+  */
 
-	/*
-	 * @OneToMany(fetch = FetchType.LAZY)
-	 * 
-	 * @JoinTable(name = "PROJECT_WORK_PACKAGE", joinColumns = {
-	 * 
-	 * @JoinColumn(name = "PROJECT_ID") }, inverseJoinColumns = {
-	 * 
-	 * @JoinColumn(name = "WORK_PACKAGE_ID") }) private Set<Workpackage>
-	 * workPackages = new HashSet<Workpackage>();
-	 */
+ public Integer getId() {
+  return id;
+ }
 
-	public Integer getId() {
-		return id;
-	}
+ public void setId(Integer id) {
+  this.id = id;
+ }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+ public String getProjectNumber() {
+  return projectNumber;
+ }
 
-	public String getProjectNumber() {
-		return projectNumber;
-	}
+ public void setProjectNumber(String projectNumber) {
+  this.projectNumber = projectNumber;
+ }
 
-	public void setProjectNumber(String projectNumber) {
-		this.projectNumber = projectNumber;
-	}
+ public String getProjectName() {
+  return projectName;
+ }
 
-	public String getProjectName() {
-		return projectName;
-	}
+ public void setProjectName(String projectName) {
+  this.projectName = projectName;
+ }
 
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
+ public String getCustomerName() {
+  return customerName;
+ }
 
-	public String getCustomerName() {
-		return customerName;
-	}
+ public void setCustomerName(String customerName) {
+  this.customerName = customerName;
+ }
 
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
+ public BigDecimal getOfferedCost() {
+  return offeredCost;
+ }
 
-	public BigDecimal getOfferedCost() {
-		return offeredCost;
-	}
+ public void setOfferedCost(BigDecimal offeredCost) {
+  this.offeredCost = offeredCost;
+ }
 
-	public void setOfferedCost(BigDecimal offeredCost) {
-		this.offeredCost = offeredCost;
-	}
+ public BigDecimal getTotalCost() {
+  return totalCost;
+ }
 
-	public BigDecimal getTotalCost() {
-		return totalCost;
-	}
+ public void setTotalCost(BigDecimal totalCost) {
+  this.totalCost = totalCost;
+ }
+ 
+ public Set<User> getUsers() {
+  return users;
+ }
 
-	public void setTotalCost(BigDecimal totalCost) {
-		this.totalCost = totalCost;
-	}
+ public void setUsers(Set<User> users) {
+	  this.users = users;
+	 }
 
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-
-	/*
-	 * public Set<Workpackage> getWorkPackages() { return workPackages; }
-	 * 
-	 * public void setWorkPackages(Set<Workpackage> workPackages) {
-	 * this.workPackages = workPackages; }
-	 */
+ /*
+  * public Set<User> getUsers() { return users; }
+  * 
+  * public void setUsers(Set<User> users) { this.users = users; }
+  * 
+  * public Set<Workpackage> getWorkPackages() { return workPackages; }
+  * 
+  * public void setWorkPackages(Set<Workpackage> workPackages) {
+  * this.workPackages = workPackages; }
+  */
 
 }

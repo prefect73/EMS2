@@ -15,7 +15,7 @@ public interface WorkpackageDao {
 	
 	void save(Workpackage Workpackage);
 	
-	void deleteById(String id);
+	void deleteById(int id);
 	
 	List<Workpackage> findAllWorkpackages();
 

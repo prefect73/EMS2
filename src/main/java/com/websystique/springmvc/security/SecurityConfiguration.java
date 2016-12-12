@@ -36,6 +36,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/Workpackage", "/workpackageslist")
+		.access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
+		.antMatchers("/newworkpackage/**", "/delete-workpackage-*").access("hasRole('ADMIN')").antMatchers("/edit-workpackage-*")
+		.access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin().loginPage("/login")
+		.loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password").and()
+		.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
+		.tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
+		
+		
 		http.authorizeRequests().antMatchers("/Project", "/projectslist")
 		.access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
 		.antMatchers("/newproject/**", "/delete-project-*").access("hasRole('ADMIN')").antMatchers("/edit-project-*")

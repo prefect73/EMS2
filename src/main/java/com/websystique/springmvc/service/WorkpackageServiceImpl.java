@@ -48,10 +48,11 @@ public class WorkpackageServiceImpl implements WorkpackageService {
 			entity.setWorkpackageName(workpackage.getWorkpackageName());
 			entity.setOfferedCost(workpackage.getOfferedCost());
 			entity.setTotalCost(workpackage.getTotalCost());
+			entity.setProject(workpackage.getProject());
 		}
 	}
 
-	public void deleteWorkpackageById(String id) {
+	public void deleteWorkpackageById(int id) {
 		dao.deleteById(id);
 	}
 

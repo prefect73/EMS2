@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.websystique.springmvc.model.Project;
-import com.websystique.springmvc.model.User;
 import com.websystique.springmvc.model.Workpackage;
 import com.websystique.springmvc.service.ProjectService;
 import com.websystique.springmvc.service.WorkpackageService;
@@ -32,7 +31,7 @@ public class WorkpackageController {
 
 	@Autowired
 	WorkpackageService workpackageService;
-	
+
 	@Autowired
 	ProjectService projectService;
 
@@ -61,14 +60,14 @@ public class WorkpackageController {
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "workpackageslist";
 	}
-	
+
 	/**
-     * This method will provide Users list to views
-     */
-    @ModelAttribute("projectslist")
-    public List<Project> initializeProjects() {
-        return projectService.findAllProjects();
-    }
+	 * This method will provide Users list to views
+	 */
+	@ModelAttribute("projectslist")
+	public List<Project> initializeProjects() {
+		return projectService.findAllProjects();
+	}
 
 	/**
 	 * This method will provide the medium to add a new workpackage.
@@ -78,7 +77,7 @@ public class WorkpackageController {
 		Workpackage workpackage = new Workpackage();
 		model.addAttribute("workpackage", workpackage);
 		model.addAttribute("edit", false);
-		model.addAttribute("loggedinworkpackage", getPrincipal());
+		model.addAttribute("loggedinuser", getPrincipal());
 		return "workpackage";
 	}
 
@@ -116,7 +115,7 @@ public class WorkpackageController {
 		// model.addAttribute("success", "Workpackage " +
 		// workpackage.getFirstName() +
 		// " "+ workpackage.getLastName() + " registered successfully");
-		// model.addAttribute("loggedinworkpackage", getPrincipal());
+		// model.addAttribute("loggedinuser", getPrincipal());
 		// return "success";
 		return "redirect:/Workpackage/workpackageslist";
 	}
@@ -129,7 +128,7 @@ public class WorkpackageController {
 		Workpackage workpackage = workpackageService.findById(id);
 		model.addAttribute("workpackage", workpackage);
 		model.addAttribute("edit", true);
-		model.addAttribute("loggedinworkpackage", getPrincipal());
+		model.addAttribute("loggedinuser", getPrincipal());
 		return "workpackage";
 	}
 
@@ -139,7 +138,7 @@ public class WorkpackageController {
 	 */
 	@RequestMapping(value = { "/edit-workpackage-{id}" }, method = RequestMethod.POST)
 	public String updateWorkpackage(@Valid Workpackage workpackage,
-			BindingResult result, ModelMap model, @PathVariable String id) {
+			BindingResult result, ModelMap model, @PathVariable Integer id) {
 
 		if (result.hasErrors()) {
 			return "workpackage";
@@ -161,7 +160,7 @@ public class WorkpackageController {
 		// model.addAttribute("success", "Workpackage " +
 		// workpackage.getFirstName() +
 		// " "+ workpackage.getLastName() + " updated successfully");
-		// model.addAttribute("loggedinworkpackage", getPrincipal());
+		// model.addAttribute("loggedinuser", getPrincipal());
 		return "redirect:/Workpackage/workpackageslist";
 	}
 
@@ -169,7 +168,7 @@ public class WorkpackageController {
 	 * This method will delete an workpackage by it's SSOID value.
 	 */
 	@RequestMapping(value = { "/delete-workpackage-{id}" }, method = RequestMethod.GET)
-	public String deleteWorkpackage(@PathVariable String id) {
+	public String deleteWorkpackage(@PathVariable Integer id) {
 		workpackageService.deleteWorkpackageById(id);
 		return "redirect:/Workpackage/workpackageslist";
 	}

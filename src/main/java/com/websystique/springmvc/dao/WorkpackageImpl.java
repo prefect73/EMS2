@@ -62,7 +62,7 @@ public class WorkpackageImpl extends AbstractDao<Integer, Workpackage>
 		persist(workpackage);
 	}
 
-	public void deleteById(String id) {
+	public void deleteById(int id) {
 		Criteria crit = createEntityCriteria();
 		crit.add(Restrictions.eq("id", id));
 		Workpackage workpackage = (Workpackage) crit.uniqueResult();

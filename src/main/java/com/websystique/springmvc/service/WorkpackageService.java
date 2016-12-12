@@ -17,7 +17,7 @@ public interface WorkpackageService {
 	
 	void updateWorkpackage(Workpackage workpackage);
 	
-	void deleteWorkpackageById(String id);
+	void deleteWorkpackageById(int id);
 
 	List<Workpackage> findAllWorkpackages(); 
 	
