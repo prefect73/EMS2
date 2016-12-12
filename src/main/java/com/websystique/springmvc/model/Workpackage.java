@@ -27,8 +27,8 @@ public class Workpackage implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@NotEmpty
-	@Column(name = "WORK_PACKAGE_NUMBER", unique = true, nullable = false)
+	//@NotEmpty
+	@Column(name = "WORK_PACKAGE_NUMBER", unique = true, nullable = true)
 	private String workpackageNumber;
 
 	@NotEmpty

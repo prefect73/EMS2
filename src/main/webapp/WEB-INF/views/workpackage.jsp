@@ -24,7 +24,7 @@
 				<div class="form-group col-md-12">
 					<label class="col-md-3 control-lable" for="workpackageNumber">Workpackage Number</label>
 					<div class="col-md-7">
-						<form:input type="text" path="workpackageNumber" id="workpackageNumber" class="form-control input-sm"/>
+						<form:input type="text" path="workpackageNumber" id="workpackageNumber" class="form-control input-sm" disabled="true"/>
 						<div class="has-error">
 							<form:errors path="workpackageNumber" class="help-inline"/>
 						</div>
@@ -74,7 +74,7 @@
 				<div class="form-group col-md-12">
 					<label class="col-md-3 control-lable" for="totalCost">Total Cost</label>
 					<div class="col-md-7">
-						<form:input type="text" path="totalCost" id="totalCost" class="form-control input-sm" />
+						<form:input type="text" path="totalCost" id="totalCost" class="form-control input-sm" disabled="true" />
 						<div class="has-error">
 							<form:errors path="totalCost" class="help-inline"/>
 						</div>

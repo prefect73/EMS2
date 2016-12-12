@@ -111,6 +111,7 @@ public class WorkpackageController {
 		 */
 
 		workpackageService.saveWorkpackage(workpackage);
+		workpackageService.updateWorkpackage(workpackage);
 
 		// model.addAttribute("success", "Workpackage " +
 		// workpackage.getFirstName() +

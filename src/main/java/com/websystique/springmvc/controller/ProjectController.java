@@ -117,6 +117,7 @@ public class ProjectController {
 		  }
 
   projectService.saveProject(project);
+  projectService.updateProject(project);
 
   // model.addAttribute("success", "Project " + project.getFirstName() +
   // " "+ project.getLastName() + " registered successfully");

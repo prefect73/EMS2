@@ -31,8 +31,8 @@ public class Project implements Serializable {
  @GeneratedValue(strategy = GenerationType.IDENTITY)
  private Integer id;
 
- @NotEmpty
- @Column(name = "PROJECT_NUMBER", unique = true, nullable = false)
+ //@NotEmpty
+ @Column(name = "PROJECT_NUMBER", unique = true, nullable = true)
  private String projectNumber;
 
  @NotEmpty

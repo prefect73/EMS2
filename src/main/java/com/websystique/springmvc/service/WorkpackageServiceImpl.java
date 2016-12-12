@@ -44,7 +44,7 @@ public class WorkpackageServiceImpl implements WorkpackageService {
 	public void updateWorkpackage(Workpackage workpackage) {
 		Workpackage entity = dao.findById(workpackage.getId());
 		if (entity != null) {
-			entity.setWorkpackageNumber(workpackage.getWorkpackageNumber());
+			entity.setWorkpackageNumber(Integer.toString(workpackage.getId()));
 			entity.setWorkpackageName(workpackage.getWorkpackageName());
 			entity.setOfferedCost(workpackage.getOfferedCost());
 			entity.setTotalCost(workpackage.getTotalCost());

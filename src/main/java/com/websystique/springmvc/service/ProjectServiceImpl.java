@@ -44,7 +44,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public void updateProject(Project project) {
 		Project entity = projectDao.findById(project.getId());
 		if (entity != null) {
-			entity.setProjectNumber(project.getProjectNumber());
+			entity.setProjectNumber(Integer.toString(project.getId()));
 			entity.setProjectName(project.getProjectName());
 			entity.setCustomerName(project.getCustomerName());
 			entity.setOfferedCost(project.getOfferedCost());
