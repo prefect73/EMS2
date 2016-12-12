@@ -44,10 +44,10 @@
 						<td>${workpackage.offeredCost}</td>
 						<td>${workpackage.totalCost}</td>
 						<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-							<td><a href="<c:url value='/Workpackage/edit-workpackage-${workpackage.workpackageNumber}' />" class="btn btn-success custom-width">edit</a></td>
+							<td><a href="<c:url value='/Workpackage/edit-workpackage-${workpackage.id}' />" class="btn btn-success custom-width">edit</a></td>
 				        </sec:authorize>
 				        <sec:authorize access="hasRole('ADMIN')">
-							<td><a href="<c:url value='/Workpackage/delete-workpackage-${workpackage.workpackageNumber}' />" class="btn btn-danger custom-width">delete</a></td>
+							<td><a href="<c:url value='/Workpackage/delete-workpackage-${workpackage.id}' />" class="btn btn-danger custom-width">delete</a></td>
         				</sec:authorize>
 					</tr>
 				</c:forEach>

@@ -29,6 +29,7 @@ public class RoleToUserProfileConverter implements Converter<Object, UserProfile
 		UserProfile profile= userProfileService.findById(id);
 		logger.info("Profile : {}",profile);
 		return profile;
+		
 	}
 	
 }

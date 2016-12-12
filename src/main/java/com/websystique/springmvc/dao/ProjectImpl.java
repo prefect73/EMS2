@@ -3,6 +3,7 @@ package com.websystique.springmvc.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -19,10 +20,11 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 
 	public Project findById(int id) {
 		Project project = getByKey(id);
-		/*
-		 * if(project!=null){ Hibernate.initialize(project.getWorkPackages());
-		 * Hibernate.initialize(project.getUsers()); }
-		 */
+
+		if (project != null) {
+			Hibernate.initialize(project.getUsers());
+		}
+
 		return project;
 	}
 
@@ -31,10 +33,11 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 		Criteria crit = createEntityCriteria();
 		crit.add(Restrictions.eq("projectNumber", projectNumber));
 		Project project = (Project) crit.uniqueResult();
-		/*
-		 * if(project!=null){ Hibernate.initialize(project.getWorkPackages());
-		 * Hibernate.initialize(project.getUsers()); }
-		 */
+
+		if (project != null) {
+			Hibernate.initialize(project.getUsers());
+		}
+
 		return project;
 	}
 
@@ -43,10 +46,11 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 		Criteria crit = createEntityCriteria();
 		crit.add(Restrictions.eq("projectName", projectName));
 		Project project = (Project) crit.uniqueResult();
-		/*
-		 * if(project!=null){ Hibernate.initialize(project.getWorkPackages());
-		 * Hibernate.initialize(project.getUsers()); }
-		 */
+
+		if (project != null) {
+			Hibernate.initialize(project.getUsers());
+		}
+
 		return project;
 	}
 

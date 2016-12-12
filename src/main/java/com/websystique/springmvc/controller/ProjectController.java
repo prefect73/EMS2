@@ -104,12 +104,23 @@ public class ProjectController {
    result.addError(projectNumberError);
    return "project";
   }
+  
+  if (!projectService.isProjectNameUnique(project.getId(),
+		    project.getProjectName())) {
+		   FieldError projectNameError = new FieldError("project",
+		     "projectName", messageSource.getMessage(
+		       "non.unique.projectName",
+		       new String[] { project.getProjectName() },
+		       Locale.getDefault()));
+		   result.addError(projectNameError);
+		   return "project";
+		  }
 
   projectService.saveProject(project);
 
   // model.addAttribute("success", "Project " + project.getFirstName() +
   // " "+ project.getLastName() + " registered successfully");
-  // model.addAttribute("loggedinuser", getPrincipal());
+  model.addAttribute("loggedinuser", getPrincipal());
   // return "success";
   return "redirect:/Project/projectslist";
  }
@@ -174,15 +185,7 @@ public class ProjectController {
   projectService.deleteProjectByProjectNumber(projectNumber);
   return "redirect:/Project/projectslist";
  }
-
- /**
-  * This method will provide Workpackage list to views
-  */
- /*
-  * @ModelAttribute("workpackages") public List<Workpackage>
-  * initializeProfiles() { return workpackageService.findAllWorkpackages(); }
-  */
-
+ 
  /**
   * This method returns the principal[user-name] of logged-in user.
   */
