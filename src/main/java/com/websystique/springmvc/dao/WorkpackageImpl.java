@@ -42,8 +42,8 @@ public class WorkpackageImpl extends AbstractDao<Integer, Workpackage>
 	@SuppressWarnings("unchecked")
 	public List<Workpackage> findAllWorkpackages() {
 		Criteria criteria = createEntityCriteria().addOrder(
-				Order.asc("firstName"));
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
+				Order.asc("workpackageName"));
+		//criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
 																		// duplicates.
 		List<Workpackage> workpackages = (List<Workpackage>) criteria.list();
 

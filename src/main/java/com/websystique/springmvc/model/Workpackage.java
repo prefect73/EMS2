@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -38,6 +40,11 @@ public class Workpackage implements Serializable {
 
 	@Column(name = "TOTAL_COST", precision = 10, scale = 2)
 	private BigDecimal totalCost;
+	
+	
+	@ManyToOne(optional = false)
+    @JoinColumn(name="PROJECT_ID")
+	private Project project;
 
 	public Integer getId() {
 		return id;
@@ -77,6 +84,16 @@ public class Workpackage implements Serializable {
 
 	public void setTotalCost(BigDecimal totalCost) {
 		this.totalCost = totalCost;
+	}
+	
+	
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	@Override

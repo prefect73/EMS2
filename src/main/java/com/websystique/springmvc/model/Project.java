@@ -2,12 +2,18 @@ package com.websystique.springmvc.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -43,21 +49,20 @@ public class Project implements Serializable {
 	@Column(name = "TOTAL_COST", precision = 10, scale = 2)
 	private BigDecimal totalCost;
 
+	@NotEmpty
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "PROJECT_APP_USER", joinColumns = { @JoinColumn(name = "PROJECT_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
+	private Set<User> users = new HashSet<User>();
+
+	// @NotEmpty
+
 	/*
-	 * //@NotEmpty
-	 * 
-	 * @ManyToMany(fetch = FetchType.LAZY)
-	 * 
-	 * @JoinTable(name = "PROJECT_APP_USER", joinColumns = { @JoinColumn(name =
-	 * "PROJECT_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
-	 * private Set<User> users = new HashSet<User>();
-	 * 
-	 * //@NotEmpty
-	 * 
 	 * @OneToMany(fetch = FetchType.LAZY)
 	 * 
 	 * @JoinTable(name = "PROJECT_WORK_PACKAGE", joinColumns = {
+	 * 
 	 * @JoinColumn(name = "PROJECT_ID") }, inverseJoinColumns = {
+	 * 
 	 * @JoinColumn(name = "WORK_PACKAGE_ID") }) private Set<Workpackage>
 	 * workPackages = new HashSet<Workpackage>();
 	 */
@@ -110,11 +115,15 @@ public class Project implements Serializable {
 		this.totalCost = totalCost;
 	}
 
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
 	/*
-	 * public Set<User> getUsers() { return users; }
-	 * 
-	 * public void setUsers(Set<User> users) { this.users = users; }
-	 * 
 	 * public Set<Workpackage> getWorkPackages() { return workPackages; }
 	 * 
 	 * public void setWorkPackages(Set<Workpackage> workPackages) {

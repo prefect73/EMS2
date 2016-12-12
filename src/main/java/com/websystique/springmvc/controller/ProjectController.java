@@ -15,19 +15,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.websystique.springmvc.model.Project;
+import com.websystique.springmvc.model.User;
 import com.websystique.springmvc.service.ProjectService;
+import com.websystique.springmvc.service.UserService;
 
 @Controller
 @RequestMapping("/Project")
+@SessionAttributes("projectleadslist")
 public class ProjectController {
 
 	@Autowired
 	ProjectService projectService;
+	
+	@Autowired
+	UserService userService;
 
 	/*
 	 * @Autowired WorkpackageService workpackageService;
@@ -53,6 +61,16 @@ public class ProjectController {
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "projectslist";
 	}
+	
+	/**
+     * This method will provide Users list to views
+     */
+    @ModelAttribute("projectleadslist")
+    public List<User> initializeProjectLeads() {
+        return userService.findAllUsers();
+    }
+	
+	
 
 	/**
 	 * This method will provide the medium to add a new project.

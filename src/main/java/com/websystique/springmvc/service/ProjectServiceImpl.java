@@ -14,25 +14,25 @@ import com.websystique.springmvc.model.Project;
 public class ProjectServiceImpl implements ProjectService {
 
 	@Autowired
-	private ProjectDao dao;
+	private ProjectDao projectDao;
 
 	public Project findById(int id) {
-		return dao.findById(id);
+		return projectDao.findById(id);
 	}
 
 	public Project findByProjectNumber(String projectNumber) {
-		Project project = dao.findByProjectNumber(projectNumber);
+		Project project = projectDao.findByProjectNumber(projectNumber);
 		return project;
 	}
 
 	@Override
 	public Project findByProjectName(String projectName) {
-		Project project = dao.findByProjectName(projectName);
+		Project project = projectDao.findByProjectName(projectName);
 		return project;
 	}
 
 	public void saveProject(Project project) {
-		dao.save(project);
+		projectDao.save(project);
 	}
 
 	/*
@@ -42,7 +42,7 @@ public class ProjectServiceImpl implements ProjectService {
 	 * transaction ends.
 	 */
 	public void updateProject(Project project) {
-		Project entity = dao.findById(project.getId());
+		Project entity = projectDao.findById(project.getId());
 		if (entity != null) {
 			entity.setProjectNumber(project.getProjectNumber());
 			entity.setProjectName(project.getProjectName());
@@ -55,11 +55,11 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	public void deleteProjectByProjectNumber(String projectNumber) {
-		dao.deleteByProjectNumber(projectNumber);
+		projectDao.deleteByProjectNumber(projectNumber);
 	}
 
 	public List<Project> findAllProjects() {
-		return dao.findAllProjects();
+		return projectDao.findAllProjects();
 	}
 
 	@Override
