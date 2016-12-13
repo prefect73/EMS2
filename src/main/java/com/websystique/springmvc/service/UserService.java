@@ -19,6 +19,8 @@ public interface UserService {
 
 	List<User> findAllUsers(); 
 	
+	List<User> findAllUsersByTypeTeamLead(); 
+	
 	boolean isUserSSOUnique(Integer id, String sso);
 
 }

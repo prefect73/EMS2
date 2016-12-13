@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -46,10 +47,30 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		
 		// No need to fetch userProfiles since we are not showing them on list page. Let them lazy load. 
 		// Uncomment below lines for eagerly fetching of userProfiles if you want.
-		/*
+		
 		for(User user : users){
 			Hibernate.initialize(user.getUserProfiles());
-		}*/
+		}
+		return users;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<User> findAllUsersByTypeTeamLead() {
+		/*Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+		List<User> users = (List<User>) criteria.list();
+		
+		// No need to fetch userProfiles since we are not showing them on list page. Let them lazy load. 
+		// Uncomment below lines for eagerly fetching of userProfiles if you want.
+		
+		for(User user : users){
+			Hibernate.initialize(user.getUserProfiles());
+		}
+		return users;*/
+		//Query query = getSession().createQuery("from Stock where stockCode = :code ");
+		Query query = getSession().createSQLQuery("SELECT au.* FROM app_user au , app_user_user_profile auup , user_profile up WHERE au.id = auup.user_id AND auup.user_profile_id = up.id  AND up.type = 'Project Lead'").addEntity(User.class);
+		//query.setParameter("code", "7277");
+		List<User> users = query.list();
 		return users;
 	}
 

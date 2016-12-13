@@ -64,6 +64,10 @@ public class UserServiceImpl implements UserService{
 	public List<User> findAllUsers() {
 		return dao.findAllUsers();
 	}
+	
+	public List<User> findAllUsersByTypeTeamLead() {
+		return dao.findAllUsersByTypeTeamLead();
+	}
 
 	public boolean isUserSSOUnique(Integer id, String sso) {
 		User user = findBySSO(sso);
