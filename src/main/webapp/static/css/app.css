@@ -37,7 +37,7 @@ background-image: linear-gradient(to top, #EDEDED 0%, #EAEAEA 8%, #2F2F2F 100%, 
 }
 
 .generic-container {
-  position:fixed;
+  /* position:fixed; */
   width:100%;
   /* margin-left: 20px;
   margin-top: 20px;
