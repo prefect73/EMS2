@@ -24,17 +24,25 @@
 <body>
 	<div class="generic-container">
 		<%@include file="authheader.jsp"%>
-
-		<c:choose>
-			<c:when test="${edit}">
-				<div class="well lead">Update Work Package</div>
-			</c:when>
-			<c:otherwise>
-				<div class="well lead">Add Work Package</div>
-			</c:otherwise>
-		</c:choose>
-		<form:form method="POST" modelAttribute="workpackage"
+<form:form method="POST" modelAttribute="workpackage"
 			class="form-horizontal">
+		<c:choose>
+				<c:when test="${edit}">
+					<div class="well lead col-md-5">Update Work package</div>
+					<div class="well col-md-2">
+						<input type="submit" value="Update" class="btn btn-primary btn-sm" />
+						or <a href="<c:url value='/Workpackage/workpackageslist' />">Cancel</a>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="well lead col-md-5">Add Work package</div>
+					<div class="well col-md-2">
+						<input type="submit" value="Add" class="btn btn-primary btn-sm" />
+						or <a href="<c:url value='/Workpackage/workpackageslist' />">Cancel</a>
+					</div>
+				</c:otherwise>
+			</c:choose>
+		
 			<form:input type="hidden" path="id" id="id" />
 
 			<div class="row">
