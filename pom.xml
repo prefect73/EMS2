@@ -14,6 +14,7 @@
 		<springsecurity.version>4.0.4.RELEASE</springsecurity.version>
 		<hibernate.version>4.3.11.Final</hibernate.version>
 		<mysql.connector.version>5.1.31</mysql.connector.version>
+		<jackson.library>2.7.5</jackson.library>
 	</properties>
 
 	<dependencies>
@@ -112,6 +113,34 @@
 			<version>1.2</version>
 		</dependency>
 
+		<!-- <dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.library}</version>
+		</dependency> -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.4.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -136,14 +165,9 @@
 						<failOnMissingWebXml>false</failOnMissingWebXml>
 					</configuration>
 				</plugin>
-				<!-- <plugin>
-					<groupId>org.apache.tomcat.maven</groupId>
-					<artifactId>tomcat7-maven-plugin</artifactId>
-					<version>1.0.0-SNAPSHOT</version>
-					<configuration>
-						<url>http://localhost:8080/EMS</url>
-					</configuration>
-				</plugin> -->
+				<!-- <plugin> <groupId>org.apache.tomcat.maven</groupId> <artifactId>tomcat7-maven-plugin</artifactId> 
+					<version>1.0.0-SNAPSHOT</version> <configuration> <url>http://localhost:8080/EMS</url> 
+					</configuration> </plugin> -->
 			</plugins>
 		</pluginManagement>
 		<finalName>EMS</finalName>
