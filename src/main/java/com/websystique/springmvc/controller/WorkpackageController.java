@@ -20,13 +20,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.websystique.springmvc.model.Project;
+import com.websystique.springmvc.model.User;
 import com.websystique.springmvc.model.Workpackage;
 import com.websystique.springmvc.service.ProjectService;
+import com.websystique.springmvc.service.UserService;
 import com.websystique.springmvc.service.WorkpackageService;
 
 @Controller
 @RequestMapping("/Workpackage")
-@SessionAttributes("projectslist")
+@SessionAttributes({"projectslist","employeeslist"})
 public class WorkpackageController {
 
 	@Autowired
@@ -35,6 +37,9 @@ public class WorkpackageController {
 	@Autowired
 	ProjectService projectService;
 
+	 @Autowired
+	 UserService userService;
+	 
 	/*
 	 * @Autowired WorkpackageService workpackageService;
 	 */
@@ -62,12 +67,20 @@ public class WorkpackageController {
 	}
 
 	/**
-	 * This method will provide Users list to views
+	 * This method will provide Projects list to views
 	 */
 	@ModelAttribute("projectslist")
 	public List<Project> initializeProjects() {
 		return projectService.findAllProjects();
 	}
+	
+	/**
+     * This method will provide Users list to views
+     */
+    @ModelAttribute("employeeslist")
+    public List<User> initializeProjectLeads() {
+        return userService.findAllUsersByType("Project Lead");// change to something else
+    }
 
 	/**
 	 * This method will provide the medium to add a new workpackage.

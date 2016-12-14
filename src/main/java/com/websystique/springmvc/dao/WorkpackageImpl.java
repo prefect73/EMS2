@@ -3,6 +3,7 @@ package com.websystique.springmvc.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -19,6 +20,10 @@ public class WorkpackageImpl extends AbstractDao<Integer, Workpackage>
 
 	public Workpackage findById(int id) {
 		Workpackage workpackage = getByKey(id);
+		
+		if (workpackage != null) {
+			Hibernate.initialize(workpackage.getUsers());
+		}
 		return workpackage;
 	}
 
@@ -27,6 +32,10 @@ public class WorkpackageImpl extends AbstractDao<Integer, Workpackage>
 		Criteria crit = createEntityCriteria();
 		crit.add(Restrictions.eq("workpackageNumber", workpackageNumber));
 		Workpackage workpackage = (Workpackage) crit.uniqueResult();
+		
+		if (workpackage != null) {
+			Hibernate.initialize(workpackage.getUsers());
+		}
 		return workpackage;
 	}
 	
@@ -36,6 +45,10 @@ public class WorkpackageImpl extends AbstractDao<Integer, Workpackage>
 		Criteria crit = createEntityCriteria();
 		crit.add(Restrictions.eq("workpackageName", workpackageName));
 		Workpackage workpackage = (Workpackage) crit.uniqueResult();
+		
+		if (workpackage != null) {
+			Hibernate.initialize(workpackage.getUsers());
+		}
 		return workpackage;
 	}
 

@@ -2,13 +2,18 @@ package com.websystique.springmvc.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -27,7 +32,7 @@ public class Workpackage implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	//@NotEmpty
+	// @NotEmpty
 	@Column(name = "WORK_PACKAGE_NUMBER", unique = true, nullable = true)
 	private String workpackageNumber;
 
@@ -40,15 +45,18 @@ public class Workpackage implements Serializable {
 
 	@Column(name = "TOTAL_COST", precision = 10, scale = 2)
 	private BigDecimal totalCost;
-	
-	
+
 	@ManyToOne(optional = false)
-    @JoinColumn(name="PROJECT_ID")
+	@JoinColumn(name = "PROJECT_ID")
 	private Project project;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "WORK_PACKAGE_APP_USER", joinColumns = { @JoinColumn(name = "WORK_PACKAGE_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
+	private Set<User> users = new HashSet<User>();
 
 	public Integer getId() {
 		return id;
-	}
+	}	
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -85,8 +93,6 @@ public class Workpackage implements Serializable {
 	public void setTotalCost(BigDecimal totalCost) {
 		this.totalCost = totalCost;
 	}
-	
-	
 
 	public Project getProject() {
 		return project;
@@ -96,64 +102,12 @@ public class Workpackage implements Serializable {
 		this.project = project;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((offeredCost == null) ? 0 : offeredCost.hashCode());
-		result = prime * result
-				+ ((workpackageName == null) ? 0 : workpackageName.hashCode());
-		result = prime * result
-				+ ((workpackageNumber == null) ? 0 : workpackageNumber.hashCode());
-		result = prime * result
-				+ ((totalCost == null) ? 0 : totalCost.hashCode());
-		return result;
+	public Set<User> getUsers() {
+		return users;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Workpackage other = (Workpackage) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (offeredCost == null) {
-			if (other.offeredCost != null)
-				return false;
-		} else if (!offeredCost.equals(other.offeredCost))
-			return false;
-		if (workpackageName == null) {
-			if (other.workpackageName != null)
-				return false;
-		} else if (!workpackageName.equals(other.workpackageName))
-			return false;
-		if (workpackageNumber == null) {
-			if (other.workpackageNumber != null)
-				return false;
-		} else if (!workpackageNumber.equals(other.workpackageNumber))
-			return false;
-		if (totalCost == null) {
-			if (other.totalCost != null)
-				return false;
-		} else if (!totalCost.equals(other.totalCost))
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Workpackage [id=" + id + ", workpackageNumber=" + workpackageNumber
-				+ ", workpackageName=" + workpackageName + ", offeredCost="
-				+ offeredCost + ", totalCost=" + totalCost + "]";
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 
 }

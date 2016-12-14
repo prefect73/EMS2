@@ -91,6 +91,20 @@
 			</div>
 			<div class="row">
 				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="users">Employee
+						Name</label>
+					<div class="col-md-3">
+						<form:select path="users" items="${employeeslist}"
+							multiple="true" itemValue="id" itemLabel="firstName"
+							class="form-control input-sm" />
+						<div class="has-error">
+							<form:errors path="users" class="help-inline" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="offeredCost">Offered
 						Cost</label>
 					<div class="col-md-3">
