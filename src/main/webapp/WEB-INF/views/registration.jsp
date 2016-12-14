@@ -118,26 +118,26 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="email">Per Day
+					<label class="col-md-2 control-lable" for="email">Per Hour
 						Cost</label>
 					<div class="col-md-3">
-						<form:input type="text" path="perDayCost" id="perDayCost"
+						<form:input type="text" path="perHourCost" id="perHourCost"
 							class="form-control input-sm" />
 						<div class="has-error">
-							<form:errors path="perDayCost" class="help-inline" />
+							<form:errors path="perHourCost" class="help-inline" />
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="email">Per Month
-						Cost</label>
+					<label class="col-md-2 control-lable" for="email">Per Day
+						Hours</label>
 					<div class="col-md-3">
-						<form:input type="text" path="perMonthCost" id="perMonthCost"
+						<form:input type="text" path="perDayHours" id="perDayHours"
 							class="form-control input-sm" />
 						<div class="has-error">
-							<form:errors path="perMonthCost" class="help-inline" />
+							<form:errors path="perDayHours" class="help-inline" />
 						</div>
 					</div>
 				</div>

@@ -50,8 +50,8 @@ public class UserServiceImpl implements UserService{
 			entity.setFirstName(user.getFirstName());
 			entity.setLastName(user.getLastName());
 			entity.setEmail(user.getEmail());
-			entity.setPerDayCost(user.getPerDayCost());
-			entity.setPerMonthCost(user.getPerMonthCost());
+			entity.setPerHourCost(user.getPerHourCost());
+			entity.setPerDayHours(user.getPerDayHours());
 			entity.setUserProfiles(user.getUserProfiles());
 		}
 	}

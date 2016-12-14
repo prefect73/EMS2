@@ -46,8 +46,8 @@
 							<th>Lastname</th>
 							<th>Email</th>
 							<th>SSO ID</th>
-							<th>Per Day Cost</th>
-							<th>Per Month Cost</th>
+							<th>Per Hour Cost</th>
+							<th>Per Day Hours</th>
 							<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 								<th width="100"></th>
 							</sec:authorize>
@@ -64,8 +64,8 @@
 								<td>${user.lastName}</td>
 								<td>${user.email}</td>
 								<td>${user.ssoId}</td>
-								<td>${user.perDayCost}</td>
-								<td>${user.perMonthCost}</td>
+								<td>${user.perHourCost}</td>
+								<td>${user.perDayHours}</td>
 								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 									<td><a href="<c:url value='/edit-user-${user.ssoId}' />"
 										class="btn btn-success custom-width">edit</a></td>
