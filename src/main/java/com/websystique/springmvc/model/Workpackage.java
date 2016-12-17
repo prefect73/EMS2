@@ -51,7 +51,7 @@ public class Workpackage implements Serializable {
 	private Project project;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "WORK_PACKAGE_APP_USER", joinColumns = { @JoinColumn(name = "WORK_PACKAGE_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
+	@JoinTable(name = "WORK_PACKAGE_APP_USER_ALLOCATIONS", joinColumns = { @JoinColumn(name = "WORK_PACKAGE_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
 	private Set<User> users = new HashSet<User>();
 
 	public Integer getId() {
