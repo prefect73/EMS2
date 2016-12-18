@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "WORK_PACKAGE")
 public class WorkPackage implements Serializable {
-
+	
 	/**
 	 * 
 	 */
@@ -59,15 +59,15 @@ public class WorkPackage implements Serializable {
 	 */
 
 	// bi-directional many-to-one association to WorkPackageAppUserAllocation
-	@OneToMany(mappedBy = "pk.workpackage")
+	@OneToMany(mappedBy = "id.workPackage")
 	private Set<WorkPackageUserAllocation> workPackageUserAllocations;
 
-	/*
-	 * // bi-directional many-to-many association to AppUser
-	 * 
-	 * @ManyToMany(mappedBy = "workPackages") private Set<User> users;
-	 */
+	// bi-directional many-to-many association to AppUser
 
+	/*@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "WORK_PACKAGE_APP_USER", joinColumns = { @JoinColumn(name = "WORK_PACKAGE_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
+	private Set<User> users = new HashSet<User>();
+*/
 	public Integer getId() {
 		return id;
 	}
@@ -125,10 +125,12 @@ public class WorkPackage implements Serializable {
 		this.workPackageUserAllocations = workPackageUserAllocations;
 	}
 
-	/*
-	 * public Set<User> getUsers() { return users; }
-	 * 
-	 * public void setUsers(Set<User> users) { this.users = users; }
-	 */
+	/*public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}*/
 
 }

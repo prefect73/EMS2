@@ -100,7 +100,7 @@ public class User implements Serializable {
 	 private String yearName;
 	 
 	 
-	 @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.user")
+	 @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.user")
 	 private Set<WorkPackageUserAllocation> workPackageUserAllocations = new HashSet<WorkPackageUserAllocation>(0);
 
 	@NotEmpty

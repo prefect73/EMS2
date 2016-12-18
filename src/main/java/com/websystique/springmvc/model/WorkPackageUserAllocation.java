@@ -20,8 +20,8 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "work_package_app_user_allocations")
 @AssociationOverrides({
-		@AssociationOverride(name = "pk.workpackage", joinColumns = @JoinColumn(name = "WORK_PACKAGE_ID")),
-		@AssociationOverride(name = "pk.user", joinColumns = @JoinColumn(name = "USER_ID")) })
+		@AssociationOverride(name = "id.workPackage", joinColumns = @JoinColumn(name = "WORK_PACKAGE_ID")),
+		@AssociationOverride(name = "id.user", joinColumns = @JoinColumn(name = "USER_ID")) })
 public class WorkPackageUserAllocation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
