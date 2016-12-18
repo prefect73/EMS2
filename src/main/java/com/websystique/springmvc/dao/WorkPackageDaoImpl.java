@@ -13,16 +13,16 @@ import org.springframework.stereotype.Repository;
 import com.websystique.springmvc.model.WorkPackage;
 
 @Repository("workPackageDao")
-public class WorkPackageImpl extends AbstractDao<Integer, WorkPackage>
+public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 		implements WorkPackageDao {
 
-	static final Logger logger = LoggerFactory.getLogger(WorkPackageImpl.class);
+	static final Logger logger = LoggerFactory.getLogger(WorkPackageDaoImpl.class);
 
 	public WorkPackage findById(int id) {
 		WorkPackage workPackage = getByKey(id);
 
 		if (workPackage != null) {
-			Hibernate.initialize(workPackage.getUsers());
+			Hibernate.initialize(workPackage.getWorkPackageUserAllocations());
 		}
 		return workPackage;
 	}
@@ -34,7 +34,7 @@ public class WorkPackageImpl extends AbstractDao<Integer, WorkPackage>
 		WorkPackage workPackage = (WorkPackage) crit.uniqueResult();
 
 		if (workPackage != null) {
-			Hibernate.initialize(workPackage.getUsers());
+			Hibernate.initialize(workPackage.getWorkPackageUserAllocations());
 		}
 		return workPackage;
 	}
@@ -47,7 +47,7 @@ public class WorkPackageImpl extends AbstractDao<Integer, WorkPackage>
 		WorkPackage workPackage = (WorkPackage) crit.uniqueResult();
 
 		if (workPackage != null) {
-			Hibernate.initialize(workPackage.getUsers());
+			Hibernate.initialize(workPackage.getWorkPackageUserAllocations());
 		}
 		return workPackage;
 	}

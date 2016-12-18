@@ -2,19 +2,16 @@ package com.websystique.springmvc.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -50,13 +47,30 @@ public class WorkPackage implements Serializable {
 	@JoinColumn(name = "PROJECT_ID")
 	private Project project;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "WORK_PACKAGE_APP_USER_ALLOCATIONS", joinColumns = { @JoinColumn(name = "WORK_PACKAGE_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
-	private Set<User> users = new HashSet<User>();
+	/*
+	 * @ManyToMany(fetch = FetchType.LAZY)
+	 * 
+	 * @JoinTable(name = "WORK_PACKAGE_APP_USER_ALLOCATIONS", joinColumns = {
+	 * 
+	 * @JoinColumn(name = "WORK_PACKAGE_ID") }, inverseJoinColumns = {
+	 * 
+	 * @JoinColumn(name = "USER_ID") }) private Set<WorkPackageUserAllocation>
+	 * workPackageUserAllocations = new HashSet<WorkPackageUserAllocation>();
+	 */
+
+	// bi-directional many-to-one association to WorkPackageAppUserAllocation
+	@OneToMany(mappedBy = "pk.workpackage")
+	private Set<WorkPackageUserAllocation> workPackageUserAllocations;
+
+	/*
+	 * // bi-directional many-to-many association to AppUser
+	 * 
+	 * @ManyToMany(mappedBy = "workPackages") private Set<User> users;
+	 */
 
 	public Integer getId() {
 		return id;
-	}	
+	}
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -102,12 +116,19 @@ public class WorkPackage implements Serializable {
 		this.project = project;
 	}
 
-	public Set<User> getUsers() {
-		return users;
+	public Set<WorkPackageUserAllocation> getWorkPackageUserAllocations() {
+		return workPackageUserAllocations;
 	}
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
+	public void setWorkPackageUserAllocations(
+			Set<WorkPackageUserAllocation> workPackageUserAllocations) {
+		this.workPackageUserAllocations = workPackageUserAllocations;
 	}
+
+	/*
+	 * public Set<User> getUsers() { return users; }
+	 * 
+	 * public void setUsers(Set<User> users) { this.users = users; }
+	 */
 
 }

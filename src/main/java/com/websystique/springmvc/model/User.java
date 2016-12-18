@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -97,12 +98,17 @@ public class User implements Serializable {
 
 	 @Column(name = "Year_Name", precision = 10, scale = 2)
 	 private String yearName;
+	 
+	 
+	 @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.user")
+	 private Set<WorkPackageUserAllocation> workPackageUserAllocations = new HashSet<WorkPackageUserAllocation>(0);
 
 	@NotEmpty
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "APP_USER_USER_PROFILE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
+	
 	public Integer getId() {
 		return id;
 	}
@@ -270,6 +276,15 @@ public class User implements Serializable {
 
 	public void setYearName(String yearName) {
 		this.yearName = yearName;
+	}
+	
+	public Set<WorkPackageUserAllocation> getWorkPackageUserAllocations() {
+		return workPackageUserAllocations;
+	}
+
+	public void setWorkPackageUserAllocations(
+			Set<WorkPackageUserAllocation> workPackageUserAllocations) {
+		this.workPackageUserAllocations = workPackageUserAllocations;
 	}
 
 	public Set<UserProfile> getUserProfiles() {

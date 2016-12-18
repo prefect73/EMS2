@@ -49,7 +49,7 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 			entity.setOfferedCost(workPackage.getOfferedCost());
 			entity.setTotalCost(workPackage.getTotalCost());
 			entity.setProject(workPackage.getProject());
-			entity.setUsers(workPackage.getUsers());
+			entity.setWorkPackageUserAllocations(workPackage.getWorkPackageUserAllocations());
 		}
 	}
 

@@ -24,9 +24,9 @@
 <body>
 	<div class="generic-container">
 		<%@include file="authheader.jsp"%>
-<form:form method="POST" modelAttribute="workPackage"
+		<form:form method="POST" modelAttribute="workPackage"
 			class="form-horizontal">
-		<c:choose>
+			<c:choose>
 				<c:when test="${edit}">
 					<div class="well lead col-md-5">Update Work package</div>
 					<div class="well col-md-2">
@@ -42,7 +42,7 @@
 					</div>
 				</c:otherwise>
 			</c:choose>
-		
+
 			<form:input type="hidden" path="id" id="id" />
 
 			<div class="row">
@@ -94,13 +94,35 @@
 					<label class="col-md-2 control-lable" for="users">Employee
 						Name</label>
 					<div class="col-md-3">
-						<form:select path="users" items="${employeeslist}"
-							multiple="true" itemValue="id" itemLabel="firstName"
+						<form:select path="users" items="${employeeslist}" multiple="true"
+							itemValue="id" itemLabel="firstName"
 							class="form-control input-sm" />
 						<div class="has-error">
 							<form:errors path="users" class="help-inline" />
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-12">
+					<c:forEach items="${workpackage.workPackageUserAllocations}"
+						var="workPackageUserAllocation" varStatus="status">
+						<tr>
+							<td align="center">${status.count}</td>
+							<td><input
+								name="workPackageUserAllocations[${status.index}].mJan"
+								value="${workPackageUserAllocation.mJan}" /></td>
+							<td><input
+								name="workPackageUserAllocations[${status.index}].mFeb"
+								value="${workPackageUserAllocation.mFeb}" /></td>
+							<td><input
+								name="workPackageUserAllocations[${status.index}].mMar"
+								value="${workPackageUserAllocation.mMar}" /></td>
+							<td><input
+								name="workPackageUserAllocations[${status.index}].mApr"
+								value="${workPackageUserAllocation.mApr}" /></td>
+						</tr>
+					</c:forEach>
 				</div>
 			</div>
 			<div class="row">

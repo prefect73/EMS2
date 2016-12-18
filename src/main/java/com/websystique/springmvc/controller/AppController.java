@@ -38,7 +38,7 @@ public class AppController {
 
 	@Autowired
 	UserService userService;
-	
+		
 	@Autowired
 	UserProfileService userProfileService;
 	
