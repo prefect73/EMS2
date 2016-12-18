@@ -3,6 +3,8 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 
 <html>
 
@@ -185,54 +187,61 @@
 									</c:when>
 									<c:otherwise>
 										<tr>
-											<c:forEach items="${workPackage.workPackageUserAllocations}"
+											<%-- <c:forEach items="${workPackage.workPackageUserAllocations}"
 												var="workPackageUserAllocation" varStatus="status">
 												<tr>
-												
-													<td align="center">${status.count}</td>
-													<td><input type="text"
-														name="workPackageUserAllocations[${status.index}].firstname"
-														value="${workPackageUserAllocation.user.firstname}" /></td>
-													<td><input
-														name="workPackageUserAllocations[${status.index}].mJan"
-														value="${workPackageUserAllocation.mJan}" /></td>
-													<td><input
-														name="workPackageUserAllocations[${status.index}].mFeb"
-														value="${workPackageUserAllocation.mFeb}" /></td>
-													<td><input
-														name="workPackageUserAllocations[${status.index}].mMar"
-														value="${workPackageUserAllocation.mMar}" /></td>
-													<td><input
-														name="workPackageUserAllocations[${status.index}].mApr"
-														value="${workPackageUserAllocation.mApr}" /></td>
-													<td><input
-														name="workPackageUserAllocations[${status.index}].mMay"
-														value="${workPackageUserAllocation.mMay}" /></td>
-													<td><input
-														name="workPackageUserAllocations[${status.index}].mJun"
-														value="${workPackageUserAllocation.mJun}" /></td>
-													<td><input
-														name="workPackageUserAllocations[${status.index}].mJul"
-														value="${workPackageUserAllocation.mJul}" /></td>
-													<td><input
-														name="workPackageUserAllocations[${status.index}].mAug"
-														value="${workPackageUserAllocation.mAug}" /></td>
-													<td><input
-														name="workPackageUserAllocations[${status.index}].mSep"
-														value="${workPackageUserAllocation.mSep}" /></td>
-													<td><input
-														name="workPackageUserAllocations[${status.index}].mOct"
-														value="${workPackageUserAllocation.mOct}" /></td>
-													<td><input
-														name="workPackageUserAllocations[${status.index}].mNov"
-														value="${workPackageUserAllocation.mNov}" /></td>
-													<td><input
-														name="workPackageUserAllocations[${status.index}].mDec"
-														value="${workPackageUserAllocation.mDec}" /></td>
+												 --%>
+											<%-- <td align="center">${status.count}</td> --%>
+											<%-- <td><input type="text" width="2%"
+												name="workPackageUserAllocations[${status.index}].firstname"
+												value="${workPackageUserAllocations.user.firstname}" /></td> --%>
 
-												</tr>
+											<td><form:select path="workPackageUserAllocation.user" items="${employeeslist}"
+													multiple="false" itemValue="id" itemLabel="firstName"
+													class="form-control input-sm" /></td>
+											<td><input
+												name="workPackageUserAllocations[${status.index}].mJan"
+												value="${workPackageUserAllocation.mJan}" /></td>
+											<td><input
+												name="workPackageUserAllocations[${status.index}].mFeb"
+												value="${workPackageUserAllocation.mFeb}" /></td>
+											<td><input
+												name="workPackageUserAllocations[${status.index}].mMar"
+												value="${workPackageUserAllocation.mMar}" /></td>
+											<td><input
+												name="workPackageUserAllocations[${status.index}].mApr"
+												value="${workPackageUserAllocation.mApr}" /></td>
+											<td><input
+												name="workPackageUserAllocations[${status.index}].mMay"
+												value="${workPackageUserAllocation.mMay}" /></td>
+											<td><input
+												name="workPackageUserAllocations[${status.index}].mJun"
+												value="${workPackageUserAllocation.mJun}" /></td>
+											<td><input
+												name="workPackageUserAllocations[${status.index}].mJul"
+												value="${workPackageUserAllocation.mJul}" /></td>
+											<td><input
+												name="workPackageUserAllocations[${status.index}].mAug"
+												value="${workPackageUserAllocation.mAug}" /></td>
+											<td><input
+												name="workPackageUserAllocations[${status.index}].mSep"
+												value="${workPackageUserAllocation.mSep}" /></td>
+											<td><input
+												name="workPackageUserAllocations[${status.index}].mOct"
+												value="${workPackageUserAllocation.mOct}" /></td>
+											<td><input
+												name="workPackageUserAllocations[${status.index}].mNov"
+												value="${workPackageUserAllocation.mNov}" /></td>
+											<td><input
+												name="workPackageUserAllocations[${status.index}].mDec"
+												value="${workPackageUserAllocation.mDec}" /></td>
+											<td><input
+												name="workPackageUserAllocations[${status.index}].yearName"
+												value="${workPackageUserAllocation.yearName}" /></td>
+
+											<%-- </tr>
 											</c:forEach>
-											
+											 --%>
 										</tr>
 									</c:otherwise>
 								</c:choose>

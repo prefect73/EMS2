@@ -2,6 +2,7 @@ package com.websystique.springmvc.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -60,7 +61,7 @@ public class WorkPackage implements Serializable {
 
 	// bi-directional many-to-one association to WorkPackageAppUserAllocation
 	@OneToMany(mappedBy = "id.workPackage")
-	private Set<WorkPackageUserAllocation> workPackageUserAllocations;
+	private Set<WorkPackageUserAllocation> workPackageUserAllocations = new HashSet<WorkPackageUserAllocation>();
 
 	// bi-directional many-to-many association to AppUser
 
