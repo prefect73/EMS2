@@ -156,7 +156,7 @@
 				</div>
 			</div>
 
-			<div class="row">
+			<%-- <div class="row">
 				<div class="form-actions floatRight">
 					<c:choose>
 						<c:when test="${edit}">
@@ -170,7 +170,7 @@
 						</c:otherwise>
 					</c:choose>
 				</div>
-			</div>
+			</div> --%>
 		</form:form>
 	</div>
 </body>

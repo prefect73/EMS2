@@ -21,7 +21,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "WORK_PACKAGE")
-public class Workpackage implements Serializable {
+public class WorkPackage implements Serializable {
 
 	/**
 	 * 
@@ -34,11 +34,11 @@ public class Workpackage implements Serializable {
 
 	// @NotEmpty
 	@Column(name = "WORK_PACKAGE_NUMBER", unique = true, nullable = true)
-	private String workpackageNumber;
+	private String workPackageNumber;
 
 	@NotEmpty
 	@Column(name = "WORK_PACKAGE_NAME", unique = true, nullable = false)
-	private String workpackageName;
+	private String workPackageName;
 
 	@Column(name = "OFFERED_COST", precision = 10, scale = 2)
 	private BigDecimal offeredCost;
@@ -62,20 +62,20 @@ public class Workpackage implements Serializable {
 		this.id = id;
 	}
 
-	public String getWorkpackageNumber() {
-		return workpackageNumber;
+	public String getWorkPackageNumber() {
+		return workPackageNumber;
 	}
 
-	public void setWorkpackageNumber(String workpackageNumber) {
-		this.workpackageNumber = workpackageNumber;
+	public void setWorkPackageNumber(String workPackageNumber) {
+		this.workPackageNumber = workPackageNumber;
 	}
 
-	public String getWorkpackageName() {
-		return workpackageName;
+	public String getWorkPackageName() {
+		return workPackageName;
 	}
 
-	public void setWorkpackageName(String workpackageName) {
-		this.workpackageName = workpackageName;
+	public void setWorkPackageName(String workPackageName) {
+		this.workPackageName = workPackageName;
 	}
 
 	public BigDecimal getOfferedCost() {

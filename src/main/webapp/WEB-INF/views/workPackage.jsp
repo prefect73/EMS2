@@ -24,21 +24,21 @@
 <body>
 	<div class="generic-container">
 		<%@include file="authheader.jsp"%>
-<form:form method="POST" modelAttribute="workpackage"
+<form:form method="POST" modelAttribute="workPackage"
 			class="form-horizontal">
 		<c:choose>
 				<c:when test="${edit}">
 					<div class="well lead col-md-5">Update Work package</div>
 					<div class="well col-md-2">
 						<input type="submit" value="Update" class="btn btn-primary btn-sm" />
-						or <a href="<c:url value='/Workpackage/workpackageslist' />">Cancel</a>
+						or <a href="<c:url value='/WorkPackage/workPackageslist' />">Cancel</a>
 					</div>
 				</c:when>
 				<c:otherwise>
 					<div class="well lead col-md-5">Add Work package</div>
 					<div class="well col-md-2">
 						<input type="submit" value="Add" class="btn btn-primary btn-sm" />
-						or <a href="<c:url value='/Workpackage/workpackageslist' />">Cancel</a>
+						or <a href="<c:url value='/WorkPackage/workPackageslist' />">Cancel</a>
 					</div>
 				</c:otherwise>
 			</c:choose>
@@ -47,14 +47,14 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="workpackageNumber">Work
+					<label class="col-md-2 control-lable" for="workPackageNumber">Work
 						Package Number</label>
 					<div class="col-md-3">
-						<form:input type="text" path="workpackageNumber"
-							id="workpackageNumber" class="form-control input-sm"
+						<form:input type="text" path="workPackageNumber"
+							id="workPackageNumber" class="form-control input-sm"
 							disabled="true" />
 						<div class="has-error">
-							<form:errors path="workpackageNumber" class="help-inline" />
+							<form:errors path="workPackageNumber" class="help-inline" />
 						</div>
 					</div>
 				</div>
@@ -62,13 +62,13 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="workpackageName">Work
+					<label class="col-md-2 control-lable" for="workPackageName">Work
 						Package Name</label>
 					<div class="col-md-3">
-						<form:input type="text" path="workpackageName"
-							id="workpackageName" class="form-control input-sm" />
+						<form:input type="text" path="workPackageName"
+							id="workPackageName" class="form-control input-sm" />
 						<div class="has-error">
-							<form:errors path="workpackageName" class="help-inline" />
+							<form:errors path="workPackageName" class="help-inline" />
 						</div>
 					</div>
 				</div>
@@ -129,21 +129,21 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<%-- <div class="row">
 				<div class="form-actions floatRight">
 					<c:choose>
 						<c:when test="${edit}">
 							<input type="submit" value="Update"
 								class="btn btn-primary btn-sm" /> or <a
-								href="<c:url value='/Workpackage/workpackageslist' />">Cancel</a>
+								href="<c:url value='/WorkPackage/workPackageslist' />">Cancel</a>
 						</c:when>
 						<c:otherwise>
 							<input type="submit" value="Add" class="btn btn-primary btn-sm" /> or <a
-								href="<c:url value='/Workpackage/workpackageslist' />">Cancel</a>
+								href="<c:url value='/WorkPackage/workPackageslist' />">Cancel</a>
 						</c:otherwise>
 					</c:choose>
 				</div>
-			</div>
+			</div> --%>
 		</form:form>
 	</div>
 </body>

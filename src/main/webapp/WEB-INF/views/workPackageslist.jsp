@@ -19,7 +19,7 @@
 	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$('#workpackagesTable').DataTable();
+		$('#workPackagesTable').DataTable();
 	});
 </script>
 </head>
@@ -33,51 +33,53 @@
 				<span class="lead">List of Work Packages </span>
 				<sec:authorize access="hasRole('ADMIN')">
 					<a class="btn btn-primary floatRight"
-						href="<c:url value='/Workpackage/newworkpackage' />">Add New Work Package</a>
+						href="<c:url value='/WorkPackage/newworkPackage' />">Add New
+						Work Package</a>
 				</sec:authorize>
 			</div>
-		<div id="workpackagesTableWrapper" style="padding: 2%;">
-			<table id="workpackagesTable"
-				class="table table-striped table-bordered dt-responsive nowrap"
-				cellspacing="0" width="100%">
-				<thead>
-					<tr>
-						<th>Work Package Number</th>
-						<th>Work Package Name</th>
-						<!-- <th>Project Name</th> -->
-						<th>Offered Cost</th>
-						<th>Total Cost</th>
-						<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-							<th width="100"></th>
-						</sec:authorize>
-						<sec:authorize access="hasRole('ADMIN')">
-							<th width="100"></th>
-						</sec:authorize>
-
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${workpackages}" var="workpackage">
+			<div id="workPackagesTableWrapper" style="padding: 2%;">
+				<table id="workPackagesTable"
+					class="table table-striped table-bordered dt-responsive nowrap"
+					cellspacing="0" width="100%">
+					<thead>
 						<tr>
-							<td>${workpackage.workpackageNumber}</td>
-							<td>${workpackage.workpackageName}</td>
-							<%-- <td>${project.projectName}</td> --%>
-							<td>${workpackage.offeredCost}</td>
-							<td>${workpackage.totalCost}</td>
+							<th>Project Name</th>
+							<th>Work Package Number</th>
+							<th>Work Package Name</th>
+
+							<th>Offered Cost</th>
+							<th>Total Cost</th>
 							<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-								<td><a
-									href="<c:url value='/Workpackage/edit-workpackage-${workpackage.id}' />"
-									class="btn btn-success custom-width">edit</a></td>
+								<th width="100"></th>
 							</sec:authorize>
 							<sec:authorize access="hasRole('ADMIN')">
-								<td><a
-									href="<c:url value='/Workpackage/delete-workpackage-${workpackage.id}' />"
-									class="btn btn-danger custom-width">delete</a></td>
+								<th width="100"></th>
 							</sec:authorize>
+
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<c:forEach items="${workPackages}" var="workPackage">
+							<tr>
+								<td>${workPackage.project.projectName}</td>
+								<td>${workPackage.workPackageNumber}</td>
+								<td>${workPackage.workPackageName}</td>
+								<td>${workPackage.offeredCost}</td>
+								<td>${workPackage.totalCost}</td>
+								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+									<td><a
+										href="<c:url value='/WorkPackage/edit-workPackage-${workPackage.id}' />"
+										class="btn btn-success custom-width">edit</a></td>
+								</sec:authorize>
+								<sec:authorize access="hasRole('ADMIN')">
+									<td><a
+										href="<c:url value='/WorkPackage/delete-workPackage-${workPackage.id}' />"
+										class="btn btn-danger custom-width">delete</a></td>
+								</sec:authorize>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

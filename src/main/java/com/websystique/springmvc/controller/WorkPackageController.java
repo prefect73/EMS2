@@ -21,18 +21,18 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.websystique.springmvc.model.Project;
 import com.websystique.springmvc.model.User;
-import com.websystique.springmvc.model.Workpackage;
+import com.websystique.springmvc.model.WorkPackage;
 import com.websystique.springmvc.service.ProjectService;
 import com.websystique.springmvc.service.UserService;
-import com.websystique.springmvc.service.WorkpackageService;
+import com.websystique.springmvc.service.WorkPackageService;
 
 @Controller
-@RequestMapping("/Workpackage")
+@RequestMapping("/WorkPackage")
 @SessionAttributes({"projectslist","employeeslist"})
-public class WorkpackageController {
+public class WorkPackageController {
 
 	@Autowired
-	WorkpackageService workpackageService;
+	WorkPackageService workPackageService;
 
 	@Autowired
 	ProjectService projectService;
@@ -41,7 +41,7 @@ public class WorkpackageController {
 	 UserService userService;
 	 
 	/*
-	 * @Autowired WorkpackageService workpackageService;
+	 * @Autowired WorkPackageService workPackageService;
 	 */
 
 	@Autowired
@@ -54,16 +54,16 @@ public class WorkpackageController {
 	AuthenticationTrustResolver authenticationTrustResolver;
 
 	/**
-	 * This method will list all existing workpackages.
+	 * This method will list all existing workPackages.
 	 */
-	@RequestMapping(value = { "/workpackageslist" }, method = RequestMethod.GET)
-	public String listWorkpackages(ModelMap model) {
+	@RequestMapping(value = { "/workPackageslist" }, method = RequestMethod.GET)
+	public String listWorkPackages(ModelMap model) {
 
-		List<Workpackage> workpackages = workpackageService
-				.findAllWorkpackages();
-		model.addAttribute("workpackages", workpackages);
+		List<WorkPackage> workPackages = workPackageService
+				.findAllWorkPackages();
+		model.addAttribute("workPackages", workPackages);
 		model.addAttribute("loggedinuser", getPrincipal());
-		return "workpackageslist";
+		return "workPackageslist";
 	}
 
 	/**
@@ -83,116 +83,116 @@ public class WorkpackageController {
     }
 
 	/**
-	 * This method will provide the medium to add a new workpackage.
+	 * This method will provide the medium to add a new workPackage.
 	 */
-	@RequestMapping(value = { "/newworkpackage" }, method = RequestMethod.GET)
-	public String newWorkpackage(ModelMap model) {
-		Workpackage workpackage = new Workpackage();
-		model.addAttribute("workpackage", workpackage);
+	@RequestMapping(value = { "/newworkPackage" }, method = RequestMethod.GET)
+	public String newWorkPackage(ModelMap model) {
+		WorkPackage workPackage = new WorkPackage();
+		model.addAttribute("workPackage", workPackage);
 		model.addAttribute("edit", false);
 		model.addAttribute("loggedinuser", getPrincipal());
-		return "workpackage";
+		return "workPackage";
 	}
 
 	/**
 	 * This method will be called on form submission, handling POST request for
-	 * saving workpackage in database. It also validates the workpackage input
+	 * saving workPackage in database. It also validates the workPackage input
 	 */
-	@RequestMapping(value = { "/newworkpackage" }, method = RequestMethod.POST)
-	public String saveWorkpackage(@Valid Workpackage workpackage,
+	@RequestMapping(value = { "/newworkPackage" }, method = RequestMethod.POST)
+	public String saveWorkPackage(@Valid WorkPackage workPackage,
 			BindingResult result, ModelMap model) {
 
 		if (result.hasErrors()) {
-			return "workpackage";
+			return "workPackage";
 		}
 
 		/*
 		 * Preferred way to achieve uniqueness of field [id] should be
 		 * implementing custom @Unique annotation and applying it on field [id]
-		 * of Model class [Workpackage].
+		 * of Model class [WorkPackage].
 		 * 
 		 * Below mentioned peace of code [if block] is to demonstrate that you
 		 * can fill custom errors outside the validation framework as well while
 		 * still using internationalized messages.
 		 * 
-		 * if (!workpackageService.isIdUnique(workpackage.getId(),
-		 * workpackage.getId())) { FieldError idError = new
-		 * FieldError("workpackage", "id", messageSource.getMessage(
-		 * "non.unique.id", new String[] { workpackage.getId() },
+		 * if (!workPackageService.isIdUnique(workPackage.getId(),
+		 * workPackage.getId())) { FieldError idError = new
+		 * FieldError("workPackage", "id", messageSource.getMessage(
+		 * "non.unique.id", new String[] { workPackage.getId() },
 		 * Locale.getDefault())); result.addError(idError); return
-		 * "workpackage"; }
+		 * "workPackage"; }
 		 */
 
-		workpackageService.saveWorkpackage(workpackage);
-		workpackageService.updateWorkpackage(workpackage);
+		workPackageService.saveWorkPackage(workPackage);
+		workPackageService.updateWorkPackage(workPackage);
 
-		// model.addAttribute("success", "Workpackage " +
-		// workpackage.getFirstName() +
-		// " "+ workpackage.getLastName() + " registered successfully");
+		// model.addAttribute("success", "WorkPackage " +
+		// workPackage.getFirstName() +
+		// " "+ workPackage.getLastName() + " registered successfully");
 		// model.addAttribute("loggedinuser", getPrincipal());
 		// return "success";
-		return "redirect:/Workpackage/workpackageslist";
+		return "redirect:/WorkPackage/workPackageslist";
 	}
 
 	/**
-	 * This method will provide the medium to update an existing workpackage.
+	 * This method will provide the medium to update an existing workPackage.
 	 */
-	@RequestMapping(value = { "/edit-workpackage-{id}" }, method = RequestMethod.GET)
-	public String editWorkpackage(@PathVariable int id, ModelMap model) {
-		Workpackage workpackage = workpackageService.findById(id);
-		model.addAttribute("workpackage", workpackage);
+	@RequestMapping(value = { "/edit-workPackage-{id}" }, method = RequestMethod.GET)
+	public String editWorkPackage(@PathVariable int id, ModelMap model) {
+		WorkPackage workPackage = workPackageService.findById(id);
+		model.addAttribute("workPackage", workPackage);
 		model.addAttribute("edit", true);
 		model.addAttribute("loggedinuser", getPrincipal());
-		return "workpackage";
+		return "workPackage";
 	}
 
 	/**
 	 * This method will be called on form submission, handling POST request for
-	 * updating workpackage in database. It also validates the workpackage input
+	 * updating workPackage in database. It also validates the workPackage input
 	 */
-	@RequestMapping(value = { "/edit-workpackage-{id}" }, method = RequestMethod.POST)
-	public String updateWorkpackage(@Valid Workpackage workpackage,
+	@RequestMapping(value = { "/edit-workPackage-{id}" }, method = RequestMethod.POST)
+	public String updateWorkPackage(@Valid WorkPackage workPackage,
 			BindingResult result, ModelMap model, @PathVariable Integer id) {
 
 		if (result.hasErrors()) {
-			return "workpackage";
+			return "workPackage";
 		}
 
 		/*
 		 * //Uncomment below 'if block' if you WANT TO ALLOW UPDATING SSO_ID in
-		 * UI which is a unique key to a Workpackage.
-		 * if(!workpackageService.isWorkpackageSSOUnique(workpackage.getId(),
-		 * workpackage.getId())){ FieldError idError =new
-		 * FieldError("workpackage","id",messageSource.getMessage(
-		 * "non.unique.id", new String[]{workpackage.getId()},
+		 * UI which is a unique key to a WorkPackage.
+		 * if(!workPackageService.isWorkPackageSSOUnique(workPackage.getId(),
+		 * workPackage.getId())){ FieldError idError =new
+		 * FieldError("workPackage","id",messageSource.getMessage(
+		 * "non.unique.id", new String[]{workPackage.getId()},
 		 * Locale.getDefault())); result.addError(idError); return
-		 * "workpackage"; }
+		 * "workPackage"; }
 		 */
 
-		workpackageService.updateWorkpackage(workpackage);
+		workPackageService.updateWorkPackage(workPackage);
 
-		// model.addAttribute("success", "Workpackage " +
-		// workpackage.getFirstName() +
-		// " "+ workpackage.getLastName() + " updated successfully");
+		// model.addAttribute("success", "WorkPackage " +
+		// workPackage.getFirstName() +
+		// " "+ workPackage.getLastName() + " updated successfully");
 		// model.addAttribute("loggedinuser", getPrincipal());
-		return "redirect:/Workpackage/workpackageslist";
+		return "redirect:/WorkPackage/workPackageslist";
 	}
 
 	/**
-	 * This method will delete an workpackage by it's SSOID value.
+	 * This method will delete an workPackage by it's SSOID value.
 	 */
-	@RequestMapping(value = { "/delete-workpackage-{id}" }, method = RequestMethod.GET)
-	public String deleteWorkpackage(@PathVariable Integer id) {
-		workpackageService.deleteWorkpackageById(id);
-		return "redirect:/Workpackage/workpackageslist";
+	@RequestMapping(value = { "/delete-workPackage-{id}" }, method = RequestMethod.GET)
+	public String deleteWorkPackage(@PathVariable Integer id) {
+		workPackageService.deleteWorkPackageById(id);
+		return "redirect:/WorkPackage/workPackageslist";
 	}
 
 	/**
-	 * This method will provide Workpackage list to views
+	 * This method will provide WorkPackage list to views
 	 */
 	/*
-	 * @ModelAttribute("workpackages") public List<Workpackage>
-	 * initializeProfiles() { return workpackageService.findAllWorkpackages(); }
+	 * @ModelAttribute("workPackages") public List<WorkPackage>
+	 * initializeProfiles() { return workPackageService.findAllWorkPackages(); }
 	 */
 
 	/**
