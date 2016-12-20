@@ -18,7 +18,7 @@
 		<sec:authorize access="hasRole('ADMIN')">
 		<li><a href="#">Time Planning</a></li>
 		<li><a href="#">Project Report</a></li>
-		<li><a href="#">Monthly Report</a></li>
+		<li><a href="<c:url value='/UserAttendance/monthlyReport' />">Monthly Report</a></li>
 		</sec:authorize>
 	</ul>
 </div>
