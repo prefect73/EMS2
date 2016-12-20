@@ -79,7 +79,7 @@ public class WorkPackageController {
      */
     @ModelAttribute("employeeslist")
     public List<User> initializeProjectLeads() {
-        return userService.findAllUsersByType("Project Lead");// change to something else
+        return userService.findAllUsers();// change to something else
     }
 
 	/**

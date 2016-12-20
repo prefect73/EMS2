@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.websystique.springmvc.model.User;
+import com.websystique.springmvc.model.UserAttendance;
 import com.websystique.springmvc.model.UserProfile;
+import com.websystique.springmvc.service.UserAttendanceService;
 import com.websystique.springmvc.service.UserProfileService;
 import com.websystique.springmvc.service.UserService;
 
@@ -38,6 +40,9 @@ public class AppController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	UserAttendanceService userAttendanceService;
 		
 	@Autowired
 	UserProfileService userProfileService;
@@ -83,7 +88,8 @@ public class AppController {
 	@RequestMapping(value = { "/newuser" }, method = RequestMethod.POST)
 	public String saveUser(@Valid User user, BindingResult result,
 			ModelMap model) {
-
+		UserAttendance userAttendance  = new UserAttendance();
+		
 		if (result.hasErrors()) {
 			return "registration";
 		}
@@ -103,6 +109,8 @@ public class AppController {
 		}
 		
 		userService.saveUser(user);
+		userAttendance.setUser(user);
+		userAttendanceService.saveUserAttendance(userAttendance);
 
 		//model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());

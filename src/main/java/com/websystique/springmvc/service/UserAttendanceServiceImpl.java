@@ -31,7 +31,7 @@ public class UserAttendanceServiceImpl implements UserAttendanceService {
 		return userAttendance;
 	}
 
-	public void saveUserAttendance(UserAttendance userAttendance) {
+	public void saveUserAttendance(UserAttendance userAttendance) {	
 		dao.save(userAttendance);
 	}
 

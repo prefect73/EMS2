@@ -13,9 +13,9 @@ public interface UserAttendanceService {
 	
 	UserAttendance findBySSOId(String ssoId);
 	
-	void saveUserAttendance(UserAttendance workpackage);
+	void saveUserAttendance(UserAttendance userAttendance);
 	
-	void updateUserAttendance(UserAttendance workpackage);
+	void updateUserAttendance(UserAttendance userAttendance);
 	
 	void deleteUserAttendanceById(int id);
 	

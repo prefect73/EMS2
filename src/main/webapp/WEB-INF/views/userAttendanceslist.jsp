@@ -82,16 +82,18 @@
 								<td>${userAttendance.mOct}</td>
 								<td>${userAttendance.mNov}</td>
 								<td>${userAttendance.mDec}</td>
-								<td>${userAttendance.yearName}</th><sec:authorize
-										access="hasRole('ADMIN') or hasRole('DBA')">
-										<td><a
-											href="<c:url value='/UserAttendance/edit-userAttendance-${userAttendance.id}' />"
-											class="btn btn-success custom-width">edit</a></td>
-									</sec:authorize> <sec:authorize access="hasRole('ADMIN')">
-										<td><a
-											href="<c:url value='/UserAttendance/delete-userAttendance-${userAttendance.id}' />"
-											class="btn btn-danger custom-width">delete</a></td>
-									</sec:authorize>
+								<td>${userAttendance.yearName}</td>
+
+								<td><a
+									href="<c:url value='/UserAttendance/edit-userAttendance-${userAttendance.id}' />"
+									class="btn btn-success custom-width">edit</a></td>
+								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+								</sec:authorize>
+								<sec:authorize access="hasRole('ADMIN')">
+									<td><a
+										href="<c:url value='/UserAttendance/delete-userAttendance-${userAttendance.id}' />"
+										class="btn btn-danger custom-width">delete</a></td>
+								</sec:authorize>
 							</tr>
 						</c:forEach>
 					</tbody>

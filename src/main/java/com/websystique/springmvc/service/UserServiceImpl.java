@@ -1,6 +1,5 @@
 package com.websystique.springmvc.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +31,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	public void saveUser(User user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user.setmJan(user.getPerDayHours().multiply(new BigDecimal(22)));
-		user.setmFeb(user.getPerDayHours().multiply(new BigDecimal(22)));
-		user.setmMar(user.getPerDayHours().multiply(new BigDecimal(22)));
-		user.setmApr(user.getPerDayHours().multiply(new BigDecimal(22)));
-		user.setmMay(user.getPerDayHours().multiply(new BigDecimal(22)));
-		user.setmJun(user.getPerDayHours().multiply(new BigDecimal(22)));
-		user.setmJul(user.getPerDayHours().multiply(new BigDecimal(22)));
-		user.setmAug(user.getPerDayHours().multiply(new BigDecimal(22)));
-		user.setmSep(user.getPerDayHours().multiply(new BigDecimal(22)));
-		user.setmOct(user.getPerDayHours().multiply(new BigDecimal(22)));
-		user.setmNov(user.getPerDayHours().multiply(new BigDecimal(22)));
-		user.setmDec(user.getPerDayHours().multiply(new BigDecimal(22)));
-		user.setYearName("2016");
+		user.setPassword(passwordEncoder.encode(user.getPassword()));	
 		dao.save(user);
 	}
 
@@ -64,8 +50,7 @@ public class UserServiceImpl implements UserService{
 			entity.setFirstName(user.getFirstName());
 			entity.setLastName(user.getLastName());
 			entity.setEmail(user.getEmail());
-			entity.setPerHourCost(user.getPerHourCost());
-			entity.setPerDayHours(user.getPerDayHours());
+			entity.setPerDayCost(user.getPerDayCost());
 			entity.setUserProfiles(user.getUserProfiles());
 		}
 	}

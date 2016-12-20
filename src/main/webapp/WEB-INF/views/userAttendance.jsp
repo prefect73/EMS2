@@ -44,21 +44,21 @@
 			</c:choose>
 		
 			<form:input type="hidden" path="id" id="id" />
-			<%-- <div class="row">
+			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="user">Employee
 						Name</label>
 					<div class="col-md-3">
 						<form:select path="user" items="${employeeslist}"
-							multiple="true" itemValue="id" itemLabel="firstName"
+							multiple="false" itemValue="id" itemLabel="firstName"
 							class="form-control input-sm"  />
 						<div class="has-error">
 							<form:errors path="user" class="help-inline" />
 						</div>
 					</div>
 				</div>
-			</div> --%>
-			<div class="row">
+			</div>
+			<%-- <div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="user.firstName">Employee Name</label>
 					<div class="col-md-3">
@@ -69,7 +69,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> --%>
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="mJan">January</label>

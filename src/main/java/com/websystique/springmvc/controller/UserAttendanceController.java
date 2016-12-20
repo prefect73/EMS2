@@ -13,17 +13,20 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.websystique.springmvc.model.User;
 import com.websystique.springmvc.model.UserAttendance;
 import com.websystique.springmvc.service.UserAttendanceService;
 import com.websystique.springmvc.service.UserService;
 
 @Controller
 @RequestMapping("/UserAttendance")
-/* @SessionAttributes({ "employeeslist" }) */
+@SessionAttributes({ "employeeslist" }) 
 public class UserAttendanceController {
 
 	@Autowired
@@ -61,10 +64,10 @@ public class UserAttendanceController {
 	/**
 	 * This method will provide Users list to views
 	 */
-	/*
-	 * @ModelAttribute("employeeslist") public List<User>
-	 * initializeProjectLeads() { return userService.findAllUsers(); }
-	 */
+	
+	  @ModelAttribute("employeeslist") public List<User>
+	  initializeProjectLeads() { return userService.findAllUsers(); }
+	 
 
 	/**
 	 * This method will provide the medium to add a new userAttendance.
