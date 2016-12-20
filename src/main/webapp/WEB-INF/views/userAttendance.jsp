@@ -24,9 +24,9 @@
 <body>
 	<div class="generic-container">
 		<%@include file="authheader.jsp"%>
-<form:form method="POST" modelAttribute="userAttendance"
+		<form:form method="POST" modelAttribute="userAttendance"
 			class="form-horizontal">
-		<c:choose>
+			<c:choose>
 				<c:when test="${edit}">
 					<div class="well lead col-md-5">Update User Attendance</div>
 					<div class="well col-md-2">
@@ -42,22 +42,45 @@
 					</div>
 				</c:otherwise>
 			</c:choose>
-		
+
 			<form:input type="hidden" path="id" id="id" />
-			<div class="row">
+			<c:choose>
+				<c:when test="${edit}">
+					<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="user">Employee
 						Name</label>
 					<div class="col-md-3">
-						<form:select path="user" items="${employeeslist}"
-							multiple="false" itemValue="id" itemLabel="firstName"
-							class="form-control input-sm"  />
+						<form:select path="user" items="${employeeslist}" multiple="false"
+							itemValue="id" itemLabel="firstName"
+							class="form-control input-sm" readonly="true" />
 						<div class="has-error">
 							<form:errors path="user" class="help-inline" />
 						</div>
 					</div>
 				</div>
 			</div>
+				</c:when>
+				<c:otherwise>
+					<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="user">Employee
+						Name</label>
+					<div class="col-md-3">
+						<form:select path="user" items="${employeeslist}" multiple="false"
+							itemValue="id" itemLabel="firstName"
+							class="form-control input-sm" />
+						<div class="has-error">
+							<form:errors path="user" class="help-inline" />
+						</div>
+					</div>
+				</div>
+			</div>
+				</c:otherwise>
+			</c:choose>
+
+
+			
 			<%-- <div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="user.firstName">Employee Name</label>
@@ -93,7 +116,8 @@
 						</div>
 					</div>
 				</div>
-			</div><div class="row">
+			</div>
+			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="mMar">March</label>
 					<div class="col-md-3">
@@ -104,7 +128,8 @@
 						</div>
 					</div>
 				</div>
-			</div><div class="row">
+			</div>
+			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="mApr">April</label>
 					<div class="col-md-3">
@@ -115,7 +140,8 @@
 						</div>
 					</div>
 				</div>
-			</div><div class="row">
+			</div>
+			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="mMay">May</label>
 					<div class="col-md-3">
@@ -126,7 +152,8 @@
 						</div>
 					</div>
 				</div>
-			</div><div class="row">
+			</div>
+			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="mJun">June</label>
 					<div class="col-md-3">
@@ -137,7 +164,8 @@
 						</div>
 					</div>
 				</div>
-			</div><div class="row">
+			</div>
+			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="mJul">July</label>
 					<div class="col-md-3">
@@ -148,7 +176,8 @@
 						</div>
 					</div>
 				</div>
-			</div><div class="row">
+			</div>
+			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="mAug">August</label>
 					<div class="col-md-3">
@@ -159,7 +188,8 @@
 						</div>
 					</div>
 				</div>
-			</div><div class="row">
+			</div>
+			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="mSep">September</label>
 					<div class="col-md-3">
@@ -170,7 +200,8 @@
 						</div>
 					</div>
 				</div>
-			</div><div class="row">
+			</div>
+			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="mOct">October</label>
 					<div class="col-md-3">
@@ -181,7 +212,8 @@
 						</div>
 					</div>
 				</div>
-			</div><div class="row">
+			</div>
+			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="mNov">November</label>
 					<div class="col-md-3">
@@ -192,7 +224,8 @@
 						</div>
 					</div>
 				</div>
-			</div><div class="row">
+			</div>
+			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="mDec">December</label>
 					<div class="col-md-3">
@@ -204,29 +237,12 @@
 					</div>
 				</div>
 			</div>
-			
-			<div class="row">
-				<div class="form-actions floatRight">
-					<c:choose>
-						<c:when test="${edit}">
-							<input type="submit" value="Update"
-								class="btn btn-primary btn-sm" /> or <a
-								href="<c:url value='/UserAttendance/userAttendanceslist' />">Cancel</a>
-						</c:when>
-						<c:otherwise>
-							<input type="submit" value="Add" class="btn btn-primary btn-sm" /> or <a
-								href="<c:url value='/UserAttendance/userAttendanceslist' />">Cancel</a>
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</div>
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="yearName">Year</label>
 					<div class="col-md-3">
-						<form:input type="text" path="yearName"
-							id="yearName" class="form-control input-sm"
-							disabled="false" />
+						<form:input type="text" path="yearName" id="yearName"
+							class="form-control input-sm" disabled="false" />
 						<div class="has-error">
 							<form:errors path="yearName" class="help-inline" />
 						</div>

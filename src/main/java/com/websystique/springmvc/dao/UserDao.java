@@ -18,6 +18,8 @@ public interface UserDao {
 	List<User> findAllUsers();
 
 	List<User> findAllUsersByType(String userProfileType);
+	
+	public boolean isAdmin (String ssoId);
 
 }
 

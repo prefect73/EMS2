@@ -1,5 +1,6 @@
 package com.websystique.springmvc.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.websystique.springmvc.model.User;
 import com.websystique.springmvc.model.UserAttendance;
 
 @Repository("userAttendanceDao")
@@ -76,6 +78,25 @@ public class UserAttendanceDaoImpl extends AbstractDao<Integer, UserAttendance>
 		}
 
 		return userAttendances;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<UserAttendance> findAllUserAttendancesBySSOId(String ssoId) {
+		Criteria criteria = createEntityCriteria();
+		// criteria.add(Restrictions.eq("ssoId", ssoId));
+		criteria.addOrder(Order.asc("id"));
+		List<UserAttendance> userAttendances = (List<UserAttendance>) criteria
+				.list();
+		List<UserAttendance> allowedUserAttendances = new ArrayList<UserAttendance>();
+
+		for (UserAttendance userAttendance : userAttendances) {
+			Hibernate.initialize(userAttendance.getUser());
+			User user = userAttendance.getUser();
+			if (user.getSsoId().equalsIgnoreCase(ssoId)) {
+				allowedUserAttendances.add(userAttendance);
+			}
+		}
+		return allowedUserAttendances;
 	}
 
 	public void save(UserAttendance userAttendance) {

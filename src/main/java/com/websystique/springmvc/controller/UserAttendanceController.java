@@ -35,10 +35,6 @@ public class UserAttendanceController {
 	@Autowired
 	UserService userService;
 
-	/*
-	 * @Autowired UserAttendanceService userAttendanceService;
-	 */
-
 	@Autowired
 	MessageSource messageSource;
 
@@ -53,11 +49,11 @@ public class UserAttendanceController {
 	 */
 	@RequestMapping(value = { "/userAttendanceslist" }, method = RequestMethod.GET)
 	public String listUserAttendances(ModelMap model) {
-
-		List<UserAttendance> userAttendances = userAttendanceService
-				.findAllUserAttendances();
+		String ssoId = getPrincipal();
+		List<UserAttendance> userAttendances = userAttendanceService.findAllUserAttendancesBySSOId(ssoId);
 		model.addAttribute("userAttendances", userAttendances);
 		model.addAttribute("loggedinuser", getPrincipal());
+		
 		return "userAttendanceslist";
 	}
 

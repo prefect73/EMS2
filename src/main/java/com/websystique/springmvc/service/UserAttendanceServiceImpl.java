@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.websystique.springmvc.dao.UserAttendanceDao;
+import com.websystique.springmvc.dao.UserDao;
 import com.websystique.springmvc.model.UserAttendance;
 
 @Service("userAttendanceService")
@@ -15,6 +16,9 @@ public class UserAttendanceServiceImpl implements UserAttendanceService {
 
 	@Autowired
 	private UserAttendanceDao dao;
+
+	@Autowired
+	private UserDao userDao;
 
 	public UserAttendance findById(int id) {
 		return dao.findById(id);
@@ -31,7 +35,7 @@ public class UserAttendanceServiceImpl implements UserAttendanceService {
 		return userAttendance;
 	}
 
-	public void saveUserAttendance(UserAttendance userAttendance) {	
+	public void saveUserAttendance(UserAttendance userAttendance) {
 		dao.save(userAttendance);
 	}
 
@@ -44,7 +48,7 @@ public class UserAttendanceServiceImpl implements UserAttendanceService {
 	public void updateUserAttendance(UserAttendance userAttendance) {
 		UserAttendance entity = dao.findById(userAttendance.getId());
 		if (entity != null) {
-			
+
 			entity.setmJan(userAttendance.getmJan());
 			entity.setmFeb(userAttendance.getmFeb());
 			entity.setmMar(userAttendance.getmMar());
@@ -68,9 +72,16 @@ public class UserAttendanceServiceImpl implements UserAttendanceService {
 	public void deleteUserAttendanceByUserId(int id) {
 		dao.deleteByUserId(id);
 	}
-	
+
 	public List<UserAttendance> findAllUserAttendances() {
 		return dao.findAllUserAttendances();
 	}
 
+	public List<UserAttendance> findAllUserAttendancesBySSOId(String ssoId) {
+		boolean isAdmin = userDao.isAdmin(ssoId);
+		if(isAdmin){
+			return dao.findAllUserAttendances();
+		}
+		return dao.findAllUserAttendancesBySSOId(ssoId);
+	}
 }

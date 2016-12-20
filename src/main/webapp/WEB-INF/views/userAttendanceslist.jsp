@@ -57,9 +57,7 @@
 							<th>Nov</th>
 							<th>Dec</th>
 							<th>Year</th>
-							<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 								<th width="100"></th>
-							</sec:authorize>
 							<sec:authorize access="hasRole('ADMIN')">
 								<th width="100"></th>
 							</sec:authorize>
@@ -87,8 +85,6 @@
 								<td><a
 									href="<c:url value='/UserAttendance/edit-userAttendance-${userAttendance.id}' />"
 									class="btn btn-success custom-width">edit</a></td>
-								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-								</sec:authorize>
 								<sec:authorize access="hasRole('ADMIN')">
 									<td><a
 										href="<c:url value='/UserAttendance/delete-userAttendance-${userAttendance.id}' />"

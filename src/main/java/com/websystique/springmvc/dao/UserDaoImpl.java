@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.websystique.springmvc.model.User;
+import com.websystique.springmvc.model.UserProfile;
 
 
 
@@ -73,4 +74,17 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		delete(user);
 	}
 
+	public boolean isAdmin (String ssoId){
+		boolean isAdmin = false;
+		User user = findBySSO(ssoId);
+		for(UserProfile userProfile : user.getUserProfiles()){
+			if(userProfile.getType().equalsIgnoreCase("Admin")){
+				isAdmin = true;
+				return isAdmin;
+			}
+			
+		}
+		
+		return isAdmin;
+	}
 }

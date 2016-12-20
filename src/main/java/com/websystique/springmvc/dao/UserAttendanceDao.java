@@ -20,6 +20,8 @@ public interface UserAttendanceDao {
 	void deleteByUserId(int id);
 	
 	List<UserAttendance> findAllUserAttendances();
+	
+	List<UserAttendance> findAllUserAttendancesBySSOId(String ssoId); 
 
 }
 

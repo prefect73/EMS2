@@ -21,7 +21,9 @@ public interface UserAttendanceService {
 	
 	void deleteUserAttendanceByUserId(int userId);
 
-	List<UserAttendance> findAllUserAttendances(); 
+	List<UserAttendance> findAllUserAttendances();
+	
+	List<UserAttendance> findAllUserAttendancesBySSOId(String ssoId); 
 	
 
 }
