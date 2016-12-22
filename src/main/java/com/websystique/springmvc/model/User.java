@@ -57,7 +57,7 @@ public class User implements Serializable {
 	private BigDecimal perDayCost;
 	 
 	 
-	 @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.user")
+	 @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	 private Set<WorkPackageUserAllocation> workPackageUserAllocations = new HashSet<WorkPackageUserAllocation>(0);
 
 	@NotEmpty

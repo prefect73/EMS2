@@ -60,7 +60,7 @@ public class WorkPackage implements Serializable {
 	 */
 
 	// bi-directional many-to-one association to WorkPackageAppUserAllocation
-	@OneToMany(mappedBy = "id.workPackage")
+	@OneToMany(mappedBy = "workPackage")
 	private Set<WorkPackageUserAllocation> workPackageUserAllocations = new HashSet<WorkPackageUserAllocation>();
 
 	// bi-directional many-to-many association to AppUser

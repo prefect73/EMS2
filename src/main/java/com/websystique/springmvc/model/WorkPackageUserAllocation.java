@@ -3,14 +3,15 @@ package com.websystique.springmvc.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.persistence.AssociationOverride;
-import javax.persistence.AssociationOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  * The persistent class for the work_package_app_user_allocations database
@@ -19,14 +20,12 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "work_package_app_user_allocations")
-@AssociationOverrides({
-		@AssociationOverride(name = "id.workPackage", joinColumns = @JoinColumn(name = "WORK_PACKAGE_ID")),
-		@AssociationOverride(name = "id.user", joinColumns = @JoinColumn(name = "USER_ID")) })
 public class WorkPackageUserAllocation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private WorkPackageUserAllocationPK id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
 	@Column(name = "mJan", precision = 10, scale = 2)
 	private BigDecimal mJan;
@@ -67,144 +66,177 @@ public class WorkPackageUserAllocation implements Serializable {
 	@Column(name = "Year_Name", precision = 10, scale = 2)
 	private String yearName;
 
-	/*
-	 * // bi-directional many-to-one association to WorkPackage
-	 * 
-	 * @ManyToOne
-	 * 
-	 * @JoinColumn(name = "work_package_id") private WorkPackage workPackage;
-	 * 
-	 * // bi-directional many-to-one association to User
-	 * 
-	 * @ManyToOne
-	 * 
-	 * @JoinColumn(name = "user_id") private User user;
-	 */
+	// bi-directional many-to-one association to WorkPackage
 
-	@Transient
-	public User getUser() {
-		return getId().getUser();
-	}
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "work_package_id")
+	private WorkPackage workPackage;
 
-	public void setUser(User user) {
-		getId().setUser(user);
-	}
+	// bi-directional many-to-one association to User
 
-	@Transient
-	public WorkPackage getWorkPackage() {
-		return getId().getWorkPackage();
-	}
-
-	public void setWorkPackage(WorkPackage workpackage) {
-		getId().setWorkPackage(workpackage);
-	}
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	public WorkPackageUserAllocation() {
 	}
+	
+	
 
-	public WorkPackageUserAllocationPK getId() {
-		return this.id;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setId(WorkPackageUserAllocationPK id) {
+
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public BigDecimal getMApr() {
-		return this.mApr;
+
+	public BigDecimal getmJan() {
+		return mJan;
 	}
 
-	public void setMApr(BigDecimal mApr) {
-		this.mApr = mApr;
-	}
 
-	public BigDecimal getMAug() {
-		return this.mAug;
-	}
 
-	public void setMAug(BigDecimal mAug) {
-		this.mAug = mAug;
-	}
-
-	public BigDecimal getMDec() {
-		return this.mDec;
-	}
-
-	public void setMDec(BigDecimal mDec) {
-		this.mDec = mDec;
-	}
-
-	public BigDecimal getMFeb() {
-		return this.mFeb;
-	}
-
-	public void setMFeb(BigDecimal mFeb) {
-		this.mFeb = mFeb;
-	}
-
-	public BigDecimal getMJan() {
-		return this.mJan;
-	}
-
-	public void setMJan(BigDecimal mJan) {
+	public void setmJan(BigDecimal mJan) {
 		this.mJan = mJan;
 	}
 
-	public BigDecimal getMJul() {
-		return this.mJul;
+
+
+	public BigDecimal getmFeb() {
+		return mFeb;
 	}
 
-	public void setMJul(BigDecimal mJul) {
-		this.mJul = mJul;
+
+
+	public void setmFeb(BigDecimal mFeb) {
+		this.mFeb = mFeb;
 	}
 
-	public BigDecimal getMJun() {
-		return this.mJun;
+
+
+	public BigDecimal getmMar() {
+		return mMar;
 	}
 
-	public void setMJun(BigDecimal mJun) {
-		this.mJun = mJun;
-	}
 
-	public BigDecimal getMMar() {
-		return this.mMar;
-	}
 
-	public void setMMar(BigDecimal mMar) {
+	public void setmMar(BigDecimal mMar) {
 		this.mMar = mMar;
 	}
 
-	public BigDecimal getMMay() {
-		return this.mMay;
+
+
+	public BigDecimal getmApr() {
+		return mApr;
 	}
 
-	public void setMMay(BigDecimal mMay) {
+
+
+	public void setmApr(BigDecimal mApr) {
+		this.mApr = mApr;
+	}
+
+
+
+	public BigDecimal getmMay() {
+		return mMay;
+	}
+
+
+
+	public void setmMay(BigDecimal mMay) {
 		this.mMay = mMay;
 	}
 
-	public BigDecimal getMNov() {
-		return this.mNov;
+
+
+	public BigDecimal getmJun() {
+		return mJun;
 	}
 
-	public void setMNov(BigDecimal mNov) {
-		this.mNov = mNov;
+
+
+	public void setmJun(BigDecimal mJun) {
+		this.mJun = mJun;
 	}
 
-	public BigDecimal getMOct() {
-		return this.mOct;
+
+
+	public BigDecimal getmJul() {
+		return mJul;
 	}
 
-	public void setMOct(BigDecimal mOct) {
+
+
+	public void setmJul(BigDecimal mJul) {
+		this.mJul = mJul;
+	}
+
+
+
+	public BigDecimal getmAug() {
+		return mAug;
+	}
+
+
+
+	public void setmAug(BigDecimal mAug) {
+		this.mAug = mAug;
+	}
+
+
+
+	public BigDecimal getmSep() {
+		return mSep;
+	}
+
+
+
+	public void setmSep(BigDecimal mSep) {
+		this.mSep = mSep;
+	}
+
+
+
+	public BigDecimal getmOct() {
+		return mOct;
+	}
+
+
+
+	public void setmOct(BigDecimal mOct) {
 		this.mOct = mOct;
 	}
 
-	public BigDecimal getMSep() {
-		return this.mSep;
+
+
+	public BigDecimal getmNov() {
+		return mNov;
 	}
 
-	public void setMSep(BigDecimal mSep) {
-		this.mSep = mSep;
+
+
+	public void setmNov(BigDecimal mNov) {
+		this.mNov = mNov;
 	}
+
+
+
+	public BigDecimal getmDec() {
+		return mDec;
+	}
+
+
+
+	public void setmDec(BigDecimal mDec) {
+		this.mDec = mDec;
+	}
+
+
 
 	public String getYearName() {
 		return this.yearName;
@@ -214,15 +246,20 @@ public class WorkPackageUserAllocation implements Serializable {
 		this.yearName = yearName;
 	}
 
-	/*
-	 * public WorkPackage getWorkPackage() { return this.workPackage; }
-	 * 
-	 * public void setWorkPackage(WorkPackage workPackage) { this.workPackage =
-	 * workPackage; }
-	 * 
-	 * public User getUser() { return this.user; }
-	 * 
-	 * public void setUser(User user) { this.user = user; }
-	 */
+	public WorkPackage getWorkPackage() {
+		return this.workPackage;
+	}
+
+	public void setWorkPackage(WorkPackage workPackage) {
+		this.workPackage = workPackage;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 }
