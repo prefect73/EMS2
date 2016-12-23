@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,7 +65,7 @@ public class UserAttendance implements Serializable {
 	@Column(name = "Year_Name", precision = 10, scale = 2)
 	private String yearName;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false,fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ID")
 	private User user;
 

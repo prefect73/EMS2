@@ -57,11 +57,11 @@ public class User implements Serializable {
 	private BigDecimal perDayCost;
 	 
 	 
-	 @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	 @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	 private Set<WorkPackageUserAllocation> workPackageUserAllocations = new HashSet<WorkPackageUserAllocation>(0);
 
 	@NotEmpty
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "APP_USER_USER_PROFILE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 

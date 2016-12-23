@@ -50,7 +50,7 @@ public class Project implements Serializable {
 	private BigDecimal totalCost;
 
 	@NotEmpty
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "PROJECT_APP_USER", joinColumns = { @JoinColumn(name = "PROJECT_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
 	private Set<User> users = new HashSet<User>();
 

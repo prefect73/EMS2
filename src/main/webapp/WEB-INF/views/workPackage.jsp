@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 <html>
@@ -21,6 +22,24 @@
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<script>
+	var wPakAllocSize = '<c:out value="${fn:length(workPackage.workPackageUserAllocations)}"/>';
+	$(document).ready(function() {
+		$("input.tr_clone_add").on('click', addHandler);
+
+	});
+
+	function addHandler() {
+		var tr = $(this).closest('.tr_clone_last').clone();
+
+		$(".tr_clone_add").remove();
+		tr.insertAfter(".tr_clone_last");
+		$(".tr_clone_last").first().removeAttr("class");
+		$("input.tr_clone_add").on('click', addHandler);
+	}
+</script>
 </head>
 
 <body>
@@ -165,40 +184,46 @@
 							<tbody>
 								<c:choose>
 									<c:when test="${edit}">
-										<c:forEach items="${workPackage.workPackageUserAllocations}"
+										<%-- <c:forEach items="${workPackage.workPackageUserAllocations}"
 											var="workPackageUserAllocation" varStatus="status">
 											<tr>
 												<td>${workPackageUserAllocation.user.firstName}</td>
-												<td>${workPackageUserAllocation.user.mJan}</td>
-												<td>${workPackageUserAllocation.user.mFeb}</td>
-												<td>${workPackageUserAllocation.user.mMar}</td>
-												<td>${workPackageUserAllocation.user.mApr}</td>
-												<td>${workPackageUserAllocation.user.mMay}</td>
-												<td>${workPackageUserAllocation.user.mJun}</td>
-												<td>${workPackageUserAllocation.user.mJul}</td>
-												<td>${workPackageUserAllocation.user.mAug}</td>
-												<td>${workPackageUserAllocation.user.mSep}</td>
-												<td>${workPackageUserAllocation.user.mOct}</td>
-												<td>${workPackageUserAllocation.user.mNov}</td>
-												<td>${workPackageUserAllocation.user.mDec}</td>
-												<td>${workPackageUserAllocation.user.yearName}</td>
+												<td>${workPackageUserAllocation.mJan}</td>
+												<td>${workPackageUserAllocation.mFeb}</td>
+												<td>${workPackageUserAllocation.mMar}</td>
+												<td>${workPackageUserAllocation.mApr}</td>
+												<td>${workPackageUserAllocation.mMay}</td>
+												<td>${workPackageUserAllocation.mJun}</td>
+												<td>${workPackageUserAllocation.mJul}</td>
+												<td>${workPackageUserAllocation.mAug}</td>
+												<td>${workPackageUserAllocation.mSep}</td>
+												<td>${workPackageUserAllocation.mOct}</td>
+												<td>${workPackageUserAllocation.mNov}</td>
+												<td>${workPackageUserAllocation.mDec}</td>
+												<td>${workPackageUserAllocation.yearName}</td>
 											</tr>
 										</c:forEach>
 									</c:when>
-									<c:otherwise>
-										<tr>
-											<%-- <c:forEach items="${workPackage.workPackageUserAllocations}"
-												var="workPackageUserAllocation" varStatus="status">
-												<tr>
-												 --%>
-											<%-- <td align="center">${status.count}</td> --%>
-											<%-- <td><input type="text" width="2%"
-												name="workPackageUserAllocations[${status.index}].firstname"
-												value="${workPackageUserAllocations.user.firstname}" /></td> --%>
+									<c:otherwise> --%>
 
-											<td><form:select path="workPackageUserAllocation.user" items="${employeeslist}"
-													multiple="false" itemValue="id" itemLabel="firstName"
-													class="form-control input-sm" /></td>
+										<c:forEach items="${workPackage.workPackageUserAllocations}"
+											var="workPackageUserAllocation" varStatus="status">
+											<c:choose>
+												<c:when
+													test="${fn:length(workPackage.workPackageUserAllocations) == status.count}">
+													<tr class="tr_clone_last">
+												</c:when>
+
+												<c:otherwise>
+													<tr>
+												</c:otherwise>
+											</c:choose>
+
+											<%-- <td><form:select path="workPackageUserAllocation.user">
+													<form:options items="${employeeslist}" multiple="false" itemValue="id"
+													itemLabel="firstName" class="form-control input-sm" />
+												</form:select></td> --%>
+
 											<td><input
 												name="workPackageUserAllocations[${status.index}].mJan"
 												value="${workPackageUserAllocation.mJan}" /></td>
@@ -239,11 +264,22 @@
 												name="workPackageUserAllocations[${status.index}].yearName"
 												value="${workPackageUserAllocation.yearName}" /></td>
 
+											<c:if
+												test="${fn:length(workPackage.workPackageUserAllocations) == status.count}">
+
+												<td>
+												<input type="button" name="add" value="Add"
+													class="tr_clone_add" />
+													</td>
+
+											</c:if>
 											<%-- </tr>
 											</c:forEach>
 											 --%>
-										</tr>
-									</c:otherwise>
+											</tr>
+										</c:forEach>
+									</c:when>
+									<%-- </c:otherwise> --%>
 								</c:choose>
 							</tbody>
 						</table>
