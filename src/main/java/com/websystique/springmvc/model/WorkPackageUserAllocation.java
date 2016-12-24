@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * The persistent class for the work_package_app_user_allocations database
  * table.
@@ -247,6 +249,7 @@ public class WorkPackageUserAllocation implements Serializable {
 		this.yearName = yearName;
 	}
 
+	@JsonIgnore
 	public WorkPackage getWorkPackage() {
 		return this.workPackage;
 	}
@@ -255,6 +258,7 @@ public class WorkPackageUserAllocation implements Serializable {
 		this.workPackage = workPackage;
 	}
 
+	@JsonIgnore
 	public User getUser() {
 		return this.user;
 	}

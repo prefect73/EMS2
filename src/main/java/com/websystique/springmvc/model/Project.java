@@ -18,6 +18,8 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "PROJECT")
 public class Project implements Serializable {
@@ -101,7 +103,8 @@ public class Project implements Serializable {
 	public void setTotalCost(BigDecimal totalCost) {
 		this.totalCost = totalCost;
 	}
-
+	
+	@JsonIgnore
 	public Set<User> getUsers() {
 		return users;
 	}

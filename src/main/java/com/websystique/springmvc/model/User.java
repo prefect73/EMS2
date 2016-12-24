@@ -19,6 +19,8 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "APP_USER")
 public class User implements Serializable {
@@ -81,7 +83,8 @@ public class User implements Serializable {
 	public void setSsoId(String ssoId) {
 		this.ssoId = ssoId;
 	}
-
+	
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -121,7 +124,8 @@ public class User implements Serializable {
 	public void setPerDayCost(BigDecimal perDayCost) {
 		this.perDayCost = perDayCost;
 	}
-
+	
+	@JsonIgnore
 	public Set<WorkPackageUserAllocation> getWorkPackageUserAllocations() {
 		return workPackageUserAllocations;
 	}
@@ -130,7 +134,8 @@ public class User implements Serializable {
 			Set<WorkPackageUserAllocation> workPackageUserAllocations) {
 		this.workPackageUserAllocations = workPackageUserAllocations;
 	}
-
+	
+	@JsonIgnore
 	public Set<UserProfile> getUserProfiles() {
 		return userProfiles;
 	}
