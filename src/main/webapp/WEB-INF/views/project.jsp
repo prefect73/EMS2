@@ -19,6 +19,23 @@
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<script>
+
+$( document ).ready(function() {
+	var selectedLeadsIds = [];
+	<c:forEach items="${project.users}" var="usr">
+	selectedLeadsIds.push('${usr.id}');
+	</c:forEach>
+	$("#projLeads > option").each(function() {
+	   if($.inArray( this.value, selectedLeadsIds ) > -1 ){
+		   $(this).attr( "selected" , "selected" );
+	   }
+	});	
+});
+
+</script>
 </head>
 
 <body>
@@ -93,7 +110,7 @@
 					<label class="col-md-2 control-lable" for="users">Project
 						Lead(s)</label>
 					<div class="col-md-3">
-						<form:select path="users" items="${projectleadslist}"
+						<form:select path="users" items="${projectleadslist}" id="projLeads"
 							multiple="true" itemValue="id" itemLabel="firstName"
 							class="form-control input-sm" />
 						<div class="has-error">

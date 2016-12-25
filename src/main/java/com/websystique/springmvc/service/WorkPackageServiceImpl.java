@@ -172,8 +172,8 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 			userTotalCost = userTotalCost.add(workPackageUserAllocation
 					.getmDec() != null ? workPackageUserAllocation.getmDec()
 					: new BigDecimal(0));
-			userTotalCost = userTotalCost.multiply(workPackageUserAllocation
-					.getUser().getPerDayCost());
+			userTotalCost = userTotalCost
+					.multiply(workPackageUserAllocation.getUser() != null && workPackageUserAllocation.getUser().getPerDayCost() != null ? workPackageUserAllocation.getUser().getPerDayCost() : new BigDecimal(0));
 			workPackageTotalCost = workPackageTotalCost.add(userTotalCost);
 		}
 

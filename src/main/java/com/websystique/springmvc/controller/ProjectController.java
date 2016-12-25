@@ -3,6 +3,7 @@ package com.websystique.springmvc.controller;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,176 +32,188 @@ import com.websystique.springmvc.service.UserService;
 @SessionAttributes("projectleadslist")
 public class ProjectController {
 
- @Autowired
- ProjectService projectService;
- 
- @Autowired
- UserService userService;
- /*
-  * @Autowired WorkpackageService workpackageService;
-  */
+	@Autowired
+	ProjectService projectService;
 
- @Autowired
- MessageSource messageSource;
+	@Autowired
+	UserService userService;
+	/*
+	 * @Autowired WorkpackageService workpackageService;
+	 */
 
- @Autowired
- PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
+	@Autowired
+	MessageSource messageSource;
 
- @Autowired
- AuthenticationTrustResolver authenticationTrustResolver;
+	@Autowired
+	PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
 
- /**
-  * This method will list all existing projects.
-  */
- @RequestMapping(value = { "/projectslist" }, method = RequestMethod.GET)
- public String listProjects(ModelMap model) {
+	@Autowired
+	AuthenticationTrustResolver authenticationTrustResolver;
 
-  List<Project> projects = projectService.findAllProjects();
-  model.addAttribute("projects", projects);
-  model.addAttribute("loggedinuser", getPrincipal());
-  return "projectslist";
- }
+	/**
+	 * This method will list all existing projects.
+	 */
+	@RequestMapping(value = { "/projectslist" }, method = RequestMethod.GET)
+	public String listProjects(ModelMap model) {
 
- /**
-  * This method will provide the medium to add a new project.
-  */
- @RequestMapping(value = { "/newproject" }, method = RequestMethod.GET)
- public String newProject(ModelMap model) {
-  Project project = new Project();
-  model.addAttribute("project", project);
-  model.addAttribute("edit", false);
-  model.addAttribute("loggedinuser", getPrincipal());
-  return "project";
- }
+		List<Project> projects = projectService.findAllProjects();
+		model.addAttribute("projects", projects);
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "projectslist";
+	}
 
- /**
-  * This method will be called on form submission, handling POST request for
-  * saving project in database. It also validates the project input
-  */
- @RequestMapping(value = { "/newproject" }, method = RequestMethod.POST)
- public String saveProject(@Valid Project project, BindingResult result,
-   ModelMap model) {
+	/**
+	 * This method will provide the medium to add a new project.
+	 */
+	@RequestMapping(value = { "/newproject" }, method = RequestMethod.GET)
+	public String newProject(ModelMap model) {
+		Project project = new Project();
+		model.addAttribute("project", project);
+		model.addAttribute("edit", false);
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "project";
+	}
 
-  if (result.hasErrors()) {
-   return "project";
-  }
+	/**
+	 * This method will be called on form submission, handling POST request for
+	 * saving project in database. It also validates the project input
+	 */
+	@RequestMapping(value = { "/newproject" }, method = RequestMethod.POST)
+	public String saveProject(@Valid Project project, BindingResult result,
+			ModelMap model, HttpServletRequest request) {
 
-  /*
-   * Preferred way to achieve uniqueness of field [projectNumber] should
-   * be implementing custom @Unique annotation and applying it on field
-   * [projectNumber] of Model class [Project].
-   * 
-   * Below mentioned peace of code [if block] is to demonstrate that you
-   * can fill custom errors outside the validation framework as well while
-   * still using internationalized messages.
-   */
-  if (!projectService.isProjectNumberUnique(project.getId(),
-    project.getProjectNumber())) {
-   FieldError projectNumberError = new FieldError("project",
-     "projectNumber", messageSource.getMessage(
-       "non.unique.projectNumber",
-       new String[] { project.getProjectNumber() },
-       Locale.getDefault()));
-   result.addError(projectNumberError);
-   return "project";
-  }
-  
-  if (!projectService.isProjectNameUnique(project.getId(),
-		    project.getProjectName())) {
-		   FieldError projectNameError = new FieldError("project",
-		     "projectName", messageSource.getMessage(
-		       "non.unique.projectName",
-		       new String[] { project.getProjectName() },
-		       Locale.getDefault()));
-		   result.addError(projectNameError);
-		   return "project";
-		  }
+		if (result.hasErrors()) {
+			return "project";
+		}
 
-  projectService.saveProject(project);
-  projectService.updateProject(project);
+		/*
+		 * Preferred way to achieve uniqueness of field [projectNumber] should
+		 * be implementing custom @Unique annotation and applying it on field
+		 * [projectNumber] of Model class [Project].
+		 * 
+		 * Below mentioned peace of code [if block] is to demonstrate that you
+		 * can fill custom errors outside the validation framework as well while
+		 * still using internationalized messages.
+		 */
+		if (!projectService.isProjectNumberUnique(project.getId(),
+				project.getProjectNumber())) {
+			FieldError projectNumberError = new FieldError("project",
+					"projectNumber", messageSource.getMessage(
+							"non.unique.projectNumber",
+							new String[] { project.getProjectNumber() },
+							Locale.getDefault()));
+			result.addError(projectNumberError);
+			return "project";
+		}
 
-  // model.addAttribute("success", "Project " + project.getFirstName() +
-  // " "+ project.getLastName() + " registered successfully");
-  model.addAttribute("loggedinuser", getPrincipal());
-  // return "success";
-  return "redirect:/Project/projectslist";
- }
+		if (!projectService.isProjectNameUnique(project.getId(),
+				project.getProjectName())) {
+			FieldError projectNameError = new FieldError("project",
+					"projectName", messageSource.getMessage(
+							"non.unique.projectName",
+							new String[] { project.getProjectName() },
+							Locale.getDefault()));
+			result.addError(projectNameError);
+			return "project";
+		}
 
- /**
-  * This method will provide the medium to update an existing project.
-  */
- @RequestMapping(value = { "/edit-project-{projectNumber}" }, method = RequestMethod.GET)
- public String editProject(@PathVariable String projectNumber, ModelMap model) {
-  Project project = projectService.findByProjectNumber(projectNumber);
-  model.addAttribute("project", project);
-  model.addAttribute("edit", true);
-  model.addAttribute("loggedinuser", getPrincipal());
-  return "project";
- }
+		projectService.saveProject(project);
+		projectService.updateProject(project);
 
-  /**
-     * This method will provide Users list to views
-     */
-    @ModelAttribute("projectleadslist")
-    public List<User> initializeProjectLeads() {
-        return userService.findAllUsersByType("Project Lead");
-    }
- 
- 
- /**
-  * This method will be called on form submission, handling POST request for
-  * updating project in database. It also validates the project input
-  */
- @RequestMapping(value = { "/edit-project-{projectNumber}" }, method = RequestMethod.POST)
- public String updateProject(@Valid Project project, BindingResult result,
-   ModelMap model, @PathVariable String projectNumber) {
+		// model.addAttribute("success", "Project " + project.getFirstName() +
+		// " "+ project.getLastName() + " registered successfully");
+		model.addAttribute("loggedinuser", getPrincipal());
+		// return "success";
+		request.getSession(false).setAttribute("projectslist", projectService.findAllProjects());
+		return "redirect:/Project/projectslist";
+	}
 
-  if (result.hasErrors()) {
-   return "project";
-  }
+	/**
+	 * This method will provide the medium to update an existing project.
+	 */
+	@RequestMapping(value = { "/edit-project-{projectNumber}" }, method = RequestMethod.GET)
+	public String editProject(@PathVariable String projectNumber, ModelMap model) {
+		Project project = projectService.findByProjectNumber(projectNumber);
+		model.addAttribute("project", project);
+		model.addAttribute("edit", true);
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "project";
+	}
 
-  /*
-   * //Uncomment below 'if block' if you WANT TO ALLOW UPDATING SSO_ID in
-   * UI which is a unique key to a Project.
-   * if(!projectService.isProjectSSOUnique(project.getId(),
-   * project.getProjectNumber())){ FieldError projectNumberError =new
-   * FieldError("project","projectNumber",messageSource.getMessage(
-   * "non.unique.projectNumber", new String[]{project.getProjectNumber()},
-   * Locale.getDefault())); result.addError(projectNumberError); return
-   * "project"; }
-   */
+	/**
+	 * This method will provide Users list to views
+	 */
+	@ModelAttribute("projectleadslist")
+	public List<User> initializeProjectLeads() {
+		return userService.findAllUsersByType("Project Lead");
+	}
 
-  projectService.updateProject(project);
+	/**
+	 * This method will be called on form submission, handling POST request for
+	 * updating project in database. It also validates the project input
+	 */
+	@RequestMapping(value = { "/edit-project-{projectNumber}" }, method = RequestMethod.POST)
+	public String updateProject(@Valid Project project, BindingResult result,
+			ModelMap model, @PathVariable String projectNumber, HttpServletRequest request) {
 
-  // model.addAttribute("success", "Project " + project.getFirstName() +
-  // " "+ project.getLastName() + " updated successfully");
-  model.addAttribute("loggedinuser", getPrincipal());
-  return "redirect:/Project/projectslist";
- }
+		if (result.hasErrors()) {
+			return "project";
+		}
 
- /**
-  * This method will delete an project by it's SSOID value.
-  */
- @RequestMapping(value = { "/delete-project-{projectNumber}" }, method = RequestMethod.GET)
- public String deleteProject(@PathVariable String projectNumber) {
-  projectService.deleteProjectByProjectNumber(projectNumber);
-  return "redirect:/Project/projectslist";
- }
- 
- /**
-  * This method returns the principal[user-name] of logged-in user.
-  */
- private String getPrincipal() {
-  String userName = null;
-  Object principal = SecurityContextHolder.getContext()
-    .getAuthentication().getPrincipal();
+		/*
+		 * //Uncomment below 'if block' if you WANT TO ALLOW UPDATING SSO_ID in
+		 * UI which is a unique key to a Project.
+		 * if(!projectService.isProjectSSOUnique(project.getId(),
+		 * project.getProjectNumber())){ FieldError projectNumberError =new
+		 * FieldError("project","projectNumber",messageSource.getMessage(
+		 * "non.unique.projectNumber", new String[]{project.getProjectNumber()},
+		 * Locale.getDefault())); result.addError(projectNumberError); return
+		 * "project"; }
+		 */
 
-  if (principal instanceof UserDetails) {
-   userName = ((UserDetails) principal).getUsername();
-  } else {
-   userName = principal.toString();
-  }
-  return userName;
- }
+		projectService.updateProject(project);
+
+		// model.addAttribute("success", "Project " + project.getFirstName() +
+		// " "+ project.getLastName() + " updated successfully");
+		model.addAttribute("loggedinuser", getPrincipal());
+		request.getSession(false).setAttribute("projectslist", projectService.findAllProjects());
+		return "redirect:/Project/projectslist";
+	}
+
+	/**
+	 * This method will delete an project by it's SSOID value.
+	 */
+	@RequestMapping(value = { "/delete-project-{projectNumber}" }, method = RequestMethod.GET)
+	public String deleteProject(@PathVariable String projectNumber, HttpServletRequest request) {
+		projectService.deleteProjectByProjectNumber(projectNumber);
+		request.getSession(false).setAttribute("projectslist", projectService.findAllProjects());
+		return "redirect:/Project/projectslist";
+	}
+
+	@RequestMapping(value = { "/projectReport" }, method = RequestMethod.GET)
+	public String listProjectReports(ModelMap model) {
+		List<Project> projectsList = projectService.findAllProjects();
+		Project project = new Project();
+		model.addAttribute("project", project);
+		model.addAttribute("projectsList", projectsList);
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "projectReport";
+	}
+
+	/**
+	 * This method returns the principal[user-name] of logged-in user.
+	 */
+	private String getPrincipal() {
+		String userName = null;
+		Object principal = SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+
+		if (principal instanceof UserDetails) {
+			userName = ((UserDetails) principal).getUsername();
+		} else {
+			userName = principal.toString();
+		}
+		return userName;
+	}
 
 }

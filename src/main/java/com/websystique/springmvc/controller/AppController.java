@@ -87,7 +87,7 @@ public class AppController {
 	 */
 	@RequestMapping(value = { "/newuser" }, method = RequestMethod.POST)
 	public String saveUser(@Valid User user, BindingResult result,
-			ModelMap model) {
+			ModelMap model, HttpServletRequest request) {
 		UserAttendance userAttendance  = new UserAttendance();
 		
 		if (result.hasErrors()) {
@@ -114,6 +114,9 @@ public class AppController {
 
 		//model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
+		request.getSession(false).setAttribute("employeeslist", userService.findAllUsers());
+		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType("Project Lead"));
+		
 		//return "success";
 		return "redirect:/list";
 	}
@@ -137,7 +140,7 @@ public class AppController {
 	 */
 	@RequestMapping(value = { "/edit-user-{ssoId}" }, method = RequestMethod.POST)
 	public String updateUser(@Valid User user, BindingResult result,
-			ModelMap model, @PathVariable String ssoId) {
+			ModelMap model, @PathVariable String ssoId, HttpServletRequest request) {
 
 		if (result.hasErrors()) {
 			return "registration";
@@ -155,6 +158,9 @@ public class AppController {
 
 		//model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " updated successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
+		request.getSession(false).setAttribute("employeeslist", userService.findAllUsers());
+		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType("Project Lead"));
+		
 		return "redirect:/list";
 	}
 
@@ -163,8 +169,11 @@ public class AppController {
 	 * This method will delete an user by it's SSOID value.
 	 */
 	@RequestMapping(value = { "/delete-user-{ssoId}" }, method = RequestMethod.GET)
-	public String deleteUser(@PathVariable String ssoId) {
+	public String deleteUser(@PathVariable String ssoId, HttpServletRequest request) {
 		userService.deleteUserBySSO(ssoId);
+		request.getSession(false).setAttribute("employeeslist", userService.findAllUsers());
+		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType("Project Lead"));
+		
 		return "redirect:/list";
 	}
 	
