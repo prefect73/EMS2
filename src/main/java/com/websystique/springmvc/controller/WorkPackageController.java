@@ -13,33 +13,33 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.websystique.springmvc.model.Project;
-import com.websystique.springmvc.model.User;
 import com.websystique.springmvc.model.WorkPackage;
 import com.websystique.springmvc.service.ProjectService;
 import com.websystique.springmvc.service.UserService;
 import com.websystique.springmvc.service.WorkPackageService;
+import com.websystique.springmvc.service.WorkPackageUserAllocationService;
 
 @Controller
 @RequestMapping("/WorkPackage")
-@SessionAttributes({"projectslist","employeeslist"})
+/* @SessionAttributes({ "projectslist", "employeeslist" }) */
 public class WorkPackageController {
 
 	@Autowired
 	WorkPackageService workPackageService;
 
 	@Autowired
+	WorkPackageUserAllocationService workPackageUserAllocationService;
+
+	@Autowired
 	ProjectService projectService;
 
-	 @Autowired
-	 UserService userService;
-	 
+	@Autowired
+	UserService userService;
+
 	/*
 	 * @Autowired WorkPackageService workPackageService;
 	 */
@@ -69,18 +69,19 @@ public class WorkPackageController {
 	/**
 	 * This method will provide Projects list to views
 	 */
-	@ModelAttribute("projectslist")
-	public List<Project> initializeProjects() {
-		return projectService.findAllProjects();
-	}
-	
+	/*
+	 * @ModelAttribute("projectslist") public List<Project> initializeProjects()
+	 * { return projectService.findAllProjects(); }
+	 */
+
 	/**
-     * This method will provide Users list to views
-     */
-    @ModelAttribute("employeeslist")
-    public List<User> initializeProjectLeads() {
-        return userService.findAllUsers();// change to something else
-    }
+	 * This method will provide Users list to views
+	 */
+	/*
+	 * @ModelAttribute("employeeslist") public List<User>
+	 * initializeProjectLeads() { return userService.findAllUsers();// change to
+	 * something else }
+	 */
 
 	/**
 	 * This method will provide the medium to add a new workPackage.
@@ -89,6 +90,8 @@ public class WorkPackageController {
 	public String newWorkPackage(ModelMap model) {
 		WorkPackage workPackage = new WorkPackage();
 		model.addAttribute("workPackage", workPackage);
+		model.addAttribute("projectslist", projectService.findAllProjects());
+		model.addAttribute("employeeslist", userService.findAllUsers());
 		model.addAttribute("edit", false);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "workPackage";
@@ -141,6 +144,8 @@ public class WorkPackageController {
 	public String editWorkPackage(@PathVariable int id, ModelMap model) {
 		WorkPackage workPackage = workPackageService.findById(id);
 		model.addAttribute("workPackage", workPackage);
+		model.addAttribute("projectslist", projectService.findAllProjects());
+		model.addAttribute("employeeslist", userService.findAllUsers());
 		model.addAttribute("edit", true);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "workPackage";
@@ -167,6 +172,19 @@ public class WorkPackageController {
 		 * "non.unique.id", new String[]{workPackage.getId()},
 		 * Locale.getDefault())); result.addError(idError); return
 		 * "workPackage"; }
+		 */
+
+		/*
+		 * for (WorkPackageUserAllocation workPackageUserAllocation :
+		 * workPackage.getWorkPackageUserAllocations() ){
+		 * workPackageUserAllocation.setWorkPackage(workPackage);
+		 * workPackageUserAllocationService
+		 * .updateWorkPackageUserAllocation(workPackageUserAllocation); }
+		 */
+
+		/*
+		 * workPackageUserAllocationService.saveWorkPackageUserAllocation(
+		 * workPackage.getWorkPackageUserAllocations());
 		 */
 
 		workPackageService.updateWorkPackage(workPackage);

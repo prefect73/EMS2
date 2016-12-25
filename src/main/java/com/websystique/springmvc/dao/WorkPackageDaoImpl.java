@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -56,7 +57,7 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 	public List<WorkPackage> findAllWorkPackages() {
 		Criteria criteria = createEntityCriteria().addOrder(
 				Order.asc("workPackageName"));
-		// criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To
 		// avoid
 		// duplicates.
 		List<WorkPackage> workPackages = (List<WorkPackage>) criteria.list();
@@ -83,5 +84,13 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 		WorkPackage workPackage = (WorkPackage) crit.uniqueResult();
 		delete(workPackage);
 	}
+
+	@Override
+	public Session getHibernateSession() {
+		return super.getSession();
+		
+	}
+	
+	
 
 }

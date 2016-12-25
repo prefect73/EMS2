@@ -26,18 +26,110 @@
 
 <script>
 	var wPakAllocSize = '<c:out value="${fn:length(workPackage.workPackageUserAllocations)}"/>';
-	$(document).ready(function() {
-		$("input.tr_clone_add").on('click', addHandler);
-
+$( document ).ready(function() {
+		
+		if (wPakAllocSize == 0){
+			addFirstRow();
+			
+		}
+		
 	});
+function addFirstRow(){
+	var index = wPakAllocSize;
+	
+	var userTD ='<td><select class="form-control input-sm" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';	
+	var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" /></td>';
+	var mFebTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mFeb" /></td>';
+	var mMarTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mMar" /></td>';
+	var mAprTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mApr" /></td>';
+	var mMayTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mMay" /></td>';
+	var mJunTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJun" /></td>';
+	var mJulTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJul" /></td>';
+	var mAugTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mAug" /></td>';
+	var mSepTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mSep" /></td>';
+	var mOctTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mOct" /></td>';
+	var mNovTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mNov" /></td>';
+	var mDecTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" /></td>';
+	var yearNameTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" /></td>';
+	
+	
+	var formHtml = userTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD +yearNameTD;
+	var formTR = $('<tr></tr>');
+	formTR.append(formHtml);
+	//add Button
 
-	function addHandler() {
-		var tr = $(this).closest('.tr_clone_last').clone();
+	var addBTN = $('<input class="btn btn-primary btn-sm" type="button" name="add" value="Add" onclick="addNewWPUallocRow(this);"/>');
+	
+	
+	var btnTD = $('<td></td>').append($('<button/>', { 'type': 'button', 'class':'btn btn-danger btn-sm' ,   'text':'Delete' , 'onclick' : 'deleteWpUsrAlloc(0,$(this).parent())' })).append('&nbsp;').append(addBTN);
+	formTR.append(btnTD);
+	
+	;
+	//add button
+	$('#empListForWorkPackageTable tr:last').after( formTR);
+	wPakAllocSize++;
+}
+
+	function addNewWPUallocRow(element) {
+		/* var tr = $(this).closest('.tr_clone_last').clone();
 
 		$(".tr_clone_add").remove();
 		tr.insertAfter(".tr_clone_last");
 		$(".tr_clone_last").first().removeAttr("class");
-		$("input.tr_clone_add").on('click', addHandler);
+		$("input.tr_clone_add").on('click', addHandler); */
+		
+		 var index = wPakAllocSize;
+		
+		var userTD ='<td><select class="form-control input-sm" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';	
+		var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" /></td>';
+		var mFebTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mFeb" /></td>';
+		var mMarTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mMar" /></td>';
+		var mAprTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mApr" /></td>';
+		var mMayTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mMay" /></td>';
+		var mJunTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJun" /></td>';
+		var mJulTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJul" /></td>';
+		var mAugTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mAug" /></td>';
+		var mSepTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mSep" /></td>';
+		var mOctTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mOct" /></td>';
+		var mNovTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mNov" /></td>';
+		var mDecTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" /></td>';
+		var yearNameTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" /></td>';
+		
+		
+		var formHtml = userTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD +yearNameTD;
+		var formTR = $('<tr></tr>');
+		formTR.append(formHtml);
+		//add Button
+		var addBTN = $(element).clone();
+		$(element).remove();
+		
+		var btnTD = $('<td></td>').append($('<button/>', { 'type': 'button', 'class':'btn btn-danger btn-sm' ,   'text':'Delete' , 'onclick' : 'deleteWpUsrAlloc(0,$(this).parent())' })).append('&nbsp;').append(addBTN);
+		formTR.append(btnTD);
+		
+		;
+		//add button
+		$('#empListForWorkPackageTable tr:last').after( formTR);
+		wPakAllocSize++;
+	}
+	
+	
+	function deleteWpUsrAlloc(id, currentTr){
+		
+		
+		
+		
+		if(currentTr.parent().is(':last-child')){
+			var addBTN = $('<input class="btn btn-primary btn-sm" type="button" name="add" value="Add" onclick="addNewWPUallocRow(this);"/>');
+			$( "#empListForWorkPackageTable tr:nth-last-child(2)" ).find('td:last').append(addBTN);
+			
+		}
+		currentTr.parent().remove();
+		
+		wPakAllocSize--;
+		if (wPakAllocSize == 0){
+			addFirstRow();
+			
+		}
 	}
 </script>
 </head>
@@ -73,7 +165,7 @@
 					<div class="col-md-3">
 						<form:input type="text" path="workPackageNumber"
 							id="workPackageNumber" class="form-control input-sm"
-							disabled="true" />
+							readonly="true" />
 						<div class="has-error">
 							<form:errors path="workPackageNumber" class="help-inline" />
 						</div>
@@ -101,12 +193,17 @@
 					<label class="col-md-2 control-lable" for="project">Project
 						Name</label>
 					<div class="col-md-3">
-						<form:select path="project" items="${projectslist}"
-							multiple="false" itemValue="id" itemLabel="projectName"
-							class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="project" class="help-inline" />
-						</div>
+
+						<select class="form-control input-sm"  name="project">
+
+							<c:forEach items="${projectslist}" var="proj">
+								<option class="form-control input-sm" value="${proj.id}"
+									${proj.id == workPackage.project.id  ? 'selected' : ''}>${proj.projectName}</option>
+							</c:forEach>
+							</select>
+							<div class="has-error">
+								<form:errors path="project" class="help-inline" />
+							</div>
 					</div>
 				</div>
 			</div>
@@ -144,16 +241,33 @@
 						Cost</label>
 					<div class="col-md-3">
 						<form:input type="text" path="totalCost" id="totalCost"
-							class="form-control input-sm" disabled="true" />
+							class="form-control input-sm" readonly="true" />
 						<div class="has-error">
 							<form:errors path="totalCost" class="help-inline" />
 						</div>
 					</div>
 				</div>
 			</div>
+			
 			<div class="row">
 				<div class="form-group col-md-12">
 					<div id="empListForWorkPackageTableWrapper" style="padding: 2%;">
+					<c:choose>
+				<c:when test="${edit}">
+					<div class="well lead col-md-5">Update Employees For This Work Package</div>
+					<%-- <div class="well col-md-2">
+						<input type="submit" value="Update" class="btn btn-primary btn-sm" />
+						or <a href="<c:url value='/WorkPackage/workPackageslist' />">Cancel</a>
+					</div> --%>
+				</c:when>
+				<c:otherwise>
+					<div class="well lead col-md-5">Add Employees For This Work package</div>
+					<%-- <div class="well col-md-2">
+						<input type="submit" value="Add" class="btn btn-primary btn-sm" />
+						or <a href="<c:url value='/WorkPackage/workPackageslist' />">Cancel</a>
+					</div> --%>
+				</c:otherwise>
+			</c:choose>
 						<table id="empListForWorkPackageTable"
 							class="table table-striped table-bordered dt-responsive nowrap"
 							cellspacing="0" width="100%">
@@ -173,6 +287,7 @@
 									<th>Nov</th>
 									<th>Dec</th>
 									<th>Year</th>
+									<th>&nbsp;</th>
 									<!-- <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 									<th width="100"></th>
 								</sec:authorize>
@@ -184,95 +299,72 @@
 							<tbody>
 								<c:choose>
 									<c:when test="${edit}">
-										<%-- <c:forEach items="${workPackage.workPackageUserAllocations}"
-											var="workPackageUserAllocation" varStatus="status">
-											<tr>
-												<td>${workPackageUserAllocation.user.firstName}</td>
-												<td>${workPackageUserAllocation.mJan}</td>
-												<td>${workPackageUserAllocation.mFeb}</td>
-												<td>${workPackageUserAllocation.mMar}</td>
-												<td>${workPackageUserAllocation.mApr}</td>
-												<td>${workPackageUserAllocation.mMay}</td>
-												<td>${workPackageUserAllocation.mJun}</td>
-												<td>${workPackageUserAllocation.mJul}</td>
-												<td>${workPackageUserAllocation.mAug}</td>
-												<td>${workPackageUserAllocation.mSep}</td>
-												<td>${workPackageUserAllocation.mOct}</td>
-												<td>${workPackageUserAllocation.mNov}</td>
-												<td>${workPackageUserAllocation.mDec}</td>
-												<td>${workPackageUserAllocation.yearName}</td>
-											</tr>
-										</c:forEach>
-									</c:when>
-									<c:otherwise> --%>
-
 										<c:forEach items="${workPackage.workPackageUserAllocations}"
 											var="workPackageUserAllocation" varStatus="status">
-											<c:choose>
-												<c:when
-													test="${fn:length(workPackage.workPackageUserAllocations) == status.count}">
-													<tr class="tr_clone_last">
-												</c:when>
+											<tr>
 
-												<c:otherwise>
-													<tr>
-												</c:otherwise>
-											</c:choose>
+											<td><form:input type="hidden" path="workPackageUserAllocations[${status.index}].id" /> 
+											<select class="form-control input-sm"
+												name="workPackageUserAllocations[${status.index}].user">
 
-											<%-- <td><form:select path="workPackageUserAllocation.user">
-													<form:options items="${employeeslist}" multiple="false" itemValue="id"
-													itemLabel="firstName" class="form-control input-sm" />
-												</form:select></td> --%>
+													<c:forEach items="${employeeslist}" var="emp">
 
-											<td><input
+														<option class="form-control input-sm" value="${emp.id}"
+															${emp.id == workPackageUserAllocation.user.id  ? 'selected' : ''}>${emp.firstName}</option>
+													</c:forEach>
+											</select>
+											</td>
+
+											<td><input class="form-control input-sm" style="width:55px;"
 												name="workPackageUserAllocations[${status.index}].mJan"
 												value="${workPackageUserAllocation.mJan}" /></td>
-											<td><input
+											<td><input class="form-control input-sm" style="width:55px;"
 												name="workPackageUserAllocations[${status.index}].mFeb"
 												value="${workPackageUserAllocation.mFeb}" /></td>
-											<td><input
+											<td><input  class="form-control input-sm" style="width:55px;"
 												name="workPackageUserAllocations[${status.index}].mMar"
 												value="${workPackageUserAllocation.mMar}" /></td>
-											<td><input
+											<td><input  class="form-control input-sm" style="width:55px;"
 												name="workPackageUserAllocations[${status.index}].mApr"
 												value="${workPackageUserAllocation.mApr}" /></td>
-											<td><input
+											<td><input   class="form-control input-sm" style="width:55px;"
 												name="workPackageUserAllocations[${status.index}].mMay"
 												value="${workPackageUserAllocation.mMay}" /></td>
-											<td><input
+											<td><input   class="form-control input-sm" style="width:55px;"
 												name="workPackageUserAllocations[${status.index}].mJun"
 												value="${workPackageUserAllocation.mJun}" /></td>
-											<td><input
+											<td><input  class="form-control input-sm" style="width:55px;"
 												name="workPackageUserAllocations[${status.index}].mJul"
 												value="${workPackageUserAllocation.mJul}" /></td>
-											<td><input
+											<td><input  class="form-control input-sm" style="width:55px;"
 												name="workPackageUserAllocations[${status.index}].mAug"
 												value="${workPackageUserAllocation.mAug}" /></td>
-											<td><input
+											<td><input  class="form-control input-sm" style="width:55px;"
 												name="workPackageUserAllocations[${status.index}].mSep"
 												value="${workPackageUserAllocation.mSep}" /></td>
-											<td><input
+											<td><input  class="form-control input-sm" style="width:55px;"
 												name="workPackageUserAllocations[${status.index}].mOct"
 												value="${workPackageUserAllocation.mOct}" /></td>
-											<td><input
+											<td><input  class="form-control input-sm" style="width:55px;"
 												name="workPackageUserAllocations[${status.index}].mNov"
 												value="${workPackageUserAllocation.mNov}" /></td>
-											<td><input
+											<td><input  class="form-control input-sm" style="width:55px;"
 												name="workPackageUserAllocations[${status.index}].mDec"
 												value="${workPackageUserAllocation.mDec}" /></td>
-											<td><input
+											<td><input  class="form-control input-sm" style="width:55px;"
 												name="workPackageUserAllocations[${status.index}].yearName"
 												value="${workPackageUserAllocation.yearName}" /></td>
+											<td>
+												<button type="button" class="btn btn-danger btn-sm"
+													onclick="deleteWpUsrAlloc(${workPackageUserAllocation.id},$(this).parent())">Delete</button>&nbsp;
+												<c:if
+													test="${fn:length(workPackage.workPackageUserAllocations) == status.count}">
 
-											<c:if
-												test="${fn:length(workPackage.workPackageUserAllocations) == status.count}">
+													<input class="btn btn-primary btn-sm" type="button" name="add" value="Add" onclick="addNewWPUallocRow(this);"
+														class="tr_clone_add" />
 
-												<td>
-												<input type="button" name="add" value="Add"
-													class="tr_clone_add" />
-													</td>
-
-											</c:if>
+												</c:if>
+											</td>
 											<%-- </tr>
 											</c:forEach>
 											 --%>
@@ -286,21 +378,6 @@
 					</div>
 				</div>
 			</div>
-			<%-- <div class="row">
-				<div class="form-actions floatRight">
-					<c:choose>
-						<c:when test="${edit}">
-							<input type="submit" value="Update"
-								class="btn btn-primary btn-sm" /> or <a
-								href="<c:url value='/WorkPackage/workPackageslist' />">Cancel</a>
-						</c:when>
-						<c:otherwise>
-							<input type="submit" value="Add" class="btn btn-primary btn-sm" /> or <a
-								href="<c:url value='/WorkPackage/workPackageslist' />">Cancel</a>
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</div> --%>
 		</form:form>
 	</div>
 </body>

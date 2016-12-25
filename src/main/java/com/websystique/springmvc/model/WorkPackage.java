@@ -2,8 +2,8 @@ package com.websystique.springmvc.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +21,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "WORK_PACKAGE")
 public class WorkPackage implements Serializable {
-	
+
 	/**
 	 * 
 	 */
@@ -45,31 +45,27 @@ public class WorkPackage implements Serializable {
 	@Column(name = "TOTAL_COST", precision = 10, scale = 2)
 	private BigDecimal totalCost;
 
-	@ManyToOne(optional = false,fetch = FetchType.EAGER)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "PROJECT_ID")
 	private Project project;
+
+	// bi-directional many-to-one association to WorkPackageAppUserAllocation
+	@OneToMany(mappedBy = "workPackage")
+	// , cascade= CascadeType.REMOVE
+	private List<WorkPackageUserAllocation> workPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
+
+	// bi-directional many-to-many association to AppUser
 
 	/*
 	 * @ManyToMany(fetch = FetchType.LAZY)
 	 * 
-	 * @JoinTable(name = "WORK_PACKAGE_APP_USER_ALLOCATIONS", joinColumns = {
+	 * @JoinTable(name = "WORK_PACKAGE_APP_USER", joinColumns = {
 	 * 
 	 * @JoinColumn(name = "WORK_PACKAGE_ID") }, inverseJoinColumns = {
 	 * 
-	 * @JoinColumn(name = "USER_ID") }) private Set<WorkPackageUserAllocation>
-	 * workPackageUserAllocations = new HashSet<WorkPackageUserAllocation>();
+	 * @JoinColumn(name = "USER_ID") }) private List<User> users = new
+	 * HashList<User>();
 	 */
-
-	// bi-directional many-to-one association to WorkPackageAppUserAllocation
-	@OneToMany(mappedBy = "workPackage")
-	private Set<WorkPackageUserAllocation> workPackageUserAllocations = new HashSet<WorkPackageUserAllocation>();
-
-	// bi-directional many-to-many association to AppUser
-
-	/*@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "WORK_PACKAGE_APP_USER", joinColumns = { @JoinColumn(name = "WORK_PACKAGE_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
-	private Set<User> users = new HashSet<User>();
-*/
 	public Integer getId() {
 		return id;
 	}
@@ -118,21 +114,13 @@ public class WorkPackage implements Serializable {
 		this.project = project;
 	}
 
-	public Set<WorkPackageUserAllocation> getWorkPackageUserAllocations() {
+	public List<WorkPackageUserAllocation> getWorkPackageUserAllocations() {
 		return workPackageUserAllocations;
 	}
 
 	public void setWorkPackageUserAllocations(
-			Set<WorkPackageUserAllocation> workPackageUserAllocations) {
+			List<WorkPackageUserAllocation> workPackageUserAllocations) {
 		this.workPackageUserAllocations = workPackageUserAllocations;
 	}
-
-	/*public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}*/
 
 }

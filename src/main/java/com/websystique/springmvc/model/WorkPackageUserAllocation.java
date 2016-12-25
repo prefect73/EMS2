@@ -71,175 +71,134 @@ public class WorkPackageUserAllocation implements Serializable {
 
 	// bi-directional many-to-one association to WorkPackage
 
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "work_package_id")
 	private WorkPackage workPackage;
 
 	// bi-directional many-to-one association to User
 
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
 
+	/*
+	 * @Transient private int workPackageId;
+	 * 
+	 * 
+	 * public int getWorkPackageId() { return workPackageId; }
+	 * 
+	 * 
+	 * 
+	 * public void setWorkPackageId(int workPackageId) { this.workPackageId =
+	 * workPackageId; }
+	 */
+
 	public WorkPackageUserAllocation() {
 	}
-	
-	
 
 	public Integer getId() {
 		return id;
 	}
 
-
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 
 	public BigDecimal getmJan() {
 		return mJan;
 	}
 
-
-
 	public void setmJan(BigDecimal mJan) {
 		this.mJan = mJan;
 	}
-
-
 
 	public BigDecimal getmFeb() {
 		return mFeb;
 	}
 
-
-
 	public void setmFeb(BigDecimal mFeb) {
 		this.mFeb = mFeb;
 	}
-
-
 
 	public BigDecimal getmMar() {
 		return mMar;
 	}
 
-
-
 	public void setmMar(BigDecimal mMar) {
 		this.mMar = mMar;
 	}
-
-
 
 	public BigDecimal getmApr() {
 		return mApr;
 	}
 
-
-
 	public void setmApr(BigDecimal mApr) {
 		this.mApr = mApr;
 	}
-
-
 
 	public BigDecimal getmMay() {
 		return mMay;
 	}
 
-
-
 	public void setmMay(BigDecimal mMay) {
 		this.mMay = mMay;
 	}
-
-
 
 	public BigDecimal getmJun() {
 		return mJun;
 	}
 
-
-
 	public void setmJun(BigDecimal mJun) {
 		this.mJun = mJun;
 	}
-
-
 
 	public BigDecimal getmJul() {
 		return mJul;
 	}
 
-
-
 	public void setmJul(BigDecimal mJul) {
 		this.mJul = mJul;
 	}
-
-
 
 	public BigDecimal getmAug() {
 		return mAug;
 	}
 
-
-
 	public void setmAug(BigDecimal mAug) {
 		this.mAug = mAug;
 	}
-
-
 
 	public BigDecimal getmSep() {
 		return mSep;
 	}
 
-
-
 	public void setmSep(BigDecimal mSep) {
 		this.mSep = mSep;
 	}
-
-
 
 	public BigDecimal getmOct() {
 		return mOct;
 	}
 
-
-
 	public void setmOct(BigDecimal mOct) {
 		this.mOct = mOct;
 	}
-
-
 
 	public BigDecimal getmNov() {
 		return mNov;
 	}
 
-
-
 	public void setmNov(BigDecimal mNov) {
 		this.mNov = mNov;
 	}
-
-
 
 	public BigDecimal getmDec() {
 		return mDec;
 	}
 
-
-
 	public void setmDec(BigDecimal mDec) {
 		this.mDec = mDec;
 	}
-
-
 
 	public String getYearName() {
 		return this.yearName;

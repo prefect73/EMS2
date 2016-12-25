@@ -36,7 +36,7 @@ public class WorkPackageUserAllocationDaoImpl extends
 	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocations() {
 		Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
 		// criteria.add(Restrictions.eq("ssoId", sso));
-		// criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To
 		// avoid
 		// duplicates.
 		List<WorkPackageUserAllocation> workPackages = (List<WorkPackageUserAllocation>) criteria

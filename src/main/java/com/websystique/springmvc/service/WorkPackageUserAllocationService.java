@@ -11,6 +11,8 @@ public interface WorkPackageUserAllocationService {
 	WorkPackageUserAllocation findById(int id);
 
 	void saveWorkPackageUserAllocation(WorkPackageUserAllocation workPackageUserAllocation);
+	
+	void updateWorkPackageUserAllocation(WorkPackageUserAllocation workPackageUserAllocation);
 
 	void deleteWorkPackageUserAllocationById(int id);
 
