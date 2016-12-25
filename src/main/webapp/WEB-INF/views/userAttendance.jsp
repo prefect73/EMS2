@@ -51,9 +51,14 @@
 					<label class="col-md-2 control-lable" for="user">Employee
 						Name</label>
 					<div class="col-md-3">
-						<form:select path="user" items="${employeeslist}" multiple="false"
-							itemValue="id" itemLabel="firstName"
-							class="form-control input-sm" readonly="true" />
+					
+					<select class="form-control input-sm"  name="user">
+
+							<c:forEach items="${employeeslist}" var="usr">
+								<option class="form-control input-sm" value="${usr.id}"
+									${usr.id == userAttendance.user.id  ? 'selected' : ''}>${usr.firstName}</option>
+							</c:forEach>
+							</select>
 						<div class="has-error">
 							<form:errors path="user" class="help-inline" />
 						</div>

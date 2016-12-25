@@ -22,6 +22,8 @@ public interface WorkPackageUserAllocationDao {
 	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsByUser(User user);
 	
 	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsByUserAndWorkPackage(WorkPackage workPackage, User user);
+	
+	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum();
 
 }
 

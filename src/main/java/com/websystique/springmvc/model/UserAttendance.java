@@ -3,6 +3,7 @@ package com.websystique.springmvc.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "APP_USER_ATTENDANCE")
@@ -64,8 +66,8 @@ public class UserAttendance implements Serializable {
 
 	@Column(name = "Year_Name", precision = 10, scale = 2)
 	private String yearName;
-
-	@ManyToOne(optional = false,fetch = FetchType.EAGER)
+	
+	@ManyToOne(optional = false,fetch = FetchType.EAGER,cascade = CascadeType.REMOVE )
 	@JoinColumn(name = "USER_ID")
 	private User user;
 

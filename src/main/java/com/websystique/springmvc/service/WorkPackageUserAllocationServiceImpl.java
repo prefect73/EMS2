@@ -79,5 +79,10 @@ public class WorkPackageUserAllocationServiceImpl implements WorkPackageUserAllo
 			WorkPackage workPackage, User user) {
 		return dao.findAllWorkPackageUserAllocationsByUserAndWorkPackage(workPackage, user);
 	}
+	
+	
+	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum() {
+	  return dao.findAllWorkPackageUserAllocationsBySum();
+	 }
 
 }

@@ -61,6 +61,7 @@ public class UserAttendanceServiceImpl implements UserAttendanceService {
 			entity.setmOct(userAttendance.getmOct());
 			entity.setmNov(userAttendance.getmNov());
 			entity.setmDec(userAttendance.getmDec());
+			entity.setYearName(userAttendance.getYearName());
 			entity.setUser(userAttendance.getUser());
 		}
 	}

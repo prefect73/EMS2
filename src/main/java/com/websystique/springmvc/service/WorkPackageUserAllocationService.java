@@ -26,5 +26,7 @@ public interface WorkPackageUserAllocationService {
 
 	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsByUserAndWorkPackage(
 			WorkPackage workPackage, User user);
+	
+	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum();
 
 }

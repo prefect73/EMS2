@@ -27,9 +27,11 @@
 <script>
 	var wPakAllocSize = '<c:out value="${fn:length(workPackage.workPackageUserAllocations)}"/>';
 	$( document ).ready(function() {
-		  if (($('#empListForWorkPackageTable tr').length == 0 ) || wPakAllocSize == 0){
+		  if ($('#empListForWorkPackageTable > tbody > tr').length == 0 || wPakAllocSize == 0 ){
 		   addFirstRow();
+		   
 		  }
+		  
 		 });
 function addFirstRow(){
 	var index = wPakAllocSize;

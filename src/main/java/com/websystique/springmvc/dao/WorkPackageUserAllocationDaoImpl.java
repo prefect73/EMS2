@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -108,12 +109,21 @@ public class WorkPackageUserAllocationDaoImpl extends
 		persist(workPackageUserAllocation);
 	}
 
-	public void deleteById(int id) {
+	public void deleteById(int id) {	
 		Criteria crit = createEntityCriteria();
 		crit.add(Restrictions.eq("id", id));
 		WorkPackageUserAllocation workPackageUserAllocation = (WorkPackageUserAllocation) crit
 				.uniqueResult();
 		delete(workPackageUserAllocation);
+	}
+
+	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum() {
+		Query query = getSession()
+				.createSQLQuery(
+						"select id, work_package_id, user_id, sum(mJan) as mJan, sum(mFeb) as mFeb, sum(mMar) as mMar, sum(mApr) as mApr, sum(mMay) as mMay, sum(mJun) as mJun, sum(mJul) as mJul, sum(mAug) as mAug, sum(mSep) as mSep, sum(mOct) as mOct, sum(mNov) as mNov, sum(mDec) as mDec, Year_Name from work_package_app_user_allocations group by user_id;")
+				.addEntity(WorkPackageUserAllocation.class);
+		List<WorkPackageUserAllocation> workPackageUserAllocationsBySum = query.list();
+		return workPackageUserAllocationsBySum;
 	}
 
 }

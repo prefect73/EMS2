@@ -60,7 +60,7 @@ public class UserAttendanceDaoImpl extends AbstractDao<Integer, UserAttendance>
 	@SuppressWarnings("unchecked")
 	public List<UserAttendance> findAllUserAttendances() {
 		Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
-		// criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To
 		// avoid
 		// duplicates.
 		List<UserAttendance> userAttendances = (List<UserAttendance>) criteria
@@ -83,6 +83,7 @@ public class UserAttendanceDaoImpl extends AbstractDao<Integer, UserAttendance>
 	@SuppressWarnings("unchecked")
 	public List<UserAttendance> findAllUserAttendancesBySSOId(String ssoId) {
 		Criteria criteria = createEntityCriteria();
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		// criteria.add(Restrictions.eq("ssoId", ssoId));
 		criteria.addOrder(Order.asc("id"));
 		List<UserAttendance> userAttendances = (List<UserAttendance>) criteria

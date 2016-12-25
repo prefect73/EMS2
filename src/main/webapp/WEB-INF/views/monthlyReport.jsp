@@ -67,65 +67,60 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${monthlyAttendances}" var="employee">
+						<c:forEach items="${monthlyAttendances}" var="monthlyAttendance" varStatus="status">
 							<tr>
-								<td>${employee.user.firstName}</td>
-								<td>
-									<tr>Possible Days</tr>
-									<tr>Planned Days</tr>
-									<tr>Available Days</tr>
-								</td>
-								<c:forEach items="${monthlyAttendances}" var="monthlyAttendance">
-									<tr>
-										<td>${monthlyAttendance.mJan}</td>
-										<td>${monthlyAttendance.mFeb}</td>
-										<td>${monthlyAttendance.mMar}</td>
-										<td>${monthlyAttendance.mApr}</td>
-										<td>${monthlyAttendance.mMay}</td>
-										<td>${monthlyAttendance.mJun}</td>
-										<td>${monthlyAttendance.mJul}</td>
-										<td>${monthlyAttendance.mAug}</td>
-										<td>${monthlyAttendance.mSep}</td>
-										<td>${monthlyAttendance.mOct}</td>
-										<td>${monthlyAttendance.mNov}</td>
-										<td>${monthlyAttendance.mDec}</td>
-									</tr>
-								</c:forEach>
-								<c:forEach items="${monthlyAttendances}" var="monthlyAttendance">
-									<tr>
-										<td>${monthlyAttendance.mJan}</td>
-										<td>${monthlyAttendance.mFeb}</td>
-										<td>${monthlyAttendance.mMar}</td>
-										<td>${monthlyAttendance.mApr}</td>
-										<td>${monthlyAttendance.mMay}</td>
-										<td>${monthlyAttendance.mJun}</td>
-										<td>${monthlyAttendance.mJul}</td>
-										<td>${monthlyAttendance.mAug}</td>
-										<td>${monthlyAttendance.mSep}</td>
-										<td>${monthlyAttendance.mOct}</td>
-										<td>${monthlyAttendance.mNov}</td>
-										<td>${monthlyAttendance.mDec}</td>
-									</tr>
-								</c:forEach>
-								<c:forEach items="${monthlyAttendances}" var="monthlyAttendance">
-									<tr>
-										<td>${monthlyAttendance.mJan}</td>
-										<td>${monthlyAttendance.mFeb}</td>
-										<td>${monthlyAttendance.mMar}</td>
-										<td>${monthlyAttendance.mApr}</td>
-										<td>${monthlyAttendance.mMay}</td>
-										<td>${monthlyAttendance.mJun}</td>
-										<td>${monthlyAttendance.mJul}</td>
-										<td>${monthlyAttendance.mAug}</td>
-										<td>${monthlyAttendance.mSep}</td>
-										<td>${monthlyAttendance.mOct}</td>
-										<td>${monthlyAttendance.mNov}</td>
-										<td>${monthlyAttendance.mDec}</td>
-									</tr>
-								</c:forEach>
+								<td rowspan="3">${monthlyAttendance.user.firstName}</td>
+								<td>Possible Days</td>
+								<td>${monthlyAttendance.mJan}</td>
+								<td>${monthlyAttendance.mFeb}</td>
+								<td>${monthlyAttendance.mMar}</td>
+								<td>${monthlyAttendance.mApr}</td>
+								<td>${monthlyAttendance.mMay}</td>
+								<td>${monthlyAttendance.mJun}</td>
+								<td>${monthlyAttendance.mJul}</td>
+								<td>${monthlyAttendance.mAug}</td>
+								<td>${monthlyAttendance.mSep}</td>
+								<td>${monthlyAttendance.mOct}</td>
+								<td>${monthlyAttendance.mNov}</td>
+								<td>${monthlyAttendance.mDec}</td>
+							</tr>
+						<%-- </c:forEach>
+						<c:forEach items="${workPackageUserAllocations}" var="monthlyAttendance">
+						 --%>	
+						 	<tr>
+								<td>Planned Days</td>
+								<td>${workPackageUserAllocationsBySum[status.index].mJan}</td>
+								<td>${workPackageUserAllocationsBySum[status.index].mFeb}</td>
+								<td>${workPackageUserAllocationsBySum[status.index].mMar}</td>
+								<td>${workPackageUserAllocationsBySum[status.index].mApr}</td>
+								<td>${workPackageUserAllocationsBySum[status.index].mMay}</td>
+								<td>${workPackageUserAllocationsBySum[status.index].mJun}</td>
+								<td>${workPackageUserAllocationsBySum[status.index].mJul}</td>
+								<td>${workPackageUserAllocationsBySum[status.index].mAug}</td>
+								<td>${workPackageUserAllocationsBySum[status.index].mSep}</td>
+								<td>${workPackageUserAllocationsBySum[status.index].mOct}</td>
+								<td>${workPackageUserAllocationsBySum[status.index].mNov}</td>
+								<td>${workPackageUserAllocationsBySum[status.index].mDec}</td>
+							</tr>
+						<%-- </c:forEach>
+						<c:forEach items="${monthlyAttendances}" var="monthlyAttendance">
+						 --%>	<tr>
+								<td>Available Days</td>
+								<td>${monthlyAttendance.mJan - workPackageUserAllocationsBySum[status.index].mJan}</td>
+								<td>${monthlyAttendance.mFeb - workPackageUserAllocationsBySum[status.index].mFeb}</td>
+								<td>${monthlyAttendance.mMar - workPackageUserAllocationsBySum[status.index].mMar}</td>
+								<td>${monthlyAttendance.mApr - workPackageUserAllocationsBySum[status.index].mApr}</td>
+								<td>${monthlyAttendance.mMay - workPackageUserAllocationsBySum[status.index].mMay}</td>
+								<td>${monthlyAttendance.mJun - workPackageUserAllocationsBySum[status.index].mJun}</td>
+								<td>${monthlyAttendance.mJul - workPackageUserAllocationsBySum[status.index].mJul}</td>
+								<td>${monthlyAttendance.mAug - workPackageUserAllocationsBySum[status.index].mAug}</td>
+								<td>${monthlyAttendance.mSep - workPackageUserAllocationsBySum[status.index].mSep}</td>
+								<td>${monthlyAttendance.mOct - workPackageUserAllocationsBySum[status.index].mOct}</td>
+								<td>${monthlyAttendance.mNov - workPackageUserAllocationsBySum[status.index].mNov}</td>
+								<td>${monthlyAttendance.mDec - workPackageUserAllocationsBySum[status.index].mDec}</td>
 							</tr>
 						</c:forEach>
-					</tbody>
+						</tbody>
 				</table>
 			</div>
 		</div>
