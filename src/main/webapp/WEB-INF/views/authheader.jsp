@@ -13,11 +13,12 @@
 		<sec:authorize access="hasRole('ADMIN')">
 		<li><a href="<c:url value='/Project/projectslist' />">Projects</a></li>
 		</sec:authorize>
-		<li><a href="<c:url value='/WorkPackage/workPackageslist' />">Workpackages</a></li>		
-		<li><a href="#">Emp Allocations</a></li>
+				
+		<!-- <li><a href="#">Emp Allocations</a></li> -->
 		<sec:authorize access="hasRole('ADMIN')">
-		<li><a href="#">Time Planning</a></li>
-		<li><a href="#">Project Report</a></li>
+		<li><a href="<c:url value='/WorkPackage/workPackageslist' />">Employee WorkPackage Allocations</a></li>
+		<!-- <li><a href="#">Time Planning</a></li> -->
+		<li><a href="<c:url value='/Project/projectReport-0' />">Project Report</a></li>
 		<li><a href="<c:url value='/UserAttendance/monthlyReport' />">Monthly Report</a></li>
 		</sec:authorize>
 	</ul>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -84,6 +85,14 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 		WorkPackage workPackage = (WorkPackage) crit.uniqueResult();
 		delete(workPackage);
 	}
+	
+	@SuppressWarnings("unchecked")
+	 public List<WorkPackage> findByProjectID(int projectID) {
+	  Query query = getSession().createSQLQuery("select * from work_package where project_id = :projectId").addEntity(WorkPackage.class);
+	  query.setParameter("projectId", projectID);
+	  List<WorkPackage> workPackages = query.list();
+	  return workPackages;
+	 }
 
 	@Override
 	public Session getHibernateSession() {

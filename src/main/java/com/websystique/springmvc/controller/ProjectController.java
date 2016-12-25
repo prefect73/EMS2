@@ -24,8 +24,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.websystique.springmvc.model.Project;
 import com.websystique.springmvc.model.User;
+import com.websystique.springmvc.model.WorkPackage;
+import com.websystique.springmvc.model.WorkPackageUserAllocation;
 import com.websystique.springmvc.service.ProjectService;
 import com.websystique.springmvc.service.UserService;
+import com.websystique.springmvc.service.WorkPackageService;
+import com.websystique.springmvc.service.WorkPackageUserAllocationService;
 
 @Controller
 @RequestMapping("/Project")
@@ -37,9 +41,12 @@ public class ProjectController {
 
 	@Autowired
 	UserService userService;
-	/*
-	 * @Autowired WorkpackageService workpackageService;
-	 */
+
+	@Autowired
+	WorkPackageService workPackageService;
+
+	@Autowired
+	WorkPackageUserAllocationService workPackageUserAllocationService;
 
 	@Autowired
 	MessageSource messageSource;
@@ -124,7 +131,8 @@ public class ProjectController {
 		// " "+ project.getLastName() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
 		// return "success";
-		request.getSession(false).setAttribute("projectslist", projectService.findAllProjects());
+		request.getSession(false).setAttribute("projectslist",
+				projectService.findAllProjects());
 		return "redirect:/Project/projectslist";
 	}
 
@@ -154,7 +162,8 @@ public class ProjectController {
 	 */
 	@RequestMapping(value = { "/edit-project-{projectNumber}" }, method = RequestMethod.POST)
 	public String updateProject(@Valid Project project, BindingResult result,
-			ModelMap model, @PathVariable String projectNumber, HttpServletRequest request) {
+			ModelMap model, @PathVariable String projectNumber,
+			HttpServletRequest request) {
 
 		if (result.hasErrors()) {
 			return "project";
@@ -176,7 +185,8 @@ public class ProjectController {
 		// model.addAttribute("success", "Project " + project.getFirstName() +
 		// " "+ project.getLastName() + " updated successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
-		request.getSession(false).setAttribute("projectslist", projectService.findAllProjects());
+		request.getSession(false).setAttribute("projectslist",
+				projectService.findAllProjects());
 		return "redirect:/Project/projectslist";
 	}
 
@@ -184,9 +194,11 @@ public class ProjectController {
 	 * This method will delete an project by it's SSOID value.
 	 */
 	@RequestMapping(value = { "/delete-project-{projectNumber}" }, method = RequestMethod.GET)
-	public String deleteProject(@PathVariable String projectNumber, HttpServletRequest request) {
+	public String deleteProject(@PathVariable String projectNumber,
+			HttpServletRequest request) {
 		projectService.deleteProjectByProjectNumber(projectNumber);
-		request.getSession(false).setAttribute("projectslist", projectService.findAllProjects());
+		request.getSession(false).setAttribute("projectslist",
+				projectService.findAllProjects());
 		return "redirect:/Project/projectslist";
 	}
 
@@ -196,6 +208,40 @@ public class ProjectController {
 		Project project = new Project();
 		model.addAttribute("project", project);
 		model.addAttribute("projectsList", projectsList);
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "projectReport";
+	}
+
+	@RequestMapping(value = { "/projectReport-{projectNumber}" }, method = RequestMethod.GET)
+	public String listProjectReports(@PathVariable int projectNumber,
+			ModelMap model) {
+		List<Project> projectsList = projectService.findAllProjects();
+		Project project = new Project();
+		List<WorkPackage> workPackages = workPackageService
+				.findAllWorkPackages();
+		List<WorkPackage> workPackagesByProjectID = workPackageService
+				.findByProjectID(projectNumber);
+		List<WorkPackageUserAllocation> workPackageHoursForAllUsers = workPackageUserAllocationService
+				.getWorkPackageHoursForAllUsers();
+		List<WorkPackageUserAllocation> workPackageTotalHours = workPackageUserAllocationService
+				.getTotalWorkPackageHours();
+		List<WorkPackageUserAllocation> workPackageUserAllocationsBySum = workPackageUserAllocationService
+				.findAllWorkPackageUserAllocationsBySum();
+		// List<WorkPackageUserAllocation>
+		// workPackageUserAllocationsBySumOfAllMonths =
+		// workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySumOfAllMonths();
+
+		model.addAttribute("project", project);
+		model.addAttribute("projectsList", projectsList);
+		model.addAttribute("workPackages", workPackages);
+		model.addAttribute("workPackagesByProjectID", workPackagesByProjectID);
+		model.addAttribute("workPackageHoursForAllUsers",
+				workPackageHoursForAllUsers);
+		model.addAttribute("workPackageTotalHours", workPackageTotalHours);
+		model.addAttribute("workPackageUserAllocationsBySum",
+				workPackageUserAllocationsBySum);
+		// model.addAttribute("workPackageUserAllocationsBySumOfAllMonths",
+		// workPackageUserAllocationsBySumOfAllMonths);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "projectReport";
 	}

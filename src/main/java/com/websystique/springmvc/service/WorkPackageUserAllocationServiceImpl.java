@@ -13,7 +13,8 @@ import com.websystique.springmvc.model.WorkPackageUserAllocation;
 
 @Service("workPackageUserAllocationService")
 @Transactional
-public class WorkPackageUserAllocationServiceImpl implements WorkPackageUserAllocationService {
+public class WorkPackageUserAllocationServiceImpl implements
+		WorkPackageUserAllocationService {
 
 	@Autowired
 	private WorkPackageUserAllocationDao dao;
@@ -22,7 +23,8 @@ public class WorkPackageUserAllocationServiceImpl implements WorkPackageUserAllo
 		return dao.findById(id);
 	}
 
-	public void saveWorkPackageUserAllocation(WorkPackageUserAllocation workPackageUserAllocation) {
+	public void saveWorkPackageUserAllocation(
+			WorkPackageUserAllocation workPackageUserAllocation) {
 		dao.save(workPackageUserAllocation);
 	}
 
@@ -32,8 +34,10 @@ public class WorkPackageUserAllocationServiceImpl implements WorkPackageUserAllo
 	 * proper values within transaction. It will be updated in db once
 	 * transaction ends.
 	 */
-	public void updateWorkPackageUserAllocation(WorkPackageUserAllocation workPackageUserAllocation) {
-		WorkPackageUserAllocation entity = dao.findById(workPackageUserAllocation.getId());
+	public void updateWorkPackageUserAllocation(
+			WorkPackageUserAllocation workPackageUserAllocation) {
+		WorkPackageUserAllocation entity = dao
+				.findById(workPackageUserAllocation.getId());
 		if (entity != null) {
 			entity.setmJan(workPackageUserAllocation.getmJan());
 			entity.setmFeb(workPackageUserAllocation.getmFeb());
@@ -77,12 +81,27 @@ public class WorkPackageUserAllocationServiceImpl implements WorkPackageUserAllo
 	@Override
 	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsByUserAndWorkPackage(
 			WorkPackage workPackage, User user) {
-		return dao.findAllWorkPackageUserAllocationsByUserAndWorkPackage(workPackage, user);
+		return dao.findAllWorkPackageUserAllocationsByUserAndWorkPackage(
+				workPackage, user);
 	}
-	
-	
+
 	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum() {
-	  return dao.findAllWorkPackageUserAllocationsBySum();
-	 }
+		return dao.findAllWorkPackageUserAllocationsBySum();
+	}
+
+	@Override
+	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySumOfAllMonths() {
+		return dao.findAllWorkPackageUserAllocationsBySumOfAllMonths();
+	}
+
+	@Override
+	public List<WorkPackageUserAllocation> getWorkPackageHoursForAllUsers() {
+		return dao.getWorkPackageHoursForAllUsers();
+	}
+
+	@Override
+	public List<WorkPackageUserAllocation> getTotalWorkPackageHours() {
+		return dao.getTotalWorkPackageHours();
+	}
 
 }

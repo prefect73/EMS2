@@ -22,6 +22,8 @@ public interface WorkPackageDao {
 	public Session getHibernateSession();
 	
 	List<WorkPackage> findAllWorkPackages();
+	
+	List<WorkPackage> findByProjectID(int projectID);
 
 }
 

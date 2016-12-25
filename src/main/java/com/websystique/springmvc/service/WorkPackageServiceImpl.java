@@ -191,4 +191,8 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 	public List<WorkPackage> findAllWorkPackages() {
 		return dao.findAllWorkPackages();
 	}
+	
+	public List<WorkPackage> findByProjectID(int projectID) {
+		  return dao.findByProjectID(projectID);  
+		 }
 }

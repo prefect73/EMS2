@@ -10,9 +10,11 @@ public interface WorkPackageUserAllocationService {
 
 	WorkPackageUserAllocation findById(int id);
 
-	void saveWorkPackageUserAllocation(WorkPackageUserAllocation workPackageUserAllocation);
-	
-	void updateWorkPackageUserAllocation(WorkPackageUserAllocation workPackageUserAllocation);
+	void saveWorkPackageUserAllocation(
+			WorkPackageUserAllocation workPackageUserAllocation);
+
+	void updateWorkPackageUserAllocation(
+			WorkPackageUserAllocation workPackageUserAllocation);
 
 	void deleteWorkPackageUserAllocationById(int id);
 
@@ -26,7 +28,13 @@ public interface WorkPackageUserAllocationService {
 
 	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsByUserAndWorkPackage(
 			WorkPackage workPackage, User user);
-	
-	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum();
+
+	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum();
+
+	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySumOfAllMonths();
+
+	List<WorkPackageUserAllocation> getWorkPackageHoursForAllUsers();
+
+	List<WorkPackageUserAllocation> getTotalWorkPackageHours();
 
 }
