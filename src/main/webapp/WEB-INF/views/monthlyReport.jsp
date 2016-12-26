@@ -19,9 +19,21 @@
 	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$('#monthlyReportTable').DataTable();
+		$('#monthlyReportTable').DataTable( {
+	        "createdRow": function ( row, data, index ) {
+	            if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {
+	                $('td', row).eq(5).addClass('highlight');
+	            }
+	        }
+	    });
 	});
 </script>
+<style type="text/css">
+td.highlight {
+        font-weight: bold;
+        color: red;
+    }
+</style>
 </head>
 
 <body>

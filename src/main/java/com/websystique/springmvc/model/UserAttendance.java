@@ -13,10 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "APP_USER_ATTENDANCE")
+@Table(name = "APP_USER_ATTENDANCE", uniqueConstraints = @UniqueConstraint(columnNames = {
+		"USER_ID", "Year_Name" }))
 public class UserAttendance implements Serializable {
 
 	/**
@@ -66,8 +67,8 @@ public class UserAttendance implements Serializable {
 
 	@Column(name = "Year_Name", precision = 10, scale = 2)
 	private String yearName;
-	
-	@ManyToOne(optional = false,fetch = FetchType.EAGER,cascade = CascadeType.REMOVE )
+
+	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "USER_ID")
 	private User user;
 

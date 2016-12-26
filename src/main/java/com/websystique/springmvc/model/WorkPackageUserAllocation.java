@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -22,7 +23,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 
  */
 @Entity
-@Table(name = "work_package_app_user_allocations")
+@Table(name = "work_package_app_user_allocations", uniqueConstraints = @UniqueConstraint(columnNames = {
+		"user_id","work_package_id", "Year_Name" }))
 public class WorkPackageUserAllocation implements Serializable {
 	private static final long serialVersionUID = 1L;
 

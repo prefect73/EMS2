@@ -213,37 +213,28 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = { "/projectReport-{projectNumber}" }, method = RequestMethod.GET)
-	public String listProjectReports(@PathVariable int projectNumber,
-			ModelMap model) {
-		List<Project> projectsList = projectService.findAllProjects();
-		Project project = new Project();
-		List<WorkPackage> workPackages = workPackageService
-				.findAllWorkPackages();
-		List<WorkPackage> workPackagesByProjectID = workPackageService
-				.findByProjectID(projectNumber);
-		List<WorkPackageUserAllocation> workPackageHoursForAllUsers = workPackageUserAllocationService
-				.getWorkPackageHoursForAllUsers();
-		List<WorkPackageUserAllocation> workPackageTotalHours = workPackageUserAllocationService
-				.getTotalWorkPackageHours();
-		List<WorkPackageUserAllocation> workPackageUserAllocationsBySum = workPackageUserAllocationService
-				.findAllWorkPackageUserAllocationsBySum();
-		// List<WorkPackageUserAllocation>
-		// workPackageUserAllocationsBySumOfAllMonths =
-		// workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySumOfAllMonths();
-
-		model.addAttribute("project", project);
-		model.addAttribute("projectsList", projectsList);
-		model.addAttribute("workPackages", workPackages);
-		model.addAttribute("workPackagesByProjectID", workPackagesByProjectID);
-		model.addAttribute("workPackageHoursForAllUsers",
-				workPackageHoursForAllUsers);
-		model.addAttribute("workPackageTotalHours", workPackageTotalHours);
-		model.addAttribute("workPackageUserAllocationsBySum",
-				workPackageUserAllocationsBySum);
-		// model.addAttribute("workPackageUserAllocationsBySumOfAllMonths",
-		// workPackageUserAllocationsBySumOfAllMonths);
-		model.addAttribute("loggedinuser", getPrincipal());
-		return "projectReport";
+	public String listProjectReports(@PathVariable int projectNumber, ModelMap model) {
+	 List<Project> projectsList = projectService.findAllProjects();
+	 Project project = new Project();
+	 
+	 List<WorkPackage> workPackages = workPackageService.findAllWorkPackages();
+	 List<WorkPackage> workPackagesByProjectID = workPackageService.findByProjectID(projectNumber);
+	 //List<WorkPackageUserAllocation> workPackageHoursForAllUsers = workPackageUserAllocationService.findAllWorkPackageUserAllocationsByWorkPackage(workPackage);
+	 //List<WorkPackageUserAllocation> workPackageHoursForAllUsers = workPackageUserAllocationService.getWorkPackageHoursForAllUsers();
+	 List<WorkPackageUserAllocation> workPackageTotalHours = workPackageUserAllocationService.getTotalWorkPackageHours();
+	 List<WorkPackageUserAllocation> workPackageUserAllocationsBySum = workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySum();
+	 //List<WorkPackageUserAllocation> workPackageUserAllocationsBySumOfAllMonths = workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySumOfAllMonths();
+	 
+	 model.addAttribute("project", project);
+	 model.addAttribute("projectsList", projectsList);
+	 model.addAttribute("workPackages", workPackages);
+	 model.addAttribute("workPackagesByProjectID", workPackagesByProjectID);
+	 //model.addAttribute("workPackageHoursForAllUsers", workPackageHoursForAllUsers);
+	 model.addAttribute("workPackageTotalHours", workPackageTotalHours);
+	 model.addAttribute("workPackageUserAllocationsBySum", workPackageUserAllocationsBySum);
+	 //model.addAttribute("workPackageUserAllocationsBySumOfAllMonths", workPackageUserAllocationsBySumOfAllMonths);
+	 model.addAttribute("loggedinuser", getPrincipal());
+	 return "projectReport";
 	}
 
 	/**
