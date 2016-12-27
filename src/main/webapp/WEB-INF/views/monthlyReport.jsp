@@ -19,20 +19,20 @@
 	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$('#monthlyReportTable').DataTable( {
-	        "createdRow": function ( row, data, index ) {
-	            if ( data[5].replace(/[\$,]/g, '') * 1 > 150000 ) {
-	                $('td', row).eq(5).addClass('highlight');
-	            }
-	        }
-	    });
+		$(".availableDays").each(function() {
+			var value = parseInt($(this).html());
+			if (value < 0) {
+				$(this).css('color', 'white');
+				$(this).css('background-color', 'red');
+			}
+		})
 	});
 </script>
 <style type="text/css">
 td.highlight {
-        font-weight: bold;
-        color: red;
-    }
+	font-weight: bold;
+	color: red;
+}
 </style>
 </head>
 
@@ -79,7 +79,8 @@ td.highlight {
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${monthlyAttendances}" var="monthlyAttendance" varStatus="status">
+						<c:forEach items="${monthlyAttendances}" var="monthlyAttendance"
+							varStatus="status">
 							<tr>
 								<td rowspan="3">${monthlyAttendance.user.firstName}</td>
 								<td>Possible Days</td>
@@ -96,10 +97,10 @@ td.highlight {
 								<td>${monthlyAttendance.mNov}</td>
 								<td>${monthlyAttendance.mDec}</td>
 							</tr>
-						<%-- </c:forEach>
+							<%-- </c:forEach>
 						<c:forEach items="${workPackageUserAllocations}" var="monthlyAttendance">
-						 --%>	
-						 	<tr>
+						 --%>
+							<tr>
 								<td>Planned Days</td>
 								<td>${workPackageUserAllocationsBySum[status.index].mJan}</td>
 								<td>${workPackageUserAllocationsBySum[status.index].mFeb}</td>
@@ -114,25 +115,26 @@ td.highlight {
 								<td>${workPackageUserAllocationsBySum[status.index].mNov}</td>
 								<td>${workPackageUserAllocationsBySum[status.index].mDec}</td>
 							</tr>
-						<%-- </c:forEach>
+							<%-- </c:forEach>
 						<c:forEach items="${monthlyAttendances}" var="monthlyAttendance">
-						 --%>	<tr>
+						 --%>
+							<tr>
 								<td>Available Days</td>
-								<td>${monthlyAttendance.mJan - workPackageUserAllocationsBySum[status.index].mJan}</td>
-								<td>${monthlyAttendance.mFeb - workPackageUserAllocationsBySum[status.index].mFeb}</td>
-								<td>${monthlyAttendance.mMar - workPackageUserAllocationsBySum[status.index].mMar}</td>
-								<td>${monthlyAttendance.mApr - workPackageUserAllocationsBySum[status.index].mApr}</td>
-								<td>${monthlyAttendance.mMay - workPackageUserAllocationsBySum[status.index].mMay}</td>
-								<td>${monthlyAttendance.mJun - workPackageUserAllocationsBySum[status.index].mJun}</td>
-								<td>${monthlyAttendance.mJul - workPackageUserAllocationsBySum[status.index].mJul}</td>
-								<td>${monthlyAttendance.mAug - workPackageUserAllocationsBySum[status.index].mAug}</td>
-								<td>${monthlyAttendance.mSep - workPackageUserAllocationsBySum[status.index].mSep}</td>
-								<td>${monthlyAttendance.mOct - workPackageUserAllocationsBySum[status.index].mOct}</td>
-								<td>${monthlyAttendance.mNov - workPackageUserAllocationsBySum[status.index].mNov}</td>
-								<td>${monthlyAttendance.mDec - workPackageUserAllocationsBySum[status.index].mDec}</td>
+								<td class="availableDays">${monthlyAttendance.mJan - workPackageUserAllocationsBySum[status.index].mJan}</td>
+								<td class="availableDays">${monthlyAttendance.mFeb - workPackageUserAllocationsBySum[status.index].mFeb}</td>
+								<td class="availableDays">${monthlyAttendance.mMar - workPackageUserAllocationsBySum[status.index].mMar}</td>
+								<td class="availableDays">${monthlyAttendance.mApr - workPackageUserAllocationsBySum[status.index].mApr}</td>
+								<td class="availableDays">${monthlyAttendance.mMay - workPackageUserAllocationsBySum[status.index].mMay}</td>
+								<td class="availableDays">${monthlyAttendance.mJun - workPackageUserAllocationsBySum[status.index].mJun}</td>
+								<td class="availableDays">${monthlyAttendance.mJul - workPackageUserAllocationsBySum[status.index].mJul}</td>
+								<td class="availableDays">${monthlyAttendance.mAug - workPackageUserAllocationsBySum[status.index].mAug}</td>
+								<td class="availableDays">${monthlyAttendance.mSep - workPackageUserAllocationsBySum[status.index].mSep}</td>
+								<td class="availableDays">${monthlyAttendance.mOct - workPackageUserAllocationsBySum[status.index].mOct}</td>
+								<td class="availableDays">${monthlyAttendance.mNov - workPackageUserAllocationsBySum[status.index].mNov}</td>
+								<td class="availableDays">${monthlyAttendance.mDec - workPackageUserAllocationsBySum[status.index].mDec}</td>
 							</tr>
 						</c:forEach>
-						</tbody>
+					</tbody>
 				</table>
 			</div>
 		</div>
