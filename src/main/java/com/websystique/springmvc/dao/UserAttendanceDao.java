@@ -22,6 +22,8 @@ public interface UserAttendanceDao {
 	List<UserAttendance> findAllUserAttendances();
 	
 	List<UserAttendance> findAllUserAttendancesBySSOId(String ssoId); 
+	
+	List<UserAttendance> findAllUserAttendancesUpdated();
 
 }
 

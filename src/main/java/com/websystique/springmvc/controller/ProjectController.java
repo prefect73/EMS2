@@ -1,5 +1,7 @@
 package com.websystique.springmvc.controller;
 
+import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
@@ -153,7 +155,7 @@ public class ProjectController {
 	 */
 	@ModelAttribute("projectleadslist")
 	public List<User> initializeProjectLeads() {
-		return userService.findAllUsersByType("Projektleitung");//Project Lead
+		return userService.findAllUsersByType("Projektleitung");// Project Lead
 	}
 
 	/**
@@ -212,26 +214,39 @@ public class ProjectController {
 		return "projectReport";
 	}
 
-	@RequestMapping(value = { "/projectReport-{projectNumber}" }, method = RequestMethod.GET)
-	public String listProjectReports(@PathVariable int projectNumber, ModelMap model) {
+	@RequestMapping(value = { "/projectReport-{projectNumber}-{workPackageName}" }, method = RequestMethod.GET)
+	public String listProjectReports(@PathVariable int projectNumber, @PathVariable String workPackageName, ModelMap model) {
+	//public String listProjectReports(@RequestParam(value = "projectNamesDropDownSelectedValue", required = false) Integer projectNumber, @RequestParam(value = "selectedWorkPackageName", required = false) String workPackageName, ModelMap model) { 
+	 /*if(workPackageName == null) { // true when landed first time on the project report page
+	  workPackageName = " ";
+	 }*/
 	 List<Project> projectsList = projectService.findAllProjects();
-	 Project project = new Project();
+	 /*Project defaultProject = new Project();defaultProject.setProjectName("--------------------------Wählen--------------------------");
+	 projectsList.add(0,defaultProject);
+	 defaultProject.setOfferedCost(new BigDecimal(0));
+	 defaultProject.setTotalCost(new BigDecimal(0));*/
 	 
+	 Project project = new Project();
 	 List<WorkPackage> workPackages = workPackageService.findAllWorkPackages();
-	 List<WorkPackage> workPackagesByProjectID = workPackageService.findByProjectID(projectNumber);
+	 //List<WorkPackage> workPackagesByProjectID = workPackageService.findByProjectID(projectNumber);
 	 //List<WorkPackageUserAllocation> workPackageHoursForAllUsers = workPackageUserAllocationService.findAllWorkPackageUserAllocationsByWorkPackage(workPackage);
-	 //List<WorkPackageUserAllocation> workPackageHoursForAllUsers = workPackageUserAllocationService.getWorkPackageHoursForAllUsers();
-	 List<WorkPackageUserAllocation> workPackageTotalHours = workPackageUserAllocationService.getTotalWorkPackageHours();
-	 List<WorkPackageUserAllocation> workPackageUserAllocationsBySum = workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySum();
+	 List<WorkPackageUserAllocation> workPackagesByProjectID = workPackageUserAllocationService.findByProjectID(projectNumber);
+	 if(projectNumber > 0){
+	 project = workPackagesByProjectID != null && workPackagesByProjectID.size() > 0  ? workPackagesByProjectID.get(0).getWorkPackage().getProject() : new Project() ;
+	 }
+	 List<WorkPackageUserAllocation> workPackageHoursForAllUsers = workPackageUserAllocationService.getWorkPackageHoursForAllUsers(workPackageName);
+	 //List<WorkPackageUserAllocation> workPackageTotalHours = workPackageUserAllocationService.getTotalWorkPackageHours();
+	 //List<WorkPackageUserAllocation> workPackageUserAllocationsBySum = workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySum();
 	 //List<WorkPackageUserAllocation> workPackageUserAllocationsBySumOfAllMonths = workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySumOfAllMonths();
 	 
 	 model.addAttribute("project", project);
+	 model.addAttribute("selectedProjectNumber", projectNumber);
 	 model.addAttribute("projectsList", projectsList);
 	 model.addAttribute("workPackages", workPackages);
 	 model.addAttribute("workPackagesByProjectID", workPackagesByProjectID);
-	 //model.addAttribute("workPackageHoursForAllUsers", workPackageHoursForAllUsers);
-	 model.addAttribute("workPackageTotalHours", workPackageTotalHours);
-	 model.addAttribute("workPackageUserAllocationsBySum", workPackageUserAllocationsBySum);
+	 model.addAttribute("workPackageHoursForAllUsers", workPackageHoursForAllUsers);
+	 //model.addAttribute("workPackageTotalHours", workPackageTotalHours);
+	 //model.addAttribute("workPackageUserAllocationsBySum", workPackageUserAllocationsBySum);
 	 //model.addAttribute("workPackageUserAllocationsBySumOfAllMonths", workPackageUserAllocationsBySumOfAllMonths);
 	 model.addAttribute("loggedinuser", getPrincipal());
 	 return "projectReport";

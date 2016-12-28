@@ -2,7 +2,9 @@ package com.websystique.springmvc.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -57,17 +59,18 @@ public class User implements Serializable {
 	@Column(name = "PER_DAY_COST", precision = 10, scale = 2)
 	// @DecimalMax("12.00")
 	private BigDecimal perDayCost;
-	 
-	 
-	 @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-	 private Set<WorkPackageUserAllocation> workPackageUserAllocations = new HashSet<WorkPackageUserAllocation>(0);
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	private Set<WorkPackageUserAllocation> workPackageUserAllocations = new HashSet<WorkPackageUserAllocation>();
+
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	private List<UserAttendance> userAttendances = new ArrayList<UserAttendance>();
 
 	@NotEmpty
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "APP_USER_USER_PROFILE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
-	
 	public Integer getId() {
 		return id;
 	}
@@ -83,7 +86,7 @@ public class User implements Serializable {
 	public void setSsoId(String ssoId) {
 		this.ssoId = ssoId;
 	}
-	
+
 	@JsonIgnore
 	public String getPassword() {
 		return password;
@@ -116,7 +119,7 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public BigDecimal getPerDayCost() {
 		return perDayCost;
 	}
@@ -124,8 +127,9 @@ public class User implements Serializable {
 	public void setPerDayCost(BigDecimal perDayCost) {
 		this.perDayCost = perDayCost;
 	}
+
 	
-	@JsonIgnore
+
 	public Set<WorkPackageUserAllocation> getWorkPackageUserAllocations() {
 		return workPackageUserAllocations;
 	}
@@ -134,7 +138,15 @@ public class User implements Serializable {
 			Set<WorkPackageUserAllocation> workPackageUserAllocations) {
 		this.workPackageUserAllocations = workPackageUserAllocations;
 	}
-	
+
+	public List<UserAttendance> getUserAttendances() {
+		return userAttendances;
+	}
+
+	public void setUserAttendances(List<UserAttendance> userAttendances) {
+		this.userAttendances = userAttendances;
+	}
+
 	@JsonIgnore
 	public Set<UserProfile> getUserProfiles() {
 		return userProfiles;

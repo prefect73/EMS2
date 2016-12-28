@@ -25,5 +25,6 @@ public interface UserAttendanceService {
 	
 	List<UserAttendance> findAllUserAttendancesBySSOId(String ssoId); 
 	
+	List<UserAttendance> findAllUserAttendancesUpdated();
 
 }

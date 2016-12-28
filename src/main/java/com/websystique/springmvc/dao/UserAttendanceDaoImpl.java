@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -117,6 +118,15 @@ public class UserAttendanceDaoImpl extends AbstractDao<Integer, UserAttendance>
 		crit.add(Restrictions.eq("userId", id));
 		UserAttendance userAttendance = (UserAttendance) crit.uniqueResult();
 		delete(userAttendance);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<UserAttendance> findAllUserAttendancesUpdated() {
+		//Query query = getSession().createSQLQuery("SELECT aua.id,aua.user_id,aua.mJan-SUM(wpua.mJan) AS mJan,aua.mFeb-SUM(wpua.mFeb) AS mFeb,aua.mMar-SUM(wpua.mMar) AS mMar,aua.mApr-SUM(wpua.mApr) AS mApr,aua.mMay-SUM(wpua.mMay) AS mMay,aua.mJun-SUM(wpua.mJun) AS mJun,aua.mJul-SUM(wpua.mJul) AS mJul,aua.mAug-SUM(wpua.mAug) AS mAug,aua.mSep-SUM(wpua.mSep) AS mSep,aua.mOct-SUM(wpua.mOct) AS mOct,aua.mNov-SUM(wpua.mNov) AS mNov,aua.mDec-SUM(wpua.mDec) AS mDec,aua.year_name FROM WORK_PACKAGE_APP_USER_ALLOCATIONS wpua JOIN app_user_attendance aua ON wpua.user_id = aua.user_id WHERE aua.user_id=:user_id GROUP BY user_id").addEntity(UserAttendance.class);
+		Query query = getSession().createSQLQuery("SELECT aua.id,aua.user_id,aua.mJan-SUM(wpua.mJan) AS mJan,aua.mFeb-SUM(wpua.mFeb) AS mFeb,aua.mMar-SUM(wpua.mMar) AS mMar,aua.mApr-SUM(wpua.mApr) AS mApr,aua.mMay-SUM(wpua.mMay) AS mMay,aua.mJun-SUM(wpua.mJun) AS mJun,aua.mJul-SUM(wpua.mJul) AS mJul,aua.mAug-SUM(wpua.mAug) AS mAug,aua.mSep-SUM(wpua.mSep) AS mSep,aua.mOct-SUM(wpua.mOct) AS mOct,aua.mNov-SUM(wpua.mNov) AS mNov,aua.mDec-SUM(wpua.mDec) AS mDec,aua.year_name FROM WORK_PACKAGE_APP_USER_ALLOCATIONS wpua JOIN app_user_attendance aua ON wpua.user_id = aua.user_id GROUP BY user_id").addEntity(UserAttendance.class);
+		//query.setParameter("user_id", userId);
+		List<UserAttendance> userAttendances = query.list();
+		return userAttendances;
 	}
 
 }

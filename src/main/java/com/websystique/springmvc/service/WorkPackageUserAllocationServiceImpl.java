@@ -104,4 +104,17 @@ public class WorkPackageUserAllocationServiceImpl implements
 		return dao.getTotalWorkPackageHours();
 	}
 
+	@Override
+	public List<WorkPackageUserAllocation> getWorkPackageHoursForAllUsers(
+			String workPackageNumber) {
+		return dao.getWorkPackageHoursForAllUsers(workPackageNumber);
+	}
+
+	@Override
+	public List<WorkPackageUserAllocation> findByProjectID(int projectID) {		
+		return dao.findByProjectID(projectID);
+	}
+	
+	
+
 }

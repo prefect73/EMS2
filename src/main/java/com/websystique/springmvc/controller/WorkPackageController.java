@@ -23,6 +23,7 @@ import com.websystique.springmvc.model.Project;
 import com.websystique.springmvc.model.User;
 import com.websystique.springmvc.model.WorkPackage;
 import com.websystique.springmvc.service.ProjectService;
+import com.websystique.springmvc.service.UserAttendanceService;
 import com.websystique.springmvc.service.UserService;
 import com.websystique.springmvc.service.WorkPackageService;
 import com.websystique.springmvc.service.WorkPackageUserAllocationService;
@@ -44,9 +45,8 @@ public class WorkPackageController {
 	@Autowired
 	UserService userService;
 
-	/*
-	 * @Autowired WorkPackageService workPackageService;
-	 */
+	@Autowired
+	UserAttendanceService userAttendanceService;
 
 	@Autowired
 	MessageSource messageSource;
@@ -95,8 +95,10 @@ public class WorkPackageController {
 	public String newWorkPackage(ModelMap model) {
 		WorkPackage workPackage = new WorkPackage();
 		model.addAttribute("workPackage", workPackage);
-		/*model.addAttribute("projectslist", projectService.findAllProjects());
-		model.addAttribute("employeeslist", userService.findAllUsers());*/
+		/*
+		 * model.addAttribute("projectslist", projectService.findAllProjects());
+		 * model.addAttribute("employeeslist", userService.findAllUsers());
+		 */
 		model.addAttribute("edit", false);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "workPackage";
@@ -149,8 +151,11 @@ public class WorkPackageController {
 	public String editWorkPackage(@PathVariable int id, ModelMap model) {
 		WorkPackage workPackage = workPackageService.findById(id);
 		model.addAttribute("workPackage", workPackage);
-		/*model.addAttribute("projectslist", projectService.findAllProjects());
-		model.addAttribute("employeeslist", userService.findAllUsers());*/
+		/*
+		 * model.addAttribute("projectslist", projectService.findAllProjects());
+		 * model.addAttribute("employeeslist", userService.findAllUsers());
+		 */
+		model.addAttribute("userAttendancesUpdated",userAttendanceService.findAllUserAttendancesUpdated());
 		model.addAttribute("edit", true);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "workPackage";

@@ -36,5 +36,9 @@ public interface WorkPackageUserAllocationService {
 	List<WorkPackageUserAllocation> getWorkPackageHoursForAllUsers();
 
 	List<WorkPackageUserAllocation> getTotalWorkPackageHours();
+	
+	List<WorkPackageUserAllocation> getWorkPackageHoursForAllUsers(String workPackageNumber);
+	
+	List<WorkPackageUserAllocation> findByProjectID(int projectID);
 
 }

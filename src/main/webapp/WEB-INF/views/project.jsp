@@ -70,7 +70,7 @@ $( document ).ready(function() {
 						</label>
 					<div class="col-md-3">
 						<form:input type="text" path="projectNumber" id="projectNumber"
-							class="form-control input-sm" disabled="true" />
+							class="form-control input-sm" readonly="true" />
 						<div class="has-error">
 							<form:errors path="projectNumber" class="help-inline" />
 						</div>
@@ -140,7 +140,7 @@ $( document ).ready(function() {
 						</label>
 					<div class="col-md-3">
 						<form:input type="text" path="totalCost" id="totalCost"
-							class="form-control input-sm" disabled="true" />
+							class="form-control input-sm" readonly="true" />
 						<div class="has-error">
 							<form:errors path="totalCost" class="help-inline" />
 						</div>

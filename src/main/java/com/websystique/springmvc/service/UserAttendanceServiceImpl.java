@@ -85,4 +85,8 @@ public class UserAttendanceServiceImpl implements UserAttendanceService {
 		}
 		return dao.findAllUserAttendancesBySSOId(ssoId);
 	}
+	
+	public List<UserAttendance> findAllUserAttendancesUpdated() {
+		return dao.findAllUserAttendancesUpdated();
+	}
 }

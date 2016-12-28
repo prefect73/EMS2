@@ -24,13 +24,16 @@
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <script>
+
+
+
+
+
 	var wPakAllocSize = '<c:out value="${fn:length(workPackage.workPackageUserAllocations)}"/>';
 	$( document ).ready(function() {
 		  if ($('#empListForWorkPackageTable > tbody > tr').length == 0 || wPakAllocSize == 0 ){
 		   addFirstRow();
-		   
 		  }
-		  
 		 });
 function addFirstRow(){
 	var index = wPakAllocSize;
@@ -112,10 +115,6 @@ function addFirstRow(){
 	
 	
 	function deleteWpUsrAlloc(id, currentTr){
-		
-		
-		
-		
 		if(currentTr.parent().is(':last-child')){
 			var addBTN = $('<input class="btn btn-primary btn-sm" type="button" name="add" value="<spring:message code="button.add"/>" onclick="addNewWPUallocRow(this);"/>');
 			$( "#empListForWorkPackageTable tr:nth-last-child(2)" ).find('td:last').append(addBTN);
