@@ -2,9 +2,7 @@ package com.websystique.springmvc.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -62,9 +60,6 @@ public class User implements Serializable {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	private Set<WorkPackageUserAllocation> workPackageUserAllocations = new HashSet<WorkPackageUserAllocation>();
-
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
-	private List<UserAttendance> userAttendances = new ArrayList<UserAttendance>();
 
 	@NotEmpty
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -128,8 +123,6 @@ public class User implements Serializable {
 		this.perDayCost = perDayCost;
 	}
 
-	
-
 	public Set<WorkPackageUserAllocation> getWorkPackageUserAllocations() {
 		return workPackageUserAllocations;
 	}
@@ -137,14 +130,6 @@ public class User implements Serializable {
 	public void setWorkPackageUserAllocations(
 			Set<WorkPackageUserAllocation> workPackageUserAllocations) {
 		this.workPackageUserAllocations = workPackageUserAllocations;
-	}
-
-	public List<UserAttendance> getUserAttendances() {
-		return userAttendances;
-	}
-
-	public void setUserAttendances(List<UserAttendance> userAttendances) {
-		this.userAttendances = userAttendances;
 	}
 
 	@JsonIgnore
