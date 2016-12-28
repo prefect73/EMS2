@@ -1,5 +1,7 @@
 package com.websystique.springmvc.configuration;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -7,11 +9,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -61,11 +67,13 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	 * convert string values[Roles] to UserProfiles in newUser.jsp
 	 */
 	@Override
-    public void addFormatters(FormatterRegistry registry) {
-        registry.addConverter(roleToUserProfileConverter);
-        registry.addConverter(projectLeadsListToUserConverter);
-        registry.addConverter(projectsListToProjectConverter);
-    }
+	public void addFormatters(FormatterRegistry registry) {
+		registry.addConverter(roleToUserProfileConverter);
+		registry.addConverter(projectLeadsListToUserConverter);
+		registry.addConverter(projectsListToProjectConverter);
+	}
+
+	/* Localization section is started */
 
 	/**
 	 * Configure MessageSource to lookup any validation/error message in
@@ -75,7 +83,27 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("messages");
+		messageSource.setDefaultEncoding("ISO-8859-15");//For German
 		return messageSource;
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(localeChangeInterceptor());
+	}
+
+	@Bean(name = "localeChangeInterceptor")
+	public LocaleChangeInterceptor localeChangeInterceptor() {
+		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+		localeChangeInterceptor.setParamName("language");
+		return localeChangeInterceptor;
+	}
+
+	@Bean(name = "localeResolver")
+	public LocaleResolver getLocaleResolver() {
+		CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
+		cookieLocaleResolver.setDefaultLocale(Locale.GERMAN);
+		return cookieLocaleResolver;
 	}
 
 	/**

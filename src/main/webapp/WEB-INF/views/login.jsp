@@ -1,10 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-15" pageEncoding="ISO-8859-15"%>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Login page</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+		<title><spring:message code="login.title"/></title>
 		<link href="<c:url value='/static/css/bootstrap.css' />"  rel="stylesheet"></link>
 		<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 		<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" />
@@ -19,12 +21,13 @@
 						<form action="${loginUrl}" method="post" class="form-horizontal">
 							<c:if test="${param.error != null}">
 								<div class="alert alert-danger">
-									<p>Invalid username and password.</p>
+								<%-- Current Locale : ${pageContext.response.locale} --%>
+									<p><spring:message code="login.invalid.username.password"/></p>
 								</div>
 							</c:if>
 							<c:if test="${param.logout != null}">
 								<div class="alert alert-success">
-									<p>You have been logged out successfully.</p>
+									<p><spring:message code="login.logout.message"/></p>
 								</div>
 							</c:if>
 							<div class="input-group input-sm">
@@ -37,14 +40,14 @@
 							</div>
 							<div class="input-group input-sm">
                               <div class="checkbox">
-                                <label><input type="checkbox" id="rememberme" name="remember-me"> Remember Me</label>  
+                                <label><input type="checkbox" id="rememberme" name="remember-me"><spring:message code="login.rememberMe.label"/></label>  
                               </div>
                             </div>
 							<input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
 								
 							<div class="form-actions">
 								<input type="submit"
-									class="btn btn-block btn-primary btn-default" value="Log in">
+									class="btn btn-block btn-primary btn-default" value="<spring:message code="login.logInButton.label"/>">
 							</div>
 						</form>
 					</div>

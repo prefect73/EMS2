@@ -1,15 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-15"
+	pageEncoding="ISO-8859-15"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-
 <html>
-
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Projects List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+<title><spring:message code="projectslist.title" /></title>
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
@@ -30,10 +31,12 @@
 		<div class="panel panel-default">
 			<!-- Default panel contents -->
 			<div class="panel-heading">
-				<span class="lead">List of Projects </span>
+				<span class="lead"><spring:message code="projectslist.title" />
+				</span>
 				<sec:authorize access="hasRole('ADMIN')">
 					<a class="btn btn-primary floatRight"
-						href="<c:url value='/Project/newproject' />">Add New Project</a>
+						href="<c:url value='/Project/newproject' />"><spring:message
+							code="projectslist.addNewProject" /></a>
 				</sec:authorize>
 			</div>
 			<div id="projectsTableWrapper" style="padding: 2%;">
@@ -42,11 +45,15 @@
 					cellspacing="0" width="100%">
 					<thead>
 						<tr>
-							<th>Project Number</th>
-							<th>Project Name</th>
-							<th>Customer Name</th>
-							<th>Offered Cost</th>
-							<th>Total Cost</th>
+							<th><spring:message code="project.label.projectNumber" />
+							</th>
+							<th><spring:message code="project.label.projectName" />
+							</th>
+							<th><spring:message code="project.label.customerName" />
+							</th>
+							<th><spring:message code="project.label.offeredCost" />
+							</th>
+							<th><spring:message code="project.label.totalCost" /></th>
 							<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 								<th width="100"></th>
 							</sec:authorize>
@@ -67,12 +74,12 @@
 								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 									<td><a
 										href="<c:url value='/Project/edit-project-${project.projectNumber}' />"
-										class="btn btn-success custom-width">edit</a></td>
+										class="btn btn-success "><spring:message code="button.edit" /></a></td>
 								</sec:authorize>
 								<sec:authorize access="hasRole('ADMIN')">
 									<td><a
 										href="<c:url value='/Project/delete-project-${project.projectNumber}' />"
-										class="btn btn-danger custom-width">delete</a></td>
+										class="btn btn-danger"><spring:message code="button.delete" /></a></td>
 								</sec:authorize>
 							</tr>
 						</c:forEach>

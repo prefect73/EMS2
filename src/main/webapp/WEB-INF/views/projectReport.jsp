@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-15"
+	pageEncoding="ISO-8859-15"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -9,8 +9,8 @@
 
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Project Report</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+<title><spring:message code="projectReport.title" /></title>
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
@@ -24,8 +24,7 @@
 			<%@include file="authheader.jsp"%>
 			<div class="row">
 				<div class="form-group col-md-12" style="margin-top: 2%;">
-					<label class="col-md-2 control-lable" for="projectName">Project
-						Name</label>
+					<label class="col-md-2 control-lable" for="projectName"><spring:message code="project.label.projectName" /></label>
 					<div class="col-md-3">
 						<form:select name="projectNamesDropDown" id="projectNamesDropDown"
 							path="projectName" items="${projectsList}" multiple="false"
@@ -37,7 +36,7 @@
 					</div>
 					<div class="col-md-3">
 						<a id="searchByProjectNameBtn"
-							class="btn btn-success custom-width">Search </a>
+							class="btn btn-success custom-width"><spring:message code="button.search" /> </a>
 					</div>
 				</div>
 			</div>

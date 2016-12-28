@@ -153,7 +153,7 @@ public class ProjectController {
 	 */
 	@ModelAttribute("projectleadslist")
 	public List<User> initializeProjectLeads() {
-		return userService.findAllUsersByType("Project Lead");
+		return userService.findAllUsersByType("Projektleitung");//Project Lead
 	}
 
 	/**

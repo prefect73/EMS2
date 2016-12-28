@@ -1,15 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-15"
+	pageEncoding="ISO-8859-15"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-
 <html>
-
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Work Packages List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+<title><spring:message code="monthlyReport.title" /></title>
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
@@ -42,7 +43,7 @@ td.highlight {
 		<div class="panel panel-default">
 			<!-- Default panel contents -->
 			<div class="panel-heading">
-				<span class="lead">Monthly Report </span>
+				<span class="lead"><spring:message code="monthlyReport.title" /></span>
 				<%-- <sec:authorize access="hasRole('ADMIN')">
 					<a class="btn btn-primary floatRight"
 						href="<c:url value='/WorkPackage/newworkPackage' />">Add New
@@ -57,18 +58,30 @@ td.highlight {
 						<tr>
 							<th></th>
 							<th></th>
-							<th>Jan</th>
-							<th>Feb</th>
-							<th>Mar</th>
-							<th>Apr</th>
-							<th>May</th>
-							<th>Jun</th>
-							<th>Jul</th>
-							<th>Aug</th>
-							<th>Sep</th>
-							<th>Oct</th>
-							<th>Nov</th>
-							<th>Dec</th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.jan" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.feb" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.mar" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.apr" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.may" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.jun" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.jul" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.aug" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.sep" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.oct" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.nov" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.dec" /></th>
 							<%-- <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 								<th width="100"></th>
 							</sec:authorize>
@@ -83,7 +96,7 @@ td.highlight {
 							varStatus="status">
 							<tr>
 								<td rowspan="3">${monthlyAttendance.user.firstName}</td>
-								<td>Possible Days</td>
+								<td><spring:message code="monthlyReport.possibleDays" /></td>
 								<td>${monthlyAttendance.mJan}</td>
 								<td>${monthlyAttendance.mFeb}</td>
 								<td>${monthlyAttendance.mMar}</td>
@@ -101,7 +114,7 @@ td.highlight {
 						<c:forEach items="${workPackageUserAllocations}" var="monthlyAttendance">
 						 --%>
 							<tr>
-								<td>Planned Days</td>
+								<td><spring:message code="monthlyReport.plannedDays" /></td>
 								<td>${workPackageUserAllocationsBySum[status.index].mJan}</td>
 								<td>${workPackageUserAllocationsBySum[status.index].mFeb}</td>
 								<td>${workPackageUserAllocationsBySum[status.index].mMar}</td>
@@ -119,7 +132,7 @@ td.highlight {
 						<c:forEach items="${monthlyAttendances}" var="monthlyAttendance">
 						 --%>
 							<tr>
-								<td>Available Days</td>
+								<td><spring:message code="monthlyReport.availableDays" /></td>
 								<td class="availableDays">${monthlyAttendance.mJan - workPackageUserAllocationsBySum[status.index].mJan}</td>
 								<td class="availableDays">${monthlyAttendance.mFeb - workPackageUserAllocationsBySum[status.index].mFeb}</td>
 								<td class="availableDays">${monthlyAttendance.mMar - workPackageUserAllocationsBySum[status.index].mMar}</td>

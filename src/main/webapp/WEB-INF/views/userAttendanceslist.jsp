@@ -1,15 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-15"
+	pageEncoding="ISO-8859-15"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-
 <html>
-
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>User Attendances List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+<title><spring:message code="userAttendanceslist.title" /></title>
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
@@ -17,25 +18,9 @@
 	href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css" />
 <script type="text/javascript"
 	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
-	
-
- <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<!-- <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
-<script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
- --><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-<script type="text/javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-<script type="text/javascript" src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-<!--<script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
-<script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script> -->
 <script>
 	$(document).ready(function() {
-		$('#userAttendancesTable').DataTable( {
-	        dom: 'Bfrtip',
-	        buttons: [
-	            'copy', 'csv', 'excel', 'pdf', 'print'
-	        ]
-	    } );
+		$('#userAttendancesTable').DataTable();
 	});
 </script>
 </head>
@@ -46,11 +31,12 @@
 		<div class="panel panel-default">
 			<!-- Default panel contents -->
 			<div class="panel-heading">
-				<span class="lead">List of User Attendances </span>
+				<span class="lead"><spring:message
+						code="userAttendanceslist.title" /></span>
 				<sec:authorize access="hasRole('ADMIN')">
 					<a class="btn btn-primary floatRight"
-						href="<c:url value='/UserAttendance/newuserAttendance' />">Add
-						New User Attendance</a>
+						href="<c:url value='/UserAttendance/newuserAttendance' />"><spring:message
+							code="userAttendanceslist.addNewEmployeeAttendance" /></a>
 				</sec:authorize>
 			</div>
 			<div id="userAttendancesTableWrapper" style="padding: 2%;">
@@ -59,21 +45,35 @@
 					cellspacing="0" width="100%">
 					<thead>
 						<tr>
-							<th>Employee Name</th>
-							<th>Jan</th>
-							<th>Feb</th>
-							<th>Mar</th>
-							<th>Apr</th>
-							<th>May</th>
-							<th>Jun</th>
-							<th>Jul</th>
-							<th>Aug</th>
-							<th>Sep</th>
-							<th>Oct</th>
-							<th>Nov</th>
-							<th>Dec</th>
-							<th>Year</th>
-								<th width="100"></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.employeeName" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.jan" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.feb" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.mar" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.apr" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.may" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.jun" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.jul" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.aug" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.sep" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.oct" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.nov" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.dec" /></th>
+							<th><spring:message
+									code="workPackageUserAllocation.label.year" /></th>
+							<th width="100"></th>
 							<sec:authorize access="hasRole('ADMIN')">
 								<th width="100"></th>
 							</sec:authorize>
@@ -100,11 +100,11 @@
 
 								<td><a
 									href="<c:url value='/UserAttendance/edit-userAttendance-${userAttendance.id}' />"
-									class="btn btn-success custom-width">edit</a></td>
+									class="btn btn-success "><spring:message code="button.edit" /></a></td>
 								<sec:authorize access="hasRole('ADMIN')">
 									<td><a
 										href="<c:url value='/UserAttendance/delete-userAttendance-${userAttendance.id}' />"
-										class="btn btn-danger custom-width">delete</a></td>
+										class="btn btn-danger "><spring:message code="button.delete" /></a></td>
 								</sec:authorize>
 							</tr>
 						</c:forEach>

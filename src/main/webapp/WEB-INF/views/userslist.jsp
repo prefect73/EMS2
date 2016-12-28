@@ -1,15 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-15"
+	pageEncoding="ISO-8859-15"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
-
 <html>
-
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Employees List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+<title><spring:message code="userslist.title" /></title>
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
@@ -30,10 +31,10 @@
 		<div class="panel panel-default">
 			<!-- Default panel contents -->
 			<div class="panel-heading">
-				<span class="lead">List of Employees </span>
+				<span class="lead"><spring:message code="userslist.title" /></span>
 				<sec:authorize access="hasRole('ADMIN')">
 					<a class="btn btn-primary floatRight"
-						href="<c:url value='/newuser' />">Add New Employee</a>
+						href="<c:url value='/newuser' />"><spring:message code="userslist.addNewEmployee" /></a>
 				</sec:authorize>
 			</div>
 			<div id="usersTableWrapper" style="padding: 2%;">
@@ -42,11 +43,11 @@
 					cellspacing="0" width="100%">
 					<thead>
 						<tr>
-							<th>Firstname</th>
-							<th>Lastname</th>
-							<th>Email</th>
-							<th>SSO ID</th>
-							<th>Per Day Cost</th>
+							<th><spring:message code="user.label.firstName" /></th>
+							<th><spring:message code="user.label.lastName" /></th>
+							<th><spring:message code="user.label.email" /></th>
+							<th><spring:message code="user.label.ssoId" /></th>
+							<th><spring:message code="user.label.perDayCost" /></th>
 							<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 								<th width="100"></th>
 							</sec:authorize>
@@ -66,11 +67,11 @@
 								<td>${user.perDayCost}</td>
 								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 									<td><a href="<c:url value='/edit-user-${user.ssoId}' />"
-										class="btn btn-success custom-width">edit</a></td>
+										class="btn btn-success "><spring:message code="button.edit" /></a></td>
 								</sec:authorize>
 								<sec:authorize access="hasRole('ADMIN')">
 									<td><a href="<c:url value='/delete-user-${user.ssoId}' />"
-										class="btn btn-danger custom-width">delete</a></td>
+										class="btn btn-danger "><spring:message code="button.delete" /></a></td>
 								</sec:authorize>
 							</tr>
 						</c:forEach>

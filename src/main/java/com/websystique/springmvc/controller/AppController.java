@@ -115,7 +115,7 @@ public class AppController {
 		//model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
 		request.getSession(false).setAttribute("employeeslist", userService.findAllUsers());
-		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType("Project Lead"));
+		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType("Projektleitung"));//Project Lead
 		
 		//return "success";
 		return "redirect:/list";
@@ -159,7 +159,7 @@ public class AppController {
 		//model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " updated successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
 		request.getSession(false).setAttribute("employeeslist", userService.findAllUsers());
-		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType("Project Lead"));
+		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType("Projektleitung"));//Project Lead
 		
 		return "redirect:/list";
 	}
@@ -172,7 +172,7 @@ public class AppController {
 	public String deleteUser(@PathVariable String ssoId, HttpServletRequest request) {
 		userService.deleteUserBySSO(ssoId);
 		request.getSession(false).setAttribute("employeeslist", userService.findAllUsers());
-		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType("Project Lead"));
+		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType("Projektleitung"));//Project Lead
 		
 		return "redirect:/list";
 	}
