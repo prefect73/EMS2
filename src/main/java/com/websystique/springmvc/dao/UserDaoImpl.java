@@ -73,6 +73,13 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		User user = (User)crit.uniqueResult();
 		delete(user);
 	}
+	
+	public void deleteById(int id) {
+		Criteria crit = createEntityCriteria();
+		crit.add(Restrictions.eq("Id", id));
+		User user = (User)crit.uniqueResult();
+		delete(user);
+	}
 
 	public boolean isAdmin (String ssoId){
 		boolean isAdmin = false;

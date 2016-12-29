@@ -19,6 +19,7 @@
 <script type="text/javascript"
 	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
 <script>
+$(document).ready(function() {
 if($("#defaultLanguage").val() == 'german'){
 	$('#userAttendancesTable').DataTable({
         "language": {
@@ -36,6 +37,7 @@ if($("#defaultLanguage").val() == 'german'){
         }
     });
 }
+});
 </script>
 </head>
 
@@ -82,15 +84,16 @@ if($("#defaultLanguage").val() == 'german'){
 									code="workPackageUserAllocation.label.sep" /></th>
 							<th><spring:message
 									code="workPackageUserAllocation.label.oct" /></th>
-							<th><spring:message
+							<%--<th><spring:message
 									code="workPackageUserAllocation.label.nov" /></th>
-							<th><spring:message
+							 <th><spring:message
 									code="workPackageUserAllocation.label.dec" /></th>
 							<th><spring:message
-									code="workPackageUserAllocation.label.year" /></th>
-							<th width="100"></th>
+									code="workPackageUserAllocation.label.year" /></th> --%>
 							<sec:authorize access="hasRole('ADMIN')">
-								<th width="100"></th>
+							<th></th>
+							
+								<th></th>
 							</sec:authorize>
 
 						</tr>
@@ -109,10 +112,10 @@ if($("#defaultLanguage").val() == 'german'){
 								<td>${userAttendance.mAug}</td>
 								<td>${userAttendance.mSep}</td>
 								<td>${userAttendance.mOct}</td>
-								<td>${userAttendance.mNov}</td>
-								<td>${userAttendance.mDec}</td>
+								<%--<td>${userAttendance.mNov}</td>
+								 <td>${userAttendance.mDec}</td>
 								<td>${userAttendance.yearName}</td>
-
+ --%>
 								<td><a
 									href="<c:url value='/UserAttendance/edit-userAttendance-${userAttendance.id}' />"
 									class="btn btn-success "><spring:message code="button.edit" /></a></td>

@@ -132,9 +132,9 @@ public class AppController {
 	/**
 	 * This method will provide the medium to update an existing user.
 	 */
-	@RequestMapping(value = { "/edit-user-{ssoId}" }, method = RequestMethod.GET)
-	public String editUser(@PathVariable String ssoId, ModelMap model) {
-		User user = userService.findBySSO(ssoId);
+	@RequestMapping(value = { "/edit-user-{id}" }, method = RequestMethod.GET)
+	public String editUser(@PathVariable int id, ModelMap model) {
+		User user = userService.findById(id);
 		model.addAttribute("user", user);
 		model.addAttribute("edit", true);
 		model.addAttribute("loggedinuser", getPrincipal());
@@ -145,9 +145,9 @@ public class AppController {
 	 * This method will be called on form submission, handling POST request for
 	 * updating user in database. It also validates the user input
 	 */
-	@RequestMapping(value = { "/edit-user-{ssoId}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/edit-user-{id}" }, method = RequestMethod.POST)
 	public String updateUser(@Valid User user, BindingResult result,
-			ModelMap model, @PathVariable String ssoId, HttpServletRequest request) {
+			ModelMap model, @PathVariable String id, HttpServletRequest request) {
 
 		if (result.hasErrors()) {
 			return "registration";
@@ -173,11 +173,11 @@ public class AppController {
 
 	
 	/**
-	 * This method will delete an user by it's SSOID value.
+	 * This method will delete an user by it's id value.
 	 */
-	@RequestMapping(value = { "/delete-user-{ssoId}" }, method = RequestMethod.GET)
-	public String deleteUser(@PathVariable String ssoId, HttpServletRequest request) {
-		userService.deleteUserBySSO(ssoId);
+	@RequestMapping(value = { "/delete-user-{id}" }, method = RequestMethod.GET)
+	public String deleteUser(@PathVariable int id, HttpServletRequest request) {
+		userService.deleteUserById(id);
 		request.getSession(false).setAttribute("employeeslist", userService.findAllUsers());
 		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType("Projektleitung"));//Project Lead
 		

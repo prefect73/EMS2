@@ -19,6 +19,7 @@
 <script type="text/javascript"
 	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
 <script>
+$(document).ready(function() {
 if($("#defaultLanguage").val() == 'german'){
 	$('#usersTable').DataTable({
         "language": {
@@ -36,6 +37,7 @@ if($("#defaultLanguage").val() == 'german'){
         }
     });
 }
+});
 </script>
 </head>
 
@@ -81,11 +83,11 @@ if($("#defaultLanguage").val() == 'german'){
 								<td>${user.ssoId}</td>
 								<td>${user.perDayCost}</td>
 								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-									<td><a href="<c:url value='/edit-user-${user.ssoId}' />"
+									<td><a href="<c:url value='/edit-user-${user.id}' />"
 										class="btn btn-success "><spring:message code="button.edit" /></a></td>
 								</sec:authorize>
 								<sec:authorize access="hasRole('ADMIN')">
-									<td><a href="<c:url value='/delete-user-${user.ssoId}' />"
+									<td><a href="<c:url value='/delete-user-${user.id}' />"
 										class="btn btn-danger "><spring:message code="button.delete" /></a></td>
 								</sec:authorize>
 							</tr>
