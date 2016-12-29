@@ -7,7 +7,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -28,7 +30,11 @@ import com.websystique.springmvc.converter.RoleToUserProfileConverter;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.websystique.springmvc")
+@PropertySource(value = { "classpath:application.properties" })
 public class AppConfig extends WebMvcConfigurerAdapter {
+
+	@Autowired
+	private Environment environment;
 
 	@Autowired
 	RoleToUserProfileConverter roleToUserProfileConverter;
@@ -83,7 +89,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("messages");
-		messageSource.setDefaultEncoding("ISO-8859-15");//For German
+		messageSource.setDefaultEncoding("ISO-8859-15");// For German
 		return messageSource;
 	}
 
@@ -102,7 +108,16 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 	@Bean(name = "localeResolver")
 	public LocaleResolver getLocaleResolver() {
 		CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
-		cookieLocaleResolver.setDefaultLocale(Locale.GERMAN);
+		if (environment.getProperty("default.language").equalsIgnoreCase(
+				"german")) {
+			cookieLocaleResolver.setDefaultLocale(Locale.GERMAN);
+		} else if (environment.getProperty("default.language")
+				.equalsIgnoreCase("english")) {
+			cookieLocaleResolver.setDefaultLocale(Locale.ENGLISH);
+		} else {
+			cookieLocaleResolver.setDefaultLocale(Locale.GERMAN);
+		}
+
 		return cookieLocaleResolver;
 	}
 

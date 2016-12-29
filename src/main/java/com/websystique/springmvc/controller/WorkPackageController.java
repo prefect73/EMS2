@@ -6,6 +6,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.websystique.springmvc.model.Project;
 import com.websystique.springmvc.model.User;
 import com.websystique.springmvc.model.WorkPackage;
+import com.websystique.springmvc.model.WorkPackageUserAllocation;
 import com.websystique.springmvc.service.ProjectService;
 import com.websystique.springmvc.service.UserAttendanceService;
 import com.websystique.springmvc.service.UserService;
@@ -31,7 +34,11 @@ import com.websystique.springmvc.service.WorkPackageUserAllocationService;
 @Controller
 @RequestMapping("/WorkPackage")
 @SessionAttributes({ "projectslist", "employeeslist" })
+@PropertySource(value = { "classpath:application.properties" })
 public class WorkPackageController {
+
+	@Autowired
+	private Environment environment;
 
 	@Autowired
 	WorkPackageService workPackageService;
@@ -65,6 +72,7 @@ public class WorkPackageController {
 
 		List<WorkPackage> workPackages = workPackageService
 				.findAllWorkPackages();
+		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 		model.addAttribute("workPackages", workPackages);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "workPackageslist";
@@ -133,6 +141,12 @@ public class WorkPackageController {
 		 * "workPackage"; }
 		 */
 
+		for (WorkPackageUserAllocation workPackageUserAllocation : workPackage
+				.getWorkPackageUserAllocations()) {
+			workPackageUserAllocation.setYearName(environment
+					.getProperty("year.name"));
+		}
+
 		workPackageService.saveWorkPackage(workPackage);
 		workPackageService.updateWorkPackage(workPackage);
 
@@ -155,7 +169,8 @@ public class WorkPackageController {
 		 * model.addAttribute("projectslist", projectService.findAllProjects());
 		 * model.addAttribute("employeeslist", userService.findAllUsers());
 		 */
-		model.addAttribute("userAttendancesUpdated",userAttendanceService.findAllUserAttendancesUpdated());
+		model.addAttribute("userAttendancesUpdated",
+				userAttendanceService.findAllUserAttendancesUpdated());
 		model.addAttribute("edit", true);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "workPackage";
@@ -197,6 +212,12 @@ public class WorkPackageController {
 		 * workPackageUserAllocationService.saveWorkPackageUserAllocation(
 		 * workPackage.getWorkPackageUserAllocations());
 		 */
+		
+		for (WorkPackageUserAllocation workPackageUserAllocation : workPackage
+				.getWorkPackageUserAllocations()) {
+			workPackageUserAllocation.setYearName(environment
+					.getProperty("year.name"));
+		}
 
 		workPackageService.updateWorkPackage(workPackage);
 

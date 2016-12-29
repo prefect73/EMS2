@@ -20,13 +20,33 @@
 	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$('#projectsTable').DataTable();
+		
+		if($("#defaultLanguage").val() == 'german'){
+			$('#projectsTable').DataTable({
+		        "language": {
+		            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+		        }
+		    });
+			
+		} else if ($("#defaultLanguage").val() == 'english'){
+			$('#projectsTable').DataTable();
+			
+		} else {
+			$('#projectsTable').DataTable({
+		        "language": {
+		            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+		        }
+		    });
+			
+		}
+		
 	});
 </script>
 </head>
 
 <body>
 	<div class="generic-container">
+		<input type="hidden" id="defaultLanguage" value='${defaultLanguage}' />
 		<%@include file="authheader.jsp"%>
 		<div class="panel panel-default">
 			<!-- Default panel contents -->

@@ -9,6 +9,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,10 +38,14 @@ import com.websystique.springmvc.service.UserService;
 @Controller
 @RequestMapping("/")
 @SessionAttributes("roles")
+@PropertySource(value = { "classpath:application.properties" })
 public class AppController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+    private Environment environment;
 	
 	@Autowired
 	UserAttendanceService userAttendanceService;
@@ -65,6 +71,7 @@ public class AppController {
 
 		List<User> users = userService.findAllUsers();
 		model.addAttribute("users", users);
+		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "userslist";
 	}

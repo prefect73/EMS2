@@ -21,7 +21,7 @@
 	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
 <script>
 function format () {
-	return '<table id="workPackageDetailsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"><tr><td>Total</td><c:forEach items="${workPackageHoursForAllUsers}" var="employeeNames"><td>${employeeNames.user.firstName}(<spring:message code="generic.currencySymbol" />${employeeNames.user.perDayCost})</td></c:forEach></tr><tr><td></td><c:forEach items="${workPackageHoursForAllUsers}" var="workPackageUserAllocation"><td>${workPackageUserAllocation.mJan +workPackageUserAllocation.mFeb + workPackageUserAllocation.mMar + workPackageUserAllocation.mApr + workPackageUserAllocation.mMay + workPackageUserAllocation.mJun + workPackageUserAllocation.mJul + workPackageUserAllocation.mAug +workPackageUserAllocation.mSep + workPackageUserAllocation.mOct + workPackageUserAllocation.mNov + workPackageUserAllocation.mDec}</td></c:forEach></tr></table>';
+	return '<table id="workPackageDetailsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"><tr><td><spring:message code="projectReport.label.total" /></td><c:forEach items="${workPackageHoursForAllUsers}" var="employeeNames"><td>${employeeNames.user.firstName}(<spring:message code="generic.currencySymbol" />${employeeNames.user.perDayCost})</td></c:forEach></tr><tr><td id="totalWorkPackageHoursColumn"></td><c:forEach items="${workPackageHoursForAllUsers}" var="workPackageUserAllocation"><td class="totalWorkPackageUserHoursColumn">${workPackageUserAllocation.mJan +workPackageUserAllocation.mFeb + workPackageUserAllocation.mMar + workPackageUserAllocation.mApr + workPackageUserAllocation.mMay + workPackageUserAllocation.mJun + workPackageUserAllocation.mJul + workPackageUserAllocation.mAug +workPackageUserAllocation.mSep + workPackageUserAllocation.mOct + workPackageUserAllocation.mNov + workPackageUserAllocation.mDec}</td></c:forEach></tr></table>';
 //	return '<table id="workPackageDetailsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"><tr><c:forEach items="${workPackageUserAllocationsBySum}" var="employeeNames" varStatus="status"><td>${employeeNames.user.firstName}</td></tr><tr><td>${workPackageHoursForAllUsers[status.index].mJan + workPackageHoursForAllUsers[status.index].mFeb + workPackageHoursForAllUsers[status.index].mMar + workPackageHoursForAllUsers[status.index].mApr + workPackageHoursForAllUsers[status.index].mMay + workPackageHoursForAllUsers[status.index].mJun + workPackageHoursForAllUsers[status.index].mJul + workPackageHoursForAllUsers[status.index].mAug + workPackageHoursForAllUsers[status.index].mSep + workPackageHoursForAllUsers[status.index].mOct + workPackageHoursForAllUsers[status.index].mNov + workPackageHoursForAllUsers[status.index].mDec}</td></c:forEach></tr></table>';
 }
 $(document).ready(function() {
@@ -31,20 +31,51 @@ $(document).ready(function() {
         	projectNamesDropDownSelectedValue = $('#projectNamesDropDown :selected').val();
         }
         console.log("pr" + projectNamesDropDownSelectedValue);
-        $('#searchByProjectNameBtn').attr('href','/EMS/Project/projectReport-' + projectNamesDropDownSelectedValue + '- ');
-       /* $.ajax({
-            url: "getSelectedProjectName",
-            type: "POST",
-            data: "projectNamesDropDownSelectedValue="+ projectNamesDropDownSelectedValue, 
-            success: function(result){
-               console.log("result: " + result);
-            }
-        });  */
+        $('#searchByProjectNameBtn').attr('href','/EMS/Project/projectReport-' + projectNamesDropDownSelectedValue + '- ');        
     });
 	
 	
-	var table = $('#projectReportTable').DataTable();//{
-    var	workPackageDetailsTable = $('#workPackageDetailsTable').DataTable();
+    var table = "";
+    var workPackageDetailsTable = "";
+    if($("#defaultLanguage").val() == 'german'){
+    	table = $('#projectReportTable').DataTable({
+	        "language": {
+	            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+	        }
+	    });
+		
+	} else if ($("#defaultLanguage").val() == 'english'){
+		table = $('#projectReportTable').DataTable();
+		
+	} else {
+		table = $('#projectReportTable').DataTable({
+	        "language": {
+	            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+	        }
+	    });
+		
+	}
+    
+    
+    if($("#defaultLanguage").val() == 'german'){
+    	workPackageDetailsTable = $('#workPackageDetailsTable').DataTable({
+	        "language": {
+	            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+	        }
+	    });
+		
+	} else if ($("#defaultLanguage").val() == 'english'){
+		workPackageDetailsTable = $('#workPackageDetailsTable').DataTable();
+		
+	} else {
+		workPackageDetailsTable = $('#workPackageDetailsTable').DataTable({
+	        "language": {
+	            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+	        }
+	    });
+		
+	}
+    
     
     if($('#workPackageHoursForAllUsers').val()) {
     	var currentURL = window.location.href;
@@ -65,26 +96,15 @@ $(document).ready(function() {
     	var tr = $(this).closest('tr');
         var row = table.row( tr );
         $(this).attr('href','/EMS/Project/projectReport-' + projectNamesDropDownSelectedValue + '-' + selectedWorkPackageName);
-        
-       	 /* $.ajax({
-            url: "/EMS/Project/projectReport-" + projectNamesDropDownSelectedValue + "-" + selectedWorkPackageName,
-            type: "POST",
-            data: "projectNamesDropDownSelectedValue="+projectNamesDropDownSelectedValue + "&selectedWorkPackageName="+ selectedWorkPackageName, 
-            success: function(result){
-               console.log("result: " + result);
-            }
-        });   */
-     
-        
-        /* if ( row.child.isShown() ) {
-            row.child.hide();
-            tr.removeClass('shown');
-        }
-        else {
-            row.child( format(row.data()) ).show();
-            tr.addClass('shown');
-        } */
     } );
+    
+    $("#totalWorkPackageHoursColumn").html(function() {
+        var sum = 0;
+        $(".totalWorkPackageUserHoursColumn").each(function() {
+            sum += parseInt($(this).html());
+        });
+        return sum;
+    });
 });
 </script>
 

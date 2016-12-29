@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,10 +24,14 @@ import com.websystique.springmvc.service.WorkPackageUserAllocationService;
 
 @Controller
 @RequestMapping("/UserAttendance")
+@PropertySource(value = { "classpath:application.properties" })
 public class MonthlyReportController {
 
 	@Autowired
 	WorkPackageService workPackageService;
+	
+	@Autowired
+    private Environment environment;
 
 	@Autowired
 	WorkPackageUserAllocationService workPackageUserAllocationService;
@@ -56,6 +62,7 @@ public class MonthlyReportController {
 		List<WorkPackageUserAllocation> workPackageUserAllocationsBySum = workPackageUserAllocationService
 				.findAllWorkPackageUserAllocationsBySum();
 		model.addAttribute("monthlyAttendances", monthlyAttendances);
+		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 		model.addAttribute("workPackageUserAllocationsBySum",
 				workPackageUserAllocationsBySum);
 		model.addAttribute("loggedinuser", getPrincipal());

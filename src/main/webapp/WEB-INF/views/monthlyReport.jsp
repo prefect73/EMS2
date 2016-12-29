@@ -27,6 +27,25 @@
 				$(this).css('background-color', 'red');
 			}
 		})
+		
+		if($("#defaultLanguage").val() == 'german'){
+			$('#monthlyReportTable').DataTable({
+		        "language": {
+		            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+		        }
+		    });
+			
+		} else if ($("#defaultLanguage").val() == 'english'){
+			$('#monthlyReportTable').DataTable();
+			
+		} else {
+			$('#monthlyReportTable').DataTable({
+		        "language": {
+		            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+		        }
+		    });
+			
+		}
 	});
 </script>
 <style type="text/css">
@@ -39,6 +58,7 @@ td.highlight {
 
 <body>
 	<div class="generic-container">
+		<input type="hidden" id="defaultLanguage" value='${defaultLanguage}' />
 		<%@include file="authheader.jsp"%>
 		<div class="panel panel-default">
 			<!-- Default panel contents -->

@@ -6,6 +6,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,8 +28,12 @@ import com.websystique.springmvc.service.UserService;
 
 @Controller
 @RequestMapping("/UserAttendance")
-@SessionAttributes({ "employeeslist" }) 
+@SessionAttributes({ "employeeslist" })
+@PropertySource(value = { "classpath:application.properties" })
 public class UserAttendanceController {
+	
+	@Autowired
+    private Environment environment;
 
 	@Autowired
 	UserAttendanceService userAttendanceService;
@@ -51,6 +57,7 @@ public class UserAttendanceController {
 	public String listUserAttendances(ModelMap model) {
 		String ssoId = getPrincipal();
 		List<UserAttendance> userAttendances = userAttendanceService.findAllUserAttendancesBySSOId(ssoId);
+		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 		model.addAttribute("userAttendances", userAttendances);
 		model.addAttribute("loggedinuser", getPrincipal());
 		
@@ -107,8 +114,10 @@ public class UserAttendanceController {
 		 * "userAttendance"; }
 		 */
 
+		
+		userAttendance.setYearName(environment.getProperty("year.name"));
 		userAttendanceService.saveUserAttendance(userAttendance);
-		userAttendanceService.updateUserAttendance(userAttendance);
+		//userAttendanceService.updateUserAttendance(userAttendance);
 
 		// model.addAttribute("success", "UserAttendance " +
 		// userAttendance.getFirstName() +
@@ -154,7 +163,7 @@ public class UserAttendanceController {
 		 * Locale.getDefault())); result.addError(idError); return
 		 * "userAttendance"; }
 		 */
-
+		userAttendance.setYearName(environment.getProperty("year.name"));
 		userAttendanceService.updateUserAttendance(userAttendance);
 
 		// model.addAttribute("success", "UserAttendance " +

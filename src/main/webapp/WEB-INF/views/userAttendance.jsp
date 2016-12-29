@@ -228,7 +228,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<%-- <div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="yearName"><spring:message code="userAttendance.label.year"/></label>
 					<div class="col-md-3">
@@ -239,7 +239,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> --%>
 		</form:form>
 	</div>
 </body>
