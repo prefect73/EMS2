@@ -107,6 +107,8 @@ public class WorkPackageController {
 		 * model.addAttribute("projectslist", projectService.findAllProjects());
 		 * model.addAttribute("employeeslist", userService.findAllUsers());
 		 */
+		model.addAttribute("userAttendancesUpdated",
+				userAttendanceService.findAllUserAttendancesUpdated());
 		model.addAttribute("edit", false);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "workPackage";
