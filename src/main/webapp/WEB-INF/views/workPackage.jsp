@@ -34,9 +34,6 @@ var userAttendance = new Map();
 	$( document ).ready(function() {
 		  if ($('#empListForWorkPackageTable > tbody > tr').length == 0 || wPakAllocSize == 0 ){
 		   addFirstRow();
-		   /* poulateAvailableHours();
-		   $( ".userCombo" ).change(poulateAvailableHours); */
-		   
 		  }
 		  poulateAvailableHours();
 		     $( ".userCombo" ).change(function() {
@@ -118,7 +115,8 @@ function addFirstRow(){
 		$("input.tr_clone_add").on('click', addHandler); */
 		
 		 var index = wPakAllocSize;
-		
+		 		 
+		var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';	
 		var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" /></td>';
 		var mFebTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mFebAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mFeb" /></td>';
 		var mMarTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMarAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mMar" /></td>';
