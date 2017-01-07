@@ -39,6 +39,7 @@ public class WorkPackageUserAllocationServiceImpl implements
 		WorkPackageUserAllocation entity = dao
 				.findById(workPackageUserAllocation.getId());
 		if (entity != null) {
+			entity.setTotalPlannedDays(workPackageUserAllocation.getTotalPlannedDays());
 			entity.setmJan(workPackageUserAllocation.getmJan());
 			entity.setmFeb(workPackageUserAllocation.getmFeb());
 			entity.setmMar(workPackageUserAllocation.getmMar());

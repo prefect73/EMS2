@@ -32,6 +32,9 @@ public class WorkPackageUserAllocation implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@Column(name = "total_planned_days", precision = 10, scale = 2)
+	private BigDecimal totalPlannedDays;
 
 	@DecimalMax(value = "31.00")
 	@Column(name = "mJan", precision = 10, scale = 2)
@@ -117,6 +120,14 @@ public class WorkPackageUserAllocation implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public BigDecimal getTotalPlannedDays() {
+		return totalPlannedDays;
+	}
+
+	public void setTotalPlannedDays(BigDecimal totalPlannedDays) {
+		this.totalPlannedDays = totalPlannedDays;
 	}
 
 	public BigDecimal getmJan() {

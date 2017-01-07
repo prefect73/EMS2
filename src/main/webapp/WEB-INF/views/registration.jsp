@@ -78,7 +78,7 @@
 						<c:choose>
 							<c:when test="${edit}">
 								<form:input type="text" path="ssoId" id="ssoId"
-									class="form-control input-sm" disabled="true" />
+									class="form-control input-sm" readonly="true" />
 							</c:when>
 							<c:otherwise>
 								<form:input type="text" path="ssoId" id="ssoId"
