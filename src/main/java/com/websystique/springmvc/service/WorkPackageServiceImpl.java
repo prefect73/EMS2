@@ -99,10 +99,11 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 			Query query = dao
 					.getHibernateSession()
 					.createSQLQuery(
-							"INSERT INTO work_package_app_user_allocations (work_package_id,  user_id,  mJan,  mFeb,  mMar,  mApr,  mMay,  mJun,  mJul,  mAug,  mSep,  mOct,  mNov,  mDec,  YEAR_NAME) VALUES (:work_package_id, :user_id, :mJan, :mFeb, :mMar, :mApr, :mMay, :mJun, :mJul, :mAug, :mSep, :mOct, :mNov, :mDec, :YEAR_NAME)");
+							"INSERT INTO work_package_app_user_allocations (work_package_id,  user_id, total_planned_days,  mJan,  mFeb,  mMar,  mApr,  mMay,  mJun,  mJul,  mAug,  mSep,  mOct,  mNov,  mDec,  YEAR_NAME) VALUES (:work_package_id, :user_id, :total_planned_days, :mJan, :mFeb, :mMar, :mApr, :mMay, :mJun, :mJul, :mAug, :mSep, :mOct, :mNov, :mDec, :YEAR_NAME)");
 			query.setParameter("work_package_id", workPackage.getId());
 			query.setParameter("user_id", workPackageUserAllocation.getUser()
 					.getId());
+			query.setParameter("total_planned_days", workPackageUserAllocation.getTotalPlannedDays());
 			query.setParameter("mJan", workPackageUserAllocation.getmJan());
 			query.setParameter("mFeb", workPackageUserAllocation.getmFeb());
 			query.setParameter("mMar", workPackageUserAllocation.getmMar());
