@@ -90,9 +90,9 @@ if($("#defaultLanguage").val() == 'german'){
 									code="workPackageUserAllocation.label.dec" /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
 									code="workPackageUserAllocation.label.year" /></th> --%>
-							<sec:authorize access="hasRole('ADMIN')">
-							<th></th>
 							
+							<th></th>
+							<sec:authorize access="hasRole('ADMIN')">
 								<th></th>
 							</sec:authorize>
 

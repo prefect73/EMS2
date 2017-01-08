@@ -64,7 +64,7 @@ $(document).ready(function() {
 					<thead>
 						<tr>
 							<th><spring:message code="project.label.projectName" /></th>
-							<th><spring:message code="workPackage.label.workPackageNumber" /></th>
+							<%-- <th><spring:message code="workPackage.label.workPackageNumber" /></th> --%>
 							<th><spring:message code="workPackage.label.workPackageName" /></th>
 							<th><spring:message code="workPackage.label.offeredCost" /></th>
 							<th><spring:message code="workPackage.label.totalCost" /></th>
@@ -81,7 +81,7 @@ $(document).ready(function() {
 						<c:forEach items="${workPackages}" var="workPackage">
 							<tr>
 								<td>${workPackage.project.projectName}</td>
-								<td>${workPackage.workPackageNumber}</td>
+								<%-- <td>${workPackage.workPackageNumber}</td> --%>
 								<td>${workPackage.workPackageName}</td>
 								<td><spring:message code="generic.currencySymbol" />${workPackage.offeredCost}</td>
 								<td><spring:message code="generic.currencySymbol" />${workPackage.totalCost}</td>

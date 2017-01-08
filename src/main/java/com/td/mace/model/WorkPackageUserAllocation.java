@@ -34,55 +34,55 @@ public class WorkPackageUserAllocation implements Serializable {
 	private Integer id;
 	
 	@Column(name = "total_planned_days", precision = 10, scale = 2)
-	private BigDecimal totalPlannedDays;
+	private BigDecimal totalPlannedDays  = new BigDecimal("0.00");;
 
 	@DecimalMax(value = "31.00")
 	@Column(name = "mJan", precision = 10, scale = 2)
-	private BigDecimal mJan;
+	private BigDecimal mJan = new BigDecimal("0.00");
 
 	@DecimalMax(value = "29.00")
 	@Column(name = "mFeb", precision = 10, scale = 2)
-	private BigDecimal mFeb;
+	private BigDecimal mFeb = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
 	@Column(name = "mMar", precision = 10, scale = 2)
-	private BigDecimal mMar;
+	private BigDecimal mMar = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
 	@Column(name = "mApr", precision = 10, scale = 2)
-	private BigDecimal mApr;
+	private BigDecimal mApr = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
 	@Column(name = "mMay", precision = 10, scale = 2)
-	private BigDecimal mMay;
+	private BigDecimal mMay = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
 	@Column(name = "mJun", precision = 10, scale = 2)
-	private BigDecimal mJun;
+	private BigDecimal mJun = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
 	@Column(name = "mJul", precision = 10, scale = 2)
-	private BigDecimal mJul;
+	private BigDecimal mJul = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
 	@Column(name = "mAug", precision = 10, scale = 2)
-	private BigDecimal mAug;
+	private BigDecimal mAug = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
 	@Column(name = "mSep", precision = 10, scale = 2)
-	private BigDecimal mSep;
+	private BigDecimal mSep = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
 	@Column(name = "mOct", precision = 10, scale = 2)
-	private BigDecimal mOct;
+	private BigDecimal mOct = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
 	@Column(name = "mNov", precision = 10, scale = 2)
-	private BigDecimal mNov;
+	private BigDecimal mNov = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
 	@Column(name = "mDec", precision = 10, scale = 2)
-	private BigDecimal mDec;
+	private BigDecimal mDec = new BigDecimal("0.00");
 
 	@Column(name = "Year_Name", precision = 10, scale = 2)
 	private String yearName;

@@ -205,7 +205,7 @@ function addFirstRow(){
 
 			<form:input type="hidden" path="id" id="id" />
 
-			<div class="row">
+			<%-- <div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="workPackageNumber"><spring:message
 							code="workPackage.label.workPackageNumber" /> </label>
@@ -218,7 +218,7 @@ function addFirstRow(){
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> --%>
 
 			<div class="row">
 				<div class="form-group col-md-12">

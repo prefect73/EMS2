@@ -22,9 +22,22 @@
 	$(document).ready(function() {
 		$(".availableDays").each(function() {
 			var value = parseInt($(this).html());
-			if (value < 0) {
+			var tdIndex = $(this).index();
+			//.eq(rowIndex).find('td').eq(columnIndex)
+			var currentTr = $(this).closest('tr');
+			var prevTr = currentTr.prev();
+			var prevTdValue = prevTr.find('td').eq(tdIndex).html();
+			var prevPrevTr = currentTr.prev().prev();
+			var prevPrevTdValue = prevPrevTr.find('td').eq(tdIndex).html();
+			if (value < 0.00) {
+				//$(this).html(value.setFixed(2));
 				$(this).css('color', 'white');
 				$(this).css('background-color', 'red');
+			} else if(value == 0.00 && prevTdValue != 0.00){
+				//$(this).html(value.setFixed(2));
+				$(this).css('color', 'white');
+				$(this).css('background-color', 'green');
+				
 			}
 		})
 		

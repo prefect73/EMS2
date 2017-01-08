@@ -46,7 +46,7 @@
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="firstName"><spring:message code="user.label.firstName"/>
-						Name</label>
+						</label>
 					<div class="col-md-3">
 						<form:input type="text" path="firstName" id="firstName"
 							class="form-control input-sm" />
@@ -60,7 +60,7 @@
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="lastName"><spring:message code="user.label.lastName"/>
-						Name</label>
+						</label>
 					<div class="col-md-3">
 						<form:input type="text" path="lastName" id="lastName"
 							class="form-control input-sm" />
@@ -120,9 +120,11 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="email">
-					<spring:message code="user.label.perDayCost"/></label>
+					<label class="col-md-2 control-lable" for="perDayCost">
+					<spring:message code="user.label.perDayCost"/>
 					<spring:message code="generic.inCurrency" />
+					</label>
+					
 					<div class="col-md-3">
 						<form:input type="text" path="perDayCost" id="perDayCost"
 							class="form-control input-sm" />

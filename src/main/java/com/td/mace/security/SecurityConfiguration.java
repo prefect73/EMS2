@@ -29,37 +29,70 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	PersistentTokenRepository tokenRepository;
 
 	@Autowired
-	public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+	public void configureGlobalSecurity(AuthenticationManagerBuilder auth)
+			throws Exception {
 		auth.userDetailsService(userDetailsService);
 		auth.authenticationProvider(authenticationProvider());
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/Workpackage", "/workpackageslist")
-		.access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
-		.antMatchers("/newworkpackage/**", "/delete-workpackage-*").access("hasRole('ADMIN')").antMatchers("/edit-workpackage-*")
-		.access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin().loginPage("/login")
-		.loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password").and()
-		.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
-		.tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
-		
-		
-		http.authorizeRequests().antMatchers("/Project", "/projectslist")
-		.access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
-		.antMatchers("/newproject/**", "/delete-project-*").access("hasRole('ADMIN')").antMatchers("/edit-project-*")
-		.access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin().loginPage("/login")
-		.loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password").and()
-		.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
-		.tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
-		
-		http.authorizeRequests().antMatchers("/", "/list")
+		/*http.authorizeRequests()
+				.antMatchers("/Workpackage", "/workpackageslist")
 				.access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
-				.antMatchers("/newuser/**", "/delete-user-*").access("hasRole('ADMIN')").antMatchers("/edit-user-*")
-				.access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin().loginPage("/login")
-				.loginProcessingUrl("/login").usernameParameter("ssoId").passwordParameter("password").and()
-				.rememberMe().rememberMeParameter("remember-me").tokenRepository(tokenRepository)
-				.tokenValiditySeconds(86400).and().csrf().and().exceptionHandling().accessDeniedPage("/Access_Denied");
+				.antMatchers("/newworkpackage/**", "/delete-workpackage-*")
+				.access("hasRole('ADMIN')").antMatchers("/edit-workpackage-*")
+				.access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin()
+				.loginPage("/login").loginProcessingUrl("/login")
+				.usernameParameter("ssoId").passwordParameter("password").and()
+				.rememberMe().rememberMeParameter("remember-me")
+				.tokenRepository(tokenRepository).tokenValiditySeconds(86400)
+				.and().csrf().and().exceptionHandling()
+				.accessDeniedPage("/Access_Denied");
+
+		http.authorizeRequests()
+				.antMatchers("/Project", "/projectslist")
+				.access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
+				.antMatchers("/newproject/**", "/delete-project-*")
+				.access("hasRole('ADMIN')").antMatchers("/edit-project-*")
+				.access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin()
+				.loginPage("/login").loginProcessingUrl("/login")
+				.usernameParameter("ssoId").passwordParameter("password").and()
+				.rememberMe().rememberMeParameter("remember-me")
+				.tokenRepository(tokenRepository).tokenValiditySeconds(86400)
+				.and().csrf().and().exceptionHandling()
+				.accessDeniedPage("/Access_Denied");
+
+		http.authorizeRequests()
+				.antMatchers("/", "/list").permitAll()
+				.access("hasRole('USER') or hasRole('ADMIN') or hasRole('DBA')")
+				.antMatchers("/newuser/**", "/delete-user-*")
+				.access("hasRole('ADMIN')").antMatchers("/edit-user-*")
+				.access("hasRole('ADMIN') or hasRole('DBA')").and().formLogin()
+				.loginPage("/login").loginProcessingUrl("/login")
+				.usernameParameter("ssoId").passwordParameter("password").and()
+				.rememberMe().rememberMeParameter("remember-me")
+				.tokenRepository(tokenRepository).tokenValiditySeconds(86400)
+				.and().csrf().and().exceptionHandling()
+				.accessDeniedPage("/Access_Denied");*/
+		http.authorizeRequests()
+				.antMatchers("/newproject/**", "/delete-project-*","/edit-project-*").access("hasRole('ADMIN')")		
+				//.antMatchers("/newuser/**", "/delete-user-*","/edit-user-*").access("hasRole('ADMIN')")
+				.antMatchers("/newworkpackage/**", "/delete-workpackage-*","/edit-workpackage-*").access("hasRole('ADMIN')")
+				.antMatchers("/newuserAttendance/**", "/delete-userAttendance-*").access("hasRole('ADMIN')")
+				.antMatchers("/", "/list").permitAll()
+				.antMatchers("/Project", "/projectslist").permitAll()
+				.antMatchers("/Workpackage", "/workpackageslist").permitAll()
+				.antMatchers("/UserAttendance", "/userAttendanceslist").permitAll()
+				.antMatchers("/UserAttendance", "/monthlyReport").permitAll()
+				.antMatchers("/edit-userAttendance-*").permitAll()
+				.and().formLogin()
+				.loginPage("/login").loginProcessingUrl("/login")
+				.usernameParameter("ssoId").passwordParameter("password").and()
+				.rememberMe().rememberMeParameter("remember-me")
+				.tokenRepository(tokenRepository).tokenValiditySeconds(86400)
+				.and().csrf().and().exceptionHandling()
+				.accessDeniedPage("/Access_Denied");
 	}
 
 	@Bean
