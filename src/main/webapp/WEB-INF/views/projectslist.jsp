@@ -89,8 +89,8 @@
 								<td>${project.projectNumber}</td>
 								<td>${project.projectName}</td>
 								<td>${project.customerName}</td>
-								<td>${project.offeredCost}</td>
-								<td>${project.totalCost}</td>
+								<td><spring:message code="generic.currencySymbol" />${project.offeredCost}</td>
+								<td><spring:message code="generic.currencySymbol" />${project.totalCost}</td>
 								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 									<td><a
 										href="<c:url value='/Project/edit-project-${project.projectNumber}' />"

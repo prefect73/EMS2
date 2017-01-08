@@ -79,29 +79,29 @@ td.highlight {
 							<th></th>
 							<th></th>
 							<th><spring:message
-									code="workPackageUserAllocation.label.jan" /></th>
+									code="workPackageUserAllocation.label.jan" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
-									code="workPackageUserAllocation.label.feb" /></th>
+									code="workPackageUserAllocation.label.feb" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
-									code="workPackageUserAllocation.label.mar" /></th>
+									code="workPackageUserAllocation.label.mar" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
-									code="workPackageUserAllocation.label.apr" /></th>
+									code="workPackageUserAllocation.label.apr" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
-									code="workPackageUserAllocation.label.may" /></th>
+									code="workPackageUserAllocation.label.may" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
-									code="workPackageUserAllocation.label.jun" /></th>
+									code="workPackageUserAllocation.label.jun" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
-									code="workPackageUserAllocation.label.jul" /></th>
+									code="workPackageUserAllocation.label.jul" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
-									code="workPackageUserAllocation.label.aug" /></th>
+									code="workPackageUserAllocation.label.aug" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
-									code="workPackageUserAllocation.label.sep" /></th>
+									code="workPackageUserAllocation.label.sep" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
-									code="workPackageUserAllocation.label.oct" /></th>
+									code="workPackageUserAllocation.label.oct" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
-									code="workPackageUserAllocation.label.nov" /></th>
+									code="workPackageUserAllocation.label.nov" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
-									code="workPackageUserAllocation.label.dec" /></th>
+									code="workPackageUserAllocation.label.dec" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<%-- <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 								<th width="100"></th>
 							</sec:authorize>

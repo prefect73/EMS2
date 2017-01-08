@@ -123,7 +123,9 @@ $( document ).ready(function() {
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="offeredCost"><spring:message code="project.label.offeredCost"/>
+					<label class="col-md-2 control-lable" for="offeredCost">
+					<spring:message code="project.label.offeredCost"/>
+					<spring:message code="generic.inCurrency" />
 						</label>
 					<div class="col-md-3">
 						<form:input type="text" path="offeredCost" id="offeredCost"
@@ -136,7 +138,9 @@ $( document ).ready(function() {
 			</div>
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="totalCost"><spring:message code="project.label.totalCost"/>
+					<label class="col-md-2 control-lable" for="totalCost">
+					<spring:message code="project.label.totalCost"/>
+					<spring:message code="generic.inCurrency" />
 						</label>
 					<div class="col-md-3">
 						<form:input type="text" path="totalCost" id="totalCost"

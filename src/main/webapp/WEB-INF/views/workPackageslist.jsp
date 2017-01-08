@@ -83,8 +83,8 @@ $(document).ready(function() {
 								<td>${workPackage.project.projectName}</td>
 								<td>${workPackage.workPackageNumber}</td>
 								<td>${workPackage.workPackageName}</td>
-								<td>${workPackage.offeredCost}</td>
-								<td>${workPackage.totalCost}</td>
+								<td><spring:message code="generic.currencySymbol" />${workPackage.offeredCost}</td>
+								<td><spring:message code="generic.currencySymbol" />${workPackage.totalCost}</td>
 								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 									<td><a
 										href="<c:url value='/WorkPackage/edit-workPackage-${workPackage.id}' />"

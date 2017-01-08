@@ -120,7 +120,9 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="email"><spring:message code="user.label.perDayCost"/></label>
+					<label class="col-md-2 control-lable" for="email">
+					<spring:message code="user.label.perDayCost"/></label>
+					<spring:message code="generic.inCurrency" />
 					<div class="col-md-3">
 						<form:input type="text" path="perDayCost" id="perDayCost"
 							class="form-control input-sm" />

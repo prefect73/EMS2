@@ -21,7 +21,7 @@
 	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
 <script>
 function format () {
-	return '<table id="workPackageDetailsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"><tr><td>Total</td><c:forEach items="${workPackageHoursForAllUsers}" var="employeeNames"><td>${employeeNames.user.firstName}(<spring:message code="generic.currencySymbol" />${employeeNames.user.perDayCost})</td></c:forEach></tr><tr><td id="totalWorkPackageHoursColumn"></td><c:forEach items="${workPackageHoursForAllUsers}" var="workPackageUserAllocation"><td class="totalWorkPackageUserHoursColumn">${workPackageUserAllocation.mJan +workPackageUserAllocation.mFeb + workPackageUserAllocation.mMar + workPackageUserAllocation.mApr + workPackageUserAllocation.mMay + workPackageUserAllocation.mJun + workPackageUserAllocation.mJul + workPackageUserAllocation.mAug +workPackageUserAllocation.mSep + workPackageUserAllocation.mOct + workPackageUserAllocation.mNov + workPackageUserAllocation.mDec}</td></c:forEach></tr></table>';
+	return '<table id="workPackageDetailsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"><tr><td><spring:message code="projectReport.label.totalDays" /></td><c:forEach items="${workPackageHoursForAllUsers}" var="employeeNames"><td>${employeeNames.user.firstName}(<spring:message code="generic.currencySymbol" />${employeeNames.user.perDayCost})</td></c:forEach></tr><tr><td id="totalWorkPackageHoursColumn"></td><c:forEach items="${workPackageHoursForAllUsers}" var="workPackageUserAllocation"><td class="totalWorkPackageUserHoursColumn">${workPackageUserAllocation.mJan +workPackageUserAllocation.mFeb + workPackageUserAllocation.mMar + workPackageUserAllocation.mApr + workPackageUserAllocation.mMay + workPackageUserAllocation.mJun + workPackageUserAllocation.mJul + workPackageUserAllocation.mAug +workPackageUserAllocation.mSep + workPackageUserAllocation.mOct + workPackageUserAllocation.mNov + workPackageUserAllocation.mDec}</td></c:forEach></tr></table>';
 //	return '<table id="workPackageDetailsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"><tr><c:forEach items="${workPackageUserAllocationsBySum}" var="employeeNames" varStatus="status"><td>${employeeNames.user.firstName}</td></tr><tr><td>${workPackageHoursForAllUsers[status.index].mJan + workPackageHoursForAllUsers[status.index].mFeb + workPackageHoursForAllUsers[status.index].mMar + workPackageHoursForAllUsers[status.index].mApr + workPackageHoursForAllUsers[status.index].mMay + workPackageHoursForAllUsers[status.index].mJun + workPackageHoursForAllUsers[status.index].mJul + workPackageHoursForAllUsers[status.index].mAug + workPackageHoursForAllUsers[status.index].mSep + workPackageHoursForAllUsers[status.index].mOct + workPackageHoursForAllUsers[status.index].mNov + workPackageHoursForAllUsers[status.index].mDec}</td></c:forEach></tr></table>';
 }
 $(document).ready(function() {
@@ -103,7 +103,7 @@ $(document).ready(function() {
         $(".totalWorkPackageUserHoursColumn").each(function() {
             sum += parseInt($(this).html());
         });
-        return sum;
+        return sum.toFixed(2);
     });
 });
 </script>
@@ -138,7 +138,7 @@ $(document).ready(function() {
 			</div>
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="offeredCost"><spring:message code="project.label.offeredCost"/>
+					<label class="col-md-2 control-lable" for="offeredCost"><spring:message code="project.label.offeredCost"/><spring:message code="generic.inCurrency" />
 						</label>
 					<div class="col-md-3">
 						<form:input type="text" path="offeredCost" id="offeredCost"
@@ -151,7 +151,7 @@ $(document).ready(function() {
 			</div>
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="totalCost"><spring:message code="project.label.totalCost"/>
+					<label class="col-md-2 control-lable" for="totalCost"><spring:message code="project.label.totalCost"/><spring:message code="generic.inCurrency" />
 						</label>
 					<div class="col-md-3">
 						<form:input type="text" path="totalCost" id="totalCost"
@@ -204,8 +204,8 @@ $(document).ready(function() {
 						<th><spring:message code="workPackage.label.workPackageNumber"/></th>
 						<th><spring:message code="workPackage.label.workPackageName"/></th>
 						<th><spring:message code="workPackage.label.projectName"/></th>
-						<th><spring:message code="workPackage.label.offeredCost"/></th>
-						<th><spring:message code="workPackage.label.totalCost"/></th>
+						<th><spring:message code="workPackage.label.offeredCost"/><spring:message code="generic.inCurrency" /></th>
+						<th><spring:message code="workPackage.label.totalCost"/><spring:message code="generic.inCurrency" /></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -218,8 +218,8 @@ $(document).ready(function() {
 								class="searchByWorkPackageNameBtn btn btn-success custom-width" id="${workPackage.workPackage.workPackageNumber}">${workPackage.workPackage.workPackageNumber}</a></td>
 							<td>${workPackage.workPackage.workPackageName}</td>
 							<td>${workPackage.workPackage.project.projectName}</td>
-							<td>${workPackage.workPackage.offeredCost}</td>
-							<td>${workPackage.workPackage.totalCost}</td>
+							<td><spring:message code="generic.currencySymbol" />${workPackage.workPackage.offeredCost}</td>
+							<td><spring:message code="generic.currencySymbol" />${workPackage.workPackage.totalCost}</td>
 						</tr>
 					</c:forEach>
 				</tbody>

@@ -154,13 +154,8 @@ function addFirstRow(){
 	      poulateAvailableHours();
 	     });
 	}
-	
-	
+
 	function deleteWpUsrAlloc(id, currentTr){
-		
-		
-		
-		
 		if(currentTr.parent().is(':last-child')){
 			var addBTN = $('<input class="btn btn-primary btn-sm" type="button" name="add" value="<spring:message code="button.add"/>" onclick="addNewWPUallocRow(this);"/>');
 			$( "#empListForWorkPackageTable tr:nth-last-child(2)" ).find('td:last').append(addBTN);
@@ -262,8 +257,8 @@ function addFirstRow(){
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="offeredCost"><spring:message
-							code="workPackage.label.offeredCost" /> </label>
+					<label class="col-md-2 control-lable" for="offeredCost"><spring:message code="workPackage.label.offeredCost" />
+					<spring:message code="generic.inCurrency" /> </label>
 					<div class="col-md-3">
 						<form:input type="text" path="offeredCost" id="offeredCost"
 							class="form-control input-sm" />
@@ -276,10 +271,11 @@ function addFirstRow(){
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="totalCost"><spring:message
-							code="workPackage.label.totalCost" /> </label>
+							code="workPackage.label.totalCost" /><spring:message code="generic.inCurrency" /> </label>
 					<div class="col-md-3">
 						<form:input type="text" path="totalCost" id="totalCost"
 							class="form-control input-sm" readonly="true" />
+						
 						<div class="has-error">
 							<form:errors path="totalCost" class="help-inline" />
 						</div>
@@ -320,31 +316,31 @@ function addFirstRow(){
 									<th><spring:message
 											code="workPackageUserAllocation.label.employeeName" /></th>
 									<th><spring:message
-											code="workPackageUserAllocation.label.totalPlannedDays" /></th>
+											code="workPackageUserAllocation.label.totalPlannedDays" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 									<th><spring:message
-											code="workPackageUserAllocation.label.jan" /></th>
+											code="workPackageUserAllocation.label.jan" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 									<th><spring:message
-											code="workPackageUserAllocation.label.feb" /></th>
+											code="workPackageUserAllocation.label.feb" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 									<th><spring:message
-											code="workPackageUserAllocation.label.mar" /></th>
+											code="workPackageUserAllocation.label.mar" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 									<th><spring:message
-											code="workPackageUserAllocation.label.apr" /></th>
+											code="workPackageUserAllocation.label.apr" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 									<th><spring:message
-											code="workPackageUserAllocation.label.may" /></th>
+											code="workPackageUserAllocation.label.may" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 									<th><spring:message
-											code="workPackageUserAllocation.label.jun" /></th>
+											code="workPackageUserAllocation.label.jun" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 									<th><spring:message
-											code="workPackageUserAllocation.label.jul" /></th>
+											code="workPackageUserAllocation.label.jul" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 									<th><spring:message
-											code="workPackageUserAllocation.label.aug" /></th>
+											code="workPackageUserAllocation.label.aug" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 									<th><spring:message
-											code="workPackageUserAllocation.label.sep" /></th>
+											code="workPackageUserAllocation.label.sep" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 									<th><spring:message
-											code="workPackageUserAllocation.label.oct" /></th>
+											code="workPackageUserAllocation.label.oct" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 									<th><spring:message
-											code="workPackageUserAllocation.label.nov" /></th>
+											code="workPackageUserAllocation.label.nov" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 									<th><spring:message
-											code="workPackageUserAllocation.label.dec" /></th>
+											code="workPackageUserAllocation.label.dec" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 									<%-- <th><spring:message
 											code="workPackageUserAllocation.label.year" /></th> --%>
 									<th>&nbsp;</th>
@@ -375,8 +371,8 @@ function addFirstRow(){
 														</c:forEach>
 												</select></td>
 
-												<td><input
-													class="form-control input-sm" style="width: 55px;"
+												<td><input class="form-control input-sm"
+													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].totalPlannedDays"
 													value="${workPackageUserAllocation.totalPlannedDays}" /></td>
 												<td><input class="form-control input-sm"
