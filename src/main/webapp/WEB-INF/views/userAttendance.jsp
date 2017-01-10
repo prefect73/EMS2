@@ -64,6 +64,14 @@
 							<form:errors path="user" class="help-inline" />
 						</div>
 					</div>
+					<label class="col-md-2 control-lable" for="yearName"><spring:message code="userAttendance.label.year"/></label>
+					<div class="col-md-2">
+						<form:input type="text" path="yearName" id="yearName"
+							class="form-control input-sm" readonly="true" />
+						<div class="has-error">
+							<form:errors path="yearName" class="help-inline" />
+						</div>
+					</div>
 				</div>
 			</div>
 				</c:when>
@@ -78,6 +86,14 @@
 							class="form-control input-sm" />
 						<div class="has-error">
 							<form:errors path="user" class="help-inline" />
+						</div>
+					</div>
+					<label class="col-md-2 control-lable" for="yearName"><spring:message code="userAttendance.label.year"/></label>
+					<div class="col-md-2">
+						<form:input type="text" path="yearName" id="yearName"
+							class="form-control input-sm" />
+						<div class="has-error">
+							<form:errors path="yearName" class="help-inline" />
 						</div>
 					</div>
 				</div>
@@ -272,18 +288,6 @@
 							class="form-control input-sm" />
 						<div class="has-error">
 							<form:errors path="mJan" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div> --%>
-			<%-- <div class="row">
-				<div class="form-group col-md-10">
-					<label class="col-md-3 control-lable" for="yearName"><spring:message code="userAttendance.label.year"/></label>
-					<div class="col-md-2">
-						<form:input type="text" path="yearName" id="yearName"
-							class="form-control input-sm" disabled="false" />
-						<div class="has-error">
-							<form:errors path="yearName" class="help-inline" />
 						</div>
 					</div>
 				</div>

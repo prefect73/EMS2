@@ -82,11 +82,11 @@ function addFirstRow(){
 	var mOctTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mOctAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mOct" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emOct" /></td>';
 	var mNovTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mNovAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mNov" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emNov" /></td>';
 	var mDecTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mDecAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emDec" /></td>';
-//var yearNameTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" /></td>';
+	var yearNameTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" /></td>';
 	
 	
 	//var formHtml = userTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD +yearNameTD;
-	var formHtml = userTD +totalPlannedDaysTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD;
+	var formHtml = userTD +totalPlannedDaysTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD +yearNameTD;
 	var formTR = $('<tr></tr>');
 	formTR.append(formHtml);
 	//add Button
@@ -132,11 +132,11 @@ function addFirstRow(){
 		var mNovTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mNovAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mNov" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emNov" /></td>';
 		var mDecTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mDecAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emDec" /></td>';
 
-		//var yearNameTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" /></td>';
+		var yearNameTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" /></td>';
 		
 		
 		//var formHtml = userTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD +yearNameTD;
-		var formHtml = userTD +totalPlannedDaysTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD;
+		var formHtml = userTD +totalPlannedDaysTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD +yearNameTD;
 		var formTR = $('<tr></tr>');
 		formTR.append(formHtml);
 		//add Button
@@ -370,8 +370,8 @@ function addFirstRow(){
 											code="workPackageUserAllocation.label.dec" /><br />
 									<span style="font-size: 0.6em;"><spring:message
 												code="generic.inDays" /></span></th>
-									<%-- <th><spring:message
-											code="workPackageUserAllocation.label.year" /></th> --%>
+									<th><spring:message
+											code="workPackageUserAllocation.label.year" /></th>
 									<th>&nbsp;</th>
 									<!-- <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 									<th width="100"></th>
@@ -512,10 +512,10 @@ function addFirstRow(){
 													class="form-control input-sm" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emDec"
 													value="${workPackageUserAllocation.emDec}" /></td>
-												<%-- <td><input class="form-control input-sm"
+												<td><input readonly="readonly" class="form-control input-sm"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].yearName"
-													value="${workPackageUserAllocation.yearName}" /></td> --%>
+													value="${workPackageUserAllocation.yearName}" /></td>
 												<td>
 													<button type="button" class="btn btn-danger btn-sm"
 														onclick="deleteWpUsrAlloc(${workPackageUserAllocation.id},$(this).parent())">

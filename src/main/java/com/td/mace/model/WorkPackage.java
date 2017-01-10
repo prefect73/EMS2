@@ -36,7 +36,7 @@ public class WorkPackage implements Serializable {
 	private String workPackageNumber;
 
 	@NotEmpty
-	@Column(name = "WORK_PACKAGE_NAME", unique = true, nullable = false)
+	@Column(name = "WORK_PACKAGE_NAME", nullable = false)
 	private String workPackageName;
 
 	@Column(name = "OFFERED_COST", precision = 10, scale = 2)

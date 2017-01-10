@@ -143,11 +143,11 @@ public class WorkPackageController {
 		 * "workPackage"; }
 		 */
 
-		for (WorkPackageUserAllocation workPackageUserAllocation : workPackage
+		/*for (WorkPackageUserAllocation workPackageUserAllocation : workPackage
 				.getWorkPackageUserAllocations()) {
 			workPackageUserAllocation.setYearName(environment
 					.getProperty("year.name"));
-		}
+		}*/
 
 		workPackageService.saveWorkPackage(workPackage);
 		workPackageService.updateWorkPackage(workPackage);
@@ -215,11 +215,11 @@ public class WorkPackageController {
 		 * workPackage.getWorkPackageUserAllocations());
 		 */
 		
-		for (WorkPackageUserAllocation workPackageUserAllocation : workPackage
+		/*for (WorkPackageUserAllocation workPackageUserAllocation : workPackage
 				.getWorkPackageUserAllocations()) {
 			workPackageUserAllocation.setYearName(environment
 					.getProperty("year.name"));
-		}
+		}*/
 
 		workPackageService.updateWorkPackage(workPackage);
 

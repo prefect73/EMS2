@@ -122,7 +122,7 @@ public class UserAttendanceController {
 		 * "userAttendance"; }
 		 */
 
-		userAttendance.setYearName(environment.getProperty("year.name"));
+		/*userAttendance.setYearName(environment.getProperty("year.name"));*/
 		userAttendanceService.saveUserAttendance(userAttendance);
 		// userAttendanceService.updateUserAttendance(userAttendance);
 
@@ -170,7 +170,7 @@ public class UserAttendanceController {
 		 * Locale.getDefault())); result.addError(idError); return
 		 * "userAttendance"; }
 		 */
-		userAttendance.setYearName(environment.getProperty("year.name"));
+		/*userAttendance.setYearName(environment.getProperty("year.name"));*/
 		userAttendanceService.updateUserAttendance(userAttendance);
 
 		// model.addAttribute("success", "UserAttendance " +
