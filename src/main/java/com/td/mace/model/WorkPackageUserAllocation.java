@@ -83,8 +83,57 @@ public class WorkPackageUserAllocation implements Serializable {
 	@DecimalMax(value = "31.00")
 	@Column(name = "mDec", precision = 10, scale = 2)
 	private BigDecimal mDec = new BigDecimal("0.00");
+	
+	@DecimalMax(value = "31.00")
+	@Column(name = "emJan", precision = 10, scale = 2)
+	private BigDecimal emJan = new BigDecimal("0.00");
 
-	@Column(name = "Year_Name", precision = 10, scale = 2)
+	@DecimalMax(value = "29.00")
+	@Column(name = "emFeb", precision = 10, scale = 2)
+	private BigDecimal emFeb = new BigDecimal("0.00");
+
+	@DecimalMax(value = "31.00")
+	@Column(name = "emMar", precision = 10, scale = 2)
+	private BigDecimal emMar = new BigDecimal("0.00");
+
+	@DecimalMax(value = "31.00")
+	@Column(name = "emApr", precision = 10, scale = 2)
+	private BigDecimal emApr = new BigDecimal("0.00");
+
+	@DecimalMax(value = "31.00")
+	@Column(name = "emMay", precision = 10, scale = 2)
+	private BigDecimal emMay = new BigDecimal("0.00");
+
+	@DecimalMax(value = "31.00")
+	@Column(name = "emJun", precision = 10, scale = 2)
+	private BigDecimal emJun = new BigDecimal("0.00");
+
+	@DecimalMax(value = "31.00")
+	@Column(name = "emJul", precision = 10, scale = 2)
+	private BigDecimal emJul = new BigDecimal("0.00");
+
+	@DecimalMax(value = "31.00")
+	@Column(name = "emAug", precision = 10, scale = 2)
+	private BigDecimal emAug = new BigDecimal("0.00");
+
+	@DecimalMax(value = "31.00")
+	@Column(name = "emSep", precision = 10, scale = 2)
+	private BigDecimal emSep = new BigDecimal("0.00");
+
+	@DecimalMax(value = "31.00")
+	@Column(name = "emOct", precision = 10, scale = 2)
+	private BigDecimal emOct = new BigDecimal("0.00");
+
+	@DecimalMax(value = "31.00")
+	@Column(name = "emNov", precision = 10, scale = 2)
+	private BigDecimal emNov = new BigDecimal("0.00");
+
+	@DecimalMax(value = "31.00")
+	@Column(name = "emDec", precision = 10, scale = 2)
+	private BigDecimal emDec = new BigDecimal("0.00");
+	
+
+	@Column(name = "Year_Name")
 	private String yearName;
 
 	// bi-directional many-to-one association to WorkPackage
@@ -224,6 +273,102 @@ public class WorkPackageUserAllocation implements Serializable {
 
 	public void setmDec(BigDecimal mDec) {
 		this.mDec = mDec;
+	}
+
+	public BigDecimal getEmJan() {
+		return emJan;
+	}
+
+	public void setEmJan(BigDecimal emJan) {
+		this.emJan = emJan;
+	}
+
+	public BigDecimal getEmFeb() {
+		return emFeb;
+	}
+
+	public void setEmFeb(BigDecimal emFeb) {
+		this.emFeb = emFeb;
+	}
+
+	public BigDecimal getEmMar() {
+		return emMar;
+	}
+
+	public void setEmMar(BigDecimal emMar) {
+		this.emMar = emMar;
+	}
+
+	public BigDecimal getEmApr() {
+		return emApr;
+	}
+
+	public void setEmApr(BigDecimal emApr) {
+		this.emApr = emApr;
+	}
+
+	public BigDecimal getEmMay() {
+		return emMay;
+	}
+
+	public void setEmMay(BigDecimal emMay) {
+		this.emMay = emMay;
+	}
+
+	public BigDecimal getEmJun() {
+		return emJun;
+	}
+
+	public void setEmJun(BigDecimal emJun) {
+		this.emJun = emJun;
+	}
+
+	public BigDecimal getEmJul() {
+		return emJul;
+	}
+
+	public void setEmJul(BigDecimal emJul) {
+		this.emJul = emJul;
+	}
+
+	public BigDecimal getEmAug() {
+		return emAug;
+	}
+
+	public void setEmAug(BigDecimal emAug) {
+		this.emAug = emAug;
+	}
+
+	public BigDecimal getEmSep() {
+		return emSep;
+	}
+
+	public void setEmSep(BigDecimal emSep) {
+		this.emSep = emSep;
+	}
+
+	public BigDecimal getEmOct() {
+		return emOct;
+	}
+
+	public void setEmOct(BigDecimal emOct) {
+		this.emOct = emOct;
+	}
+
+	public BigDecimal getEmNov() {
+		return emNov;
+	}
+
+	public void setEmNov(BigDecimal emNov) {
+		this.emNov = emNov;
+	}
+
+	public BigDecimal getEmDec() {
+		return emDec;
+	}
+
+	public void setEmDec(BigDecimal emDec) {
+		this.emDec = emDec;
 	}
 
 	public String getYearName() {

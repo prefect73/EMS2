@@ -1,5 +1,6 @@
 package com.td.mace.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -31,9 +32,9 @@ import com.td.mace.service.UserService;
 @SessionAttributes({ "employeeslist" })
 @PropertySource(value = { "classpath:application.properties" })
 public class UserAttendanceController {
-	
+
 	@Autowired
-    private Environment environment;
+	private Environment environment;
 
 	@Autowired
 	UserAttendanceService userAttendanceService;
@@ -55,22 +56,29 @@ public class UserAttendanceController {
 	 */
 	@RequestMapping(value = { "/userAttendanceslist" }, method = RequestMethod.GET)
 	public String listUserAttendances(ModelMap model) {
-		String ssoId = getPrincipal();
-		List<UserAttendance> userAttendances = userAttendanceService.findAllUserAttendancesBySSOId(ssoId);
-		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
+		List<UserAttendance> userAttendances = new ArrayList<UserAttendance>();
+		if (getPrincipal() != null) {
+			userAttendances = userAttendanceService
+					.findAllUserAttendancesBySSOId(getPrincipal());
+		} else {
+			userAttendances = userAttendanceService.findAllUserAttendances();
+		}
+		model.addAttribute("defaultLanguage",
+				environment.getProperty("default.language"));
 		model.addAttribute("userAttendances", userAttendances);
 		model.addAttribute("loggedinuser", getPrincipal());
-		
+
 		return "userAttendanceslist";
 	}
 
 	/**
 	 * This method will provide Users list to views
 	 */
-	
-	  @ModelAttribute("employeeslist") public List<User>
-	  initializeProjectLeads() { return userService.findAllUsers(); }
-	 
+
+	@ModelAttribute("employeeslist")
+	public List<User> initializeProjectLeads() {
+		return userService.findAllUsers();
+	}
 
 	/**
 	 * This method will provide the medium to add a new userAttendance.
@@ -114,10 +122,9 @@ public class UserAttendanceController {
 		 * "userAttendance"; }
 		 */
 
-		
 		userAttendance.setYearName(environment.getProperty("year.name"));
 		userAttendanceService.saveUserAttendance(userAttendance);
-		//userAttendanceService.updateUserAttendance(userAttendance);
+		// userAttendanceService.updateUserAttendance(userAttendance);
 
 		// model.addAttribute("success", "UserAttendance " +
 		// userAttendance.getFirstName() +

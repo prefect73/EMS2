@@ -113,6 +113,7 @@ public class WorkPackageRestController {
 		currentWorkPackage.setWorkPackageName(workPackage.getWorkPackageName());
 		currentWorkPackage.setOfferedCost(workPackage.getOfferedCost());
 		currentWorkPackage.setTotalCost(workPackage.getTotalCost());
+		currentWorkPackage.setEffectiveCost(workPackage.getEffectiveCost());
 		currentWorkPackage.setProject(workPackage.getProject());
 		currentWorkPackage.setWorkPackageUserAllocations(workPackage.getWorkPackageUserAllocations());
 

@@ -40,10 +40,13 @@ public class WorkPackage implements Serializable {
 	private String workPackageName;
 
 	@Column(name = "OFFERED_COST", precision = 10, scale = 2)
-	private BigDecimal offeredCost;
+	private BigDecimal offeredCost = new BigDecimal("0.00");
 
 	@Column(name = "TOTAL_COST", precision = 10, scale = 2)
-	private BigDecimal totalCost;
+	private BigDecimal totalCost =  new BigDecimal("0.00");
+	
+	@Column(name = "EFFECTIVE_COST", precision = 10, scale = 2)
+	private BigDecimal effectiveCost=  new BigDecimal("0.00");
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "PROJECT_ID")
@@ -104,6 +107,14 @@ public class WorkPackage implements Serializable {
 
 	public void setTotalCost(BigDecimal totalCost) {
 		this.totalCost = totalCost;
+	}
+
+	public BigDecimal getEffectiveCost() {
+		return effectiveCost;
+	}
+
+	public void setEffectiveCost(BigDecimal effectiveCost) {
+		this.effectiveCost = effectiveCost;
 	}
 
 	public Project getProject() {

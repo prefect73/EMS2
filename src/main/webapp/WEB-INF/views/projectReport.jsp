@@ -162,7 +162,19 @@ $(document).ready(function() {
 					</div>
 				</div>
 			</div>
-
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="effectiveCost"><spring:message code="project.label.effectiveCost"/><spring:message code="generic.inCurrency" />
+						</label>
+					<div class="col-md-3">
+						<form:input type="text" path="effectiveCost" id="effectiveCost"
+							class="form-control input-sm" readonly="true" />
+						<div class="has-error">
+							<form:errors path="effectiveCost" class="help-inline" />
+						</div>
+					</div>
+				</div>
+			</div>
 
 
 			<%-- <div class="row">

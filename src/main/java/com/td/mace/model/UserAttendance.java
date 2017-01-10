@@ -81,7 +81,7 @@ public class UserAttendance implements Serializable {
 	@Column(name = "Year_Name", precision = 10, scale = 2)
 	private String yearName;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ID")
 	private User user;
 

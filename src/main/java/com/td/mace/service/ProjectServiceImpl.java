@@ -49,6 +49,7 @@ public class ProjectServiceImpl implements ProjectService {
 			entity.setCustomerName(project.getCustomerName());
 			entity.setOfferedCost(project.getOfferedCost());
 			entity.setTotalCost(project.getTotalCost());
+			entity.setEffectiveCost(project.getEffectiveCost());
 			entity.setUsers((project.getUsers()));
 			/*entity.setWorkPackages(project.getWorkPackages());*/
 		}

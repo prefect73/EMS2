@@ -52,6 +52,7 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 			entity.setWorkPackageName(workPackage.getWorkPackageName());
 			entity.setOfferedCost(workPackage.getOfferedCost());
 			entity.setTotalCost(getWorkPackageTotalCost(workPackage));
+			entity.setEffectiveCost(getWorkPackageEffectiveCost(workPackage));
 			entity.setProject(workPackage.getProject());
 			deleteAllWorkPackageUserAllocations(workPackage);
 			for (WorkPackageUserAllocation workPackageUserAllocation : workPackage
@@ -60,12 +61,63 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 						workPackageUserAllocation);
 			}
 		}
-		updateProjectTotalCost(workPackage.getProject().getId());
+		updateProjectTotalAndEffectiveCosts(workPackage.getProject().getId());
+	}
+
+	private BigDecimal getWorkPackageEffectiveCost(WorkPackage workPackage) {
+		BigDecimal workPackageEffectiveCost = new BigDecimal("0.00");
+		
+		for (WorkPackageUserAllocation workPackageUserAllocation : workPackage
+				.getWorkPackageUserAllocations()) {
+			BigDecimal userEffectiveCost = new BigDecimal("0.00");
+			userEffectiveCost = userEffectiveCost.add(workPackageUserAllocation
+					.getEmJan() != null ? workPackageUserAllocation.getEmJan()
+					: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost.add(workPackageUserAllocation
+					.getEmFeb() != null ? workPackageUserAllocation.getEmFeb()
+					: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost.add(workPackageUserAllocation
+					.getEmMar() != null ? workPackageUserAllocation.getEmMar()
+					: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost.add(workPackageUserAllocation
+					.getEmApr() != null ? workPackageUserAllocation.getEmApr()
+					: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost.add(workPackageUserAllocation
+					.getEmMay() != null ? workPackageUserAllocation.getEmMay()
+					: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost.add(workPackageUserAllocation
+					.getEmJun() != null ? workPackageUserAllocation.getEmJun()
+					: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost.add(workPackageUserAllocation
+					.getEmJul() != null ? workPackageUserAllocation.getEmJul()
+					: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost.add(workPackageUserAllocation
+					.getEmAug() != null ? workPackageUserAllocation.getEmAug()
+					: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost.add(workPackageUserAllocation
+					.getEmSep() != null ? workPackageUserAllocation.getEmSep()
+					: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost.add(workPackageUserAllocation
+					.getEmOct() != null ? workPackageUserAllocation.getEmOct()
+					: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost.add(workPackageUserAllocation
+					.getEmNov() != null ? workPackageUserAllocation.getEmNov()
+					: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost.add(workPackageUserAllocation
+					.getEmDec() != null ? workPackageUserAllocation.getEmDec()
+					: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost
+					.multiply(workPackageUserAllocation.getUser() != null && workPackageUserAllocation.getUser().getPerDayCost() != null ? workPackageUserAllocation.getUser().getPerDayCost() : new BigDecimal("0.00"));
+			workPackageEffectiveCost = workPackageEffectiveCost.add(userEffectiveCost);
+		}
+
+		return workPackageEffectiveCost;
 	}
 
 	@SuppressWarnings("unchecked")
-	private void updateProjectTotalCost(int projectId) {
-		BigDecimal projectTotalCost = new BigDecimal(0);
+	private void updateProjectTotalAndEffectiveCosts(int projectId) {
+		BigDecimal projectTotalCost = new BigDecimal("0.00");
+		BigDecimal projectEffectiveCost = new BigDecimal("0.00");
 		Query getAllWorkPackagesListByProjectId = dao
 				.getHibernateSession()
 				.createSQLQuery(
@@ -77,16 +129,16 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 				.list();
 
 		for (WorkPackage workPackage : workPackages) {
-			projectTotalCost = projectTotalCost
-					.add(workPackage.getTotalCost() != null ? workPackage
-							.getTotalCost() : new BigDecimal(0));
+			projectTotalCost = projectTotalCost.add(workPackage.getTotalCost() != null ? workPackage.getTotalCost() : new BigDecimal("0.00"));
+			projectEffectiveCost = projectEffectiveCost.add(workPackage.getEffectiveCost() != null ? workPackage.getEffectiveCost() : new BigDecimal("0.00"));
 		}
 
 		Query updateProjectTotalCost = dao
 				.getHibernateSession()
 				.createSQLQuery(
-						"UPDATE project set total_cost = :total_cost WHERE id = :project_id");
+						"UPDATE project set total_cost = :total_cost ,effective_cost = :effective_cost WHERE id = :project_id");
 		updateProjectTotalCost.setParameter("total_cost", projectTotalCost);
+		updateProjectTotalCost.setParameter("effective_cost", projectEffectiveCost);
 		updateProjectTotalCost.setParameter("project_id", projectId);
 		updateProjectTotalCost.executeUpdate();
 
@@ -99,7 +151,7 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 			Query query = dao
 					.getHibernateSession()
 					.createSQLQuery(
-							"INSERT INTO work_package_app_user_allocations (work_package_id,  user_id, total_planned_days,  mJan,  mFeb,  mMar,  mApr,  mMay,  mJun,  mJul,  mAug,  mSep,  mOct,  mNov,  mDec,  YEAR_NAME) VALUES (:work_package_id, :user_id, :total_planned_days, :mJan, :mFeb, :mMar, :mApr, :mMay, :mJun, :mJul, :mAug, :mSep, :mOct, :mNov, :mDec, :YEAR_NAME)");
+							"INSERT INTO work_package_app_user_allocations (work_package_id,  user_id, total_planned_days,  mJan,  mFeb,  mMar,  mApr,  mMay,  mJun,  mJul,  mAug,  mSep,  mOct,  mNov,  mDec, emJan,  emFeb,  emMar,  emApr,  emMay,  emJun,  emJul,  emAug,  emSep,  emOct,  emNov,  emDec,  YEAR_NAME) VALUES (:work_package_id, :user_id, :total_planned_days, :mJan, :mFeb, :mMar, :mApr, :mMay, :mJun, :mJul, :mAug, :mSep, :mOct, :mNov, :mDec,:emJan, :emFeb, :emMar, :emApr, :emMay, :emJun, :emJul, :emAug, :emSep, :emOct, :emNov, :emDec, :YEAR_NAME)");
 			query.setParameter("work_package_id", workPackage.getId());
 			query.setParameter("user_id", workPackageUserAllocation.getUser()
 					.getId());
@@ -116,6 +168,18 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 			query.setParameter("mOct", workPackageUserAllocation.getmOct());
 			query.setParameter("mNov", workPackageUserAllocation.getmNov());
 			query.setParameter("mDec", workPackageUserAllocation.getmDec());
+			query.setParameter("emJan", workPackageUserAllocation.getEmJan());
+			query.setParameter("emFeb", workPackageUserAllocation.getEmFeb());
+			query.setParameter("emMar", workPackageUserAllocation.getEmMar());
+			query.setParameter("emApr", workPackageUserAllocation.getEmApr());
+			query.setParameter("emMay", workPackageUserAllocation.getEmMay());
+			query.setParameter("emJun", workPackageUserAllocation.getEmJun());
+			query.setParameter("emJul", workPackageUserAllocation.getEmJul());
+			query.setParameter("emAug", workPackageUserAllocation.getEmAug());
+			query.setParameter("emSep", workPackageUserAllocation.getEmSep());
+			query.setParameter("emOct", workPackageUserAllocation.getEmOct());
+			query.setParameter("emNov", workPackageUserAllocation.getEmNov());
+			query.setParameter("emDec", workPackageUserAllocation.getEmDec());
 			query.setParameter("YEAR_NAME",
 					workPackageUserAllocation.getYearName());
 			query.executeUpdate();
@@ -132,49 +196,49 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 	}
 
 	private BigDecimal getWorkPackageTotalCost(WorkPackage workPackage) {
-		BigDecimal workPackageTotalCost = new BigDecimal(0);
+		BigDecimal workPackageTotalCost = new BigDecimal("0.00");
 
 		for (WorkPackageUserAllocation workPackageUserAllocation : workPackage
 				.getWorkPackageUserAllocations()) {
-			BigDecimal userTotalCost = new BigDecimal(0);
+			BigDecimal userTotalCost = new BigDecimal("0.00");
 			userTotalCost = userTotalCost.add(workPackageUserAllocation
 					.getmJan() != null ? workPackageUserAllocation.getmJan()
-					: new BigDecimal(0));
+					: new BigDecimal("0.00"));
 			userTotalCost = userTotalCost.add(workPackageUserAllocation
 					.getmFeb() != null ? workPackageUserAllocation.getmFeb()
-					: new BigDecimal(0));
+					: new BigDecimal("0.00"));
 			userTotalCost = userTotalCost.add(workPackageUserAllocation
 					.getmMar() != null ? workPackageUserAllocation.getmMar()
-					: new BigDecimal(0));
+					: new BigDecimal("0.00"));
 			userTotalCost = userTotalCost.add(workPackageUserAllocation
 					.getmApr() != null ? workPackageUserAllocation.getmApr()
-					: new BigDecimal(0));
+					: new BigDecimal("0.00"));
 			userTotalCost = userTotalCost.add(workPackageUserAllocation
 					.getmMay() != null ? workPackageUserAllocation.getmMay()
-					: new BigDecimal(0));
+					: new BigDecimal("0.00"));
 			userTotalCost = userTotalCost.add(workPackageUserAllocation
 					.getmJun() != null ? workPackageUserAllocation.getmJun()
-					: new BigDecimal(0));
+					: new BigDecimal("0.00"));
 			userTotalCost = userTotalCost.add(workPackageUserAllocation
 					.getmJul() != null ? workPackageUserAllocation.getmJul()
-					: new BigDecimal(0));
+					: new BigDecimal("0.00"));
 			userTotalCost = userTotalCost.add(workPackageUserAllocation
 					.getmAug() != null ? workPackageUserAllocation.getmAug()
-					: new BigDecimal(0));
+					: new BigDecimal("0.00"));
 			userTotalCost = userTotalCost.add(workPackageUserAllocation
 					.getmSep() != null ? workPackageUserAllocation.getmSep()
-					: new BigDecimal(0));
+					: new BigDecimal("0.00"));
 			userTotalCost = userTotalCost.add(workPackageUserAllocation
 					.getmOct() != null ? workPackageUserAllocation.getmOct()
-					: new BigDecimal(0));
+					: new BigDecimal("0.00"));
 			userTotalCost = userTotalCost.add(workPackageUserAllocation
 					.getmNov() != null ? workPackageUserAllocation.getmNov()
-					: new BigDecimal(0));
+					: new BigDecimal("0.00"));
 			userTotalCost = userTotalCost.add(workPackageUserAllocation
 					.getmDec() != null ? workPackageUserAllocation.getmDec()
-					: new BigDecimal(0));
+					: new BigDecimal("0.00"));
 			userTotalCost = userTotalCost
-					.multiply(workPackageUserAllocation.getUser() != null && workPackageUserAllocation.getUser().getPerDayCost() != null ? workPackageUserAllocation.getUser().getPerDayCost() : new BigDecimal(0));
+					.multiply(workPackageUserAllocation.getUser() != null && workPackageUserAllocation.getUser().getPerDayCost() != null ? workPackageUserAllocation.getUser().getPerDayCost() : new BigDecimal("0.00"));
 			workPackageTotalCost = workPackageTotalCost.add(userTotalCost);
 		}
 
@@ -185,7 +249,7 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 		WorkPackage workPackage = dao.findById(id);
 		deleteAllWorkPackageUserAllocations(workPackage);
 		dao.deleteById(id);
-		updateProjectTotalCost(workPackage.getProject().getId());
+		updateProjectTotalAndEffectiveCosts(workPackage.getProject().getId());
 
 	}
 
