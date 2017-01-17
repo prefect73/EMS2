@@ -27,7 +27,7 @@
 var userAttendance = new Map();
 
 <c:forEach items="${userAttendancesUpdated}" var="usrAttend">
-	userAttendance.set('${usrAttend.user.id}', {'mJan' : '${usrAttend.mJan}' , 'mFeb' : '${usrAttend.mFeb}', 'mMar' : '${usrAttend.mMar}', 'mApr' : '${usrAttend.mApr}', 'mMay' : '${usrAttend.mMay}', 'mJun' : '${usrAttend.mJun}', 'mJul' : '${usrAttend.mJul}', 'mAug' : '${usrAttend.mAug}', 'mSep' : '${usrAttend.mSep}', 'mOct' : '${usrAttend.mOct}', 'mNov' : '${usrAttend.mNov}', 'mDec' : '${usrAttend.mDec}' });
+	userAttendance.set('${usrAttend.user.id}-${usrAttend.yearName}', {'mJan' : '${usrAttend.mJan}' , 'mFeb' : '${usrAttend.mFeb}', 'mMar' : '${usrAttend.mMar}', 'mApr' : '${usrAttend.mApr}', 'mMay' : '${usrAttend.mMay}', 'mJun' : '${usrAttend.mJun}', 'mJul' : '${usrAttend.mJul}', 'mAug' : '${usrAttend.mAug}', 'mSep' : '${usrAttend.mSep}', 'mOct' : '${usrAttend.mOct}', 'mNov' : '${usrAttend.mNov}', 'mDec' : '${usrAttend.mDec}' });
 </c:forEach>
 
 	var wPakAllocSize = '<c:out value="${fn:length(workPackage.workPackageUserAllocations)}"/>';
@@ -36,7 +36,7 @@ var userAttendance = new Map();
 		   addFirstRow();
 		  }
 		  poulateAvailableHours();
-		     $( ".userCombo" ).change(function() {
+		     $( ".userCombo,.yearCombo" ).change(function() {
 		      poulateAvailableHours();
 		     });
 		  
@@ -44,10 +44,16 @@ var userAttendance = new Map();
 	
 	function poulateAvailableHours(){
 		$( ".userCombo" ).each(function( index , element) {
+			
+			var yearNameVal = $(element).parent().prev().find('select').val();
+		console.log(yearNameVal);	
 			var trObj = $(element).parent().parent();
 		
+		
 			///zzz selected value
-			var usAtt = userAttendance.get($( element ).val());
+			var usAtt = userAttendance.get($( element ).val()+"-"+yearNameVal);
+			console.log(usAtt);
+			console.log(usAtt.mJan);
 			$(trObj).find("[id$=mJanAvailableHrs]").val(usAtt.mJan);
 			$(trObj).find("[id$=mFebAvailableHrs]").val(usAtt.mFeb);
 			$(trObj).find("[id$=mMarAvailableHrs]").val(usAtt.mMar);
@@ -68,6 +74,7 @@ var userAttendance = new Map();
 function addFirstRow(){
 	var index = wPakAllocSize;
 	
+	var yearNameTD ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ><option class="form-control input-sm" value="2017">2017</option><option class="form-control input-sm" value="2018">2018</option><option class="form-control input-sm" value="2019">2019</option><option class="form-control input-sm" value="2020">2020</option></select></td>';
 	var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';
 	var totalPlannedDaysTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].totalPlannedDays" /></td>';
 	var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" /></td>';
@@ -82,11 +89,11 @@ function addFirstRow(){
 	var mOctTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mOctAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mOct" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emOct" /></td>';
 	var mNovTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mNovAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mNov" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emNov" /></td>';
 	var mDecTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mDecAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emDec" /></td>';
-	var yearNameTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" /></td>';
+	/* var yearNameTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" /></td>'; */
 	
 	
 	//var formHtml = userTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD +yearNameTD;
-	var formHtml = userTD +totalPlannedDaysTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD +yearNameTD;
+	var formHtml = yearNameTD +userTD +totalPlannedDaysTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD;
 	var formTR = $('<tr></tr>');
 	formTR.append(formHtml);
 	//add Button
@@ -102,7 +109,7 @@ function addFirstRow(){
 	$('#empListForWorkPackageTable tr:last').after( formTR);
 	wPakAllocSize++;
 	 poulateAvailableHours();
-     $( ".userCombo" ).change(function() {
+     $( ".userCombo,.yearCombo" ).change(function() {
       poulateAvailableHours();
      });
 }
@@ -117,6 +124,7 @@ function addFirstRow(){
 		
 		 var index = wPakAllocSize;
 		 		 
+		var yearNameTD ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ><option class="form-control input-sm" value="2017">2017</option><option class="form-control input-sm" value="2018">2018</option><option class="form-control input-sm" value="2019">2019</option><option class="form-control input-sm" value="2020">2020</option></select></td>';
 		var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';
 		var totalPlannedDaysTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].totalPlannedDays" /></td>';
 		var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" /></td>';
@@ -132,11 +140,11 @@ function addFirstRow(){
 		var mNovTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mNovAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mNov" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emNov" /></td>';
 		var mDecTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mDecAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emDec" /></td>';
 
-		var yearNameTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" /></td>';
+		/* var yearNameTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" /></td>'; */
 		
 		
 		//var formHtml = userTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD +yearNameTD;
-		var formHtml = userTD +totalPlannedDaysTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD +yearNameTD;
+		var formHtml = yearNameTD+ userTD +totalPlannedDaysTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD ;
 		var formTR = $('<tr></tr>');
 		formTR.append(formHtml);
 		//add Button
@@ -151,7 +159,7 @@ function addFirstRow(){
 		$('#empListForWorkPackageTable tr:last').after( formTR);
 		wPakAllocSize++;
 		 poulateAvailableHours();
-	     $( ".userCombo" ).change(function() {
+	     $( ".userCombo,.yearCombo" ).change(function() {
 	      poulateAvailableHours();
 	     });
 	}
@@ -316,6 +324,8 @@ function addFirstRow(){
 							cellspacing="0" width="100%">
 							<thead>
 								<tr>
+								<th><spring:message
+											code="workPackageUserAllocation.label.year" /></th>
 									<th><spring:message
 											code="workPackageUserAllocation.label.employeeName" /></th>
 									<th><spring:message
@@ -370,8 +380,7 @@ function addFirstRow(){
 											code="workPackageUserAllocation.label.dec" /><br />
 									<span style="font-size: 0.6em;"><spring:message
 												code="generic.inDays" /></span></th>
-									<th><spring:message
-											code="workPackageUserAllocation.label.year" /></th>
+									
 									<th>&nbsp;</th>
 									<!-- <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 									<th width="100"></th>
@@ -387,18 +396,25 @@ function addFirstRow(){
 										<c:forEach items="${workPackage.workPackageUserAllocations}"
 											var="workPackageUserAllocation" varStatus="status">
 											<tr>
-
+												<td><input readonly="readonly" class="form-control input-sm"
+													style="width: 55px;"
+													name="workPackageUserAllocations[${status.index}].yearName"
+													value="${workPackageUserAllocation.yearName}" /></td>
 												<td><form:input type="hidden"
 														path="workPackageUserAllocations[${status.index}].id" />
-													<select class="form-control input-sm userCombo"
+														<%--<input readonly="readonly" class="form-control input-sm userCombo"
+													style="width: 55px;"
+													name="workPackageUserAllocations[${status.index}].user.id"
+													value="${workPackageUserAllocation.user.firstName}" />--%>
+													 <select  class="form-control input-sm userCombo"
 													name="workPackageUserAllocations[${status.index}].user">
 
 														<c:forEach items="${employeeslist}" var="emp">
 
-															<option class="form-control input-sm" value="${emp.id}"
+															<option  class="form-control input-sm" value="${emp.id}"
 																${emp.id == workPackageUserAllocation.user.id  ? 'selected' : ''}>${emp.firstName}</option>
 														</c:forEach>
-												</select></td>
+												</select> </td>
 
 												<td><input class="form-control input-sm"
 													style="width: 55px;"
@@ -512,10 +528,6 @@ function addFirstRow(){
 													class="form-control input-sm" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emDec"
 													value="${workPackageUserAllocation.emDec}" /></td>
-												<td><input readonly="readonly" class="form-control input-sm"
-													style="width: 55px;"
-													name="workPackageUserAllocations[${status.index}].yearName"
-													value="${workPackageUserAllocation.yearName}" /></td>
 												<td>
 													<button type="button" class="btn btn-danger btn-sm"
 														onclick="deleteWpUsrAlloc(${workPackageUserAllocation.id},$(this).parent())">
