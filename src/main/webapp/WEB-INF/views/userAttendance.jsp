@@ -90,8 +90,14 @@
 					</div>
 					<label class="col-md-2 control-lable" for="yearName"><spring:message code="userAttendance.label.year"/></label>
 					<div class="col-md-2">
-						<form:input type="text" path="yearName" id="yearName"
-							class="form-control input-sm" />
+						<%-- <form:input type="text" path="yearName" id="yearName"
+							class="form-control input-sm" /> --%>
+							<select class="form-control input-sm"  name="yearName">
+								<option class="form-control input-sm" value="2017">2017</option>
+								<option class="form-control input-sm" value="2018">2018</option>
+								<option class="form-control input-sm" value="2019">2019</option>
+								<option class="form-control input-sm" value="2020">2020</option>
+							</select>
 						<div class="has-error">
 							<form:errors path="yearName" class="help-inline" />
 						</div>

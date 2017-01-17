@@ -65,6 +65,8 @@ if($("#defaultLanguage").val() == 'german'){
 							<th><spring:message
 									code="workPackageUserAllocation.label.employeeName" /></th>
 							<th><spring:message
+									code="workPackageUserAllocation.label.year" /></th>
+							<th><spring:message
 									code="workPackageUserAllocation.label.jan" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
 									code="workPackageUserAllocation.label.feb" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
@@ -80,16 +82,15 @@ if($("#defaultLanguage").val() == 'german'){
 									code="workPackageUserAllocation.label.jul" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
 									code="workPackageUserAllocation.label.aug" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
-							<th><spring:message
-									code="workPackageUserAllocation.label.sep" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<%--<th><spring:message
+									code="workPackageUserAllocation.label.sep" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
+							<th><spring:message
 									code="workPackageUserAllocation.label.oct" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
 									code="workPackageUserAllocation.label.nov" /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							 <th><spring:message
 									code="workPackageUserAllocation.label.dec" /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
-							<th><spring:message
-									code="workPackageUserAllocation.label.year" /></th> --%>
+							 --%>
 							
 							<th></th>
 							<sec:authorize access="hasRole('ADMIN')">
@@ -102,6 +103,7 @@ if($("#defaultLanguage").val() == 'german'){
 						<c:forEach items="${userAttendances}" var="userAttendance">
 							<tr>
 								<td>${userAttendance.user.firstName}</td>
+								<td>${userAttendance.yearName}</td>
 								<td>${userAttendance.mJan}</td>
 								<td>${userAttendance.mFeb}</td>
 								<td>${userAttendance.mMar}</td>
@@ -110,11 +112,11 @@ if($("#defaultLanguage").val() == 'german'){
 								<td>${userAttendance.mJun}</td>
 								<td>${userAttendance.mJul}</td>
 								<td>${userAttendance.mAug}</td>
-								<td>${userAttendance.mSep}</td>
-								<%--<td>${userAttendance.mOct}</td>
+								<%--<td>${userAttendance.mSep}</td>
+								<td>${userAttendance.mOct}</td>
 								<td>${userAttendance.mNov}</td>
 								 <td>${userAttendance.mDec}</td>
-								<td>${userAttendance.yearName}</td>
+								
  --%>
 								<td><a
 									href="<c:url value='/UserAttendance/edit-userAttendance-${userAttendance.id}' />"
