@@ -68,6 +68,7 @@ $(document).ready(function() {
 							<th><spring:message code="workPackage.label.workPackageName" /></th>
 							<th><spring:message code="workPackage.label.offeredCost" /></th>
 							<th><spring:message code="workPackage.label.totalCost" /></th>
+							<th><spring:message code="workPackage.label.effectiveCost" /></th>
 							<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 								<th width="100"></th>
 							</sec:authorize>
@@ -85,6 +86,7 @@ $(document).ready(function() {
 								<td>${workPackage.workPackageName}</td>
 								<td><spring:message code="generic.currencySymbol" />${workPackage.offeredCost}</td>
 								<td><spring:message code="generic.currencySymbol" />${workPackage.totalCost}</td>
+								<td><spring:message code="generic.currencySymbol" />${workPackage.effectiveCost}</td>
 								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 									<td><a
 										href="<c:url value='/WorkPackage/edit-workPackage-${workPackage.id}' />"

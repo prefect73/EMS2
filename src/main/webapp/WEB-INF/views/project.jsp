@@ -105,6 +105,25 @@ $( document ).ready(function() {
 					</div>
 				</div>
 			</div>
+			
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="yearName"><spring:message code="project.label.yearName"/></label>
+					<div class="col-md-3">
+						<%-- <form:input type="text" path="yearName" id="yearName"
+							class="form-control input-sm" /> --%>
+							<select class="form-control input-sm"  name="yearName">
+								<option class="form-control input-sm" value="2017">2017</option>
+								<option class="form-control input-sm" value="2018">2018</option>
+								<option class="form-control input-sm" value="2019">2019</option>
+								<option class="form-control input-sm" value="2020">2020</option>
+							</select>
+						<div class="has-error">
+							<form:errors path="yearName" class="help-inline" />
+						</div>
+					</div>
+				</div>
+			</div>
 
 			<div class="row">
 				<div class="form-group col-md-12">
@@ -147,6 +166,21 @@ $( document ).ready(function() {
 							class="form-control input-sm" readonly="true" />
 						<div class="has-error">
 							<form:errors path="totalCost" class="help-inline" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="effectiveCost">
+					<spring:message code="project.label.effectiveCost"/>
+					<spring:message code="generic.inCurrency" />
+						</label>
+					<div class="col-md-3">
+						<form:input type="text" path="effectiveCost" id="effectiveCost"
+							class="form-control input-sm" readonly="true" />
+						<div class="has-error">
+							<form:errors path="effectiveCost" class="help-inline" />
 						</div>
 					</div>
 				</div>

@@ -54,6 +54,9 @@ public class Project implements Serializable {
 	@Column(name = "EFFECTIVE_COST", precision = 10, scale = 2)
 	private BigDecimal effectiveCost=  new BigDecimal("0.00");
 
+	@Column(name = "Year_Name", precision = 10, scale = 2)
+	private String yearName;
+	
 	@NotEmpty
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "PROJECT_APP_USER", joinColumns = { @JoinColumn(name = "PROJECT_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
@@ -106,15 +109,23 @@ public class Project implements Serializable {
 	public void setTotalCost(BigDecimal totalCost) {
 		this.totalCost = totalCost;
 	}
-	
-	
-	
+
 	public BigDecimal getEffectiveCost() {
 		return effectiveCost;
 	}
 
 	public void setEffectiveCost(BigDecimal effectiveCost) {
 		this.effectiveCost = effectiveCost;
+	}
+
+	
+	
+	public String getYearName() {
+		return yearName;
+	}
+
+	public void setYearName(String yearName) {
+		this.yearName = yearName;
 	}
 
 	@JsonIgnore

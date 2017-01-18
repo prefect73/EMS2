@@ -71,9 +71,15 @@
 							</th>
 							<th><spring:message code="project.label.customerName" />
 							</th>
+							<%-- <th><spring:message code="project.label.yearName" /> 
+							</th>--%>
 							<th><spring:message code="project.label.offeredCost" />
 							</th>
 							<th><spring:message code="project.label.totalCost" /></th>
+							<%-- <th><spring:message code="project.label.effectiveCost" /></th> --%>
+							<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+								<th width="100"></th>
+							</sec:authorize>
 							<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 								<th width="100"></th>
 							</sec:authorize>
@@ -89,8 +95,15 @@
 								<td>${project.projectNumber}</td>
 								<td>${project.projectName}</td>
 								<td>${project.customerName}</td>
+								<%-- <td>${project.yearName}</td> --%>
 								<td><spring:message code="generic.currencySymbol" />${project.offeredCost}</td>
 								<td><spring:message code="generic.currencySymbol" />${project.totalCost}</td>
+								<%-- <td><spring:message code="generic.currencySymbol" />${project.effectiveCost}</td> --%>
+								<sec:authorize access="hasRole('ADMIN')">
+									<td><a class="btn btn-primary floatRight"
+										href="<c:url value='/WorkPackage/newworkPackage?projectName=${project.projectName}' />"><spring:message code="workPackageslist.addNewWorkPackage" /></a>
+										</td>
+								</sec:authorize>
 								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 									<td><a
 										href="<c:url value='/Project/edit-project-${project.projectNumber}' />"

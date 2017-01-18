@@ -44,8 +44,12 @@ var userAttendance = new Map();
 	
 	function poulateAvailableHours(){
 		$( ".userCombo" ).each(function( index , element) {
-			
-			var yearNameVal = $(element).parent().prev().find('select').val();
+			var yearNameVal = "";
+			if('<c:out value="${edit}"/>'){
+				yearNameVal = $(element).parent().prev().find('input').val()
+			}else{
+				yearNameVal = $(element).parent().prev().find('select').val()
+			}
 		console.log(yearNameVal);	
 			var trObj = $(element).parent().parent();
 		
@@ -296,6 +300,21 @@ function addFirstRow(){
 
 			<div class="row">
 				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="effectiveCost">
+					<spring:message code="project.label.effectiveCost"/>
+					<spring:message code="generic.inCurrency" />
+						</label>
+					<div class="col-md-3">
+						<form:input type="text" path="effectiveCost" id="effectiveCost"
+							class="form-control input-sm" readonly="true" />
+						<div class="has-error">
+							<form:errors path="effectiveCost" class="help-inline" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-12">
 					<div id="empListForWorkPackageTableWrapper">
 						<c:choose>
 							<c:when test="${edit}">
@@ -406,8 +425,8 @@ function addFirstRow(){
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].user.id"
 													value="${workPackageUserAllocation.user.firstName}" />--%>
-													 <select  class="form-control input-sm userCombo"
-													name="workPackageUserAllocations[${status.index}].user">
+													 <select disabled="disabled"  class="form-control input-sm userCombo"
+													name="workPackageUserAllocati1ons[${status.index}].user">
 
 														<c:forEach items="${employeeslist}" var="emp">
 

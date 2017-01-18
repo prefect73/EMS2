@@ -25,6 +25,34 @@ function format () {
 //	return '<table id="workPackageDetailsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"><tr><c:forEach items="${workPackageUserAllocationsBySum}" var="employeeNames" varStatus="status"><td>${employeeNames.user.firstName}</td></tr><tr><td>${workPackageHoursForAllUsers[status.index].mJan + workPackageHoursForAllUsers[status.index].mFeb + workPackageHoursForAllUsers[status.index].mMar + workPackageHoursForAllUsers[status.index].mApr + workPackageHoursForAllUsers[status.index].mMay + workPackageHoursForAllUsers[status.index].mJun + workPackageHoursForAllUsers[status.index].mJul + workPackageHoursForAllUsers[status.index].mAug + workPackageHoursForAllUsers[status.index].mSep + workPackageHoursForAllUsers[status.index].mOct + workPackageHoursForAllUsers[status.index].mNov + workPackageHoursForAllUsers[status.index].mDec}</td></c:forEach></tr></table>';
 }
 $(document).ready(function() {
+	
+	if($("#totalCost").val() > $("#offeredCost").val()){
+		$("#totalCost").css({ 'color': 'red'});
+	}
+	if($("#effectiveCost").val() > $("#offeredCost").val()){
+		$("#effectiveCost").css({ 'color': 'red'});
+	}
+	
+		
+	$('#projectNamesDropDown').attr('disabled','disbaled');
+	$('#yearNamesDropDown').change(function(e) {
+	if($('#yearNamesDropDown').prop('selectedIndex') > 0){
+		$('#projectNamesDropDown').removeAttr('disabled');
+		$('#projectNamesDropDown').find('option').remove();
+		var  yearNamesDropDown = $('#yearNamesDropDown :selected').val();
+		$('#projectNamesDropDown').append('<option class="form-control input-sm" value="NONE">--------------------------Wählen--------------------------</option>');
+		<c:forEach items="${projectsList}" var="project">
+		var projectYear = '<c:out value="${project.yearName}"/>';
+		if(yearNamesDropDown ==  projectYear){
+			$('#projectNamesDropDown').append('<option class="form-control input-sm" value=' + '${project.id}' + '>' + '${project.projectName}' + '</option>');
+		}
+		</c:forEach>
+		}
+	else{
+		$('#projectNamesDropDown').attr('disabled','disbaled');
+	}
+	});
+	
 	var projectNamesDropDownSelectedValue = $('#selectedProjectNumber').val();
 	$('#projectNamesDropDown').change(function(e) {
         if($('#projectNamesDropDown :selected').val()) {
@@ -116,15 +144,41 @@ $(document).ready(function() {
 			<%@include file="authheader.jsp"%>
 			<div class="row">
 				<div class="form-group col-md-12" style="margin-top: 2%;">
+					<label class="col-md-2 control-lable" for="yearName"><spring:message code="projectReport.label.yearName" />
+						</label>
+					<div class="col-md-3">
+						<select class="form-control input-sm" id="yearNamesDropDown" name="yearNamesDropDown" >
+							<option value="NONE">--------------------------<spring:message code="generic.select.default.option" />--------------------------</option>
+							<option class="form-control input-sm" value="2017">2017</option>
+							<option class="form-control input-sm" value="2018">2018</option>
+							<option class="form-control input-sm" value="2019">2019</option>
+							<option class="form-control input-sm" value="2020">2020</option>
+						<%-- 	<c:forEach items="${projectsList}" var="proj">
+								<option class="form-control input-sm" value="${proj.id}"
+									${proj.id == project.id  ? 'selected' : ''}>${proj.projectName}</option>
+							</c:forEach> --%>
+						</select>
+						<div class="has-error">
+							<form:errors path="projectName" class="help-inline" />
+						</div>
+					</div>
+					<%-- <div class="col-md-3">
+						<a id="searchByProjectNameBtn"
+							class="btn btn-success custom-width"><spring:message code="button.search" /> </a>
+					</div> --%>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="projectName"><spring:message code="project.label.projectName" />
 						</label>
 					<div class="col-md-3">
 						<select class="form-control input-sm" id="projectNamesDropDown" name="projectNamesDropDown" >
 							<option value="NONE">--------------------------<spring:message code="generic.select.default.option" />--------------------------</option>
-							<c:forEach items="${projectsList}" var="proj">
+							<%-- <c:forEach items="${projectsList}" var="proj">
 								<option class="form-control input-sm" value="${proj.id}"
 									${proj.id == project.id  ? 'selected' : ''}>${proj.projectName}</option>
-							</c:forEach>
+							</c:forEach> --%>
 						</select>
 						<div class="has-error">
 							<form:errors path="projectName" class="help-inline" />
