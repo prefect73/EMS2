@@ -18,18 +18,21 @@
 		<title><spring:message code="workPackage.add.title" /></title>
 	</c:otherwise>
 </c:choose>
-<link href="<c:url value='/static/css/bootstrap.css' />"
-	rel="stylesheet"></link>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-<script>
+
+<script type="text/javascript">
 var userAttendance = new Map();
 
 <c:forEach items="${userAttendancesUpdated}" var="usrAttend">
 	userAttendance.set('${usrAttend.user.id}-${usrAttend.yearName}', {'mJan' : '${usrAttend.mJan}' , 'mFeb' : '${usrAttend.mFeb}', 'mMar' : '${usrAttend.mMar}', 'mApr' : '${usrAttend.mApr}', 'mMay' : '${usrAttend.mMay}', 'mJun' : '${usrAttend.mJun}', 'mJul' : '${usrAttend.mJul}', 'mAug' : '${usrAttend.mAug}', 'mSep' : '${usrAttend.mSep}', 'mOct' : '${usrAttend.mOct}', 'mNov' : '${usrAttend.mNov}', 'mDec' : '${usrAttend.mDec}' });
 </c:forEach>
-
+	
+	/* var editView = $("#workPackageName").val() == '' ? false : true ; */
 	var wPakAllocSize = '<c:out value="${fn:length(workPackage.workPackageUserAllocations)}"/>';
 	$( document ).ready(function() {
 		  if ($('#empListForWorkPackageTable > tbody > tr').length == 0 || wPakAllocSize == 0 ){
@@ -39,25 +42,57 @@ var userAttendance = new Map();
 		     $( ".userCombo,.yearCombo" ).change(function() {
 		      poulateAvailableHours();
 		     });
-		  
+		     effectiveDistributionPopups();
 		 });
 	
+	function effectiveDistributionPopups (){
+		$( document ).on( "click", "[name$=emJan],[name$=emFeb],[name$=emMar],[name$=emApr],[name$=emMay],[name$=emJun],[name$=emJuly],[name$=emAug],[name$=emSep],[name$=emOct],[name$=emNov],[name$=emDec]", function() {
+			$("#effectiveDaysDialog").dialog({
+				title: 'emJan',
+			    modal: true,
+			    draggable: false,
+			    resizable: false,
+			    position: ['center', 'top'],
+			    show: 'blind',
+			    hide: 'blind',
+			    width: 400,
+			    dialogClass: 'ui-dialog-osx',
+			    buttons: {
+			        "ok": function() {
+			        
+			            $(this).dialog("close");
+			        },
+			        "cancel": function() {
+			            $(this).dialog("close");
+			        }
+			    }
+			});
+	    	  //alert( this.value + this.id + this.name  );  
+			
+	    	});
+	}
 	function poulateAvailableHours(){
-		$( ".userCombo" ).each(function( index , element) {
-			var yearNameVal = "";
-			if('<c:out value="${edit}"/>'){
-				yearNameVal = $(element).parent().prev().find('input').val()
-			}else{
-				yearNameVal = $(element).parent().prev().find('select').val()
-			}
-		console.log(yearNameVal);	
+		$( ".userCombo" ).each(function( index , element) {			
+			yearNameVal = $(element).parent().prev().find('input').val() == null ? $(element).parent().prev().find('select').val() : $(element).parent().prev().find('input').val();	
 			var trObj = $(element).parent().parent();
-		
-		
 			///zzz selected value
 			var usAtt = userAttendance.get($( element ).val()+"-"+yearNameVal);
-			console.log(usAtt);
-			console.log(usAtt.mJan);
+			if(usAtt == null){
+				$(trObj).find("[id$=mJanAvailableHrs]").val('0.00');
+				$(trObj).find("[id$=mFebAvailableHrs]").val('0.00');
+				$(trObj).find("[id$=mMarAvailableHrs]").val('0.00');
+				$(trObj).find("[id$=mAprAvailableHrs]").val('0.00');
+				$(trObj).find("[id$=mMayAvailableHrs]").val('0.00');
+				$(trObj).find("[id$=mJunAvailableHrs]").val('0.00');
+				$(trObj).find("[id$=mJulAvailableHrs]").val('0.00');
+				$(trObj).find("[id$=mAugAvailableHrs]").val('0.00');
+				$(trObj).find("[id$=mSepAvailableHrs]").val('0.00');
+				$(trObj).find("[id$=mOctAvailableHrs]").val('0.00');
+				$(trObj).find("[id$=mNovAvailableHrs]").val('0.00');
+				$(trObj).find("[id$=mDecAvailableHrs]").val('0.00');
+				alert('<spring:message code="workPackage.alert.attendanceNotFound"/>' + ' ' + yearNameVal);
+				
+			}
 			$(trObj).find("[id$=mJanAvailableHrs]").val(usAtt.mJan);
 			$(trObj).find("[id$=mFebAvailableHrs]").val(usAtt.mFeb);
 			$(trObj).find("[id$=mMarAvailableHrs]").val(usAtt.mMar);
@@ -182,6 +217,8 @@ function addFirstRow(){
 			
 		}
 	}
+	
+
 </script>
 </head>
 
@@ -414,18 +451,16 @@ function addFirstRow(){
 									<c:when test="${edit}">
 										<c:forEach items="${workPackage.workPackageUserAllocations}"
 											var="workPackageUserAllocation" varStatus="status">
+											
 											<tr>
 												<td><input readonly="readonly" class="form-control input-sm"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].yearName"
 													value="${workPackageUserAllocation.yearName}" /></td>
-												<td><form:input type="hidden"
-														path="workPackageUserAllocations[${status.index}].id" />
-														<%--<input readonly="readonly" class="form-control input-sm userCombo"
-													style="width: 55px;"
-													name="workPackageUserAllocations[${status.index}].user.id"
-													value="${workPackageUserAllocation.user.firstName}" />--%>
-													 <select disabled="disabled"  class="form-control input-sm userCombo"
+												<td>
+												<input type="hidden" 
+														name="workPackageUserAllocations[${status.index}].id" />
+													<select   class="form-control input-sm userCombo"
 													name="workPackageUserAllocati1ons[${status.index}].user">
 
 														<c:forEach items="${employeeslist}" var="emp">
@@ -573,7 +608,57 @@ function addFirstRow(){
 					</div>
 				</div>
 			</div>
+				<div id="effectiveDaysDialog" style="display: none; font-size: 12px!important;">
+    <table>
+  <tr>
+    <td></td>
+    <td></td>
+	<td style="text-align:center;"><label>1</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>2</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>3</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>4</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>5</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	</tr>
+	<tr>
+	<td style="text-align:center;"><label>6</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>7</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>8</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>9</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>10</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>11</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>12</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	</tr>
+	<tr>
+	<td style="text-align:center;"><label>13</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>14</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>15</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>16</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>17</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>18</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>19</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	</tr>
+	<tr>
+	<td style="text-align:center;"><label>20</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>21</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>22</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>23</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>24</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>25</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>26</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	</tr>
+	<tr>
+	<td style="text-align:center;"><label>27</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>28</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>29</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>30</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+	<td style="text-align:center;"><label>31</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</div>
 		</form:form>
 	</div>
+
 </body>
 </html>

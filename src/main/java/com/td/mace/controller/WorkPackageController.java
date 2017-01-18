@@ -2,6 +2,7 @@ package com.td.mace.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.td.mace.model.Project;
 import com.td.mace.model.User;
 import com.td.mace.model.WorkPackage;
-import com.td.mace.model.WorkPackageUserAllocation;
 import com.td.mace.service.ProjectService;
 import com.td.mace.service.UserAttendanceService;
 import com.td.mace.service.UserService;
@@ -72,7 +72,8 @@ public class WorkPackageController {
 
 		List<WorkPackage> workPackages = workPackageService
 				.findAllWorkPackages();
-		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
+		model.addAttribute("defaultLanguage",
+				environment.getProperty("default.language"));
 		model.addAttribute("workPackages", workPackages);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "workPackageslist";
@@ -100,8 +101,15 @@ public class WorkPackageController {
 	 * This method will provide the medium to add a new workPackage.
 	 */
 	@RequestMapping(value = { "/newworkPackage" }, method = RequestMethod.GET)
-	public String newWorkPackage(ModelMap model) {
+	public String newWorkPackage(ModelMap model,HttpServletRequest request) {
 		WorkPackage workPackage = new WorkPackage();
+		
+		if(request.getParameter("projectId") != null){
+			int projectId = (Integer.parseInt(request.getParameter("projectId")));
+			Project project = projectService.findById(projectId);
+			workPackage.setProject(project);
+		}
+		
 		model.addAttribute("workPackage", workPackage);
 		/*
 		 * model.addAttribute("projectslist", projectService.findAllProjects());
@@ -143,11 +151,12 @@ public class WorkPackageController {
 		 * "workPackage"; }
 		 */
 
-		/*for (WorkPackageUserAllocation workPackageUserAllocation : workPackage
-				.getWorkPackageUserAllocations()) {
-			workPackageUserAllocation.setYearName(environment
-					.getProperty("year.name"));
-		}*/
+		/*
+		 * for (WorkPackageUserAllocation workPackageUserAllocation :
+		 * workPackage .getWorkPackageUserAllocations()) {
+		 * workPackageUserAllocation.setYearName(environment
+		 * .getProperty("year.name")); }
+		 */
 
 		workPackageService.saveWorkPackage(workPackage);
 		workPackageService.updateWorkPackage(workPackage);
@@ -214,12 +223,13 @@ public class WorkPackageController {
 		 * workPackageUserAllocationService.saveWorkPackageUserAllocation(
 		 * workPackage.getWorkPackageUserAllocations());
 		 */
-		
-		/*for (WorkPackageUserAllocation workPackageUserAllocation : workPackage
-				.getWorkPackageUserAllocations()) {
-			workPackageUserAllocation.setYearName(environment
-					.getProperty("year.name"));
-		}*/
+
+		/*
+		 * for (WorkPackageUserAllocation workPackageUserAllocation :
+		 * workPackage .getWorkPackageUserAllocations()) {
+		 * workPackageUserAllocation.setYearName(environment
+		 * .getProperty("year.name")); }
+		 */
 
 		workPackageService.updateWorkPackage(workPackage);
 

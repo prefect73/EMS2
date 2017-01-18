@@ -26,10 +26,10 @@ function format () {
 }
 $(document).ready(function() {
 	
-	if($("#totalCost").val() > $("#offeredCost").val()){
+	if(parseInt($("#totalCost").val()) >  parseInt($("#offeredCost").val())){
 		$("#totalCost").css({ 'color': 'red'});
 	}
-	if($("#effectiveCost").val() > $("#offeredCost").val()){
+	if(parseInt($("#effectiveCost").val()) > parseInt($("#offeredCost").val())){
 		$("#effectiveCost").css({ 'color': 'red'});
 	}
 	

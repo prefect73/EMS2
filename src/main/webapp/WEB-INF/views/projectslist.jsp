@@ -101,7 +101,7 @@
 								<%-- <td><spring:message code="generic.currencySymbol" />${project.effectiveCost}</td> --%>
 								<sec:authorize access="hasRole('ADMIN')">
 									<td><a class="btn btn-primary floatRight"
-										href="<c:url value='/WorkPackage/newworkPackage?projectName=${project.projectName}' />"><spring:message code="workPackageslist.addNewWorkPackage" /></a>
+										href="<c:url value='/WorkPackage/newworkPackage?projectId=${project.id}' />"><spring:message code="workPackageslist.addNewWorkPackage" /></a>
 										</td>
 								</sec:authorize>
 								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
