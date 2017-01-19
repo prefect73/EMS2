@@ -47,7 +47,13 @@ var userAttendance = new Map();
 			  validateAttendanceAndAllocatedHours();
 			  validateTotalPlannedDaysWithTotalAllocatedDays();
 		     });
-		     //effectiveDistributionPopups();
+		     $( ".userCombo,.yearCombo,.allocatedDays,.effectiveDays" ).blur(function() {
+			      poulateAvailableHours();
+			      validateAllocatedAndEffectiveHours();
+				  validateAttendanceAndAllocatedHours();
+				  validateTotalPlannedDaysWithTotalAllocatedDays();
+			     });
+		     effectiveDistributionPopups();
 		     
 		 });
 	
@@ -96,22 +102,346 @@ var userAttendance = new Map();
 			}
 		});
 	}
-	
+	function getCalendarValues(emMonth, selector) {
+		 var daysSum = 0;
+		 $(selector).each(function(){
+		     var th = $(this);
+		     console.log("th val: " + th.val() + ",," + parseInt(th.val())); 
+		  if(!th.val())
+		   th.val(0);
+		  daysSum += parseInt(th.val());
+		  th.val(0); //to be removed later
+		 });
+		 console.log("monthTotal: " + daysSum); 
+		 $(emMonth).val(daysSum);  
+		 return daysSum;
+		 }
 	function effectiveDistributionPopups (){
-		$( document ).on( "click", "[name$=emJan],[name$=emFeb],[name$=emMar],[name$=emApr],[name$=emMay],[name$=emJun],[name$=emJuly],[name$=emAug],[name$=emSep],[name$=emOct],[name$=emNov],[name$=emDec]", function() {
+		/* $( document ).on( "click", "[name$=emJan],[name$=emFeb],[name$=emMar],[name$=emApr],[name$=emMay],[name$=emJun],[name$=emJuly],[name$=emAug],[name$=emSep],[name$=emOct],[name$=emNov],[name$=emDec]", function() {
 			$("#effectiveDaysDialog").dialog({
-				title: 'emJan',
+				title: 'mJan',
 			    modal: true,
 			    draggable: false,
 			    resizable: false,
-			    position: ['center', 'top'],
+			    position: { my: 'top', at: 'top+150' },
 			    show: 'blind',
 			    hide: 'blind',
 			    width: 400,
 			    dialogClass: 'ui-dialog-osx',
 			    buttons: {
 			        "ok": function() {
-			        
+			        	getCalendarValues('.calendarTextBoxes');
+			            $(this).dialog("close");
+			        },
+			        "cancel": function() {
+			            $(this).dialog("close");
+			        }
+			    }
+			});
+	    	  //alert( this.value + this.id + this.name  );  
+			
+	    	}); */
+		$( document ).on( "click", "[id=emJanTextBox]", function() {
+			$('.calendarTextBoxes').addClass('mJan').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
+			$("#effectiveDaysDialog").dialog({
+				title: 'Jan',
+			    modal: true,
+			    draggable: false,
+			    resizable: false,
+			    position: { my: 'top', at: 'top+150' },
+			    show: 'blind',
+			    hide: 'blind',
+			    width: 400,
+			    dialogClass: 'ui-dialog-osx',
+			    buttons: {
+			        "ok": function() {
+			        	getCalendarValues('#emJanTextBox','.mJan');
+			            $(this).dialog("close");
+			        },
+			        "cancel": function() {
+			            $(this).dialog("close");
+			        }
+			    }
+			});
+	    	  //alert( this.value + this.id + this.name  );  
+			
+	    	});
+	    	
+		$( document ).on( "click", "[id=emFebTextBox]", function() {
+			$('.calendarTextBoxes').addClass('mFeb').removeClass('mJan').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
+			$("#effectiveDaysDialog").dialog({
+				title: 'Feb',
+			    modal: true,
+			    draggable: false,
+			    resizable: false,
+			    position: { my: 'top', at: 'top+150' },
+			    show: 'blind',
+			    hide: 'blind',
+			    width: 400,
+			    dialogClass: 'ui-dialog-osx',
+			    buttons: {
+			        "ok": function() {
+			        	getCalendarValues('#emFebTextBox','.mFeb');
+			            $(this).dialog("close");
+			        },
+			        "cancel": function() {
+			            $(this).dialog("close");
+			        }
+			    }
+			});
+	    	  //alert( this.value + this.id + this.name  );  
+			
+	    	});
+		
+		$( document ).on( "click", "[id=emMarTextBox]", function() {
+			$('.calendarTextBoxes').addClass('mMar').removeClass('mFeb').removeClass('mJan').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
+			$("#effectiveDaysDialog").dialog({
+				title: 'Mar',
+			    modal: true,
+			    draggable: false,
+			    resizable: false,
+			    position: { my: 'top', at: 'top+150' },
+			    show: 'blind',
+			    hide: 'blind',
+			    width: 400,
+			    dialogClass: 'ui-dialog-osx',
+			    buttons: {
+			        "ok": function() {
+			        	getCalendarValues('#emMarTextBox','.mMar');
+			            $(this).dialog("close");
+			        },
+			        "cancel": function() {
+			            $(this).dialog("close");
+			        }
+			    }
+			});
+	    	  //alert( this.value + this.id + this.name  );  
+			
+	    	});
+		
+		$( document ).on( "click", "[id=emAprTextBox]", function() {
+			$('.calendarTextBoxes').addClass('mApr').removeClass('mFeb').removeClass('mMar').removeClass('mJan').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
+			$("#effectiveDaysDialog").dialog({
+				title: 'Apr',
+			    modal: true,
+			    draggable: false,
+			    resizable: false,
+			    position: { my: 'top', at: 'top+150' },
+			    show: 'blind',
+			    hide: 'blind',
+			    width: 400,
+			    dialogClass: 'ui-dialog-osx',
+			    buttons: {
+			        "ok": function() {
+			        	getCalendarValues('#emAprTextBox','.mApr');
+			            $(this).dialog("close");
+			        },
+			        "cancel": function() {
+			            $(this).dialog("close");
+			        }
+			    }
+			});
+	    	  //alert( this.value + this.id + this.name  );  
+			
+	    	});
+		
+		$( document ).on( "click", "[id=emMayTextBox]", function() {
+			$('.calendarTextBoxes').addClass('mMay').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mJan').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
+			$("#effectiveDaysDialog").dialog({
+				title: 'May',
+			    modal: true,
+			    draggable: false,
+			    resizable: false,
+			    position: { my: 'top', at: 'top+150' },
+			    show: 'blind',
+			    hide: 'blind',
+			    width: 400,
+			    dialogClass: 'ui-dialog-osx',
+			    buttons: {
+			        "ok": function() {
+			        	getCalendarValues('#emMayTextBox','.mMay');
+			            $(this).dialog("close");
+			        },
+			        "cancel": function() {
+			            $(this).dialog("close");
+			        }
+			    }
+			});
+	    	  //alert( this.value + this.id + this.name  );  
+			
+	    	});
+		
+		$( document ).on( "click", "[id=emJunTextBox]", function() {
+			$('.calendarTextBoxes').addClass('mJun').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJan').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
+			$("#effectiveDaysDialog").dialog({
+				title: 'Jun',
+			    modal: true,
+			    draggable: false,
+			    resizable: false,
+			    position: { my: 'top', at: 'top+150' },
+			    show: 'blind',
+			    hide: 'blind',
+			    width: 400,
+			    dialogClass: 'ui-dialog-osx',
+			    buttons: {
+			        "ok": function() {
+			        	getCalendarValues('#emJunTextBox','.mJun');
+			            $(this).dialog("close");
+			        },
+			        "cancel": function() {
+			            $(this).dialog("close");
+			        }
+			    }
+			});
+	    	  //alert( this.value + this.id + this.name  );  
+			
+	    	});
+		
+		$( document ).on( "click", "[id=emJulTextBox]", function() {
+			$('.calendarTextBoxes').addClass('mJul').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJan').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
+			$("#effectiveDaysDialog").dialog({
+				title: 'Jul',
+			    modal: true,
+			    draggable: false,
+			    resizable: false,
+			    position: { my: 'top', at: 'top+150' },
+			    show: 'blind',
+			    hide: 'blind',
+			    width: 400,
+			    dialogClass: 'ui-dialog-osx',
+			    buttons: {
+			        "ok": function() {
+			        	getCalendarValues('#emJulTextBox','.mJul');
+			            $(this).dialog("close");
+			        },
+			        "cancel": function() {
+			            $(this).dialog("close");
+			        }
+			    }
+			});
+	    	  //alert( this.value + this.id + this.name  );  
+			
+	    	});
+		
+		$( document ).on( "click", "[id=emAugTextBox]", function() {
+			$('.calendarTextBoxes').addClass('mAug').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mJan').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
+			$("#effectiveDaysDialog").dialog({
+				title: 'Aug',
+			    modal: true,
+			    draggable: false,
+			    resizable: false,
+			    position: { my: 'top', at: 'top+150' },
+			    show: 'blind',
+			    hide: 'blind',
+			    width: 400,
+			    dialogClass: 'ui-dialog-osx',
+			    buttons: {
+			        "ok": function() {
+			        	getCalendarValues('#emAugTextBox','.mAug');
+			            $(this).dialog("close");
+			        },
+			        "cancel": function() {
+			            $(this).dialog("close");
+			        }
+			    }
+			});
+	    	  //alert( this.value + this.id + this.name  );  
+			
+	    	});
+		
+		$( document ).on( "click", "[id=emSepTextBox]", function() {
+			$('.calendarTextBoxes').addClass('mSep').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mJan').removeClass('mOct').removeClass('mNov').removeClass('mDec');
+			$("#effectiveDaysDialog").dialog({
+				title: 'Sep',
+			    modal: true,
+			    draggable: false,
+			    resizable: false,
+			    position: { my: 'top', at: 'top+150' },
+			    show: 'blind',
+			    hide: 'blind',
+			    width: 400,
+			    dialogClass: 'ui-dialog-osx',
+			    buttons: {
+			        "ok": function() {
+			        	getCalendarValues('#emSepTextBox','.mSep');
+			            $(this).dialog("close");
+			        },
+			        "cancel": function() {
+			            $(this).dialog("close");
+			        }
+			    }
+			});
+	    	  //alert( this.value + this.id + this.name  );  
+			
+	    	});
+		
+		$( document ).on( "click", "[id=emOctTextBox]", function() {
+			$('.calendarTextBoxes').addClass('mOct').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mJan').removeClass('mNov').removeClass('mDec');
+			$("#effectiveDaysDialog").dialog({
+				title: 'Oct',
+			    modal: true,
+			    draggable: false,
+			    resizable: false,
+			    position: { my: 'top', at: 'top+150' },
+			    show: 'blind',
+			    hide: 'blind',
+			    width: 400,
+			    dialogClass: 'ui-dialog-osx',
+			    buttons: {
+			        "ok": function() {
+			        	getCalendarValues('#emOctTextBox','.mOct');
+			            $(this).dialog("close");
+			        },
+			        "cancel": function() {
+			            $(this).dialog("close");
+			        }
+			    }
+			});
+	    	  //alert( this.value + this.id + this.name  );  
+			
+	    	});
+		
+		$( document ).on( "click", "[id=emNovTextBox]", function() {
+			$('.calendarTextBoxes').addClass('mNov').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mJan').removeClass('mDec');
+			$("#effectiveDaysDialog").dialog({
+				title: 'Nov',
+			    modal: true,
+			    draggable: false,
+			    resizable: false,
+			    position: { my: 'top', at: 'top+150' },
+			    show: 'blind',
+			    hide: 'blind',
+			    width: 400,
+			    dialogClass: 'ui-dialog-osx',
+			    buttons: {
+			        "ok": function() {
+			        	getCalendarValues('#emNovTextBox','.mNov');
+			            $(this).dialog("close");
+			        },
+			        "cancel": function() {
+			            $(this).dialog("close");
+			        }
+			    }
+			});
+	    	  //alert( this.value + this.id + this.name  );  
+			
+	    	});
+		
+		$( document ).on( "click", "[id=emDecTextBox]", function() {
+			$('.calendarTextBoxes').addClass('mDec').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mJan');
+			$("#effectiveDaysDialog").dialog({
+				title: 'Dec',
+			    modal: true,
+			    draggable: false,
+			    resizable: false,
+			    position: { my: 'top', at: 'top+150' },
+			    show: 'blind',
+			    hide: 'blind',
+			    width: 400,
+			    dialogClass: 'ui-dialog-osx',
+			    buttons: {
+			        "ok": function() {
+			        	getCalendarValues('#emDecTextBox','.mDec');
 			            $(this).dialog("close");
 			        },
 			        "cancel": function() {
@@ -123,6 +453,7 @@ var userAttendance = new Map();
 			
 	    	});
 	}
+
 	function poulateAvailableHours(){
 		$( ".userCombo" ).each(function( index , element) {			
 			yearNameVal = $(element).parent().prev().find('input').val() == null ? $(element).parent().prev().find('select').val() : $(element).parent().prev().find('input').val();	
@@ -168,18 +499,18 @@ function addFirstRow(){
 	var yearNameTD ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ><option class="form-control input-sm" value="2017">2017</option><option class="form-control input-sm" value="2018">2018</option><option class="form-control input-sm" value="2019">2019</option><option class="form-control input-sm" value="2020">2020</option></select></td>';
 	var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';
 	var totalPlannedDaysTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].totalPlannedDays" /></td>';
-	var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" /></td>';
-	var mFebTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mFebAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mFeb" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emFeb" /></td>';
-	var mMarTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMarAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mMar" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emMar" /></td>';
-	var mAprTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAprAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mApr" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emApr" /></td>';
-	var mMayTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMayAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mMay" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emMay" /></td>';
-	var mJunTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJunAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJun" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJun" /></td>';
-	var mJulTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJulAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJul" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJul" /></td>';
-	var mAugTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAugAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mAug" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emAug" /></td>';
-	var mSepTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mSepAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mSep" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emSep" /></td>';
-	var mOctTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mOctAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mOct" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emOct" /></td>';
-	var mNovTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mNovAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mNov" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emNov" /></td>';
-	var mDecTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mDecAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emDec" /></td>';
+	var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input id="emJanTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" /></td>';
+	var mFebTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mFebAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mFeb" />&nbsp;<input id="emFebTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emFeb" /></td>';
+	var mMarTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMarAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mMar" />&nbsp;<input id="emMarTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emMar" /></td>';
+	var mAprTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAprAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mApr" />&nbsp;<input id="emAprTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emApr" /></td>';
+	var mMayTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMayAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mMay" />&nbsp;<input id="emMayTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emMay" /></td>';
+	var mJunTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJunAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJun" />&nbsp;<input id="emJunTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJun" /></td>';
+	var mJulTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJulAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJul" />&nbsp;<input id="emJulTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJul" /></td>';
+	var mAugTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAugAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mAug" />&nbsp;<input id="emAugTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emAug" /></td>';
+	var mSepTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mSepAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mSep" />&nbsp;<input id="emSepTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emSep" /></td>';
+	var mOctTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mOctAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mOct" />&nbsp;<input id="emOctTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emOct" /></td>';
+	var mNovTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mNovAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mNov" />&nbsp;<input id="emNovTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emNov" /></td>';
+	var mDecTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mDecAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" />&nbsp;<input id="emDecTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emDec" /></td>';
 	/* var yearNameTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" /></td>'; */
 	
 	
@@ -218,19 +549,19 @@ function addFirstRow(){
 		var yearNameTD ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ><option class="form-control input-sm" value="2017">2017</option><option class="form-control input-sm" value="2018">2018</option><option class="form-control input-sm" value="2019">2019</option><option class="form-control input-sm" value="2020">2020</option></select></td>';
 		var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';
 		var totalPlannedDaysTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].totalPlannedDays" /></td>';
-		var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" /></td>';
-		var mFebTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mFebAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mFeb" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emFeb" /></td>';
-		var mMarTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMarAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mMar" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emMar" /></td>';
-		var mAprTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAprAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mApr" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emApr" /></td>';
-		var mMayTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMayAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mMay" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emMay" /></td>';
-		var mJunTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJunAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJun" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJun" /></td>';
-		var mJulTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJulAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJul" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJul" /></td>';
-		var mAugTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAugAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mAug" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emAug" /></td>';
-		var mSepTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mSepAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mSep" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emSep" /></td>';
-		var mOctTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mOctAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mOct" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emOct" /></td>';
-		var mNovTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mNovAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mNov" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emNov" /></td>';
-		var mDecTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mDecAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emDec" /></td>';
-
+		var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input id="emJanTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" /></td>';
+		var mFebTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mFebAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mFeb" />&nbsp;<input id="emFebTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emFeb" /></td>';
+		var mMarTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMarAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mMar" />&nbsp;<input id="emMarTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emMar" /></td>';
+		var mAprTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAprAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mApr" />&nbsp;<input id="emAprTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emApr" /></td>';
+		var mMayTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMayAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mMay" />&nbsp;<input id="emMayTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emMay" /></td>';
+		var mJunTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJunAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJun" />&nbsp;<input id="emJunTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJun" /></td>';
+		var mJulTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJulAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJul" />&nbsp;<input id="emJulTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJul" /></td>';
+		var mAugTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAugAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mAug" />&nbsp;<input id="emAugTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emAug" /></td>';
+		var mSepTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mSepAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mSep" />&nbsp;<input id="emSepTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emSep" /></td>';
+		var mOctTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mOctAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mOct" />&nbsp;<input id="emOctTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emOct" /></td>';
+		var mNovTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mNovAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mNov" />&nbsp;<input id="emNovTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emNov" /></td>';
+		var mDecTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mDecAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" />&nbsp;<input id="emDecTextBox" class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emDec" /></td>';
+		
 		/* var yearNameTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" /></td>'; */
 		
 		
@@ -532,6 +863,7 @@ function addFirstRow(){
 													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mJan"
 													value="${workPackageUserAllocation.mJan}" />&nbsp;<input
+													id="emJanTextBox"
 													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emJan"
 													value="${workPackageUserAllocation.emJan}" /></td>
@@ -541,6 +873,7 @@ function addFirstRow(){
 													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mFeb"
 													value="${workPackageUserAllocation.mFeb}" />&nbsp;<input
+													id="emFebTextBox"
 													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emFeb"
 													value="${workPackageUserAllocation.emFeb}" /></td>
@@ -550,6 +883,7 @@ function addFirstRow(){
 													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mMar"
 													value="${workPackageUserAllocation.mMar}" />&nbsp;<input
+													id="emMarTextBox"
 													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emMar"
 													value="${workPackageUserAllocation.emMar}" /></td>
@@ -559,6 +893,7 @@ function addFirstRow(){
 													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mApr"
 													value="${workPackageUserAllocation.mApr}" />&nbsp;<input
+													id="emAprTextBox"
 													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emApr"
 													value="${workPackageUserAllocation.emApr}" /></td>
@@ -568,6 +903,7 @@ function addFirstRow(){
 													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mMay"
 													value="${workPackageUserAllocation.mMay}" />&nbsp;<input
+													id="emMayTextBox"
 													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emMay"
 													value="${workPackageUserAllocation.emMay}" /></td>
@@ -577,6 +913,7 @@ function addFirstRow(){
 													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mJun"
 													value="${workPackageUserAllocation.mJun}" />&nbsp;<input
+													id="emJunTextBox"
 													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emJun"
 													value="${workPackageUserAllocation.emJun}" /></td>
@@ -586,6 +923,7 @@ function addFirstRow(){
 													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mJul"
 													value="${workPackageUserAllocation.mJul}" />&nbsp;<input
+													id="emJulTextBox"
 													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emJul"
 													value="${workPackageUserAllocation.emJul}" /></td>
@@ -595,6 +933,7 @@ function addFirstRow(){
 													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mAug"
 													value="${workPackageUserAllocation.mAug}" />&nbsp;<input
+													id="emAugTextBox"
 													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emAug"
 													value="${workPackageUserAllocation.emAug}" /></td>
@@ -604,6 +943,7 @@ function addFirstRow(){
 													class="form-control input-sm  allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mSep"
 													value="${workPackageUserAllocation.mSep}" />&nbsp;<input
+													id="emSepTextBox"
 													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emSep"
 													value="${workPackageUserAllocation.emSep}" /></td>
@@ -613,6 +953,7 @@ function addFirstRow(){
 													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mOct"
 													value="${workPackageUserAllocation.mOct}" />&nbsp;<input
+													id="emOctTextBox"
 													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emOct"
 													value="${workPackageUserAllocation.emOct}" /></td>
@@ -622,6 +963,7 @@ function addFirstRow(){
 													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mNov"
 													value="${workPackageUserAllocation.mNov}" />&nbsp;<input
+													id="emNovTextBox"
 													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emNov"
 													value="${workPackageUserAllocation.emNov}" /></td>
@@ -631,6 +973,7 @@ function addFirstRow(){
 													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mDec"
 													value="${workPackageUserAllocation.mDec}" />&nbsp;<input
+													id="emDecTextBox"
 													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emDec"
 													value="${workPackageUserAllocation.emDec}" /></td>
@@ -660,50 +1003,50 @@ function addFirstRow(){
 					</div>
 				</div>
 			</div>
-				<div id="effectiveDaysDialog" style="display: none; font-size: 12px!important;">
+<div id="effectiveDaysDialog" style="display: none; font-size: 12px!important;">
     <table>
   <tr>
     <td></td>
     <td></td>
-	<td style="text-align:center;"><label>1</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>2</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>3</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>4</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>5</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	</tr>
-	<tr>
-	<td style="text-align:center;"><label>6</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>7</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>8</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>9</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>10</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>11</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>12</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	</tr>
-	<tr>
-	<td style="text-align:center;"><label>13</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>14</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>15</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>16</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>17</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>18</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>19</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	</tr>
-	<tr>
-	<td style="text-align:center;"><label>20</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>21</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>22</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>23</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>24</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>25</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>26</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	</tr>
-	<tr>
-	<td style="text-align:center;"><label>27</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>28</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>29</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>30</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
-	<td style="text-align:center;"><label>31</label><input type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>1</label><input title="1" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>2</label><input title="2" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>3</label><input title="3" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>4</label><input title="4" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>5</label><input title="5" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ </tr>
+ <tr>
+ <td style="text-align:center;"><label>6</label><input title="6" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>7</label><input title="7" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>8</label><input title="8" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>9</label><input title="9" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>10</label><input title="10" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>11</label><input title="11" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>12</label><input title="12" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ </tr>
+ <tr>
+ <td style="text-align:center;"><label>13</label><input title="13" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>14</label><input title="14" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>15</label><input title="15" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>16</label><input title="16" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>17</label><input title="17" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>18</label><input title="18" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>19</label><input title="19" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ </tr>
+ <tr>
+ <td style="text-align:center;"><label>20</label><input title="20" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>21</label><input title="21" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>22</label><input title="22" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>23</label><input title="23" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>24</label><input title="24" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>25</label><input title="25" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>26</label><input title="26" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ </tr>
+ <tr>
+ <td style="text-align:center;"><label>27</label><input title="27" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>28</label><input title="28" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>29</label><input title="29" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>30</label><input title="30" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
+ <td style="text-align:center;"><label>31</label><input title="31" class="calendarTextBoxes" type="text" style="width:42px;" class="form-control input-sm"></td>
     <td></td>
     <td></td>
   </tr>
