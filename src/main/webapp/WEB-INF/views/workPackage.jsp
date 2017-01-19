@@ -32,18 +32,70 @@ var userAttendance = new Map();
 	userAttendance.set('${usrAttend.user.id}-${usrAttend.yearName}', {'mJan' : '${usrAttend.mJan}' , 'mFeb' : '${usrAttend.mFeb}', 'mMar' : '${usrAttend.mMar}', 'mApr' : '${usrAttend.mApr}', 'mMay' : '${usrAttend.mMay}', 'mJun' : '${usrAttend.mJun}', 'mJul' : '${usrAttend.mJul}', 'mAug' : '${usrAttend.mAug}', 'mSep' : '${usrAttend.mSep}', 'mOct' : '${usrAttend.mOct}', 'mNov' : '${usrAttend.mNov}', 'mDec' : '${usrAttend.mDec}' });
 </c:forEach>
 	
-	/* var editView = $("#workPackageName").val() == '' ? false : true ; */
 	var wPakAllocSize = '<c:out value="${fn:length(workPackage.workPackageUserAllocations)}"/>';
 	$( document ).ready(function() {
 		  if ($('#empListForWorkPackageTable > tbody > tr').length == 0 || wPakAllocSize == 0 ){
 		   addFirstRow();
 		  }
 		  poulateAvailableHours();
-		     $( ".userCombo,.yearCombo" ).change(function() {
+		  validateAllocatedAndEffectiveHours();
+		  validateAttendanceAndAllocatedHours();
+		  validateTotalPlannedDaysWithTotalAllocatedDays();
+		     $( ".userCombo,.yearCombo,.allocatedDays,.effectiveDays" ).change(function() {
 		      poulateAvailableHours();
+		      validateAllocatedAndEffectiveHours();
+			  validateAttendanceAndAllocatedHours();
+			  validateTotalPlannedDaysWithTotalAllocatedDays();
 		     });
-		     effectiveDistributionPopups();
+		     //effectiveDistributionPopups();
+		     
 		 });
+	
+	function validateTotalPlannedDaysWithTotalAllocatedDays(){
+		$( ".allocatedDays" ).each(function(index,element) {
+			var totalPlannedDaysVal = $(element).closest('tr').find('td:eq(2)').find('input').val();
+			var allocatedDaysSumTds = $(element).closest('tr').find('td').not(':eq(0),:eq(1),:eq(2),:eq(15)');
+			var allocatedDaysSum = 0;
+			allocatedDaysSumTds.each(function() {     
+				console.log(isNaN($(this).find('input:eq(1)').val()));
+				allocatedDaysSum += isNaN(parseInt($(this).find('input:eq(1)').val())) ? parseInt('0.00') : parseInt( $(this).find('input:eq(1)').val()) ;                     
+		    });
+			if(totalPlannedDaysVal == allocatedDaysSum ){
+				$(element).closest('tr').find('td:eq(2)').find('input').css('backgroundColor','green');
+				$(element).closest('tr').find('td:eq(2)').find('input').css('color','white');
+			}else if(totalPlannedDaysVal > allocatedDaysSum ){
+				$(element).closest('tr').find('td:eq(2)').find('input').css('backgroundColor','yellow');
+				$(element).closest('tr').find('td:eq(2)').find('input').css('color','black');
+			}else if (totalPlannedDaysVal < allocatedDaysSum){
+				$(element).closest('tr').find('td:eq(2)').find('input').css('backgroundColor','red');
+				$(element).closest('tr').find('td:eq(2)').find('input').css('color','white'); 
+			}
+		});
+	}
+	
+	function validateAttendanceAndAllocatedHours(){
+		$( ".allocatedDays" ).each(function(index,element) {
+			if((parseInt($(element).val())) > (parseInt($(element).closest('td').find('input:eq(0)').val()))){
+				$(element).css('backgroundColor','red');
+				$(element).css('color','white');
+			}else{
+				$(element).css('backgroundColor','white');
+				$(element).css('color','black');
+			}
+		});
+	}
+	
+	function validateAllocatedAndEffectiveHours (){
+		$( ".effectiveDays" ).each(function(index,element) {
+			if((parseInt($(element).val())) > (parseInt($(element).closest('td').find('input:eq(1)').val()))){
+				$(element).css('backgroundColor','red');
+				$(element).css('color','white');
+			}else{
+				$(element).css('backgroundColor','white');
+				$(element).css('color','black');
+			}
+		});
+	}
 	
 	function effectiveDistributionPopups (){
 		$( document ).on( "click", "[name$=emJan],[name$=emFeb],[name$=emMar],[name$=emApr],[name$=emMay],[name$=emJun],[name$=emJuly],[name$=emAug],[name$=emSep],[name$=emOct],[name$=emNov],[name$=emDec]", function() {
@@ -116,18 +168,18 @@ function addFirstRow(){
 	var yearNameTD ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ><option class="form-control input-sm" value="2017">2017</option><option class="form-control input-sm" value="2018">2018</option><option class="form-control input-sm" value="2019">2019</option><option class="form-control input-sm" value="2020">2020</option></select></td>';
 	var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';
 	var totalPlannedDaysTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].totalPlannedDays" /></td>';
-	var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" /></td>';
-	var mFebTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mFebAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mFeb" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emFeb" /></td>';
-	var mMarTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMarAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mMar" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emMar" /></td>';
-	var mAprTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAprAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mApr" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emApr" /></td>';
-	var mMayTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMayAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mMay" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emMay" /></td>';
-	var mJunTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJunAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJun" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emJun" /></td>';
-	var mJulTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJulAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJul" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emJul" /></td>';
-	var mAugTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAugAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mAug" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emAug" /></td>';
-	var mSepTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mSepAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mSep" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emSep" /></td>';
-	var mOctTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mOctAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mOct" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emOct" /></td>';
-	var mNovTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mNovAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mNov" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emNov" /></td>';
-	var mDecTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mDecAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emDec" /></td>';
+	var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" /></td>';
+	var mFebTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mFebAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mFeb" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emFeb" /></td>';
+	var mMarTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMarAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mMar" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emMar" /></td>';
+	var mAprTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAprAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mApr" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emApr" /></td>';
+	var mMayTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMayAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mMay" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emMay" /></td>';
+	var mJunTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJunAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJun" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJun" /></td>';
+	var mJulTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJulAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJul" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJul" /></td>';
+	var mAugTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAugAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mAug" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emAug" /></td>';
+	var mSepTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mSepAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mSep" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emSep" /></td>';
+	var mOctTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mOctAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mOct" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emOct" /></td>';
+	var mNovTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mNovAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mNov" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emNov" /></td>';
+	var mDecTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mDecAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emDec" /></td>';
 	/* var yearNameTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" /></td>'; */
 	
 	
@@ -166,18 +218,18 @@ function addFirstRow(){
 		var yearNameTD ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ><option class="form-control input-sm" value="2017">2017</option><option class="form-control input-sm" value="2018">2018</option><option class="form-control input-sm" value="2019">2019</option><option class="form-control input-sm" value="2020">2020</option></select></td>';
 		var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';
 		var totalPlannedDaysTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].totalPlannedDays" /></td>';
-		var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" /></td>';
-		var mFebTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mFebAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mFeb" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emFeb" /></td>';
-		var mMarTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMarAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mMar" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emMar" /></td>';
-		var mAprTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAprAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mApr" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emApr" /></td>';
-		var mMayTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMayAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mMay" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emMay" /></td>';
-		var mJunTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJunAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJun" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emJun" /></td>';
-		var mJulTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJulAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mJul" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emJul" /></td>';
-		var mAugTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAugAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mAug" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emAug" /></td>';
-		var mSepTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mSepAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mSep" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emSep" /></td>';
-		var mOctTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mOctAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mOct" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emOct" /></td>';
-		var mNovTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mNovAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mNov" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emNov" /></td>';
-		var mDecTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mDecAvailableHrs" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" />&nbsp;<input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].emDec" /></td>';
+		var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" /></td>';
+		var mFebTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mFebAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mFeb" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emFeb" /></td>';
+		var mMarTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMarAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mMar" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emMar" /></td>';
+		var mAprTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAprAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mApr" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emApr" /></td>';
+		var mMayTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMayAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mMay" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emMay" /></td>';
+		var mJunTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJunAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJun" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJun" /></td>';
+		var mJulTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJulAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mJul" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emJul" /></td>';
+		var mAugTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mAugAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mAug" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emAug" /></td>';
+		var mSepTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mSepAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mSep" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emSep" /></td>';
+		var mOctTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mOctAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mOct" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emOct" /></td>';
+		var mNovTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mNovAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mNov" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emNov" /></td>';
+		var mDecTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mDecAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" />&nbsp;<input class="form-control input-sm effectiveDays" style="width:55px;" name="workPackageUserAllocations['+index+'].emDec" /></td>';
 
 		/* var yearNameTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" /></td>'; */
 		
@@ -477,109 +529,109 @@ function addFirstRow(){
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mJanAvailableHrs" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mJan"
 													value="${workPackageUserAllocation.mJan}" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emJan"
 													value="${workPackageUserAllocation.emJan}" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mFebAvailableHrs" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mFeb"
 													value="${workPackageUserAllocation.mFeb}" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emFeb"
 													value="${workPackageUserAllocation.emFeb}" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mMarAvailableHrs" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mMar"
 													value="${workPackageUserAllocation.mMar}" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emMar"
 													value="${workPackageUserAllocation.emMar}" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mAprAvailableHrs" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mApr"
 													value="${workPackageUserAllocation.mApr}" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emApr"
 													value="${workPackageUserAllocation.emApr}" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mMayAvailableHrs" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mMay"
 													value="${workPackageUserAllocation.mMay}" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emMay"
 													value="${workPackageUserAllocation.emMay}" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mJunAvailableHrs" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mJun"
 													value="${workPackageUserAllocation.mJun}" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emJun"
 													value="${workPackageUserAllocation.emJun}" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mJulAvailableHrs" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mJul"
 													value="${workPackageUserAllocation.mJul}" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emJul"
 													value="${workPackageUserAllocation.emJul}" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mAugAvailableHrs" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mAug"
 													value="${workPackageUserAllocation.mAug}" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emAug"
 													value="${workPackageUserAllocation.emAug}" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mSepAvailableHrs" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm  allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mSep"
 													value="${workPackageUserAllocation.mSep}" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emSep"
 													value="${workPackageUserAllocation.emSep}" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mOctAvailableHrs" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mOct"
 													value="${workPackageUserAllocation.mOct}" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emOct"
 													value="${workPackageUserAllocation.emOct}" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mNovAvailableHrs" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mNov"
 													value="${workPackageUserAllocation.mNov}" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emNov"
 													value="${workPackageUserAllocation.emNov}" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mDecAvailableHrs" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm allocatedDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mDec"
 													value="${workPackageUserAllocation.mDec}" />&nbsp;<input
-													class="form-control input-sm" style="width: 55px;"
+													class="form-control input-sm effectiveDays" style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emDec"
 													value="${workPackageUserAllocation.emDec}" /></td>
 												<td>
