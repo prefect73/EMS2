@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.td.mace.dao.UserDao;
 import com.td.mace.model.User;
+import com.td.mace.model.UserAttendance;
 
 
 @Service("userService")
@@ -66,6 +67,14 @@ public class UserServiceImpl implements UserService{
 
 	public List<User> findAllUsers() {
 		return dao.findAllUsers();
+	}
+	
+	public List<User> findAllUsersBySSOId(String ssoId) {
+		boolean isAdmin = dao.isAdmin(ssoId);
+		if(isAdmin){
+			return dao.findAllUsers();
+		}
+		return dao.findAllUsersBySSOId(ssoId);
 	}
 	
 	public List<User> findAllUsersByType(String userProfileType) {

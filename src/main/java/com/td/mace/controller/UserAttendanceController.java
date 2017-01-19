@@ -77,7 +77,14 @@ public class UserAttendanceController {
 
 	@ModelAttribute("employeeslist")
 	public List<User> initializeProjectLeads() {
-		return userService.findAllUsers();
+		List<User> employeeslist =  userService.findAllUsers();
+		/*List<User> employeeslist = new ArrayList<User>();
+		if (getPrincipal() != null) {
+			employeeslist.add(userService.findBySSO(getPrincipal()));
+		} else {
+			employeeslist = userService.findAllUsers();
+		}*/
+		return employeeslist;
 	}
 
 	/**

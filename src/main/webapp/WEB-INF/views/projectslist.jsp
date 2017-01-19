@@ -73,9 +73,11 @@
 							</th>
 							<%-- <th><spring:message code="project.label.yearName" /> 
 							</th>--%>
+							<sec:authorize access="hasRole('ADMIN')">
 							<th><spring:message code="project.label.offeredCost" />
 							</th>
 							<th><spring:message code="project.label.totalCost" /></th>
+							</sec:authorize>
 							<%-- <th><spring:message code="project.label.effectiveCost" /></th> --%>
 							<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 								<th width="100"></th>
@@ -96,8 +98,10 @@
 								<td>${project.projectName}</td>
 								<td>${project.customerName}</td>
 								<%-- <td>${project.yearName}</td> --%>
+								<sec:authorize access="hasRole('ADMIN')">
 								<td><spring:message code="generic.currencySymbol" />${project.offeredCost}</td>
 								<td><spring:message code="generic.currencySymbol" />${project.totalCost}</td>
+								</sec:authorize>
 								<%-- <td><spring:message code="generic.currencySymbol" />${project.effectiveCost}</td> --%>
 								<sec:authorize access="hasRole('ADMIN')">
 									<td><a class="btn btn-primary floatRight"

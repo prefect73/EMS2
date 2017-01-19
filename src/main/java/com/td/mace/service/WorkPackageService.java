@@ -22,6 +22,8 @@ public interface WorkPackageService {
 	List<WorkPackage> findAllWorkPackages(); 
 	
 	List<WorkPackage> findByProjectID(int projectID);
+
+	List<WorkPackage> findAllWorkPackagesBySSOId(String ssoId);
 	
 
 }

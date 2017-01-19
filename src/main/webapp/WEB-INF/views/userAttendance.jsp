@@ -53,7 +53,7 @@
 						</label>
 					<div class="col-md-2">
 					
-					<select class="form-control input-sm"  name="user">
+					<select readonly="true" class="form-control input-sm"  name="user">
 
 							<c:forEach items="${employeeslist}" var="usr">
 								<option class="form-control input-sm" value="${usr.id}"

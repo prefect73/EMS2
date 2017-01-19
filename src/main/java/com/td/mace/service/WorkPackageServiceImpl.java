@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.td.mace.dao.UserDao;
 import com.td.mace.dao.WorkPackageDao;
 import com.td.mace.model.WorkPackage;
 import com.td.mace.model.WorkPackageUserAllocation;
@@ -18,6 +19,10 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 
 	@Autowired
 	private WorkPackageDao dao;
+	
+	@Autowired
+	private UserDao userDao;
+		
 
 	public WorkPackage findById(int id) {
 		return dao.findById(id);
@@ -256,6 +261,14 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 	public List<WorkPackage> findAllWorkPackages() {
 		return dao.findAllWorkPackages();
 	}
+	
+	public List<WorkPackage> findAllWorkPackagesBySSOId(String ssoId){
+			boolean isAdmin = userDao.isAdmin(ssoId);
+			if(isAdmin){
+				return dao.findAllWorkPackages();
+			}
+			return dao.findAllWorkPackagesBySSOId(ssoId);
+		}
 	
 	public List<WorkPackage> findByProjectID(int projectID) {
 		  return dao.findByProjectID(projectID);  

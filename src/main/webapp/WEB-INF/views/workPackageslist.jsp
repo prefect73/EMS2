@@ -66,12 +66,14 @@ $(document).ready(function() {
 							<th><spring:message code="project.label.projectName" /></th>
 							<%-- <th><spring:message code="workPackage.label.workPackageNumber" /></th> --%>
 							<th><spring:message code="workPackage.label.workPackageName" /></th>
+							<sec:authorize access="hasRole('ADMIN')">
 							<th><spring:message code="workPackage.label.offeredCost" /></th>
 							<th><spring:message code="workPackage.label.totalCost" /></th>
 							<th><spring:message code="workPackage.label.effectiveCost" /></th>
-							<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-								<th width="100"></th>
 							</sec:authorize>
+							<%-- <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')"> --%>
+								<th width="100"></th>
+							<%-- </sec:authorize> --%>
 							<sec:authorize access="hasRole('ADMIN')">
 								<th width="100"></th>
 							</sec:authorize>
@@ -84,14 +86,16 @@ $(document).ready(function() {
 								<td>${workPackage.project.projectName}</td>
 								<%-- <td>${workPackage.workPackageNumber}</td> --%>
 								<td>${workPackage.workPackageName}</td>
+								<sec:authorize access="hasRole('ADMIN')">
 								<td><spring:message code="generic.currencySymbol" />${workPackage.offeredCost}</td>
 								<td><spring:message code="generic.currencySymbol" />${workPackage.totalCost}</td>
 								<td><spring:message code="generic.currencySymbol" />${workPackage.effectiveCost}</td>
-								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+								</sec:authorize>
+								<%-- <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')"> --%>
 									<td><a
 										href="<c:url value='/WorkPackage/edit-workPackage-${workPackage.id}' />"
 										class="btn btn-success "><spring:message code="button.edit" /></a></td>
-								</sec:authorize>
+								<%-- </sec:authorize> --%>
 								<sec:authorize access="hasRole('ADMIN')">
 									<td><a
 										href="<c:url value='/WorkPackage/delete-workPackage-${workPackage.id}' />"

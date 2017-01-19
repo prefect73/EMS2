@@ -1,5 +1,6 @@
 package com.td.mace.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -12,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.td.mace.model.User;
+import com.td.mace.model.UserAttendance;
 import com.td.mace.model.UserProfile;
 
 
@@ -53,6 +55,23 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 			Hibernate.initialize(user.getUserProfiles());
 		}
 		return users;
+	}
+	@SuppressWarnings("unchecked")
+	public List<User> findAllUsersBySSOId(String ssoId) {
+		Criteria criteria = createEntityCriteria();
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		// criteria.add(Restrictions.eq("ssoId", ssoId));
+		criteria.addOrder(Order.asc("id"));
+		List<User> users = (List<User>) criteria
+				.list();
+		List<User> allowedUsers = new ArrayList<User>();
+
+		for (User user : users) {
+			if (user.getSsoId().equalsIgnoreCase(ssoId)) {
+				allowedUsers.add(user);
+			}
+		}
+		return allowedUsers;
 	}
 	
 	@SuppressWarnings("unchecked")

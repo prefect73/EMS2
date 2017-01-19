@@ -108,9 +108,9 @@ var userAttendance = new Map();
 		     var th = $(this);
 		     console.log("th val: " + th.val() + ",," + parseInt(th.val())); 
 		  if(!th.val())
-		   th.val(0);
-		  daysSum += parseInt(th.val());
-		  th.val(0); //to be removed later
+		   th.val('0.00');
+		  daysSum += parseFloat(th.val());
+		  th.val('0.00'); //to be removed later
 		 });
 		 console.log("monthTotal: " + daysSum); 
 		 $(emMonth).val(daysSum);  
@@ -674,7 +674,7 @@ function addFirstRow(){
 							code="workPackage.label.projectName" /> </label>
 					<div class="col-md-3">
 
-						<select class="form-control input-sm" name="project">
+						<select readonly="true" class="form-control input-sm" name="project">
 
 							<c:forEach items="${projectslist}" var="proj">
 								<option class="form-control input-sm" value="${proj.id}"
@@ -687,7 +687,7 @@ function addFirstRow(){
 					</div>
 				</div>
 			</div>
-
+			<sec:authorize access="hasRole('ADMIN')">
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="offeredCost"><spring:message
@@ -733,6 +733,7 @@ function addFirstRow(){
 					</div>
 				</div>
 			</div>
+			</sec:authorize>
 			<div class="row">
 				<div class="form-group col-md-12">
 					<div id="empListForWorkPackageTableWrapper">
@@ -843,7 +844,7 @@ function addFirstRow(){
 												<td>
 												<input type="hidden" 
 														name="workPackageUserAllocations[${status.index}].id" />
-													<select   class="form-control input-sm userCombo"
+													<select readonly="true"  class="form-control input-sm userCombo"
 													name="workPackageUserAllocati1ons[${status.index}].user">
 
 														<c:forEach items="${employeeslist}" var="emp">

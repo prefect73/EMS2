@@ -1,5 +1,6 @@
 package com.td.mace.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -66,10 +67,17 @@ public class AppController {
 	/**
 	 * This method will list all existing users.
 	 */
-	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
+	@RequestMapping(value = {  "/list" }, method = RequestMethod.GET)
 	public String listUsers(ModelMap model) {
+		
+		List<User> users = new ArrayList<User>();
+		if (getPrincipal() != null) {
+			users = userService.findAllUsersBySSOId(getPrincipal());
+		} else {
+			users = userService.findAllUsers();
+		}
 
-		List<User> users = userService.findAllUsers();
+		
 		model.addAttribute("users", users);
 		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 		model.addAttribute("loggedinuser", getPrincipal());
@@ -117,6 +125,7 @@ public class AppController {
 		
 		userService.saveUser(user);
 		userAttendance.setUser(user);
+		userAttendance.setYearName(environment.getProperty("year.name") != null ? environment.getProperty("year.name") : "2017" );
 		userAttendanceService.saveUserAttendance(userAttendance);
 
 		//model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");
@@ -206,7 +215,7 @@ public class AppController {
 	 * This method handles login GET requests.
 	 * If users is already logged-in and tries to goto login page again, will be redirected to list page.
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = {"/","/login"}, method = RequestMethod.GET)
 	public String loginPage() {
 		if (isCurrentAuthenticationAnonymous()) {
 			return "login";

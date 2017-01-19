@@ -1,5 +1,6 @@
 package com.td.mace.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.td.mace.model.Project;
 import com.td.mace.model.User;
+import com.td.mace.model.UserAttendance;
 import com.td.mace.model.WorkPackage;
 import com.td.mace.service.ProjectService;
 import com.td.mace.service.UserAttendanceService;
@@ -69,9 +71,15 @@ public class WorkPackageController {
 	 */
 	@RequestMapping(value = { "/workPackageslist" }, method = RequestMethod.GET)
 	public String listWorkPackages(ModelMap model) {
-
-		List<WorkPackage> workPackages = workPackageService
-				.findAllWorkPackages();
+		
+		List<WorkPackage> workPackages = new ArrayList<WorkPackage>();
+		if (getPrincipal() != null) {
+			workPackages = workPackageService.findAllWorkPackagesBySSOId(getPrincipal());
+		} else {
+			workPackages = workPackageService.findAllWorkPackages();
+		}
+		
+		
 		model.addAttribute("defaultLanguage",
 				environment.getProperty("default.language"));
 		model.addAttribute("workPackages", workPackages);
@@ -111,10 +119,10 @@ public class WorkPackageController {
 		}
 		
 		model.addAttribute("workPackage", workPackage);
-		/*
-		 * model.addAttribute("projectslist", projectService.findAllProjects());
-		 * model.addAttribute("employeeslist", userService.findAllUsers());
-		 */
+		
+		  model.addAttribute("projectslist", projectService.findAllProjects());
+		  model.addAttribute("employeeslist", userService.findAllUsers());
+		 
 		model.addAttribute("userAttendancesUpdated",
 				userAttendanceService.findAllUserAttendancesUpdated());
 		model.addAttribute("edit", false);
@@ -176,10 +184,10 @@ public class WorkPackageController {
 	public String editWorkPackage(@PathVariable int id, ModelMap model) {
 		WorkPackage workPackage = workPackageService.findById(id);
 		model.addAttribute("workPackage", workPackage);
-		/*
-		 * model.addAttribute("projectslist", projectService.findAllProjects());
-		 * model.addAttribute("employeeslist", userService.findAllUsers());
-		 */
+		
+		  model.addAttribute("projectslist", projectService.findAllProjects());
+		  model.addAttribute("employeeslist", userService.findAllUsers());
+		 
 		model.addAttribute("userAttendancesUpdated",
 				userAttendanceService.findAllUserAttendancesUpdated());
 		model.addAttribute("edit", true);

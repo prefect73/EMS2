@@ -23,6 +23,7 @@ public interface UserService {
 	
 	List<User> findAllUsersByType(String userProfileType); 
 
+	List<User> findAllUsersBySSOId(String ssoId);
 	
 	boolean isUserSSOUnique(Integer id, String sso);
 

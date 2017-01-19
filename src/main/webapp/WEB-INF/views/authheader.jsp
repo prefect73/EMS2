@@ -14,9 +14,9 @@
 		<li><a href="<c:url value='/list' />"><spring:message code="authheader.menu.employees"/></a></li>
 		<%-- </sec:authorize> --%>
 		<li><a href="<c:url value='/UserAttendance/userAttendanceslist' />"><spring:message code="authheader.menu.emp.attendance"/></a></li>
-		<%-- <sec:authorize access="hasRole('ADMIN')"> --%>
+		<sec:authorize access="hasRole('ADMIN')">
 		<li><a href="<c:url value='/Project/projectslist' />"><spring:message code="authheader.menu.projects"/></a></li>
-		<%-- </sec:authorize> --%>
+		</sec:authorize>
 				
 		<!-- <li><a href="#">Emp Allocations</a></li> -->
 		

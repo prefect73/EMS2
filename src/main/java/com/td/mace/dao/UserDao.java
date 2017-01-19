@@ -23,5 +23,7 @@ public interface UserDao {
 	
 	public boolean isAdmin (String ssoId);
 
+	List<User> findAllUsersBySSOId(String ssoId);
+
 }
 

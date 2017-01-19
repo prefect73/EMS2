@@ -1,5 +1,6 @@
 package com.td.mace.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -12,7 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.td.mace.model.User;
+import com.td.mace.model.UserAttendance;
 import com.td.mace.model.WorkPackage;
+import com.td.mace.model.WorkPackageUserAllocation;
 
 @Repository("workPackageDao")
 public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
@@ -73,6 +77,30 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 		}
 
 		return workPackages;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<WorkPackage> findAllWorkPackagesBySSOId(String ssoId) {
+		Criteria criteria = createEntityCriteria();
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		// criteria.add(Restrictions.eq("ssoId", ssoId));
+		criteria.addOrder(Order.asc("id"));
+		List<WorkPackage> workPackages = (List<WorkPackage>) criteria
+				.list();
+		List<WorkPackage> allowedUserAttendances = new ArrayList<WorkPackage>();
+
+		for (WorkPackage workPackage : workPackages) {
+			Hibernate.initialize(workPackage.getWorkPackageUserAllocations());
+			for(WorkPackageUserAllocation workPackageUserAllocation  : workPackage.getWorkPackageUserAllocations()){
+				User user = workPackageUserAllocation.getUser();
+				if (user.getSsoId().equalsIgnoreCase(ssoId)) {
+					allowedUserAttendances.add(workPackage);
+					break;
+				}
+			}
+			
+		}
+		return allowedUserAttendances;
 	}
 
 	public void save(WorkPackage workPackage) {

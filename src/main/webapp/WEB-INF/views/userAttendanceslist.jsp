@@ -50,11 +50,11 @@ if($("#defaultLanguage").val() == 'german'){
 			<div class="panel-heading">
 				<span class="lead"><spring:message
 						code="userAttendanceslist.title" /></span>
-				<sec:authorize access="hasRole('ADMIN')">
+				<%-- <sec:authorize access="hasRole('ADMIN')"> --%>
 					<a class="btn btn-primary floatRight"
 						href="<c:url value='/UserAttendance/newuserAttendance' />"><spring:message
 							code="userAttendanceslist.addNewEmployeeAttendance" /></a>
-				</sec:authorize>
+				<%-- </sec:authorize> --%>
 			</div>
 			<div id="userAttendancesTableWrapper" style="padding: 2%;">
 				<table id="userAttendancesTable"
@@ -93,9 +93,9 @@ if($("#defaultLanguage").val() == 'german'){
 							 --%>
 							
 							<th></th>
-							<sec:authorize access="hasRole('ADMIN')">
+							<%-- <sec:authorize access="hasRole('ADMIN')"> --%>
 								<th></th>
-							</sec:authorize>
+							<%-- </sec:authorize> --%>
 
 						</tr>
 					</thead>
@@ -121,11 +121,11 @@ if($("#defaultLanguage").val() == 'german'){
 								<td><a
 									href="<c:url value='/UserAttendance/edit-userAttendance-${userAttendance.id}' />"
 									class="btn btn-success "><spring:message code="button.edit" /></a></td>
-								<sec:authorize access="hasRole('ADMIN')">
+								<%-- <sec:authorize access="hasRole('ADMIN')"> --%>
 									<td><a
 										href="<c:url value='/UserAttendance/delete-userAttendance-${userAttendance.id}' />"
 										class="btn btn-danger "><spring:message code="button.delete" /></a></td>
-								</sec:authorize>
+								<%-- </sec:authorize> --%>
 							</tr>
 						</c:forEach>
 					</tbody>

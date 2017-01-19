@@ -29,11 +29,11 @@
 			var prevTdValue = prevTr.find('td').eq(tdIndex).html();
 			var prevPrevTr = currentTr.prev().prev();
 			var prevPrevTdValue = prevPrevTr.find('td').eq(tdIndex).html();
-			if (parseInt(value) < 0.00) {
+			if (parseInt(value) < parseInt('0.00')) {
 				//$(this).html(value.setFixed(2));
 				$(this).css('color', 'white');
 				$(this).css('background-color', 'red');
-			} else if(parseInt(value) == 0.00 && parseInt(prevTdValue) != 0.00){
+			} else if(parseInt(value) == parseInt('0.00') && !prevTr.find('td').eq(tdIndex).is(':empty') ){
 				//$(this).html(value.setFixed(2));
 				$(this).css('color', 'white');
 				$(this).css('background-color', 'green');
