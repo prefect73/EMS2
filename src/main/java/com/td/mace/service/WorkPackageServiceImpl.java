@@ -156,7 +156,7 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 			Query query = dao
 					.getHibernateSession()
 					.createSQLQuery(
-							"INSERT INTO work_package_app_user_allocations (work_package_id,  user_id, total_planned_days,  mJan,  mFeb,  mMar,  mApr,  mMay,  mJun,  mJul,  mAug,  mSep,  mOct,  mNov,  mDec, emJan,  emFeb,  emMar,  emApr,  emMay,  emJun,  emJul,  emAug,  emSep,  emOct,  emNov,  emDec,  YEAR_NAME) VALUES (:work_package_id, :user_id, :total_planned_days, :mJan, :mFeb, :mMar, :mApr, :mMay, :mJun, :mJul, :mAug, :mSep, :mOct, :mNov, :mDec,:emJan, :emFeb, :emMar, :emApr, :emMay, :emJun, :emJul, :emAug, :emSep, :emOct, :emNov, :emDec, :YEAR_NAME)");
+							"INSERT INTO work_package_app_user_allocations (work_package_id,  user_id, total_planned_days,  mJan,  mFeb,  mMar,  mApr,  mMay,  mJun,  mJul,  mAug,  mSep,  mOct,  mNov,  mDec, emJan,  emFeb,  emMar,  emApr,  emMay,  emJun,  emJul,  emAug,  emSep,  emOct,  emNov,  emDec, eemJan, eemFeb, eemMar, eemApr, eemMay, eemJun, eemJul, eemAug, eemSep, eemOct, eemNov, eemDec,  YEAR_NAME) VALUES (:work_package_id, :user_id, :total_planned_days, :mJan, :mFeb, :mMar, :mApr, :mMay, :mJun, :mJul, :mAug, :mSep, :mOct, :mNov, :mDec,:emJan, :emFeb, :emMar, :emApr, :emMay, :emJun, :emJul, :emAug, :emSep, :emOct, :emNov, :emDec, :eemJan, :eemFeb, :eemMar, :eemApr, :eemMay, :eemJun, :eemJul, :eemAug, :eemSep, :eemOct, :eemNov, :eemDec, :YEAR_NAME)");
 			query.setParameter("work_package_id", workPackage.getId());
 			query.setParameter("user_id", workPackageUserAllocation.getUser()
 					.getId());
@@ -185,6 +185,18 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 			query.setParameter("emOct", workPackageUserAllocation.getEmOct());
 			query.setParameter("emNov", workPackageUserAllocation.getEmNov());
 			query.setParameter("emDec", workPackageUserAllocation.getEmDec());
+			query.setParameter("eemJan", workPackageUserAllocation.getEemJan());
+			query.setParameter("eemFeb", workPackageUserAllocation.getEemFeb());
+			query.setParameter("eemMar", workPackageUserAllocation.getEemMar());
+			query.setParameter("eemApr", workPackageUserAllocation.getEemApr());
+			query.setParameter("eemMay", workPackageUserAllocation.getEemMay());
+			query.setParameter("eemJun", workPackageUserAllocation.getEemJun());
+			query.setParameter("eemJul", workPackageUserAllocation.getEemJul());
+			query.setParameter("eemAug", workPackageUserAllocation.getEemAug());
+			query.setParameter("eemSep", workPackageUserAllocation.getEemSep());
+			query.setParameter("eemOct", workPackageUserAllocation.getEemOct());
+			query.setParameter("eemNov", workPackageUserAllocation.getEemNov());
+			query.setParameter("eemDec", workPackageUserAllocation.getEemDec());
 			query.setParameter("YEAR_NAME",
 					workPackageUserAllocation.getYearName());
 			query.executeUpdate();

@@ -131,7 +131,54 @@ public class WorkPackageUserAllocation implements Serializable {
 	@DecimalMax(value = "31.00")
 	@Column(name = "emDec", precision = 10, scale = 2)
 	private BigDecimal emDec = new BigDecimal("0.00");
+
 	
+	@Column(name = "eemJan")
+	private String eemJan;
+
+
+	@Column(name = "eemFeb")
+	private String eemFeb;
+
+
+	@Column(name = "eemMar")
+	private String eemMar;
+
+
+	@Column(name = "eemApr")
+	private String eemApr;
+
+
+	@Column(name = "eemMay")
+	private String eemMay;
+
+
+	@Column(name = "eemJun")
+	private String eemJun;
+
+
+	@Column(name = "eemJul")
+	private String eemJul;
+
+
+	@Column(name = "eemAug")
+	private String eemAug;
+
+
+	@Column(name = "eemSep")
+	private String eemSep;
+
+
+	@Column(name = "eemOct")
+	private String eemOct;
+
+
+	@Column(name = "eemNov")
+	private String eemNov;
+
+
+	@Column(name = "eemDec")
+	private String eemDec;
 
 	@Column(name = "Year_Name")
 	private String yearName;
@@ -369,6 +416,104 @@ public class WorkPackageUserAllocation implements Serializable {
 
 	public void setEmDec(BigDecimal emDec) {
 		this.emDec = emDec;
+	}
+	
+	
+
+	public String getEemJan() {
+		return eemJan;
+	}
+
+	public void setEemJan(String eemJan) {
+		this.eemJan = eemJan;
+	}
+
+	public String getEemFeb() {
+		return eemFeb;
+	}
+
+	public void setEemFeb(String eemFeb) {
+		this.eemFeb = eemFeb;
+	}
+
+	public String getEemMar() {
+		return eemMar;
+	}
+
+	public void setEemMar(String eemMar) {
+		this.eemMar = eemMar;
+	}
+
+	public String getEemApr() {
+		return eemApr;
+	}
+
+	public void setEemApr(String eemApr) {
+		this.eemApr = eemApr;
+	}
+
+	public String getEemMay() {
+		return eemMay;
+	}
+
+	public void setEemMay(String eemMay) {
+		this.eemMay = eemMay;
+	}
+
+	public String getEemJun() {
+		return eemJun;
+	}
+
+	public void setEemJun(String eemJun) {
+		this.eemJun = eemJun;
+	}
+
+	public String getEemJul() {
+		return eemJul;
+	}
+
+	public void setEemJul(String eemJul) {
+		this.eemJul = eemJul;
+	}
+
+	public String getEemAug() {
+		return eemAug;
+	}
+
+	public void setEemAug(String eemAug) {
+		this.eemAug = eemAug;
+	}
+
+	public String getEemSep() {
+		return eemSep;
+	}
+
+	public void setEemSep(String eemSep) {
+		this.eemSep = eemSep;
+	}
+
+	public String getEemOct() {
+		return eemOct;
+	}
+
+	public void setEemOct(String eemOct) {
+		this.eemOct = eemOct;
+	}
+
+	public String getEemNov() {
+		return eemNov;
+	}
+
+	public void setEemNov(String eemNov) {
+		this.eemNov = eemNov;
+	}
+
+	public String getEemDec() {
+		return eemDec;
+	}
+
+	public void setEemDec(String eemDec) {
+		this.eemDec = eemDec;
 	}
 
 	public String getYearName() {

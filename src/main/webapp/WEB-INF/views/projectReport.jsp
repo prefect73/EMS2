@@ -25,6 +25,22 @@ function format () {
 //	return '<table id="workPackageDetailsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"><tr><c:forEach items="${workPackageUserAllocationsBySum}" var="employeeNames" varStatus="status"><td>${employeeNames.user.firstName}</td></tr><tr><td>${workPackageHoursForAllUsers[status.index].mJan + workPackageHoursForAllUsers[status.index].mFeb + workPackageHoursForAllUsers[status.index].mMar + workPackageHoursForAllUsers[status.index].mApr + workPackageHoursForAllUsers[status.index].mMay + workPackageHoursForAllUsers[status.index].mJun + workPackageHoursForAllUsers[status.index].mJul + workPackageHoursForAllUsers[status.index].mAug + workPackageHoursForAllUsers[status.index].mSep + workPackageHoursForAllUsers[status.index].mOct + workPackageHoursForAllUsers[status.index].mNov + workPackageHoursForAllUsers[status.index].mDec}</td></c:forEach></tr></table>';
 }
 $(document).ready(function() {
+	var selectOptions;
+	   if(localStorage.getItem("selectOptions")) {
+	       selectOptions = JSON.parse(localStorage.getItem("selectOptions"));
+	       Object.keys(selectOptions).forEach(function(select) {
+	         $("select[name="+select+"]").val(selectOptions[select]);
+	       });
+	  } else {
+	     selectOptions = {};
+	  }
+	  $("select").change(function() {
+	       var $this =  $(this),
+	           selectName = $this.attr("name");
+	      selectOptions[selectName] = $this.val();
+	      localStorage.setItem("selectOptions", JSON.stringify(selectOptions));
+	      console.log(JSON.stringify(selectOptions));
+	    });
 	
 	if(parseInt($("#totalCost").val()) >  parseInt($("#offeredCost").val())){
 		$("#totalCost").css({ 'color': 'red'});
@@ -34,10 +50,10 @@ $(document).ready(function() {
 	}
 	
 		
-	$('#projectNamesDropDown').attr('disabled','disbaled');
+	/* $('#projectNamesDropDown').attr('disabled','disbaled'); */
 	$('#yearNamesDropDown').change(function(e) {
 	if($('#yearNamesDropDown').prop('selectedIndex') > 0){
-		$('#projectNamesDropDown').removeAttr('disabled');
+		/* $('#projectNamesDropDown').removeAttr('disabled'); */
 		$('#projectNamesDropDown').find('option').remove();
 		var  yearNamesDropDown = $('#yearNamesDropDown :selected').val();
 		$('#projectNamesDropDown').append('<option class="form-control input-sm" value="NONE">--------------------------Wählen--------------------------</option>');
@@ -49,7 +65,7 @@ $(document).ready(function() {
 		</c:forEach>
 		}
 	else{
-		$('#projectNamesDropDown').attr('disabled','disbaled');
+		/* $('#projectNamesDropDown').attr('disabled','disbaled'); */
 	}
 	});
 	
