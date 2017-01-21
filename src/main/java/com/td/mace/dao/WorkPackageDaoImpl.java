@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.td.mace.model.User;
-import com.td.mace.model.UserAttendance;
 import com.td.mace.model.WorkPackage;
 import com.td.mace.model.WorkPackageUserAllocation;
 
@@ -22,7 +21,8 @@ import com.td.mace.model.WorkPackageUserAllocation;
 public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 		implements WorkPackageDao {
 
-	static final Logger logger = LoggerFactory.getLogger(WorkPackageDaoImpl.class);
+	static final Logger logger = LoggerFactory
+			.getLogger(WorkPackageDaoImpl.class);
 
 	public WorkPackage findById(int id) {
 		WorkPackage workPackage = getByKey(id);
@@ -78,27 +78,27 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 
 		return workPackages;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<WorkPackage> findAllWorkPackagesBySSOId(String ssoId) {
 		Criteria criteria = createEntityCriteria();
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		// criteria.add(Restrictions.eq("ssoId", ssoId));
 		criteria.addOrder(Order.asc("id"));
-		List<WorkPackage> workPackages = (List<WorkPackage>) criteria
-				.list();
+		List<WorkPackage> workPackages = (List<WorkPackage>) criteria.list();
 		List<WorkPackage> allowedUserAttendances = new ArrayList<WorkPackage>();
 
 		for (WorkPackage workPackage : workPackages) {
 			Hibernate.initialize(workPackage.getWorkPackageUserAllocations());
-			for(WorkPackageUserAllocation workPackageUserAllocation  : workPackage.getWorkPackageUserAllocations()){
+			for (WorkPackageUserAllocation workPackageUserAllocation : workPackage
+					.getWorkPackageUserAllocations()) {
 				User user = workPackageUserAllocation.getUser();
 				if (user.getSsoId().equalsIgnoreCase(ssoId)) {
 					allowedUserAttendances.add(workPackage);
 					break;
 				}
 			}
-			
+
 		}
 		return allowedUserAttendances;
 	}
@@ -113,21 +113,21 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 		WorkPackage workPackage = (WorkPackage) crit.uniqueResult();
 		delete(workPackage);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	 public List<WorkPackage> findByProjectID(int projectID) {
-	  Query query = getSession().createSQLQuery("select * from work_package where project_id = :projectId").addEntity(WorkPackage.class);
-	  query.setParameter("projectId", projectID);
-	  List<WorkPackage> workPackages = query.list();
-	  return workPackages;
-	 }
+	public List<WorkPackage> findByProjectID(int projectID) {
+		Query query = getSession().createSQLQuery(
+				"select * from work_package where project_id = :projectId")
+				.addEntity(WorkPackage.class);
+		query.setParameter("projectId", projectID);
+		List<WorkPackage> workPackages = query.list();
+		return workPackages;
+	}
 
 	@Override
 	public Session getHibernateSession() {
 		return super.getSession();
-		
+
 	}
-	
-	
 
 }
