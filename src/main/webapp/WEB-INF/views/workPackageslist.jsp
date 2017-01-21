@@ -20,6 +20,9 @@
 	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
 <script>
 $(document).ready(function() {
+	if(localStorage.getItem("selectOptions" != null)){
+		localStorage.removeItem("selectOptions");
+	}
 	
 	if($("#defaultLanguage").val() == 'german'){
 		$('#workPackagesTable').DataTable({

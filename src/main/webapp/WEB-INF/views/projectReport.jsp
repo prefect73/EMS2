@@ -50,10 +50,10 @@ $(document).ready(function() {
 	}
 	
 		
-	/* $('#projectNamesDropDown').attr('disabled','disbaled'); */
+	$('#projectNamesDropDown').attr('readonly','true'); 
 	$('#yearNamesDropDown').change(function(e) {
 	if($('#yearNamesDropDown').prop('selectedIndex') > 0){
-		/* $('#projectNamesDropDown').removeAttr('disabled'); */
+		$('#projectNamesDropDown').removeAttr('readonly');
 		$('#projectNamesDropDown').find('option').remove();
 		var  yearNamesDropDown = $('#yearNamesDropDown :selected').val();
 		$('#projectNamesDropDown').append('<option class="form-control input-sm" value="NONE">--------------------------Wählen--------------------------</option>');

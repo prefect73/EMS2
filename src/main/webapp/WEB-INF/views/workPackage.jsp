@@ -20,13 +20,22 @@
 </c:choose>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-<link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 
-
+<style type="text/css">
+.ui-datepicker {
+	width: 42%;
+	position: absolute !important;
+	top:80% !important;
+	left:25%!important; 
+  /* margin-left: 100px; */
+  z-index: 1000;
+}
+</style>
 <script type="text/javascript">
 var userAttendance = new Map();
 
@@ -56,7 +65,6 @@ var userAttendance = new Map();
 				  validateTotalPlannedDaysWithTotalAllocatedDays();
 			     });
 		     effectiveDistributionPopups();
-		     
 		 });
 	
 	function validateTotalPlannedDaysWithTotalAllocatedDays(){
@@ -105,355 +113,316 @@ var userAttendance = new Map();
 		});
 	}
 	function getCalendarValues(emMonth, selector) {
+		 console.log('emMonth: ' + emMonth);
 		 var daysSum = 0;
+		 var tempCSV = "";
+		 var effectiveDaysCSV = "";
 		 $(selector).each(function(){
 		     var th = $(this);
 		     console.log("th val: " + th.val() + ",," + parseInt(th.val())); 
 		  if(!th.val())
 		   th.val('0.00');
+		  tempCSV += "," + th.val();
+		  effectiveDaysCSV = tempCSV.substring(1, tempCSV.length);
 		  daysSum += parseFloat(th.val());
-		  th.val('0.00'); //to be removed later
 		 });
-		 console.log("monthTotal: " + daysSum); 
 		 $(emMonth).val(daysSum);  
+		 $(emMonth).next().val(effectiveDaysCSV); 
+		 console.log("csv: " + effectiveDaysCSV);
+		 console.log("monthTotal: " + daysSum); 
+		 //$('#workPackageUserAllocations[0].emJan').val('31');		
 		 return daysSum;
-		 }
+	}
 	function effectiveDistributionPopups (){
-		/* $( document ).on( "click", "[name$=emJan],[name$=emFeb],[name$=emMar],[name$=emApr],[name$=emMay],[name$=emJun],[name$=emJuly],[name$=emAug],[name$=emSep],[name$=emOct],[name$=emNov],[name$=emDec]", function() {
-			$("#effectiveDaysDialog").dialog({
-				title: 'mJan',
-			    modal: true,
-			    draggable: false,
-			    resizable: false,
-			    position: { my: 'top', at: 'top+150' },
-			    show: 'blind',
-			    hide: 'blind',
-			    width: 400,
-			    dialogClass: 'ui-dialog-osx',
-			    buttons: {
-			        "ok": function() {
-			        	getCalendarValues('.calendarTextBoxes');
-			            $(this).dialog("close");
-			        },
-			        "cancel": function() {
-			            $(this).dialog("close");
-			        }
-			    }
-			});
-	    	  //alert( this.value + this.id + this.name  );  
+		$( document ).on( "click", "[id$=emJan]", function() {
+			console.log("emJan clicked");
+			var d = new Date();
+			d.setMonth(0);
+			$(this).datepicker({
+			 	changeMonth: false, 
+			 	changeYear: false,
+				close: false,
+			 	showButtonPanel: true,
+			 	defaultDate: d,
+				autoclose: false,
+			 	onClose: function(dateText, inst) {
+     				console.log('closing');
+			//		getCalendarValues('#emJanTextBox','.mJan');
+     				getCalendarValues("#" + $(this).attr('id'),'.mJan');
+    			}
+			}).datepicker("show");
 			
-	    	}); */
-		$( document ).on( "click", "[id=emJanTextBox]", function() {
-			$('.calendarTextBoxes').addClass('mJan').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
-			$("#effectiveDaysDialog").dialog({
-				title: 'Jan',
-			    modal: true,
-			    draggable: false,
-			    resizable: false,
-			    position: { my: 'top', at: 'top+150' },
-			    show: 'blind',
-			    hide: 'blind',
-			    width: 400,
-			    dialogClass: 'ui-dialog-osx',
-			    buttons: {
-			        "ok": function() {
-			        	getCalendarValues('#emJanTextBox','.mJan');
-			            $(this).dialog("close");
-			        },
-			        "cancel": function() {
-			            $(this).dialog("close");
-			        }
-			    }
-			});
-	    	  //alert( this.value + this.id + this.name  );  
 			
-	    	});
+            var i = 1;
+            $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
+				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
+				$(this).html($(this).html() + "<input class=\"form-control input-sm mJan\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemJan" + i + "\" value=\"1\" />");
+			});
+		});
 	    	
-		$( document ).on( "click", "[id=emFebTextBox]", function() {
-			$('.calendarTextBoxes').addClass('mFeb').removeClass('mJan').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
-			$("#effectiveDaysDialog").dialog({
-				title: 'Feb',
-			    modal: true,
-			    draggable: false,
-			    resizable: false,
-			    position: { my: 'top', at: 'top+150' },
-			    show: 'blind',
-			    hide: 'blind',
-			    width: 400,
-			    dialogClass: 'ui-dialog-osx',
-			    buttons: {
-			        "ok": function() {
-			        	getCalendarValues('#emFebTextBox','.mFeb');
-			            $(this).dialog("close");
-			        },
-			        "cancel": function() {
-			            $(this).dialog("close");
-			        }
-			    }
+		$( document ).on( "click", "[id$=emFeb]", function() {
+			console.log("emFeb clicked");
+			var d = new Date();
+			d.setMonth(1);
+			$(this).datepicker({
+			 	changeMonth: false, 
+			 	changeYear: false,
+				close: false,
+			 	showButtonPanel: true,
+			 	defaultDate: d,
+				autoClose: false,
+			 	onClose: function(dateText, inst) {
+     				console.log('closing');
+			//		getCalendarValues('#emJanTextBox','.mJan');
+     				getCalendarValues("#" + $(this).attr('id'),'.mFeb');
+    			}
+			}).datepicker("show");
+            var i = 1;
+            $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
+				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
+				$(this).html($(this).html() + "<input class=\"form-control input-sm mFeb\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemFeb" + i + "\" value=\"1\" />");
 			});
-	    	  //alert( this.value + this.id + this.name  );  
-			
-	    	});
+	    });
 		
-		$( document ).on( "click", "[id=emMarTextBox]", function() {
-			$('.calendarTextBoxes').addClass('mMar').removeClass('mFeb').removeClass('mJan').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
-			$("#effectiveDaysDialog").dialog({
-				title: 'Mar',
-			    modal: true,
-			    draggable: false,
-			    resizable: false,
-			    position: { my: 'top', at: 'top+150' },
-			    show: 'blind',
-			    hide: 'blind',
-			    width: 400,
-			    dialogClass: 'ui-dialog-osx',
-			    buttons: {
-			        "ok": function() {
-			        	getCalendarValues('#emMarTextBox','.mMar');
-			            $(this).dialog("close");
-			        },
-			        "cancel": function() {
-			            $(this).dialog("close");
-			        }
-			    }
+		$( document ).on( "click", "[id$=emMar]", function() {
+			console.log("emMar clicked");
+			var d = new Date();
+			d.setMonth(2);
+			$(this).datepicker({
+			 	changeMonth: false, 
+			 	changeYear: false,
+				close: false,
+			 	showButtonPanel: true,
+			 	defaultDate: d,
+				autoClose: false,
+			 	onClose: function(dateText, inst) {
+     				console.log('closing');
+			//		getCalendarValues('#emJanTextBox','.mJan');
+     				getCalendarValues("#" + $(this).attr('id'),'.mMar');
+    			}
+			}).datepicker("show");
+            var i = 1;
+            $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
+				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
+				$(this).html($(this).html() + "<input class=\"form-control input-sm mMar\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemMar" + i + "\" value=\"1\" />");
 			});
-	    	  //alert( this.value + this.id + this.name  );  
-			
-	    	});
+		});
 		
-		$( document ).on( "click", "[id=emAprTextBox]", function() {
-			$('.calendarTextBoxes').addClass('mApr').removeClass('mFeb').removeClass('mMar').removeClass('mJan').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
-			$("#effectiveDaysDialog").dialog({
-				title: 'Apr',
-			    modal: true,
-			    draggable: false,
-			    resizable: false,
-			    position: { my: 'top', at: 'top+150' },
-			    show: 'blind',
-			    hide: 'blind',
-			    width: 400,
-			    dialogClass: 'ui-dialog-osx',
-			    buttons: {
-			        "ok": function() {
-			        	getCalendarValues('#emAprTextBox','.mApr');
-			            $(this).dialog("close");
-			        },
-			        "cancel": function() {
-			            $(this).dialog("close");
-			        }
-			    }
+		$( document ).on( "click", "[id$=emApr]", function() {
+			console.log("emApr clicked");
+			var d = new Date();
+			d.setMonth(3);
+			$(this).datepicker({
+			 	changeMonth: false, 
+			 	changeYear: false,
+				close: false,
+			 	showButtonPanel: true,
+			 	defaultDate: d,
+				autoClose: false,
+			 	onClose: function(dateText, inst) {
+     				console.log('closing');
+			//		getCalendarValues('#emJanTextBox','.mJan');
+     				getCalendarValues("#" + $(this).attr('id'),'.mApr');
+    			}
+			}).datepicker("show");
+            var i = 1;
+            $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
+				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
+				$(this).html($(this).html() + "<input class=\"form-control input-sm mApr\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemApr" + i + "\" value=\"1\" />");
 			});
-	    	  //alert( this.value + this.id + this.name  );  
-			
-	    	});
+		});
 		
-		$( document ).on( "click", "[id=emMayTextBox]", function() {
-			$('.calendarTextBoxes').addClass('mMay').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mJan').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
-			$("#effectiveDaysDialog").dialog({
-				title: 'May',
-			    modal: true,
-			    draggable: false,
-			    resizable: false,
-			    position: { my: 'top', at: 'top+150' },
-			    show: 'blind',
-			    hide: 'blind',
-			    width: 400,
-			    dialogClass: 'ui-dialog-osx',
-			    buttons: {
-			        "ok": function() {
-			        	getCalendarValues('#emMayTextBox','.mMay');
-			            $(this).dialog("close");
-			        },
-			        "cancel": function() {
-			            $(this).dialog("close");
-			        }
-			    }
+		$( document ).on( "click", "[id$=emMay]", function() {
+			console.log("emMay clicked");
+			var d = new Date();
+			d.setMonth(4);
+			$(this).datepicker({
+			 	changeMonth: false, 
+			 	changeYear: false,
+				close: false,
+			 	showButtonPanel: true,
+			 	defaultDate: d,
+				autoClose: false,
+			 	onClose: function(dateText, inst) {
+     				console.log('closing');
+			//		getCalendarValues('#emJanTextBox','.mJan');
+     				getCalendarValues("#" + $(this).attr('id'),'.mMay');
+    			}
+			}).datepicker("show");
+            var i = 1;
+            $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
+				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
+				$(this).html($(this).html() + "<input class=\"form-control input-sm mMay\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemMay" + i + "\" value=\"1\" />");
 			});
-	    	  //alert( this.value + this.id + this.name  );  
-			
-	    	});
+	    });
 		
-		$( document ).on( "click", "[id=emJunTextBox]", function() {
-			$('.calendarTextBoxes').addClass('mJun').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJan').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
-			$("#effectiveDaysDialog").dialog({
-				title: 'Jun',
-			    modal: true,
-			    draggable: false,
-			    resizable: false,
-			    position: { my: 'top', at: 'top+150' },
-			    show: 'blind',
-			    hide: 'blind',
-			    width: 400,
-			    dialogClass: 'ui-dialog-osx',
-			    buttons: {
-			        "ok": function() {
-			        	getCalendarValues('#emJunTextBox','.mJun');
-			            $(this).dialog("close");
-			        },
-			        "cancel": function() {
-			            $(this).dialog("close");
-			        }
-			    }
+		$( document ).on( "click", "[id$=emJun]", function() {
+			console.log("emJun clicked");
+			var d = new Date();
+			d.setMonth(5);
+			$(this).datepicker({
+			 	changeMonth: false, 
+			 	changeYear: false,
+				close: false,
+			 	showButtonPanel: true,
+			 	defaultDate: d,
+				autoClose: false,
+			 	onClose: function(dateText, inst) {
+     				console.log('closing');
+			//		getCalendarValues('#emJanTextBox','.mJan');
+     				getCalendarValues("#" + $(this).attr('id'),'.mJun');
+    			}
+			}).datepicker("show");
+            var i = 1;
+            $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
+				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
+				$(this).html($(this).html() + "<input class=\"form-control input-sm mJun\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemJun" + i + "\" value=\"1\" />");
 			});
-	    	  //alert( this.value + this.id + this.name  );  
-			
-	    	});
+		});
 		
-		$( document ).on( "click", "[id=emJulTextBox]", function() {
-			$('.calendarTextBoxes').addClass('mJul').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJan').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
-			$("#effectiveDaysDialog").dialog({
-				title: 'Jul',
-			    modal: true,
-			    draggable: false,
-			    resizable: false,
-			    position: { my: 'top', at: 'top+150' },
-			    show: 'blind',
-			    hide: 'blind',
-			    width: 400,
-			    dialogClass: 'ui-dialog-osx',
-			    buttons: {
-			        "ok": function() {
-			        	getCalendarValues('#emJulTextBox','.mJul');
-			            $(this).dialog("close");
-			        },
-			        "cancel": function() {
-			            $(this).dialog("close");
-			        }
-			    }
+		$( document ).on( "click", "[id$=emJul]", function() {
+			console.log("emJul clicked");
+			var d = new Date();
+			d.setMonth(6);
+			$(this).datepicker({
+			 	changeMonth: false, 
+			 	changeYear: false,
+				close: false,
+			 	showButtonPanel: true,
+			 	defaultDate: d,
+				autoClose: false,
+			 	onClose: function(dateText, inst) {
+     				console.log('closing');
+			//		getCalendarValues('#emJanTextBox','.mJan');
+     				getCalendarValues("#" + $(this).attr('id'),'.mJul');
+    			}
+			}).datepicker("show");
+            var i = 1;
+            $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
+				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
+				$(this).html($(this).html() + "<input class=\"form-control input-sm mJul\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemJul" + i + "\" value=\"1\" />");
 			});
-	    	  //alert( this.value + this.id + this.name  );  
-			
-	    	});
+		});
 		
-		$( document ).on( "click", "[id=emAugTextBox]", function() {
-			$('.calendarTextBoxes').addClass('mAug').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mJan').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mDec');
-			$("#effectiveDaysDialog").dialog({
-				title: 'Aug',
-			    modal: true,
-			    draggable: false,
-			    resizable: false,
-			    position: { my: 'top', at: 'top+150' },
-			    show: 'blind',
-			    hide: 'blind',
-			    width: 400,
-			    dialogClass: 'ui-dialog-osx',
-			    buttons: {
-			        "ok": function() {
-			        	getCalendarValues('#emAugTextBox','.mAug');
-			            $(this).dialog("close");
-			        },
-			        "cancel": function() {
-			            $(this).dialog("close");
-			        }
-			    }
+		$( document ).on( "click", "[id$=emAug]", function() {
+			console.log("emAug clicked");
+			var d = new Date();
+			d.setMonth(7);
+			$(this).datepicker({
+			 	changeMonth: false, 
+			 	changeYear: false,
+				close: false,
+			 	showButtonPanel: true,
+			 	defaultDate: d,
+				autoClose: false,
+			 	onClose: function(dateText, inst) {
+     				console.log('closing');
+			//		getCalendarValues('#emJanTextBox','.mJan');
+     				getCalendarValues("#" + $(this).attr('id'),'.mAug');
+    			}
+			}).datepicker("show");
+            var i = 1;
+            $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
+				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
+				$(this).html($(this).html() + "<input class=\"form-control input-sm mAug\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemAug" + i + "\" value=\"1\" />");
 			});
-	    	  //alert( this.value + this.id + this.name  );  
-			
-	    	});
+		});
 		
-		$( document ).on( "click", "[id=emSepTextBox]", function() {
-			$('.calendarTextBoxes').addClass('mSep').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mJan').removeClass('mOct').removeClass('mNov').removeClass('mDec');
-			$("#effectiveDaysDialog").dialog({
-				title: 'Sep',
-			    modal: true,
-			    draggable: false,
-			    resizable: false,
-			    position: { my: 'top', at: 'top+150' },
-			    show: 'blind',
-			    hide: 'blind',
-			    width: 400,
-			    dialogClass: 'ui-dialog-osx',
-			    buttons: {
-			        "ok": function() {
-			        	getCalendarValues('#emSepTextBox','.mSep');
-			            $(this).dialog("close");
-			        },
-			        "cancel": function() {
-			            $(this).dialog("close");
-			        }
-			    }
+		$( document ).on( "click", "[id$=emSep]", function() {
+			console.log("emSep clicked");
+			var d = new Date();
+			d.setMonth(8);
+			$(this).datepicker({
+			 	changeMonth: false, 
+			 	changeYear: false,
+				close: false,
+			 	showButtonPanel: true,
+			 	defaultDate: d,
+				autoClose: false,
+			 	onClose: function(dateText, inst) {
+     				console.log('closing');
+			//		getCalendarValues('#emJanTextBox','.mJan');
+     				getCalendarValues("#" + $(this).attr('id'),'.mSep');
+    			}
+			}).datepicker("show");
+            var i = 1;
+            $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
+				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
+				$(this).html($(this).html() + "<input class=\"form-control input-sm mSep\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemSep" + i + "\" value=\"1\" />");
 			});
-	    	  //alert( this.value + this.id + this.name  );  
-			
-	    	});
+		});
 		
-		$( document ).on( "click", "[id=emOctTextBox]", function() {
-			$('.calendarTextBoxes').addClass('mOct').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mJan').removeClass('mNov').removeClass('mDec');
-			$("#effectiveDaysDialog").dialog({
-				title: 'Oct',
-			    modal: true,
-			    draggable: false,
-			    resizable: false,
-			    position: { my: 'top', at: 'top+150' },
-			    show: 'blind',
-			    hide: 'blind',
-			    width: 400,
-			    dialogClass: 'ui-dialog-osx',
-			    buttons: {
-			        "ok": function() {
-			        	getCalendarValues('#emOctTextBox','.mOct');
-			            $(this).dialog("close");
-			        },
-			        "cancel": function() {
-			            $(this).dialog("close");
-			        }
-			    }
+		$( document ).on( "click", "[id$=emOct]", function() {
+			console.log("emOct clicked");
+			var d = new Date();
+			d.setMonth(9);
+			$(this).datepicker({
+			 	changeMonth: false, 
+			 	changeYear: false,
+				close: false,
+			 	showButtonPanel: true,
+			 	defaultDate: d,
+				autoClose: false,
+			 	onClose: function(dateText, inst) {
+     				console.log('closing');
+			//		getCalendarValues('#emJanTextBox','.mJan');
+     				getCalendarValues("#" + $(this).attr('id'),'.mOct');
+    			}
+			}).datepicker("show");
+            var i = 1;
+            $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
+				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
+				$(this).html($(this).html() + "<input class=\"form-control input-sm mOct\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemOct" + i + "\" value=\"1\" />");
 			});
-	    	  //alert( this.value + this.id + this.name  );  
-			
-	    	});
+		});
 		
-		$( document ).on( "click", "[id=emNovTextBox]", function() {
-			$('.calendarTextBoxes').addClass('mNov').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mJan').removeClass('mDec');
-			$("#effectiveDaysDialog").dialog({
-				title: 'Nov',
-			    modal: true,
-			    draggable: false,
-			    resizable: false,
-			    position: { my: 'top', at: 'top+150' },
-			    show: 'blind',
-			    hide: 'blind',
-			    width: 400,
-			    dialogClass: 'ui-dialog-osx',
-			    buttons: {
-			        "ok": function() {
-			        	getCalendarValues('#emNovTextBox','.mNov');
-			            $(this).dialog("close");
-			        },
-			        "cancel": function() {
-			            $(this).dialog("close");
-			        }
-			    }
+		$( document ).on( "click", "[id$=emNov]", function() {
+			console.log("emNov clicked");
+			var d = new Date();
+			d.setMonth(10);
+			$(this).datepicker({
+			 	changeMonth: false, 
+			 	changeYear: false,
+				close: false,
+			 	showButtonPanel: true,
+			 	defaultDate: d,
+				autoClose: false,
+			 	onClose: function(dateText, inst) {
+     				console.log('closing');
+			//		getCalendarValues('#emJanTextBox','.mJan');
+     				getCalendarValues("#" + $(this).attr('id'),'.mNov');
+    			}
+			}).datepicker("show");
+            var i = 1;
+            $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
+				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
+				$(this).html($(this).html() + "<input class=\"form-control input-sm mNov\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemNov" + i + "\" value=\"1\" />");
 			});
-	    	  //alert( this.value + this.id + this.name  );  
-			
-	    	});
+		});
 		
-		$( document ).on( "click", "[id=emDecTextBox]", function() {
-			$('.calendarTextBoxes').addClass('mDec').removeClass('mFeb').removeClass('mMar').removeClass('mApr').removeClass('mMay').removeClass('mJun').removeClass('mJul').removeClass('mAug').removeClass('mSep').removeClass('mOct').removeClass('mNov').removeClass('mJan');
-			$("#effectiveDaysDialog").dialog({
-				title: 'Dec',
-			    modal: true,
-			    draggable: false,
-			    resizable: false,
-			    position: { my: 'top', at: 'top+150' },
-			    show: 'blind',
-			    hide: 'blind',
-			    width: 400,
-			    dialogClass: 'ui-dialog-osx',
-			    buttons: {
-			        "ok": function() {
-			        	getCalendarValues('#emDecTextBox','.mDec');
-			            $(this).dialog("close");
-			        },
-			        "cancel": function() {
-			            $(this).dialog("close");
-			        }
-			    }
+		$( document ).on( "click", "[id$=emDec]", function() {
+			console.log("emDec clicked");
+			var d = new Date();
+			d.setMonth(11);
+			$(this).datepicker({
+			 	changeMonth: false, 
+			 	changeYear: false,
+				close: false,
+			 	showButtonPanel: true,
+			 	defaultDate: d,
+				autoClose: false,
+			 	onClose: function(dateText, inst) {
+     				console.log('closing');
+			//		getCalendarValues('#emJanTextBox','.mJan');
+     				getCalendarValues("#" + $(this).attr('id'),'.mDec');
+    			}
+			}).datepicker("show")
+            var i = 1;
+            $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
+				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
+				$(this).html($(this).html() + "<input class=\"form-control input-sm mDec\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemDec" + i + "\" value=\"1\" />");
 			});
-	    	  //alert( this.value + this.id + this.name  );  
-			
-	    	});
+	    });
 	}
 
 	function poulateAvailableHours(){
@@ -832,7 +801,7 @@ function addFirstRow(){
 												<td><input type="hidden"
 													name="workPackageUserAllocations[${status.index}].id" /> <select
 													readonly="true" class="form-control input-sm userCombo"
-													name="workPackageUserAllocati1ons[${status.index}].user">
+													name="workPackageUserAllocations[${status.index}].user">
 
 														<c:forEach items="${employeeslist}" var="emp">
 
@@ -851,17 +820,17 @@ function addFirstRow(){
 													class="form-control input-sm allocatedDays"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mJan"
-													value="${workPackageUserAllocation.mJan}" />&nbsp;<input
-													id="workPackageUserAllocations[${status.index}].emJan"
+													value="${workPackageUserAllocation.mJan}" />&nbsp;<input 
+													id="workPackageUserAllocations${status.index}emJan"
 													class="form-control input-sm effectiveDays"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emJan"
 													value="${workPackageUserAllocation.emJan}" />&nbsp;<input
 													type="hidden"
-													id="workPackageUserAllocations['+index+'].eemJan"
+													id="workPackageUserAllocations${status.index}eemJan"
 													class="form-control input-sm effectiveDaysDistribution"
 													style="width: 55px;"
-													name="workPackageUserAllocations['+index+'].eemJan" /></td>
+													name="workPackageUserAllocations[${status.index}].eemJan" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mFebAvailableHrs" />&nbsp;<input
@@ -869,16 +838,16 @@ function addFirstRow(){
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mFeb"
 													value="${workPackageUserAllocation.mFeb}" />&nbsp;<input
-													id="workPackageUserAllocations[${status.index}].emFeb"
+													id="workPackageUserAllocation${status.index}emFeb"
 													class="form-control input-sm effectiveDays"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emFeb"
 													value="${workPackageUserAllocation.emFeb}" />&nbsp;<input
 													type="hidden"
-													id="workPackageUserAllocations['+index+'].eemFeb"
+													id="workPackageUserAllocations${status.index}eemFeb"
 													class="form-control input-sm effectiveDaysDistribution"
 													style="width: 55px;"
-													name="workPackageUserAllocations['+index+'].eemFeb" /></td>
+													name="workPackageUserAllocations[${status.index}].eemFeb" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mMarAvailableHrs" />&nbsp;<input
@@ -886,16 +855,16 @@ function addFirstRow(){
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mMar"
 													value="${workPackageUserAllocation.mMar}" />&nbsp;<input
-													id="workPackageUserAllocations[${status.index}].emMar"
+													id="workPackageUserAllocations${status.index}emMar"
 													class="form-control input-sm effectiveDays"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emMar"
 													value="${workPackageUserAllocation.emMar}" />&nbsp;<input
 													type="hidden"
-													id="workPackageUserAllocations['+index+'].eemMar"
+													id="workPackageUserAllocations${status.index}eemMar"
 													class="form-control input-sm effectiveDaysDistribution"
 													style="width: 55px;"
-													name="workPackageUserAllocations['+index+'].eemMar" /></td>
+													name="workPackageUserAllocations[${status.index}].eemMar" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mAprAvailableHrs" />&nbsp;<input
@@ -903,16 +872,16 @@ function addFirstRow(){
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mApr"
 													value="${workPackageUserAllocation.mApr}" />&nbsp;<input
-													id="workPackageUserAllocations[${status.index}].emApr"
+													id="workPackageUserAllocations${status.index}emApr"
 													class="form-control input-sm effectiveDays"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emApr"
 													value="${workPackageUserAllocation.emApr}" />&nbsp;<input
 													type="hidden"
-													id="workPackageUserAllocations['+index+'].eemApr"
+													id="workPackageUserAllocations${status.index}eemApr"
 													class="form-control input-sm effectiveDaysDistribution"
 													style="width: 55px;"
-													name="workPackageUserAllocations['+index+'].eemApr" /></td>
+													name="workPackageUserAllocations[${status.index}].eemApr" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mMayAvailableHrs" />&nbsp;<input
@@ -920,16 +889,16 @@ function addFirstRow(){
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mMay"
 													value="${workPackageUserAllocation.mMay}" />&nbsp;<input
-													id="workPackageUserAllocations[${status.index}].emMay"
+													id="workPackageUserAllocations${status.index}emMay"
 													class="form-control input-sm effectiveDays"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emMay"
 													value="${workPackageUserAllocation.emMay}" />&nbsp;<input
 													type="hidden"
-													id="workPackageUserAllocations['+index+'].eemMay"
+													id="workPackageUserAllocations${status.index}eemMay"
 													class="form-control input-sm effectiveDaysDistribution"
 													style="width: 55px;"
-													name="workPackageUserAllocations['+index+'].eemMay" /></td>
+													name="workPackageUserAllocations[${status.index}].eemMay" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mJunAvailableHrs" />&nbsp;<input
@@ -937,16 +906,16 @@ function addFirstRow(){
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mJun"
 													value="${workPackageUserAllocation.mJun}" />&nbsp;<input
-													id="workPackageUserAllocations[${status.index}].emJun"
+													id="workPackageUserAllocations${status.index}emJun"
 													class="form-control input-sm effectiveDays"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emJun"
 													value="${workPackageUserAllocation.emJun}" />&nbsp;<input
 													type="hidden"
-													id="workPackageUserAllocations['+index+'].eemJun"
+													id="workPackageUserAllocations${status.index}eemJun"
 													class="form-control input-sm effectiveDaysDistribution"
 													style="width: 55px;"
-													name="workPackageUserAllocations['+index+'].eemJun" /></td>
+													name="workPackageUserAllocations[${status.index}].eemJun" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mJulAvailableHrs" />&nbsp;<input
@@ -954,16 +923,16 @@ function addFirstRow(){
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mJul"
 													value="${workPackageUserAllocation.mJul}" />&nbsp;<input
-													id="workPackageUserAllocations[${status.index}].emJul"
+													id="workPackageUserAllocations${status.index}emJul"
 													class="form-control input-sm effectiveDays"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emJul"
 													value="${workPackageUserAllocation.emJul}" />&nbsp;<input
 													type="hidden"
-													id="workPackageUserAllocations['+index+'].eemJul"
+													id="workPackageUserAllocations${status.index}eemJul"
 													class="form-control input-sm effectiveDaysDistribution"
 													style="width: 55px;"
-													name="workPackageUserAllocations['+index+'].eemJul" /></td>
+													name="workPackageUserAllocations[${status.index}].eemJul" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mAugAvailableHrs" />&nbsp;<input
@@ -971,16 +940,16 @@ function addFirstRow(){
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mAug"
 													value="${workPackageUserAllocation.mAug}" />&nbsp;<input
-													id="workPackageUserAllocations[${status.index}].emAug"
+													id="workPackageUserAllocations${status.index}emAug"
 													class="form-control input-sm effectiveDays"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emAug"
 													value="${workPackageUserAllocation.emAug}" />&nbsp;<input
 													type="hidden"
-													id="workPackageUserAllocations['+index+'].eemAug"
+													id="workPackageUserAllocations${status.index}eemAug"
 													class="form-control input-sm effectiveDaysDistribution"
 													style="width: 55px;"
-													name="workPackageUserAllocations['+index+'].eemAug" /></td>
+													name="workPackageUserAllocations[${status.index}].eemAug" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mSepAvailableHrs" />&nbsp;<input
@@ -988,16 +957,16 @@ function addFirstRow(){
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mSep"
 													value="${workPackageUserAllocation.mSep}" />&nbsp;<input
-													id="workPackageUserAllocations[${status.index}].emSep"
+													id="workPackageUserAllocations${status.index}emSep"
 													class="form-control input-sm effectiveDays"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emSep"
 													value="${workPackageUserAllocation.emSep}" />&nbsp;<input
 													type="hidden"
-													id="workPackageUserAllocations['+index+'].eemSep"
+													id="workPackageUserAllocations${status.index}eemSep"
 													class="form-control input-sm effectiveDaysDistribution"
 													style="width: 55px;"
-													name="workPackageUserAllocations['+index+'].eemSep" /></td>
+													name="workPackageUserAllocations[${status.index}].eemSep" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mOctAvailableHrs" />&nbsp;<input
@@ -1005,16 +974,16 @@ function addFirstRow(){
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mOct"
 													value="${workPackageUserAllocation.mOct}" />&nbsp;<input
-													id="workPackageUserAllocations[${status.index}].emOct"
+													id="workPackageUserAllocations${status.index}emOct"
 													class="form-control input-sm effectiveDays"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emOct"
 													value="${workPackageUserAllocation.emOct}" />&nbsp;<input
 													type="hidden"
-													id="workPackageUserAllocations['+index+'].eemOct"
+													id="workPackageUserAllocations${status.index}eemOct"
 													class="form-control input-sm effectiveDaysDistribution"
 													style="width: 55px;"
-													name="workPackageUserAllocations['+index+'].eemOct" /></td>
+													name="workPackageUserAllocations[${status.index}].eemOct" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mNovAvailableHrs" />&nbsp;<input
@@ -1022,16 +991,16 @@ function addFirstRow(){
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mNov"
 													value="${workPackageUserAllocation.mNov}" />&nbsp;<input
-													id="workPackageUserAllocations[${status.index}].emNov"
+													id="workPackageUserAllocations${status.index}emNov"
 													class="form-control input-sm effectiveDays"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emNov"
 													value="${workPackageUserAllocation.emNov}" />&nbsp;<input
 													type="hidden"
-													id="workPackageUserAllocations['+index+'].eemNov"
+													id="workPackageUserAllocations${status.index}eemNov"
 													class="form-control input-sm effectiveDaysDistribution"
 													style="width: 55px;"
-													name="workPackageUserAllocations['+index+'].eemNov" /></td>
+													name="workPackageUserAllocations[${status.index}].eemNov" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mDecAvailableHrs" />&nbsp;<input
@@ -1039,16 +1008,16 @@ function addFirstRow(){
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mDec"
 													value="${workPackageUserAllocation.mDec}" />&nbsp;<input
-													id="workPackageUserAllocations[${status.index}].emDec"
+													id="workPackageUserAllocations${status.index}emDec"
 													class="form-control input-sm effectiveDays"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].emDec"
 													value="${workPackageUserAllocation.emDec}" />&nbsp;<input
 													type="hidden"
-													id="workPackageUserAllocations['+index+'].eemDec"
+													id="workPackageUserAllocations${status.index}eemDec"
 													class="form-control input-sm effectiveDaysDistribution"
 													style="width: 55px;"
-													name="workPackageUserAllocations['+index+'].eemDec" /></td>
+													name="workPackageUserAllocations[${status.index}].eemDec" /></td>
 												<td>
 													<button type="button" class="btn btn-danger btn-sm"
 														onclick="deleteWpUsrAlloc(${workPackageUserAllocation.id},$(this).parent())">
@@ -1077,7 +1046,7 @@ function addFirstRow(){
 			</div>
 			<div id="effectiveDaysDialog"
 				style="display: none; font-size: 12px !important;">
-				<table>
+				<!-- <table>
 					<tr>
 						<td></td>
 						<td></td>
@@ -1185,7 +1154,7 @@ function addFirstRow(){
 						<td></td>
 						<td></td>
 					</tr>
-				</table>
+				</table> -->
 			</div>
 		</form:form>
 	</div>

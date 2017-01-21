@@ -34,7 +34,7 @@ public class WorkPackageUserAllocation implements Serializable {
 	private Integer id;
 	
 	@Column(name = "total_planned_days", precision = 10, scale = 2)
-	private BigDecimal totalPlannedDays  = new BigDecimal("0.00");;
+	private BigDecimal totalPlannedDays  = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
 	@Column(name = "mJan", precision = 10, scale = 2)
