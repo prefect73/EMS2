@@ -20,26 +20,28 @@
 <script type="text/javascript"
 	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
 <script>
+var projects = [];
+
+<c:forEach items="${projectsList}" var="pr">
+projects.push({projectId : '${pr.id}', yearName : '${pr.yearName}', projectName : '${pr.projectName}'});
+</c:forEach>
 function format () {
 	return '<table id="workPackageDetailsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"><tr><td><spring:message code="projectReport.label.totalDays" /></td><c:forEach items="${workPackageHoursForAllUsers}" var="employeeNames"><td>${employeeNames.user.firstName}(<spring:message code="generic.currencySymbol" />${employeeNames.user.perDayCost})</td></c:forEach></tr><tr><td id="totalWorkPackageHoursColumn"></td><c:forEach items="${workPackageHoursForAllUsers}" var="workPackageUserAllocation"><td class="totalWorkPackageUserHoursColumn">${workPackageUserAllocation.mJan +workPackageUserAllocation.mFeb + workPackageUserAllocation.mMar + workPackageUserAllocation.mApr + workPackageUserAllocation.mMay + workPackageUserAllocation.mJun + workPackageUserAllocation.mJul + workPackageUserAllocation.mAug +workPackageUserAllocation.mSep + workPackageUserAllocation.mOct + workPackageUserAllocation.mNov + workPackageUserAllocation.mDec}</td></c:forEach></tr></table>';
 }
+var  selectedSelects = JSON.parse(localStorage.getItem("selectOptions"));
 function projectsByYear(){
-	$('#projectNamesDropDown').attr('readonly','true');
-	if($('#yearNamesDropDown').prop('selectedIndex') > 0){
-		$('#projectNamesDropDown').removeAttr('readonly');
 		$('#projectNamesDropDown').find('option').remove();
-		var  yearNamesDropDown = $('#yearNamesDropDown :selected').val();
-		$('#projectNamesDropDown').append('<option class="form-control input-sm" value="NONE">--------------------------Wählen--------------------------</option>');
-		<c:forEach items="${projectsList}" var="project">
-		var projectYear = '<c:out value="${project.yearName}"/>';
-		if(yearNamesDropDown ==  projectYear){
-			$('#projectNamesDropDown').append('<option class="form-control input-sm" value=' + '${project.id}' + '>' + '${project.projectName}' + '</option>');
-		}
-		</c:forEach>
-	}else{
-		$('#projectNamesDropDown').attr('readonly','true');
-	}	
-
+		 $('#projectNamesDropDown').append('<option class="form-control input-sm" value="NONE">--------------------------Wählen--------------------------</option>');
+		$('#projectNamesDropDown').find('option:selected').removeAttr('selected');
+		$.each(projects, function(key,value) {
+			console.log(selectedSelects.yearNamesDropDown == value.yearName);
+			console.log(selectedSelects.yearNamesDropDown);
+			console.log(value.yearName);
+			selectedSelects = JSON.parse(localStorage.getItem("selectOptions"));
+			if(selectedSelects.yearNamesDropDown == value.yearName ){
+		     $('#projectNamesDropDown').append($("<option class=\"form-control input-sm\" ></option>").attr('data-year-name',value.yearName).attr("value",value.projectId).text(value.projectName));
+			}
+		});	
 }
 function makeSelectsSelected(){
 	var selectOptions;
@@ -60,6 +62,7 @@ function makeSelectsSelected(){
 	    });
 }
 $(document).ready(function() {
+	
 	projectsByYear();
 	makeSelectsSelected();
 	
@@ -166,12 +169,12 @@ $(document).ready(function() {
 						</label>
 					<div class="col-md-3">
 						<select class="form-control input-sm" id="yearNamesDropDown" name="yearNamesDropDown" >
-							<option value="NONE">--------------------------<spring:message code="generic.select.default.option" />--------------------------</option>
+							<%-- <option value="NONE">--------------------------<spring:message code="generic.select.default.option" />--------------------------</option> --%>
 							<option class="form-control input-sm" value="2017">2017</option>
 							<option class="form-control input-sm" value="2018">2018</option>
 							<option class="form-control input-sm" value="2019">2019</option>
 							<option class="form-control input-sm" value="2020">2020</option>
-						<%-- 	<c:forEach items="${projectsList}" var="proj">
+							<%-- <c:forEach items="${projectsList}" var="proj">
 								<option class="form-control input-sm" value="${proj.id}"
 									${proj.id == project.id  ? 'selected' : ''}>${proj.projectName}</option>
 							</c:forEach> --%>
@@ -192,9 +195,9 @@ $(document).ready(function() {
 						</label>
 					<div class="col-md-3">
 						<select class="form-control input-sm" id="projectNamesDropDown" name="projectNamesDropDown" >
-							<option value="NONE">--------------------------<spring:message code="generic.select.default.option" />--------------------------</option>
-							<%-- <c:forEach items="${projectsList}" var="proj">
-								<option class="form-control input-sm" value="${proj.id}"
+							<%-- <option value="NONE">--------------------------<spring:message code="generic.select.default.option" />--------------------------</option>
+							<c:forEach items="${projectsList}" var="proj">
+								<option class="form-control input-sm" value="${proj.id}" data-year-name="${proj.yearName}"
 									${proj.id == project.id  ? 'selected' : ''}>${proj.projectName}</option>
 							</c:forEach> --%>
 						</select>
