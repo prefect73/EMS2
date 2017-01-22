@@ -22,9 +22,26 @@
 <script>
 function format () {
 	return '<table id="workPackageDetailsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"><tr><td><spring:message code="projectReport.label.totalDays" /></td><c:forEach items="${workPackageHoursForAllUsers}" var="employeeNames"><td>${employeeNames.user.firstName}(<spring:message code="generic.currencySymbol" />${employeeNames.user.perDayCost})</td></c:forEach></tr><tr><td id="totalWorkPackageHoursColumn"></td><c:forEach items="${workPackageHoursForAllUsers}" var="workPackageUserAllocation"><td class="totalWorkPackageUserHoursColumn">${workPackageUserAllocation.mJan +workPackageUserAllocation.mFeb + workPackageUserAllocation.mMar + workPackageUserAllocation.mApr + workPackageUserAllocation.mMay + workPackageUserAllocation.mJun + workPackageUserAllocation.mJul + workPackageUserAllocation.mAug +workPackageUserAllocation.mSep + workPackageUserAllocation.mOct + workPackageUserAllocation.mNov + workPackageUserAllocation.mDec}</td></c:forEach></tr></table>';
-//	return '<table id="workPackageDetailsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"><tr><c:forEach items="${workPackageUserAllocationsBySum}" var="employeeNames" varStatus="status"><td>${employeeNames.user.firstName}</td></tr><tr><td>${workPackageHoursForAllUsers[status.index].mJan + workPackageHoursForAllUsers[status.index].mFeb + workPackageHoursForAllUsers[status.index].mMar + workPackageHoursForAllUsers[status.index].mApr + workPackageHoursForAllUsers[status.index].mMay + workPackageHoursForAllUsers[status.index].mJun + workPackageHoursForAllUsers[status.index].mJul + workPackageHoursForAllUsers[status.index].mAug + workPackageHoursForAllUsers[status.index].mSep + workPackageHoursForAllUsers[status.index].mOct + workPackageHoursForAllUsers[status.index].mNov + workPackageHoursForAllUsers[status.index].mDec}</td></c:forEach></tr></table>';
 }
-$(document).ready(function() {
+function projectsByYear(){
+	$('#projectNamesDropDown').attr('readonly','true');
+	if($('#yearNamesDropDown').prop('selectedIndex') > 0){
+		$('#projectNamesDropDown').removeAttr('readonly');
+		$('#projectNamesDropDown').find('option').remove();
+		var  yearNamesDropDown = $('#yearNamesDropDown :selected').val();
+		$('#projectNamesDropDown').append('<option class="form-control input-sm" value="NONE">--------------------------Wählen--------------------------</option>');
+		<c:forEach items="${projectsList}" var="project">
+		var projectYear = '<c:out value="${project.yearName}"/>';
+		if(yearNamesDropDown ==  projectYear){
+			$('#projectNamesDropDown').append('<option class="form-control input-sm" value=' + '${project.id}' + '>' + '${project.projectName}' + '</option>');
+		}
+		</c:forEach>
+	}else{
+		$('#projectNamesDropDown').attr('readonly','true');
+	}	
+
+}
+function makeSelectsSelected(){
 	var selectOptions;
 	   if(localStorage.getItem("selectOptions")) {
 	       selectOptions = JSON.parse(localStorage.getItem("selectOptions"));
@@ -41,6 +58,10 @@ $(document).ready(function() {
 	      localStorage.setItem("selectOptions", JSON.stringify(selectOptions));
 	      console.log(JSON.stringify(selectOptions));
 	    });
+}
+$(document).ready(function() {
+	projectsByYear();
+	makeSelectsSelected();
 	
 	if(parseInt($("#totalCost").val()) >  parseInt($("#offeredCost").val())){
 		$("#totalCost").css({ 'color': 'red'});
@@ -48,27 +69,10 @@ $(document).ready(function() {
 	if(parseInt($("#effectiveCost").val()) > parseInt($("#offeredCost").val())){
 		$("#effectiveCost").css({ 'color': 'red'});
 	}
-	
-		
-	$('#projectNamesDropDown').attr('readonly','true'); 
 	$('#yearNamesDropDown').change(function(e) {
-	if($('#yearNamesDropDown').prop('selectedIndex') > 0){
-		$('#projectNamesDropDown').removeAttr('readonly');
-		$('#projectNamesDropDown').find('option').remove();
-		var  yearNamesDropDown = $('#yearNamesDropDown :selected').val();
-		$('#projectNamesDropDown').append('<option class="form-control input-sm" value="NONE">--------------------------Wählen--------------------------</option>');
-		<c:forEach items="${projectsList}" var="project">
-		var projectYear = '<c:out value="${project.yearName}"/>';
-		if(yearNamesDropDown ==  projectYear){
-			$('#projectNamesDropDown').append('<option class="form-control input-sm" value=' + '${project.id}' + '>' + '${project.projectName}' + '</option>');
-		}
-		</c:forEach>
-		}
-	else{
-		/* $('#projectNamesDropDown').attr('disabled','disbaled'); */
-	}
+		projectsByYear();
 	});
-	
+
 	var projectNamesDropDownSelectedValue = $('#selectedProjectNumber').val();
 	$('#projectNamesDropDown').change(function(e) {
         if($('#projectNamesDropDown :selected').val()) {
@@ -126,15 +130,13 @@ $(document).ready(function() {
     	var parts = currentURL.split('-');
     	var workPackage = parts.pop();
     	
-    	//var tr = $('.searchByWorkPackageNameBtn').closest('tr');
+    	
         var tr = $('#' + workPackage).closest('tr');
         var row = table.row( tr );
         row.child( format(row.data()) ).show();
     }
-    //$('#projectReportTable tbody').on('click', 'td.details-control', function () {
+    
     $('.searchByWorkPackageNameBtn').on('click', function() {
-    	//console.log($(this).text());
-        //console.log($('workPackageNameRow').text());
     	var selectedWorkPackageName = $(this).text();
     	console.log("wpkg: " + selectedWorkPackageName);
     	var tr = $(this).closest('tr');

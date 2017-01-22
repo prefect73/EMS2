@@ -29,10 +29,6 @@
 <style type="text/css">
 .ui-datepicker {
 	width: 42%;
-	position: absolute !important;
-	top:80% !important;
-	left:25%!important; 
-  /* margin-left: 100px; */
   z-index: 1000;
 }
 </style>
@@ -44,6 +40,7 @@ var userAttendance = new Map();
 </c:forEach>
 	
 	var wPakAllocSize = '<c:out value="${fn:length(workPackage.workPackageUserAllocations)}"/>';
+	var editView = '<c:out value="${edit}"/>';
 	$( document ).ready(function() {
 		  if ($('#empListForWorkPackageTable > tbody > tr').length == 0 || wPakAllocSize == 0 ){
 		   addFirstRow();
@@ -119,51 +116,56 @@ var userAttendance = new Map();
 		 var effectiveDaysCSV = "";
 		 $(selector).each(function(){
 		     var th = $(this);
-		     console.log("th val: " + th.val() + ",," + parseInt(th.val())); 
+		     /* console.log("th val: " + th.val() + ",," + parseInt(th.val()));  */
 		  if(!th.val())
 		   th.val('0.00');
 		  tempCSV += "," + th.val();
 		  effectiveDaysCSV = tempCSV.substring(1, tempCSV.length);
 		  daysSum += parseFloat(th.val());
 		 });
+		 $(emMonth).removeAttr( "disabled");
 		 $(emMonth).val(daysSum);  
 		 $(emMonth).next().val(effectiveDaysCSV); 
-		 console.log("csv: " + effectiveDaysCSV);
-		 console.log("monthTotal: " + daysSum); 
+		  console.log("csv: " + effectiveDaysCSV);
+		 console.log("monthTotal: " + daysSum);
 		 //$('#workPackageUserAllocations[0].emJan').val('31');		
 		 return daysSum;
 	}
 	function effectiveDistributionPopups (){
+		
 		$( document ).on( "click", "[id$=emJan]", function() {
-			console.log("emJan clicked");
 			var d = new Date();
 			d.setMonth(0);
+			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());	
+			console.log()
 			$(this).datepicker({
 			 	changeMonth: false, 
 			 	changeYear: false,
 				close: false,
 			 	showButtonPanel: true,
 			 	defaultDate: d,
-				autoclose: false,
+				autoClose: false,
 			 	onClose: function(dateText, inst) {
      				console.log('closing');
+     				console.log($(this).attr('id'));
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mJan');
     			}
-			}).datepicker("show");
-			
-			
+			}).datepicker("show");$(document).off('mousedown', $.datepicker._checkExternalClick);
             var i = 1;
+            
             $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
 				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
 				$(this).html($(this).html() + "<input class=\"form-control input-sm mJan\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemJan" + i + "\" value=\"1\" />");
-			});
-		});
+		    });
+            $(this).attr( "disabled", "disabled");
+    	});
 	    	
 		$( document ).on( "click", "[id$=emFeb]", function() {
 			console.log("emFeb clicked");
 			var d = new Date();
 			d.setMonth(1);
+			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({
 			 	changeMonth: false, 
 			 	changeYear: false,
@@ -176,18 +178,20 @@ var userAttendance = new Map();
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mFeb');
     			}
-			}).datepicker("show");
+			}).datepicker("show");$(document).off('mousedown', $.datepicker._checkExternalClick);
             var i = 1;
             $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
 				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
 				$(this).html($(this).html() + "<input class=\"form-control input-sm mFeb\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemFeb" + i + "\" value=\"1\" />");
 			});
+            $(this).attr( "disabled", "disabled");
 	    });
 		
 		$( document ).on( "click", "[id$=emMar]", function() {
 			console.log("emMar clicked");
 			var d = new Date();
 			d.setMonth(2);
+			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({
 			 	changeMonth: false, 
 			 	changeYear: false,
@@ -200,18 +204,20 @@ var userAttendance = new Map();
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mMar');
     			}
-			}).datepicker("show");
+			}).datepicker("show");$(document).off('mousedown', $.datepicker._checkExternalClick);
             var i = 1;
             $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
 				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
 				$(this).html($(this).html() + "<input class=\"form-control input-sm mMar\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemMar" + i + "\" value=\"1\" />");
 			});
+            $(this).attr( "disabled", "disabled");
 		});
 		
 		$( document ).on( "click", "[id$=emApr]", function() {
 			console.log("emApr clicked");
 			var d = new Date();
 			d.setMonth(3);
+			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({
 			 	changeMonth: false, 
 			 	changeYear: false,
@@ -224,18 +230,20 @@ var userAttendance = new Map();
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mApr');
     			}
-			}).datepicker("show");
+			}).datepicker("show");$(document).off('mousedown', $.datepicker._checkExternalClick);
             var i = 1;
             $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
 				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
 				$(this).html($(this).html() + "<input class=\"form-control input-sm mApr\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemApr" + i + "\" value=\"1\" />");
 			});
+            $(this).attr( "disabled", "disabled");
 		});
 		
 		$( document ).on( "click", "[id$=emMay]", function() {
 			console.log("emMay clicked");
 			var d = new Date();
 			d.setMonth(4);
+			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({
 			 	changeMonth: false, 
 			 	changeYear: false,
@@ -248,18 +256,20 @@ var userAttendance = new Map();
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mMay');
     			}
-			}).datepicker("show");
+			}).datepicker("show");$(document).off('mousedown', $.datepicker._checkExternalClick);
             var i = 1;
             $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
 				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
 				$(this).html($(this).html() + "<input class=\"form-control input-sm mMay\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemMay" + i + "\" value=\"1\" />");
 			});
+            $(this).attr( "disabled", "disabled");
 	    });
 		
 		$( document ).on( "click", "[id$=emJun]", function() {
 			console.log("emJun clicked");
 			var d = new Date();
 			d.setMonth(5);
+			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({
 			 	changeMonth: false, 
 			 	changeYear: false,
@@ -272,18 +282,20 @@ var userAttendance = new Map();
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mJun');
     			}
-			}).datepicker("show");
+			}).datepicker("show");$(document).off('mousedown', $.datepicker._checkExternalClick);
             var i = 1;
             $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
 				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
 				$(this).html($(this).html() + "<input class=\"form-control input-sm mJun\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemJun" + i + "\" value=\"1\" />");
 			});
+            $(this).attr( "disabled", "disabled");
 		});
 		
 		$( document ).on( "click", "[id$=emJul]", function() {
 			console.log("emJul clicked");
 			var d = new Date();
 			d.setMonth(6);
+			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({
 			 	changeMonth: false, 
 			 	changeYear: false,
@@ -296,18 +308,20 @@ var userAttendance = new Map();
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mJul');
     			}
-			}).datepicker("show");
+			}).datepicker("show");$(document).off('mousedown', $.datepicker._checkExternalClick);
             var i = 1;
             $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
 				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
 				$(this).html($(this).html() + "<input class=\"form-control input-sm mJul\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemJul" + i + "\" value=\"1\" />");
 			});
+            $(this).attr( "disabled", "disabled");
 		});
 		
 		$( document ).on( "click", "[id$=emAug]", function() {
 			console.log("emAug clicked");
 			var d = new Date();
 			d.setMonth(7);
+			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({
 			 	changeMonth: false, 
 			 	changeYear: false,
@@ -320,18 +334,20 @@ var userAttendance = new Map();
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mAug');
     			}
-			}).datepicker("show");
+			}).datepicker("show");$(document).off('mousedown', $.datepicker._checkExternalClick);
             var i = 1;
             $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
 				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
 				$(this).html($(this).html() + "<input class=\"form-control input-sm mAug\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemAug" + i + "\" value=\"1\" />");
 			});
+            $(this).attr( "disabled", "disabled");
 		});
 		
 		$( document ).on( "click", "[id$=emSep]", function() {
 			console.log("emSep clicked");
 			var d = new Date();
 			d.setMonth(8);
+			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({
 			 	changeMonth: false, 
 			 	changeYear: false,
@@ -344,18 +360,20 @@ var userAttendance = new Map();
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mSep');
     			}
-			}).datepicker("show");
+			}).datepicker("show");$(document).off('mousedown', $.datepicker._checkExternalClick);
             var i = 1;
             $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
 				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
 				$(this).html($(this).html() + "<input class=\"form-control input-sm mSep\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemSep" + i + "\" value=\"1\" />");
 			});
+            $(this).attr( "disabled", "disabled");
 		});
 		
 		$( document ).on( "click", "[id$=emOct]", function() {
 			console.log("emOct clicked");
 			var d = new Date();
 			d.setMonth(9);
+			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({
 			 	changeMonth: false, 
 			 	changeYear: false,
@@ -368,18 +386,20 @@ var userAttendance = new Map();
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mOct');
     			}
-			}).datepicker("show");
+			}).datepicker("show");$(document).off('mousedown', $.datepicker._checkExternalClick);
             var i = 1;
             $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
 				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
 				$(this).html($(this).html() + "<input class=\"form-control input-sm mOct\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemOct" + i + "\" value=\"1\" />");
 			});
+            $(this).attr( "disabled", "disabled");
 		});
 		
 		$( document ).on( "click", "[id$=emNov]", function() {
 			console.log("emNov clicked");
 			var d = new Date();
 			d.setMonth(10);
+			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({
 			 	changeMonth: false, 
 			 	changeYear: false,
@@ -392,18 +412,20 @@ var userAttendance = new Map();
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mNov');
     			}
-			}).datepicker("show");
+			}).datepicker("show");$(document).off('mousedown', $.datepicker._checkExternalClick);
             var i = 1;
             $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
 				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
 				$(this).html($(this).html() + "<input class=\"form-control input-sm mNov\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemNov" + i + "\" value=\"1\" />");
 			});
+            $(this).attr( "disabled", "disabled");
 		});
 		
 		$( document ).on( "click", "[id$=emDec]", function() {
 			console.log("emDec clicked");
 			var d = new Date();
 			d.setMonth(11);
+			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({
 			 	changeMonth: false, 
 			 	changeYear: false,
@@ -416,12 +438,13 @@ var userAttendance = new Map();
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mDec');
     			}
-			}).datepicker("show")
+			}).datepicker("show");$(document).off('mousedown', $.datepicker._checkExternalClick);
             var i = 1;
             $(".ui-datepicker-calendar .ui-state-default").each(function (i) {
 				$(".ui-datepicker-prev, .ui-datepicker-next").remove();
 				$(this).html($(this).html() + "<input class=\"form-control input-sm mDec\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemDec" + i + "\" value=\"1\" />");
 			});
+            $(this).attr( "disabled", "disabled");
 	    });
 	}
 
