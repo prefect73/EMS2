@@ -11,6 +11,8 @@ public interface WorkPackageDao {
 
 	WorkPackage findById(int id);
 	
+	WorkPackage findById(int id, String ssoId);
+	
 	WorkPackage findByWorkPackageNumber(String workPackageNumber);
 	
 	WorkPackage findByWorkPackageName(String workPackageName);

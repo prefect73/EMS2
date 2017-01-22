@@ -1,5 +1,6 @@
 package com.td.mace.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,20 @@ public class WorkPackageUserAllocationServiceImpl implements
 
 	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum() {
 		return dao.findAllWorkPackageUserAllocationsBySum();
+	}
+	
+	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum(String ssoId) {
+		List<WorkPackageUserAllocation> allowedWorkpackageUserAllocatins = new ArrayList<WorkPackageUserAllocation>();
+		
+		for(WorkPackageUserAllocation workPackageUserAllocation : dao.findAllWorkPackageUserAllocationsBySum()){
+			User user = workPackageUserAllocation.getUser();
+			if(user.getSsoId().equalsIgnoreCase(ssoId)){
+				allowedWorkpackageUserAllocatins.add(workPackageUserAllocation);
+			}
+		}
+		 
+		
+		return allowedWorkpackageUserAllocatins;
 	}
 
 	@Override

@@ -30,6 +30,8 @@ public interface WorkPackageUserAllocationService {
 			WorkPackage workPackage, User user);
 
 	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum();
+	
+	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum(String ssoId);
 
 	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySumOfAllMonths();
 

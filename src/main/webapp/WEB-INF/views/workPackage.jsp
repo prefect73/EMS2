@@ -23,24 +23,33 @@
 <!-- <script type="text/javascript"
         src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/i18n/jquery-ui-i18n.min.js">
 </script> -->
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 
 <style type="text/css">
+.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
+ opacity: 1.35;
+}
 .ui-datepicker {
 	width: 42%;
 	position: relative !important;
-	top:-92%!important;
-	left:30%!important;
-  z-index: 1000;
+	top: -92% !important;
+	left: 30% !important;
+	z-index: 1000;
 }
-.ui-datepicker-year{
-display:none;
+
+.ui-datepicker-year {
+	display: none;
 }
-button.ui-datepicker-current { display: none; }
+
+button.ui-datepicker-current {
+	display: none;
+}
 </style>
 <script type="text/javascript">
 var userAttendance = new Map();
@@ -56,6 +65,7 @@ var userAttendance = new Map();
 		  if ($('#empListForWorkPackageTable > tbody > tr').length == 0 || wPakAllocSize == 0 ){
 		   addFirstRow();
 		  }
+		  disabledFieldsForNormalUser();
 		  poulateAvailableHours();
 		  validateAllocatedAndEffectiveHours();
 		  validateAttendanceAndAllocatedHours();
@@ -77,6 +87,18 @@ var userAttendance = new Map();
 			     });
 		     
 		 });
+	
+	function disabledFieldsForNormalUser(){
+		var normalUserView = '<c:out value="${normalUserView}"/>';
+		if(normalUserView){
+			$( ".allocatedDays" ).attr('readonly','true');
+			$( "[id$=totalPlannedDays]" ).attr('readonly','true');
+			
+		}else{
+			$( "[id$=totalPlannedDays]" ).attr('readonly','true');
+			$( ".allocatedDays" ).removeAttr('readonly');
+		}
+	}
 	
 	function validateTotalPlannedDaysWithTotalAllocatedDays(){
 		  $( ".allocatedDays" ).each(function(index,element) {
@@ -155,7 +177,7 @@ var userAttendance = new Map();
 			d.setMonth(0);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());	
 			
-			$(this).datepicker({
+			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
 				monthNames: ['Januar','Februar','März','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
 				             monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
@@ -194,7 +216,7 @@ var userAttendance = new Map();
 			var d = new Date();
 			d.setMonth(1);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
-			$(this).datepicker({
+			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
 				monthNames: ['Januar','Februar','März','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
 				             monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
@@ -230,7 +252,7 @@ var userAttendance = new Map();
 			var d = new Date();
 			d.setMonth(2);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
-			$(this).datepicker({
+			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
 				monthNames: ['Januar','Februar','März','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
 				             monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
@@ -266,7 +288,7 @@ var userAttendance = new Map();
 			var d = new Date();
 			d.setMonth(3);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
-			$(this).datepicker({
+			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
 				monthNames: ['Januar','Februar','März','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
 				             monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
@@ -302,7 +324,7 @@ var userAttendance = new Map();
 			var d = new Date();
 			d.setMonth(4);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
-			$(this).datepicker({
+			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
 				monthNames: ['Januar','Februar','März','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
 				             monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
@@ -338,7 +360,7 @@ var userAttendance = new Map();
 			var d = new Date();
 			d.setMonth(5);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
-			$(this).datepicker({
+			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
 				monthNames: ['Januar','Februar','März','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
 				             monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
@@ -374,7 +396,7 @@ var userAttendance = new Map();
 			var d = new Date();
 			d.setMonth(6);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
-			$(this).datepicker({
+			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
 				monthNames: ['Januar','Februar','März','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
 				             monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
@@ -410,7 +432,7 @@ var userAttendance = new Map();
 			var d = new Date();
 			d.setMonth(7);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
-			$(this).datepicker({
+			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
 				monthNames: ['Januar','Februar','März','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
 				             monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
@@ -446,7 +468,7 @@ var userAttendance = new Map();
 			var d = new Date();
 			d.setMonth(8);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
-			$(this).datepicker({
+			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
 				monthNames: ['Januar','Februar','März','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
 				             monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
@@ -482,7 +504,7 @@ var userAttendance = new Map();
 			var d = new Date();
 			d.setMonth(9);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
-			$(this).datepicker({
+			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
 				monthNames: ['Januar','Februar','März','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
 				             monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
@@ -518,7 +540,7 @@ var userAttendance = new Map();
 			var d = new Date();
 			d.setMonth(10);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
-			$(this).datepicker({
+			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
 				monthNames: ['Januar','Februar','März','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
 				             monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
@@ -554,7 +576,7 @@ var userAttendance = new Map();
 			var d = new Date();
 			d.setMonth(11);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
-			$(this).datepicker({
+			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
 				monthNames: ['Januar','Februar','März','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
 				             monthNamesShort: ['Jan','Feb','Mär','Apr','Mai','Jun',
@@ -649,7 +671,7 @@ var userAttendance = new Map();
 		formTR.append(formHtml);
 		//add Button
 
-		var addBTN = $('<input class="btn btn-primary btn-sm" type="button" name="add" value="<spring:message code="button.add"/>" onclick="addNewWPUallocRow(this);"/>');
+		var addBTN = $('<input class="btn btn-primary btn-sm" type="button" name="add" id="add" value="<spring:message code="button.add"/>" onclick="addNewWPUallocRow(this);"/>');
 		
 		
 		var btnTD = $('<td></td>').append($('<button/>', { 'type': 'button', 'class':'btn btn-danger btn-sm' ,   'text':'<spring:message code="button.delete"/>' , 'onclick' : 'deleteWpUsrAlloc(0,$(this).parent())' })).append('&nbsp;').append(addBTN);
@@ -739,7 +761,7 @@ var userAttendance = new Map();
 
 	function deleteWpUsrAlloc(id, currentTr){
 		if(currentTr.parent().is(':last-child')){
-			var addBTN = $('<input class="btn btn-primary btn-sm" type="button" name="add" value="<spring:message code="button.add"/>" onclick="addNewWPUallocRow(this);"/>');
+			var addBTN = $('<input class="btn btn-primary btn-sm" type="button" name="add" id="add" value="<spring:message code="button.add"/>" onclick="addNewWPUallocRow(this);"/>');
 			$( "#empListForWorkPackageTable tr:nth-last-child(2)" ).find('td:last').append(addBTN);
 		}
 		currentTr.parent().remove();
@@ -802,7 +824,46 @@ var userAttendance = new Map();
 				</div>
 			</div> --%>
 
+			<c:choose>
+				<c:when test="${edit && normalUserView}">
+					<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="workPackageName"><spring:message
+							code="workPackage.label.workPackageName" /> </label>
+					<div class="col-md-3">
+						<form:input readonly="true"  type="text" path="workPackageName"
+							id="workPackageName" class="form-control input-sm" />
+						<div class="has-error">
+							<form:errors path="workPackageName" class="help-inline" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+
 			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="project"><spring:message
+							code="workPackage.label.projectName" /> </label>
+					<div class="col-md-3">
+						<form:input readonly="true"  type="text" path="project.projectName"
+							id="project" class="form-control input-sm" />
+						<%-- <select class="form-control input-sm" name="project" id="project">
+
+							<c:forEach items="${projectslist}" var="proj">
+								<option class="form-control input-sm" value="${proj.id}"
+									${proj.id == workPackage.project.id  ? 'selected' : ''}>${proj.projectName}</option>
+							</c:forEach>
+						</select> --%>
+						<div class="has-error">
+							<form:errors path="project" class="help-inline" />
+						</div>
+					</div>
+				</div>
+			</div>
+				</c:when>
+				<c:otherwise>
+					<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="workPackageName"><spring:message
 							code="workPackage.label.workPackageName" /> </label>
@@ -823,8 +884,7 @@ var userAttendance = new Map();
 							code="workPackage.label.projectName" /> </label>
 					<div class="col-md-3">
 
-						<select  class="form-control input-sm"
-							name="project">
+						<select class="form-control input-sm" name="project" id="project">
 
 							<c:forEach items="${projectslist}" var="proj">
 								<option class="form-control input-sm" value="${proj.id}"
@@ -837,6 +897,9 @@ var userAttendance = new Map();
 					</div>
 				</div>
 			</div>
+				</c:otherwise>
+			</c:choose>
+			
 			<sec:authorize access="hasRole('ADMIN')">
 				<div class="row">
 					<div class="form-group col-md-12">
@@ -970,8 +1033,9 @@ var userAttendance = new Map();
 											code="workPackageUserAllocation.label.dec" /><br /> <span
 										style="font-size: 0.6em;"><spring:message
 												code="generic.inDays" /></span></th>
-
+									<sec:authorize access="hasRole('ADMIN')">
 									<th>&nbsp;</th>
+									</sec:authorize>
 									<!-- <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 									<th width="100"></th>
 								</sec:authorize>
@@ -1006,6 +1070,7 @@ var userAttendance = new Map();
 												<td><input class="form-control input-sm"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].totalPlannedDays"
+													id="workPackageUserAllocations[${status.index}].totalPlannedDays"
 													value="${workPackageUserAllocation.totalPlannedDays}" /></td>
 												<td><input class="form-control input-sm"
 													style="width: 55px;" disabled
@@ -1013,7 +1078,7 @@ var userAttendance = new Map();
 													class="form-control input-sm allocatedDays"
 													style="width: 55px;"
 													name="workPackageUserAllocations[${status.index}].mJan"
-													value="${workPackageUserAllocation.mJan}" />&nbsp;<input 
+													value="${workPackageUserAllocation.mJan}" />&nbsp;<input
 													id="workPackageUserAllocations${status.index}emJan"
 													class="form-control input-sm effectiveDays"
 													style="width: 55px;"
@@ -1223,6 +1288,7 @@ var userAttendance = new Map();
 													style="width: 55px;"
 													value="${workPackageUserAllocation.eemDec}"
 													name="workPackageUserAllocations[${status.index}].eemDec" /></td>
+													<sec:authorize access="hasRole('ADMIN')">
 												<td>
 													<button type="button" class="btn btn-danger btn-sm"
 														onclick="deleteWpUsrAlloc(${workPackageUserAllocation.id},$(this).parent())">
@@ -1231,11 +1297,13 @@ var userAttendance = new Map();
 														test="${fn:length(workPackage.workPackageUserAllocations) == status.count}">
 
 														<input class="btn btn-primary btn-sm" type="button"
-															name="add" value="<spring:message code="button.add"/>"
+															name="add" id="add"
+															value="<spring:message code="button.add"/>"
 															onclick="addNewWPUallocRow(this);" class="tr_clone_add" />
 
 													</c:if>
 												</td>
+												</sec:authorize>
 												<%-- </tr>
 											</c:forEach>
 											 --%>

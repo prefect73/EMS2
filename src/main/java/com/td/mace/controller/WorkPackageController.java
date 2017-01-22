@@ -73,6 +73,7 @@ public class WorkPackageController {
 
 		List<WorkPackage> workPackages = new ArrayList<WorkPackage>();
 		if (getPrincipal() != null) {
+			
 			workPackages = workPackageService
 					.findAllWorkPackagesBySSOId(getPrincipal());
 		} else {
@@ -184,6 +185,10 @@ public class WorkPackageController {
 	@RequestMapping(value = { "/edit-workPackage-{id}" }, method = RequestMethod.GET)
 	public String editWorkPackage(@PathVariable int id, ModelMap model) {
 		WorkPackage workPackage = workPackageService.findById(id);
+		
+		if(!userService.isAdmin(getPrincipal())){
+			model.addAttribute("normalUserView", true);	
+		}
 		model.addAttribute("workPackage", workPackage);
 		/*
 		 * model.addAttribute("projectslist", projectService.findAllProjects());
@@ -192,6 +197,7 @@ public class WorkPackageController {
 		model.addAttribute("userAttendancesUpdated",
 				userAttendanceService.findAllUserAttendancesUpdated());
 		model.addAttribute("edit", true);
+		
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "workPackage";
 	}

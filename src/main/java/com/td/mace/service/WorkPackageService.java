@@ -8,6 +8,7 @@ import com.td.mace.model.WorkPackage;
 public interface WorkPackageService {
 	
 	WorkPackage findById(int id);
+	WorkPackage findById(int id, String ssoId);
 	
 	WorkPackage findByWorkPackageNumber(String workPackageNumber);
 	

@@ -26,5 +26,7 @@ public interface UserService {
 	List<User> findAllUsersBySSOId(String ssoId);
 	
 	boolean isUserSSOUnique(Integer id, String sso);
+	
+	boolean isAdmin(String ssoId);
 
 }

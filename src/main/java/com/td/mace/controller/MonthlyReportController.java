@@ -1,5 +1,6 @@
 package com.td.mace.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,9 @@ public class MonthlyReportController {
 
 	@Autowired
 	WorkPackageService workPackageService;
-	
+
 	@Autowired
-    private Environment environment;
+	private Environment environment;
 
 	@Autowired
 	WorkPackageUserAllocationService workPackageUserAllocationService;
@@ -56,11 +57,17 @@ public class MonthlyReportController {
 	 */
 	@RequestMapping(value = { "/monthlyReport" }, method = RequestMethod.GET)
 	public String listMonthlyAttendances(ModelMap model) {
-
-		List<UserAttendance> monthlyAttendances = userAttendanceService
-				.findAllUserAttendances();
-		List<WorkPackageUserAllocation> workPackageUserAllocationsBySum = workPackageUserAllocationService
-				.findAllWorkPackageUserAllocationsBySum();
+		List<UserAttendance> monthlyAttendances = new ArrayList<UserAttendance>();
+		List<WorkPackageUserAllocation> workPackageUserAllocationsBySum = new ArrayList<WorkPackageUserAllocation>();
+		if(getPrincipal() != null){
+			if(userService.isAdmin(getPrincipal())){
+				monthlyAttendances = userAttendanceService.findAllUserAttendances();
+				workPackageUserAllocationsBySum = workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySum();
+			}else{
+			monthlyAttendances = userAttendanceService.findAllUserAttendancesBySSOId(getPrincipal());
+			workPackageUserAllocationsBySum = workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySum(getPrincipal());
+		}
+		}
 		model.addAttribute("monthlyAttendances", monthlyAttendances);
 		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 		model.addAttribute("workPackageUserAllocationsBySum",

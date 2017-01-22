@@ -77,6 +77,7 @@ public class UserServiceImpl implements UserService{
 		return dao.findAllUsersBySSOId(ssoId);
 	}
 	
+	
 	public List<User> findAllUsersByType(String userProfileType) {
 		return dao.findAllUsersByType(userProfileType);
 	}
@@ -84,6 +85,10 @@ public class UserServiceImpl implements UserService{
 	public boolean isUserSSOUnique(Integer id, String sso) {
 		User user = findBySSO(sso);
 		return ( user == null || ((id != null) && (user.getId() == id)));
+	}
+	
+	public boolean isAdmin(String ssoId){
+		return dao.isAdmin(ssoId);
 	}
 	
 }

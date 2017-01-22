@@ -27,6 +27,10 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 	public WorkPackage findById(int id) {
 		return dao.findById(id);
 	}
+	
+	public WorkPackage findById(int id, String ssoId) {
+		return dao.findById(id, ssoId);
+	}
 
 	public WorkPackage findByWorkPackageNumber(String workPackageNumber) {
 		WorkPackage workPackage = dao

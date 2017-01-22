@@ -92,6 +92,8 @@ td.highlight {
 							<th></th>
 							<th></th>
 							<th><spring:message
+									code="monthlyReport.label.yearName" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
+							<th><spring:message
 									code="workPackageUserAllocation.label.jan" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
 									code="workPackageUserAllocation.label.feb" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
@@ -130,6 +132,7 @@ td.highlight {
 							<tr>
 								<td rowspan="3">${monthlyAttendance.user.firstName}</td>
 								<td><spring:message code="monthlyReport.possibleDays" /></td>
+								<td>${monthlyAttendance.yearName}</td>
 								<td>${monthlyAttendance.mJan}</td>
 								<td>${monthlyAttendance.mFeb}</td>
 								<td>${monthlyAttendance.mMar}</td>
@@ -142,12 +145,14 @@ td.highlight {
 								<td>${monthlyAttendance.mOct}</td>
 								<td>${monthlyAttendance.mNov}</td>
 								<td>${monthlyAttendance.mDec}</td>
+								
 							</tr>
 							<%-- </c:forEach>
 						<c:forEach items="${workPackageUserAllocations}" var="monthlyAttendance">
 						 --%>
 							<tr>
 								<td><spring:message code="monthlyReport.plannedDays" /></td>
+								<td>${workPackageUserAllocationsBySum[status.index].yearName}</td>
 								<td>${workPackageUserAllocationsBySum[status.index].mJan}</td>
 								<td>${workPackageUserAllocationsBySum[status.index].mFeb}</td>
 								<td>${workPackageUserAllocationsBySum[status.index].mMar}</td>
@@ -160,12 +165,14 @@ td.highlight {
 								<td>${workPackageUserAllocationsBySum[status.index].mOct}</td>
 								<td>${workPackageUserAllocationsBySum[status.index].mNov}</td>
 								<td>${workPackageUserAllocationsBySum[status.index].mDec}</td>
+								
 							</tr>
 							<%-- </c:forEach>
 						<c:forEach items="${monthlyAttendances}" var="monthlyAttendance">
 						 --%>
 							<tr>
 								<td><spring:message code="monthlyReport.availableDays" /></td>
+								<td class="availableDays">${monthlyAttendance.yearName}</td>
 								<td class="availableDays">${monthlyAttendance.mJan - workPackageUserAllocationsBySum[status.index].mJan}</td>
 								<td class="availableDays">${monthlyAttendance.mFeb - workPackageUserAllocationsBySum[status.index].mFeb}</td>
 								<td class="availableDays">${monthlyAttendance.mMar - workPackageUserAllocationsBySum[status.index].mMar}</td>
@@ -178,6 +185,7 @@ td.highlight {
 								<td class="availableDays">${monthlyAttendance.mOct - workPackageUserAllocationsBySum[status.index].mOct}</td>
 								<td class="availableDays">${monthlyAttendance.mNov - workPackageUserAllocationsBySum[status.index].mNov}</td>
 								<td class="availableDays">${monthlyAttendance.mDec - workPackageUserAllocationsBySum[status.index].mDec}</td>
+								
 							</tr>
 						</c:forEach>
 					</tbody>

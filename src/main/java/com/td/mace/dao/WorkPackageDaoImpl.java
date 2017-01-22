@@ -33,6 +33,24 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 		return workPackage;
 	}
 
+	public WorkPackage findById(int id, String ssoId) {
+		WorkPackage workPackage = getByKey(id);
+
+		List<WorkPackageUserAllocation> workPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
+		List<WorkPackageUserAllocation> allowedWorkPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
+		if (workPackage != null) {
+			Hibernate.initialize(workPackage.getWorkPackageUserAllocations());
+			workPackageUserAllocations = workPackage.getWorkPackageUserAllocations();
+			for(WorkPackageUserAllocation workPackageUserAllocation : workPackageUserAllocations){
+				User user = workPackageUserAllocation.getUser();
+				if(user.getSsoId() == ssoId){
+					allowedWorkPackageUserAllocations.add(workPackageUserAllocation);
+				}
+			}
+		}
+		workPackage.setWorkPackageUserAllocations((allowedWorkPackageUserAllocations));
+		return workPackage;
+	}
 	public WorkPackage findByWorkPackageNumber(String workPackageNumber) {
 		logger.info("WorkPackageNumber : {}", workPackageNumber);
 		Criteria crit = createEntityCriteria();
@@ -86,7 +104,7 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 		// criteria.add(Restrictions.eq("ssoId", ssoId));
 		criteria.addOrder(Order.asc("id"));
 		List<WorkPackage> workPackages = (List<WorkPackage>) criteria.list();
-		List<WorkPackage> allowedUserAttendances = new ArrayList<WorkPackage>();
+		List<WorkPackage> allowedWorkPackages = new ArrayList<WorkPackage>();
 
 		for (WorkPackage workPackage : workPackages) {
 			Hibernate.initialize(workPackage.getWorkPackageUserAllocations());
@@ -94,13 +112,13 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 					.getWorkPackageUserAllocations()) {
 				User user = workPackageUserAllocation.getUser();
 				if (user.getSsoId().equalsIgnoreCase(ssoId)) {
-					allowedUserAttendances.add(workPackage);
+					allowedWorkPackages.add(workPackage);
 					break;
 				}
 			}
 
 		}
-		return allowedUserAttendances;
+		return allowedWorkPackages;
 	}
 
 	public void save(WorkPackage workPackage) {
