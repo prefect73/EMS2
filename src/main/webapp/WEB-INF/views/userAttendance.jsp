@@ -17,9 +17,23 @@
 		<title><spring:message code="userAttendance.add.title"/></title>
 	</c:otherwise>
 </c:choose>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+<script>
+function yearDropdownFill(startYear, endYear){
+	for (i = startYear; i <= endYear; i++)
+	{
+	    $('#yearName').append($('<option />').val(i).html(i));
+	}
+}
+$(document).ready(function() {
+	var startYear = 2012;
+	var endYear = 2099;
+	yearDropdownFill(startYear, endYear);
+	});
+</script>
 </head>
 
 <body>
@@ -92,11 +106,11 @@
 					<div class="col-md-2">
 						<%-- <form:input type="text" path="yearName" id="yearName"
 							class="form-control input-sm" /> --%>
-							<select class="form-control input-sm"  name="yearName">
-								<option class="form-control input-sm" value="2017">2017</option>
+							<select class="form-control input-sm"  id="yearName" name="yearName">
+								<!-- <option class="form-control input-sm" value="2017">2017</option>
 								<option class="form-control input-sm" value="2018">2018</option>
 								<option class="form-control input-sm" value="2019">2019</option>
-								<option class="form-control input-sm" value="2020">2020</option>
+								<option class="form-control input-sm" value="2020">2020</option> -->
 							</select>
 						<div class="has-error">
 							<form:errors path="yearName" class="help-inline" />

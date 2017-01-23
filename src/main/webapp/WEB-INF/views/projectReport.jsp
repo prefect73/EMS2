@@ -61,8 +61,18 @@ function makeSelectsSelected(){
 	      console.log(JSON.stringify(selectOptions));
 	    });
 }
+
+function yearDropdownFill(startYear, endYear){
+	for (i = startYear; i <= endYear; i++)
+	{
+	    $('#yearNamesDropDown').append($('<option />').val(i).html(i));
+	}
+}
 $(document).ready(function() {
+	var startYear = 2012;
+	var endYear = 2099;
 	
+	yearDropdownFill(startYear, endYear);
 	projectsByYear();
 	makeSelectsSelected();
 	
@@ -170,10 +180,10 @@ $(document).ready(function() {
 					<div class="col-md-3">
 						<select class="form-control input-sm" id="yearNamesDropDown" name="yearNamesDropDown" >
 							<%-- <option value="NONE">--------------------------<spring:message code="generic.select.default.option" />--------------------------</option> --%>
-							<option class="form-control input-sm" value="2017">2017</option>
+							<!-- <option class="form-control input-sm" value="2017">2017</option>
 							<option class="form-control input-sm" value="2018">2018</option>
 							<option class="form-control input-sm" value="2019">2019</option>
-							<option class="form-control input-sm" value="2020">2020</option>
+							<option class="form-control input-sm" value="2020">2020</option> -->
 							<%-- <c:forEach items="${projectsList}" var="proj">
 								<option class="form-control input-sm" value="${proj.id}"
 									${proj.id == project.id  ? 'selected' : ''}>${proj.projectName}</option>
