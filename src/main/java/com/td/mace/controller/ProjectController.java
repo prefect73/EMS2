@@ -255,27 +255,16 @@ public class ProjectController {
 		}
 		List<WorkPackageUserAllocation> workPackageHoursForAllUsers = workPackageUserAllocationService
 				.getWorkPackageHoursForAllUsers(workPackageName);
-		// List<WorkPackageUserAllocation> workPackageTotalHours =
-		// workPackageUserAllocationService.getTotalWorkPackageHours();
-		// List<WorkPackageUserAllocation> workPackageUserAllocationsBySum =
-		// workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySum();
-		// List<WorkPackageUserAllocation>
-		// workPackageUserAllocationsBySumOfAllMonths =
-		// workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySumOfAllMonths();
-
 		model.addAttribute("project", project);
 		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
+		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
+		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 		model.addAttribute("selectedProjectNumber", projectNumber);
 		model.addAttribute("projectsList", projectsList);
 		model.addAttribute("workPackages", workPackages);
 		model.addAttribute("workPackagesByProjectID", workPackagesByProjectID);
 		model.addAttribute("workPackageHoursForAllUsers",
 				workPackageHoursForAllUsers);
-		// model.addAttribute("workPackageTotalHours", workPackageTotalHours);
-		// model.addAttribute("workPackageUserAllocationsBySum",
-		// workPackageUserAllocationsBySum);
-		// model.addAttribute("workPackageUserAllocationsBySumOfAllMonths",
-		// workPackageUserAllocationsBySumOfAllMonths);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "projectReport";
 	}

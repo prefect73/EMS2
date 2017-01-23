@@ -63,15 +63,13 @@ function makeSelectsSelected(){
 }
 
 function yearDropdownFill(startYear, endYear){
-	for (i = startYear; i <= endYear; i++)
-	{
+	for (i = startYear; i <= endYear; i++){
 	    $('#yearNamesDropDown').append($('<option />').val(i).html(i));
 	}
 }
 $(document).ready(function() {
-	var startYear = 2012;
-	var endYear = 2099;
-	
+	var startYear = '<c:out value="${yearNameStart}"/>';
+	var endYear = '<c:out value="${yearNameEnd}"/>';
 	yearDropdownFill(startYear, endYear);
 	projectsByYear();
 	makeSelectsSelected();

@@ -78,12 +78,6 @@ public class UserAttendanceController {
 	@ModelAttribute("employeeslist")
 	public List<User> initializeProjectLeads() {
 		List<User> employeeslist =  userService.findAllUsers();
-		/*List<User> employeeslist = new ArrayList<User>();
-		if (getPrincipal() != null) {
-			employeeslist.add(userService.findBySSO(getPrincipal()));
-		} else {
-			employeeslist = userService.findAllUsers();
-		}*/
 		return employeeslist;
 	}
 
@@ -95,6 +89,8 @@ public class UserAttendanceController {
 		UserAttendance userAttendance = new UserAttendance();
 		model.addAttribute("userAttendance", userAttendance);
 		model.addAttribute("edit", false);
+		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
+		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "userAttendance";
 	}
@@ -111,33 +107,7 @@ public class UserAttendanceController {
 		if (result.hasErrors()) {
 			return "userAttendance";
 		}
-
-		/*
-		 * Preferred way to achieve uniqueness of field [id] should be
-		 * implementing custom @Unique annotation and applying it on field [id]
-		 * of Model class [UserAttendance].
-		 * 
-		 * Below mentioned peace of code [if block] is to demonstrate that you
-		 * can fill custom errors outside the validation framework as well while
-		 * still using internationalized messages.
-		 * 
-		 * if (!userAttendanceService.isIdUnique(userAttendance.getId(),
-		 * userAttendance.getId())) { FieldError idError = new
-		 * FieldError("userAttendance", "id", messageSource.getMessage(
-		 * "non.unique.id", new String[] { userAttendance.getId() },
-		 * Locale.getDefault())); result.addError(idError); return
-		 * "userAttendance"; }
-		 */
-
-		/*userAttendance.setYearName(environment.getProperty("year.name"));*/
 		userAttendanceService.saveUserAttendance(userAttendance);
-		// userAttendanceService.updateUserAttendance(userAttendance);
-
-		// model.addAttribute("success", "UserAttendance " +
-		// userAttendance.getFirstName() +
-		// " "+ userAttendance.getLastName() + " registered successfully");
-		// model.addAttribute("loggedinuser", getPrincipal());
-		// return "success";
 		return "redirect:/UserAttendance/userAttendanceslist";
 	}
 
@@ -165,45 +135,20 @@ public class UserAttendanceController {
 		if (result.hasErrors()) {
 			return "userAttendance";
 		}
-
-		/*
-		 * //Uncomment below 'if block' if you WANT TO ALLOW UPDATING SSO_ID in
-		 * UI which is a unique key to a UserAttendance.
-		 * if(!userAttendanceService
-		 * .isUserAttendanceSSOUnique(userAttendance.getId(),
-		 * userAttendance.getId())){ FieldError idError =new
-		 * FieldError("userAttendance","id",messageSource.getMessage(
-		 * "non.unique.id", new String[]{userAttendance.getId()},
-		 * Locale.getDefault())); result.addError(idError); return
-		 * "userAttendance"; }
-		 */
-		/*userAttendance.setYearName(environment.getProperty("year.name"));*/
+		
 		userAttendanceService.updateUserAttendance(userAttendance);
-
-		// model.addAttribute("success", "UserAttendance " +
-		// userAttendance.getFirstName() +
-		// " "+ userAttendance.getLastName() + " updated successfully");
-		// model.addAttribute("loggedinuser", getPrincipal());
 		return "redirect:/UserAttendance/userAttendanceslist";
 	}
 
 	/**
-	 * This method will delete an userAttendance by it's SSOID value.
+	 * This method will delete an userAttendance by it's id value.
 	 */
 	@RequestMapping(value = { "/delete-userAttendance-{id}" }, method = RequestMethod.GET)
 	public String deleteUserAttendance(@PathVariable Integer id) {
 		userAttendanceService.deleteUserAttendanceById(id);
 		return "redirect:/UserAttendance/userAttendanceslist";
 	}
-
-	/**
-	 * This method will provide UserAttendance list to views
-	 */
-	/*
-	 * @ModelAttribute("userAttendances") public List<UserAttendance>
-	 * initializeProfiles() { return
-	 * userAttendanceService.findAllUserAttendances(); }
-	 */
+	
 
 	/**
 	 * This method returns the principal[user-name] of logged-in user.

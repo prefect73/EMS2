@@ -73,7 +73,7 @@ public class WorkPackageController {
 
 		List<WorkPackage> workPackages = new ArrayList<WorkPackage>();
 		if (getPrincipal() != null) {
-			
+
 			workPackages = workPackageService
 					.findAllWorkPackagesBySSOId(getPrincipal());
 		} else {
@@ -101,8 +101,8 @@ public class WorkPackageController {
 	 */
 
 	@ModelAttribute("employeeslist")
-	public List<User> initializeProjectLeads() {
-		return userService.findAllUsers();// change to
+	public List<User> initializeUsers() {
+		return userService.findAllUsers();
 	}
 
 	/**
@@ -120,11 +120,10 @@ public class WorkPackageController {
 		}
 
 		model.addAttribute("workPackage", workPackage);
-		/*
-		 * model.addAttribute("projectslist", projectService.findAllProjects());
-		 * model.addAttribute("employeeslist", userService.findAllUsers());
-		 */
-
+		model.addAttribute("yearNameStart",
+				environment.getProperty("year.name.start"));
+		model.addAttribute("yearNameEnd",
+				environment.getProperty("year.name.end"));
 		model.addAttribute("userAttendancesUpdated",
 				userAttendanceService.findAllUserAttendancesUpdated());
 		model.addAttribute("edit", false);
@@ -165,7 +164,7 @@ public class WorkPackageController {
 		 * for (WorkPackageUserAllocation workPackageUserAllocation :
 		 * workPackage .getWorkPackageUserAllocations()) {
 		 * workPackageUserAllocation.setYearName(environment
-		 * .getProperty("year.name")); }
+		 * .getProperty("year.name.default")); }
 		 */
 
 		workPackageService.saveWorkPackage(workPackage);
@@ -185,9 +184,9 @@ public class WorkPackageController {
 	@RequestMapping(value = { "/edit-workPackage-{id}" }, method = RequestMethod.GET)
 	public String editWorkPackage(@PathVariable int id, ModelMap model) {
 		WorkPackage workPackage = workPackageService.findById(id);
-		
-		if(!userService.isAdmin(getPrincipal())){
-			model.addAttribute("normalUserView", true);	
+
+		if (!userService.isAdmin(getPrincipal())) {
+			model.addAttribute("normalUserView", true);
 		}
 		model.addAttribute("workPackage", workPackage);
 		/*
@@ -197,7 +196,7 @@ public class WorkPackageController {
 		model.addAttribute("userAttendancesUpdated",
 				userAttendanceService.findAllUserAttendancesUpdated());
 		model.addAttribute("edit", true);
-		
+
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "workPackage";
 	}
@@ -243,7 +242,7 @@ public class WorkPackageController {
 		 * for (WorkPackageUserAllocation workPackageUserAllocation :
 		 * workPackage .getWorkPackageUserAllocations()) {
 		 * workPackageUserAllocation.setYearName(environment
-		 * .getProperty("year.name")); }
+		 * .getProperty("year.name.default")); }
 		 */
 
 		workPackageService.updateWorkPackage(workPackage);
