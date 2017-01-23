@@ -16,6 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.td.mace.model.User;
 import com.td.mace.model.UserAttendance;
 import com.td.mace.model.WorkPackageUserAllocation;
 import com.td.mace.service.UserAttendanceService;
@@ -58,17 +59,31 @@ public class MonthlyReportController {
 	@RequestMapping(value = { "/monthlyReport" }, method = RequestMethod.GET)
 	public String listMonthlyAttendances(ModelMap model) {
 		List<UserAttendance> monthlyAttendances = new ArrayList<UserAttendance>();
+		List<UserAttendance> monthlyAttendancesToDisplay = new ArrayList<UserAttendance>();
 		List<WorkPackageUserAllocation> workPackageUserAllocationsBySum = new ArrayList<WorkPackageUserAllocation>();
 		if(getPrincipal() != null){
 			if(userService.isAdmin(getPrincipal())){
-				monthlyAttendances = userAttendanceService.findAllUserAttendances();
-				workPackageUserAllocationsBySum = workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySum();
+				
+			monthlyAttendances = userAttendanceService.findAllUserAttendances();
+			workPackageUserAllocationsBySum = workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySum();
+			for(UserAttendance monthlyAttendance : monthlyAttendances){
+				for(WorkPackageUserAllocation workPackageUserAllocation :workPackageUserAllocationsBySum){
+					User attendanceUser = monthlyAttendance.getUser();
+					User allocationUser = workPackageUserAllocation.getUser();
+					
+					if(monthlyAttendance.getYearName().equalsIgnoreCase(workPackageUserAllocation.getYearName()) && attendanceUser.getId() == allocationUser.getId() ){
+						monthlyAttendancesToDisplay.add(monthlyAttendance);
+					}
+				}
+			}
+			model.addAttribute("monthlyAttendances", monthlyAttendancesToDisplay);
 			}else{
 			monthlyAttendances = userAttendanceService.findAllUserAttendancesBySSOId(getPrincipal());
 			workPackageUserAllocationsBySum = workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySum(getPrincipal());
+			model.addAttribute("monthlyAttendances", monthlyAttendances);
 		}
 		}
-		model.addAttribute("monthlyAttendances", monthlyAttendances);
+		
 		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 		model.addAttribute("workPackageUserAllocationsBySum",
 				workPackageUserAllocationsBySum);
