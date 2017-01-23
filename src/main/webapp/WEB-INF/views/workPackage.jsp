@@ -23,8 +23,8 @@
 <!-- <script type="text/javascript"
         src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/i18n/jquery-ui-i18n.min.js">
 </script> -->
-<link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<%-- <script src="<c:url value='/static/lib/year-select.js' />"></script> --%>
+
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
 <link href="<c:url value='/static/css/bootstrap.css' />"
@@ -64,6 +64,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 	var editView = '<c:out value="${edit}"/>';
 	var globalYearName = "";
 	$( document ).ready(function() {
+		
 		  if ($('#empListForWorkPackageTable > tbody > tr').length == 0 || wPakAllocSize == 0 ){
 		   addFirstRow();
 		  }
@@ -81,7 +82,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			  /* effectiveDistributionPopups(); */
 		     });
 		     $( ".userCombo,.yearCombo,.allocatedDays,.effectiveDays" ).blur(function() {
-			      poulateAvailableHours();
+			      //poulateAvailableHours();
 			      validateAllocatedAndEffectiveHours();
 				  validateAttendanceAndAllocatedHours();
 				  validateTotalPlannedDaysWithTotalAllocatedDays();
@@ -612,7 +613,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 
 	function poulateAvailableHours(){
 		$( ".userCombo" ).each(function( index , element) {			
-			yearNameVal = $(element).parent().prev().find('input').val() == null ? $(element).parent().prev().find('select').val() : $(element).parent().prev().find('input').val();	
+			yearNameVal = $(element).parent().prev().find('input').val() == undefined || null ? $(element).parent().prev().find('select').val() : $(element).parent().prev().find('input').val();
+			console.log($(element).parent().prev().find('input').val());
+			console.log($(element).parent().prev().find('select').val());
 			var trObj = $(element).parent().parent();
 			///zzz selected value
 			var usAtt = userAttendance.get($( element ).val()+"-"+yearNameVal);
@@ -631,7 +634,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				$(trObj).find("[id$=mDecAvailableHrs]").val('0.00');
 				alert('<spring:message code="workPackage.alert.attendanceNotFound"/>' + ' ' + yearNameVal);
 				
-			}
+			}else{
 			$(trObj).find("[id$=mJanAvailableHrs]").val(usAtt.mJan);
 			$(trObj).find("[id$=mFebAvailableHrs]").val(usAtt.mFeb);
 			$(trObj).find("[id$=mMarAvailableHrs]").val(usAtt.mMar);
@@ -644,27 +647,22 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			$(trObj).find("[id$=mOctAvailableHrs]").val(usAtt.mOct);
 			$(trObj).find("[id$=mNovAvailableHrs]").val(usAtt.mNov);
 			$(trObj).find("[id$=mDecAvailableHrs]").val(usAtt.mDec);
-			
+			}
 			
 			});
 	}
 	
+	
 	function addFirstRow(){
 		var index = wPakAllocSize;
 		//var yearNameTD ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ><option class="form-control input-sm" value="2017">2017</option><option class="form-control input-sm" value="2018">2018</option><option class="form-control input-sm" value="2019">2019</option><option class="form-control input-sm" value="2020">2020</option></select></td>';
-		var yearNameTD = $('<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ></select></td>');
-		console.log(yearNameTD);
-		//var yearNameSelect = $('<select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" />');
-		for (i = startYear; i <= endYear; i++){
-			$(yearNameTD).find('select').append($('<option class="form-control input-sm" />').val(i).html(i));
-		    //$('<option class="form-control input-sm">', {value: i, text: i}).appendTo(yearNameSelect);
-		}
-		//console.log(yearNameSelect);
-		//yearNameTD.append($(yearNameSelect));
-		//$(yearNameTD).html($(yearNameSelect).html());
-		//$(yearNameTD).html(yearNameTD).html + yearNameSelect);
-		//yearNameSelect.appendTo(yearNameTD);
-		console.log(yearNameTD);
+		var yearNameTDStart ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" >';
+		var yearNameTdEnd = '</select></td>';
+		var optionsAsString = "";
+			for (i = startYear; i <= endYear; i++){
+			    optionsAsString += '<option value="'+i+'">'+i+'</option>';
+			}
+		var yearNameTD = yearNameTDStart + optionsAsString + yearNameTdEnd ;
 		var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';
 		var totalPlannedDaysTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].totalPlannedDays" /></td>';
 		var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input id="workPackageUserAllocations'+index+'emJan" class="form-control input-sm effectiveDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" />&nbsp;<input type="hidden" id="workPackageUserAllocations['+index+'].eemJan" class="form-control input-sm effectiveDaysDistribution" style="width:55px;" name="workPackageUserAllocations['+index+'].eemJan" value="" /></td>';
@@ -708,7 +706,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		  /* effectiveDistributionPopups(); */
 	     });
 	     $( ".userCombo,.yearCombo,.allocatedDays,.effectiveDays" ).blur(function() {
-		      poulateAvailableHours();
+		      //poulateAvailableHours();
 		      validateAllocatedAndEffectiveHours();
 			  validateAttendanceAndAllocatedHours();
 			  validateTotalPlannedDaysWithTotalAllocatedDays();
@@ -718,15 +716,14 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 
 		function addNewWPUallocRow(element) {
 			var index = wPakAllocSize;
-			 		 
 			//var yearNameTD ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ><option class="form-control input-sm" value="2017">2017</option><option class="form-control input-sm" value="2018">2018</option><option class="form-control input-sm" value="2019">2019</option><option class="form-control input-sm" value="2020">2020</option></select></td>';
-			var yearNameTD ='<td></td>';
-			var yearNameSelect = $('<select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" >');
-
-			for (i = startYear; i <= endYear; i++){
-			    $('<option class="form-control input-sm">', {value: i, text: i}).appendTo(yearNameSelect);
-			}
-			yearNameSelect.appendTo(yearNameTD);
+			var yearNameTDStart ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" >';
+			var yearNameTdEnd = '</select></td>';
+			var optionsAsString = '';
+				for (i = startYear; i <= endYear; i++){
+				    optionsAsString += '<option value="'+i+'">'+i+'</option>';
+				}
+			var yearNameTD = yearNameTDStart + optionsAsString + yearNameTdEnd ;
 			var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';
 			var totalPlannedDaysTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].totalPlannedDays" /></td>';
 			var totalPlannedDaysTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].totalPlannedDays" /></td>';
@@ -771,7 +768,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			  /* effectiveDistributionPopups(); */
 		     });
 		     $( ".userCombo,.yearCombo,.allocatedDays,.effectiveDays" ).blur(function() {
-			      poulateAvailableHours();
+			      //poulateAvailableHours();
 			      validateAllocatedAndEffectiveHours();
 				  validateAttendanceAndAllocatedHours();
 				  validateTotalPlannedDaysWithTotalAllocatedDays();
