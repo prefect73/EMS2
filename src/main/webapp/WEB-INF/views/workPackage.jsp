@@ -113,7 +113,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		    allocatedDaysSum += isNaN(parseInt($(this).find('input:eq(1)').val())) ? parseInt('0.00') : parseInt( $(this).find('input:eq(1)').val()) ;                     
 		      });
 		   
-		   console.log(parseInt(totalPlannedDaysVal) == 0);
+		   
 		   if(!(parseInt(totalPlannedDaysVal) == 0) && parseInt(totalPlannedDaysVal) == parseInt(allocatedDaysSum) ){
 		    $(element).closest('tr').find('td:eq(2)').find('input').css('backgroundColor','green');
 		    $(element).closest('tr').find('td:eq(2)').find('input').css('color','white');
@@ -152,13 +152,13 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		});
 	}
 	function getCalendarValues(emMonth, selector) {
-		 console.log('emMonth: ' + emMonth);
+		 
 		 var daysSum = 0;
 		 var tempCSV = "";
 		 var effectiveDaysCSV = "";
 		 $(selector).each(function(){
 		     var th = $(this);
-		     console.log("th val: " + th.val() + ",," + parseInt(th.val()));
+		     
 		  if(!th.val())
 		   th.val('0.00');
 		  tempCSV += "," + th.val();
@@ -168,8 +168,6 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		 $(emMonth).removeAttr( "disabled");
 		 $(emMonth).val(daysSum);  
 		 $(emMonth).next().val(effectiveDaysCSV); 
-		  console.log("csv: " + effectiveDaysCSV);
-		 console.log("monthTotal: " + daysSum);
 		 //$('#workPackageUserAllocations[0].emJan').val('31');		
 		 return daysSum;
 	}
@@ -196,8 +194,6 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			 	defaultDate: d,
 				autoClose: false,
 			 	onClose: function(dateText, inst) {
-     				console.log('closing');
-     				console.log($(this).attr('id'));
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mJan');
     			}
@@ -215,7 +211,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
     	});
 	    	
 		$( document ).on( "click", "[id$=emFeb]", function() {
-			console.log("emFeb clicked");
+			
 			var d = new Date();
 			d.setMonth(1);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
@@ -235,7 +231,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			 	defaultDate: d,
 				autoClose: false,
 			 	onClose: function(dateText, inst) {
-     				console.log('closing');
+     				
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mFeb');
     			}
@@ -656,7 +652,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 	function addFirstRow(){
 		var index = wPakAllocSize;
 		//var yearNameTD ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ><option class="form-control input-sm" value="2017">2017</option><option class="form-control input-sm" value="2018">2018</option><option class="form-control input-sm" value="2019">2019</option><option class="form-control input-sm" value="2020">2020</option></select></td>';
-		var yearNameTDStart ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" >';
+		var yearNameTDStart ='<td><select class="form-control input-sm yearCombo" style="width:72px;" name="workPackageUserAllocations['+index+'].yearName" >';
 		var yearNameTdEnd = '</select></td>';
 		var optionsAsString = "";
 			for (i = startYear; i <= endYear; i++){
@@ -717,15 +713,16 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		function addNewWPUallocRow(element) {
 			var index = wPakAllocSize;
 			//var yearNameTD ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ><option class="form-control input-sm" value="2017">2017</option><option class="form-control input-sm" value="2018">2018</option><option class="form-control input-sm" value="2019">2019</option><option class="form-control input-sm" value="2020">2020</option></select></td>';
-			var yearNameTDStart ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" >';
+			var yearNameTDStart ='<td><select class="form-control input-sm yearCombo" style="width:72px;" name="workPackageUserAllocations['+index+'].yearName" >';
 			var yearNameTdEnd = '</select></td>';
 			var optionsAsString = '';
 				for (i = startYear; i <= endYear; i++){
 				    optionsAsString += '<option value="'+i+'">'+i+'</option>';
 				}
+			
 			var yearNameTD = yearNameTDStart + optionsAsString + yearNameTdEnd ;
+			
 			var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';
-			var totalPlannedDaysTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].totalPlannedDays" /></td>';
 			var totalPlannedDaysTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].totalPlannedDays" /></td>';
 			var mJanTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input id="workPackageUserAllocations'+index+'emJan" class="form-control input-sm effectiveDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" />&nbsp;<input type="hidden" id="workPackageUserAllocations['+index+'].eemJan" class="form-control input-sm effectiveDaysDistribution" style="width:55px;" name="workPackageUserAllocations['+index+'].eemJan" value="" /></td>';
 			var mFebTD ='<td><input class="form-control input-sm" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mFebAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].mFeb" />&nbsp;<input id="workPackageUserAllocations'+index+'emFeb" class="form-control input-sm effectiveDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].emFeb" />&nbsp;<input type="hidden" id="workPackageUserAllocations['+index+'].eemFeb" class="form-control input-sm effectiveDaysDistribution" style="width:55px;" name="workPackageUserAllocations['+index+'].eemFeb"  value="" /></td>';

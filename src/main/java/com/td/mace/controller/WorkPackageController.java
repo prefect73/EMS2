@@ -193,6 +193,11 @@ public class WorkPackageController {
 		 * model.addAttribute("projectslist", projectService.findAllProjects());
 		 * model.addAttribute("employeeslist", userService.findAllUsers());
 		 */
+		model.addAttribute("workPackage", workPackage);
+		model.addAttribute("yearNameStart",
+				environment.getProperty("year.name.start"));
+		model.addAttribute("yearNameEnd",
+				environment.getProperty("year.name.end"));
 		model.addAttribute("userAttendancesUpdated",
 				userAttendanceService.findAllUserAttendancesUpdated());
 		model.addAttribute("edit", true);
