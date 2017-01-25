@@ -1071,6 +1071,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 													name="workPackageUserAllocations[${status.index}].yearName"
 													value="${workPackageUserAllocation.yearName}" /></td>
 												<td><input type="hidden"
+													value="${workPackageUserAllocation.id}"
 													name="workPackageUserAllocations[${status.index}].id" /> <select
 													readonly="true" class="form-control input-sm userCombo"
 													name="workPackageUserAllocations[${status.index}].user">

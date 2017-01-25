@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.td.mace.model.Project;
 import com.td.mace.model.User;
 import com.td.mace.model.WorkPackage;
+import com.td.mace.model.WorkPackageUserAllocation;
 import com.td.mace.service.ProjectService;
 import com.td.mace.service.UserAttendanceService;
 import com.td.mace.service.UserService;
@@ -143,38 +144,9 @@ public class WorkPackageController {
 			return "workPackage";
 		}
 
-		/*
-		 * Preferred way to achieve uniqueness of field [id] should be
-		 * implementing custom @Unique annotation and applying it on field [id]
-		 * of Model class [WorkPackage].
-		 * 
-		 * Below mentioned peace of code [if block] is to demonstrate that you
-		 * can fill custom errors outside the validation framework as well while
-		 * still using internationalized messages.
-		 * 
-		 * if (!workPackageService.isIdUnique(workPackage.getId(),
-		 * workPackage.getId())) { FieldError idError = new
-		 * FieldError("workPackage", "id", messageSource.getMessage(
-		 * "non.unique.id", new String[] { workPackage.getId() },
-		 * Locale.getDefault())); result.addError(idError); return
-		 * "workPackage"; }
-		 */
-
-		/*
-		 * for (WorkPackageUserAllocation workPackageUserAllocation :
-		 * workPackage .getWorkPackageUserAllocations()) {
-		 * workPackageUserAllocation.setYearName(environment
-		 * .getProperty("year.name.default")); }
-		 */
-
 		workPackageService.saveWorkPackage(workPackage);
 		workPackageService.updateWorkPackage(workPackage);
 
-		// model.addAttribute("success", "WorkPackage " +
-		// workPackage.getFirstName() +
-		// " "+ workPackage.getLastName() + " registered successfully");
-		// model.addAttribute("loggedinuser", getPrincipal());
-		// return "success";
 		return "redirect:/WorkPackage/workPackageslist";
 	}
 
@@ -186,14 +158,19 @@ public class WorkPackageController {
 		WorkPackage workPackage = workPackageService.findById(id);
 
 		if (!userService.isAdmin(getPrincipal())) {
+			List<WorkPackageUserAllocation> allowedWorkPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
+			User loggedInUser = userService.findBySSO(getPrincipal());
+			for (WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()) {
+				if (workPackageUserAllocation.getUser().getId() == loggedInUser.getId()) {
+					allowedWorkPackageUserAllocations.add(workPackageUserAllocation);
+				}
+				workPackage.setWorkPackageUserAllocations(allowedWorkPackageUserAllocations);
+			}
+			model.addAttribute("workPackage", workPackage);
 			model.addAttribute("normalUserView", true);
+		} else {
+			model.addAttribute("workPackage", workPackage);
 		}
-		model.addAttribute("workPackage", workPackage);
-		/*
-		 * model.addAttribute("projectslist", projectService.findAllProjects());
-		 * model.addAttribute("employeeslist", userService.findAllUsers());
-		 */
-		model.addAttribute("workPackage", workPackage);
 		model.addAttribute("yearNameStart",
 				environment.getProperty("year.name.start"));
 		model.addAttribute("yearNameEnd",
@@ -218,44 +195,13 @@ public class WorkPackageController {
 			model.addAttribute("projectslist", projectService.findAllProjects());
 			return "workPackage";
 		}
-
-		/*
-		 * //Uncomment below 'if block' if you WANT TO ALLOW UPDATING SSO_ID in
-		 * UI which is a unique key to a WorkPackage.
-		 * if(!workPackageService.isWorkPackageSSOUnique(workPackage.getId(),
-		 * workPackage.getId())){ FieldError idError =new
-		 * FieldError("workPackage","id",messageSource.getMessage(
-		 * "non.unique.id", new String[]{workPackage.getId()},
-		 * Locale.getDefault())); result.addError(idError); return
-		 * "workPackage"; }
-		 */
-
-		/*
-		 * for (WorkPackageUserAllocation workPackageUserAllocation :
-		 * workPackage.getWorkPackageUserAllocations() ){
-		 * workPackageUserAllocation.setWorkPackage(workPackage);
-		 * workPackageUserAllocationService
-		 * .updateWorkPackageUserAllocation(workPackageUserAllocation); }
-		 */
-
-		/*
-		 * workPackageUserAllocationService.saveWorkPackageUserAllocation(
-		 * workPackage.getWorkPackageUserAllocations());
-		 */
-
-		/*
-		 * for (WorkPackageUserAllocation workPackageUserAllocation :
-		 * workPackage .getWorkPackageUserAllocations()) {
-		 * workPackageUserAllocation.setYearName(environment
-		 * .getProperty("year.name.default")); }
-		 */
-
-		workPackageService.updateWorkPackage(workPackage);
-
-		// model.addAttribute("success", "WorkPackage " +
-		// workPackage.getFirstName() +
-		// " "+ workPackage.getLastName() + " updated successfully");
-		// model.addAttribute("loggedinuser", getPrincipal());
+		
+		/*if (!userService.isAdmin(getPrincipal())) {
+			workPackageService.updateWorkPackage(workPackage, userService.findBySSO(getPrincipal()));
+		}else{*/
+			workPackageService.updateWorkPackage(workPackage);
+		/*}*/
+		
 		return "redirect:/WorkPackage/workPackageslist";
 	}
 
@@ -267,14 +213,6 @@ public class WorkPackageController {
 		workPackageService.deleteWorkPackageById(id);
 		return "redirect:/WorkPackage/workPackageslist";
 	}
-
-	/**
-	 * This method will provide WorkPackage list to views
-	 */
-	/*
-	 * @ModelAttribute("workPackages") public List<WorkPackage>
-	 * initializeProfiles() { return workPackageService.findAllWorkPackages(); }
-	 */
 
 	/**
 	 * This method returns the principal[user-name] of logged-in user.
