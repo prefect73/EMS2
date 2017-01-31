@@ -64,7 +64,14 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 	var editView = '<c:out value="${edit}"/>';
 	var globalYearName = "";
 	$( document ).ready(function() {
-		
+		$('input').on('keypress', function (event) {
+		    var regex = new RegExp("^[^,]+$");
+		    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+		    if (!regex.test(key)) {
+		       event.preventDefault();
+		       return false;
+		    }
+		});
 		  if ($('#empListForWorkPackageTable > tbody > tr').length == 0 || wPakAllocSize == 0 ){
 		   addFirstRow();
 		  }
@@ -247,7 +254,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 	    });
 		
 		$( document ).on( "click", "[id$=emMar]", function() {
-			console.log("emMar clicked");
+			//console.log("emMar clicked");
 			var d = new Date();
 			d.setMonth(2);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
@@ -267,7 +274,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			 	defaultDate: d,
 				autoClose: false,
 			 	onClose: function(dateText, inst) {
-     				console.log('closing');
+     				//console.log('closing');
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mMar');
     			}
@@ -283,7 +290,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		});
 		
 		$( document ).on( "click", "[id$=emApr]", function() {
-			console.log("emApr clicked");
+			//console.log("emApr clicked");
 			var d = new Date();
 			d.setMonth(3);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
@@ -303,7 +310,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			 	defaultDate: d,
 				autoClose: false,
 			 	onClose: function(dateText, inst) {
-     				console.log('closing');
+     				//console.log('closing');
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mApr');
     			}
@@ -319,7 +326,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		});
 		
 		$( document ).on( "click", "[id$=emMay]", function() {
-			console.log("emMay clicked");
+			//console.log("emMay clicked");
 			var d = new Date();
 			d.setMonth(4);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
@@ -339,7 +346,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			 	defaultDate: d,
 				autoClose: false,
 			 	onClose: function(dateText, inst) {
-     				console.log('closing');
+     				//console.log('closing');
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mMay');
     			}
@@ -355,7 +362,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 	    });
 		
 		$( document ).on( "click", "[id$=emJun]", function() {
-			console.log("emJun clicked");
+			//console.log("emJun clicked");
 			var d = new Date();
 			d.setMonth(5);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
@@ -375,7 +382,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			 	defaultDate: d,
 				autoClose: false,
 			 	onClose: function(dateText, inst) {
-     				console.log('closing');
+     				//console.log('closing');
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mJun');
     			}
@@ -391,7 +398,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		});
 		
 		$( document ).on( "click", "[id$=emJul]", function() {
-			console.log("emJul clicked");
+			//console.log("emJul clicked");
 			var d = new Date();
 			d.setMonth(6);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
@@ -411,7 +418,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			 	defaultDate: d,
 				autoClose: false,
 			 	onClose: function(dateText, inst) {
-     				console.log('closing');
+     				//console.log('closing');
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mJul');
     			}
@@ -427,7 +434,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		});
 		
 		$( document ).on( "click", "[id$=emAug]", function() {
-			console.log("emAug clicked");
+			//console.log("emAug clicked");
 			var d = new Date();
 			d.setMonth(7);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
@@ -447,7 +454,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			 	defaultDate: d,
 				autoClose: false,
 			 	onClose: function(dateText, inst) {
-     				console.log('closing');
+     				//console.log('closing');
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mAug');
     			}
@@ -463,7 +470,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		});
 		
 		$( document ).on( "click", "[id$=emSep]", function() {
-			console.log("emSep clicked");
+			//console.log("emSep clicked");
 			var d = new Date();
 			d.setMonth(8);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
@@ -483,7 +490,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			 	defaultDate: d,
 				autoClose: false,
 			 	onClose: function(dateText, inst) {
-     				console.log('closing');
+     				//console.log('closing');
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mSep');
     			}
@@ -499,7 +506,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		});
 		
 		$( document ).on( "click", "[id$=emOct]", function() {
-			console.log("emOct clicked");
+			//console.log("emOct clicked");
 			var d = new Date();
 			d.setMonth(9);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
@@ -519,7 +526,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			 	defaultDate: d,
 				autoClose: false,
 			 	onClose: function(dateText, inst) {
-     				console.log('closing');
+     				//console.log('closing');
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mOct');
     			}
@@ -535,7 +542,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		});
 		
 		$( document ).on( "click", "[id$=emNov]", function() {
-			console.log("emNov clicked");
+			//console.log("emNov clicked");
 			var d = new Date();
 			d.setMonth(10);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
@@ -555,7 +562,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			 	defaultDate: d,
 				autoClose: false,
 			 	onClose: function(dateText, inst) {
-     				console.log('closing');
+     				//console.log('closing');
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mNov');
     			}
@@ -571,7 +578,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		});
 		
 		$( document ).on( "click", "[id$=emDec]", function() {
-			console.log("emDec clicked");
+			//console.log("emDec clicked");
 			var d = new Date();
 			d.setMonth(11);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
@@ -591,7 +598,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			 	defaultDate: d,
 				autoClose: false,
 			 	onClose: function(dateText, inst) {
-     				console.log('closing');
+     				//console.log('closing');
 			//		getCalendarValues('#emJanTextBox','.mJan');
      				getCalendarValues("#" + $(this).attr('id'),'.mDec');
     			}
@@ -610,8 +617,8 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 	function poulateAvailableHours(){
 		$( ".userCombo" ).each(function( index , element) {			
 			yearNameVal = $(element).parent().prev().find('input').val() == undefined || null ? $(element).parent().prev().find('select').val() : $(element).parent().prev().find('input').val();
-			console.log($(element).parent().prev().find('input').val());
-			console.log($(element).parent().prev().find('select').val());
+			////console.log($(element).parent().prev().find('input').val());
+			////console.log($(element).parent().prev().find('select').val());
 			var trObj = $(element).parent().parent();
 			///zzz selected value
 			var usAtt = userAttendance.get($( element ).val()+"-"+yearNameVal);
