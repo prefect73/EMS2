@@ -131,7 +131,7 @@ public class AppController {
 		//model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
 		request.getSession(false).setAttribute("employeeslist", userService.findAllUsers());
-		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType("Projektleitung"));//Project Lead
+		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType(environment.getProperty("default.project.lead.role.title") != null ? environment.getProperty("default.project.lead.role.title") : "Projektleitung" ));//Project Lead
 		
 		//return "success";
 		return "redirect:/list";
@@ -175,7 +175,7 @@ public class AppController {
 		//model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " updated successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
 		request.getSession(false).setAttribute("employeeslist", userService.findAllUsers());
-		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType("Projektleitung"));//Project Lead
+		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType(environment.getProperty("default.project.lead.role.title") != null ? environment.getProperty("default.project.lead.role.title") : "Projektleitung" ));//Project Lead
 		
 		return "redirect:/list";
 	}
@@ -188,7 +188,7 @@ public class AppController {
 	public String deleteUser(@PathVariable int id, HttpServletRequest request) {
 		userService.deleteUserById(id);
 		request.getSession(false).setAttribute("employeeslist", userService.findAllUsers());
-		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType("Projektleitung"));//Project Lead
+		request.getSession(false).setAttribute("projectleadslist", userService.findAllUsersByType(environment.getProperty("default.project.lead.role.title") != null ? environment.getProperty("default.project.lead.role.title") : "Projektleitung" ));//Project Lead
 		
 		return "redirect:/list";
 	}

@@ -162,7 +162,7 @@ public class ProjectController {
 	 */
 	@ModelAttribute("projectleadslist")
 	public List<User> initializeProjectLeads() {
-		return userService.findAllUsersByType("Projektleitung");// Project Lead
+		return userService.findAllUsersByType(environment.getProperty("default.project.lead.role.title") != null ? environment.getProperty("default.project.lead.role.title") : "Projektleitung" );// Project Lead
 	}
 
 	/**
