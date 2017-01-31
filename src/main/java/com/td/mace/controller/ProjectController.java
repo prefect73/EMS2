@@ -152,6 +152,8 @@ public class ProjectController {
 	public String editProject(@PathVariable String projectNumber, ModelMap model) {
 		Project project = projectService.findByProjectNumber(projectNumber);
 		model.addAttribute("project", project);
+		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
+		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 		model.addAttribute("edit", true);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "project";

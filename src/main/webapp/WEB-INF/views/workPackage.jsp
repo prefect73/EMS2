@@ -110,17 +110,17 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		   var allocatedDaysSumTds = $(element).closest('tr').find('td').not(':eq(0),:eq(1),:eq(2),:eq(15)');
 		   var allocatedDaysSum = 0;
 		   allocatedDaysSumTds.each(function() {     
-		    allocatedDaysSum += isNaN(parseInt($(this).find('input:eq(1)').val())) ? parseInt('0.00') : parseInt( $(this).find('input:eq(1)').val()) ;                     
+		    allocatedDaysSum += isNaN(parseFloat($(this).find('input:eq(1)').val())) ? parseFloat('0.00') : parseFloat( $(this).find('input:eq(1)').val()) ;                     
 		      });
 		   
 		   
-		   if(!(parseInt(totalPlannedDaysVal) == 0) && parseInt(totalPlannedDaysVal) == parseInt(allocatedDaysSum) ){
+		   if(!(parseFloat(totalPlannedDaysVal) == 0) && parseFloat(totalPlannedDaysVal) == parseFloat(allocatedDaysSum) ){
 		    $(element).closest('tr').find('td:eq(2)').find('input').css('backgroundColor','green');
 		    $(element).closest('tr').find('td:eq(2)').find('input').css('color','white');
-		   }else if(!(parseInt(totalPlannedDaysVal) == 0) && parseInt(totalPlannedDaysVal) > parseInt(allocatedDaysSum)){
+		   }else if(!(parseFloat(totalPlannedDaysVal) == 0) && parseFloat(totalPlannedDaysVal) > parseFloat(allocatedDaysSum)){
 		    $(element).closest('tr').find('td:eq(2)').find('input').css('backgroundColor','yellow');
 		    $(element).closest('tr').find('td:eq(2)').find('input').css('color','black');
-		   }else if (!(parseInt(totalPlannedDaysVal) == 0) && parseInt(totalPlannedDaysVal) < parseInt(allocatedDaysSum)){
+		   }else if (!(parseFloat(totalPlannedDaysVal) == 0) && parseFloat(totalPlannedDaysVal) < parseFloat(allocatedDaysSum)){
 		    $(element).closest('tr').find('td:eq(2)').find('input').css('backgroundColor','red');
 		    $(element).closest('tr').find('td:eq(2)').find('input').css('color','white'); 
 		   }
@@ -130,7 +130,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 	
 	function validateAttendanceAndAllocatedHours(){
 		$( ".allocatedDays" ).each(function(index,element) {
-			if(!(parseInt($(element).val()) == 0) && (parseInt($(element).val())) > (parseInt($(element).closest('td').find('input:eq(0)').val()))){
+			if(!(parseFloat($(element).val()) == 0) && (parseFloat($(element).val())) > (parseFloat($(element).closest('td').find('input:eq(0)').val()))){
 				$(element).css('backgroundColor','red');
 				$(element).css('color','white');
 			}else{
@@ -142,7 +142,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 	
 	function validateAllocatedAndEffectiveHours (){
 		$( ".effectiveDays" ).each(function(index,element) {
-			if((!(parseInt($(element).val()) == 0) && parseInt($(element).val())) > (parseInt($(element).closest('td').find('input:eq(1)').val()))){
+			if((!(parseFloat($(element).val()) == 0) && parseFloat($(element).val())) > (parseFloat($(element).closest('td').find('input:eq(1)').val()))){
 				$(element).css('backgroundColor','red');
 				$(element).css('color','white');
 			}else{

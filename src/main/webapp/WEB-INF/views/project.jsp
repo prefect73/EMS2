@@ -25,18 +25,23 @@
 
 <script>
 	function yearDropdownFill(startYear, endYear) {
+		console.log("start " + startYear + " end" + endYear);
 		for (i = startYear; i <= endYear; i++) {
 			$('#yearName').append($('<option />').val(i).html(i));
 		}
+		
 	}
 
 	$(document).ready(function() {
 		var startYear = '<c:out value="${yearNameStart}"/>';
 		var endYear = '<c:out value="${yearNameEnd}"/>';
 		yearDropdownFill(startYear, endYear);
+		var projectYear = '<c:out value="${project.yearName}"/>';
+		//$('#yearName option[value="' + projectYear +'"]').prop('selected', true);
+		$('#yearName option[value="' + projectYear +'"]').attr("selected", "selected");
 		var selectedLeadsIds = [];
 		<c:forEach items="${project.users}" var="usr">
-		selectedLeadsIds.push('${usr.id}');
+			selectedLeadsIds.push('${usr.id}');
 		</c:forEach>
 		$("#projLeads > option").each(function() {
 			if ($.inArray(this.value, selectedLeadsIds) > -1) {
@@ -131,9 +136,13 @@
 					<label class="col-md-2 control-lable" for="yearName"><spring:message
 							code="project.label.yearName" /></label>
 					<div class="col-md-3">
-						<form:input readonly="true" type="text" path="yearName" id="yearName"
+						<%-- <form:input readonly="true" type="text" path="yearName" id="yearName"
 							class="form-control input-sm" />
-						<div class="has-error">
+						 --%>
+						 <select class="form-control input-sm" id="yearName"
+							name="yearName">
+						 </select>
+						 <div class="has-error">
 							<form:errors path="yearName" class="help-inline" />
 						</div>
 					</div>
@@ -148,13 +157,14 @@
 					<div class="col-md-3">
 						<%-- <form:input type="text" path="yearName" id="yearName"
 							class="form-control input-sm" /> --%>
-						<select class="form-control input-sm" id="yearName"
+						 <select class="form-control input-sm" id="yearName"
 							name="yearName">
-							<!-- <option class="form-control input-sm" value="2017">2017</option>
+						<!-- 	<option class="form-control input-sm" value="2017">2017</option>
 								<option class="form-control input-sm" value="2018">2018</option>
 								<option class="form-control input-sm" value="2019">2019</option>
-								<option class="form-control input-sm" value="2020">2020</option> -->
-						</select>
+								<option class="form-control input-sm" value="2020">2020</option>
+						 -->
+						 </select> 
 						<div class="has-error">
 							<form:errors path="yearName" class="help-inline" />
 						</div>

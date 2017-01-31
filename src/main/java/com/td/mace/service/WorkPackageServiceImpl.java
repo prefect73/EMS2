@@ -1,7 +1,6 @@
 package com.td.mace.service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -92,13 +91,14 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 			entity.setOfferedCost(workPackage.getOfferedCost());
 			entity.setTotalCost(getWorkPackageTotalCost(workPackage));
 			entity.setEffectiveCost(getWorkPackageEffectiveCost(workPackage));
-			entity.setProject(workPackage.getProject());
+			//entity.setProject(workPackage.getProject());
 			deleteAllWorkPackageUserAllocations(workPackage);
 			for (WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()) {
 				insertWorkPackageUserAllocation(workPackage,workPackageUserAllocation);
 			}
 		}
-		updateProjectTotalAndEffectiveCosts(workPackage.getProject().getId());
+		updateProjectTotalAndEffectiveCosts(entity.getProject().getId());
+		
 	}
 
 	private BigDecimal getWorkPackageEffectiveCost(WorkPackage workPackage) {

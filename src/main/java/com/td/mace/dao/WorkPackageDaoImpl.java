@@ -28,6 +28,7 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 		WorkPackage workPackage = getByKey(id);
 
 		if (workPackage != null) {
+			Hibernate.initialize(workPackage.getProject());
 			Hibernate.initialize(workPackage.getWorkPackageUserAllocations());
 		}
 		return workPackage;

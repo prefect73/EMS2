@@ -196,11 +196,11 @@ public class WorkPackageController {
 			return "workPackage";
 		}
 		
-		/*if (!userService.isAdmin(getPrincipal())) {
+		if (!userService.isAdmin(getPrincipal())) {
 			workPackageService.updateWorkPackage(workPackage, userService.findBySSO(getPrincipal()));
-		}else{*/
+		}else{
 			workPackageService.updateWorkPackage(workPackage);
-		/*}*/
+		}
 		
 		return "redirect:/WorkPackage/workPackageslist";
 	}
