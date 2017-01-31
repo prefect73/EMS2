@@ -170,7 +170,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		   th.val('0.00');
 		  tempCSV += "," + th.val();
 		  effectiveDaysCSV = tempCSV.substring(1, tempCSV.length);
-		  daysSum += parseFloat(th.val());
+		  daysSum += parseFloat(th.val() > 4 ? 1 : th.val() > 0 && th.val() < 4 ? 0.5 : 0  );
 		 });
 		 $(emMonth).removeAttr( "disabled");
 		 $(emMonth).val(daysSum);  
