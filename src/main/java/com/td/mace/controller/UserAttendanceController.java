@@ -105,6 +105,8 @@ public class UserAttendanceController {
 			BindingResult result, ModelMap model) {
 
 		if (result.hasErrors()) {
+			model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
+			model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 			return "userAttendance";
 		}
 		userAttendanceService.saveUserAttendance(userAttendance);
@@ -133,6 +135,8 @@ public class UserAttendanceController {
 			BindingResult result, ModelMap model, @PathVariable Integer id) {
 
 		if (result.hasErrors()) {
+			model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
+			model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 			return "userAttendance";
 		}
 		

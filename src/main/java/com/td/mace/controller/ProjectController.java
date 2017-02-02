@@ -99,6 +99,8 @@ public class ProjectController {
 			ModelMap model, HttpServletRequest request) {
 
 		if (result.hasErrors()) {
+			model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
+			model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 			return "project";
 		}
 
@@ -177,6 +179,8 @@ public class ProjectController {
 			HttpServletRequest request) {
 
 		if (result.hasErrors()) {
+			model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
+			model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 			return "project";
 		}
 

@@ -296,11 +296,11 @@ $(document).ready(function() {
 				cellspacing="0" width="100%">
 				<thead>
 					<tr>
-						<th><spring:message code="workPackage.label.workPackageNumber"/></th>
-						<th><spring:message code="workPackage.label.workPackageName"/></th>
 						<th><spring:message code="workPackage.label.projectName"/></th>
+						<th><spring:message code="workPackage.label.workPackageName"/></th>
 						<th><spring:message code="workPackage.label.offeredCost"/><spring:message code="generic.inCurrency" /></th>
 						<th><spring:message code="workPackage.label.totalCost"/><spring:message code="generic.inCurrency" /></th>
+						<th><spring:message code="workPackage.label.workPackageNumber"/></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -309,12 +309,12 @@ $(document).ready(function() {
 							<!-- <td class="details-control"><a
 								id="searchByWorkPackageNameBtn"
 								class="btn btn-success custom-width">Search</a></td> -->
-							<td><a
-								class="searchByWorkPackageNameBtn btn btn-success custom-width" id="${workPackage.workPackage.workPackageNumber}">${workPackage.workPackage.workPackageNumber}</a></td>
-							<td>${workPackage.workPackage.workPackageName}</td>
 							<td>${workPackage.workPackage.project.projectName}</td>
+							<td>${workPackage.workPackage.workPackageName}</td>
 							<td><spring:message code="generic.currencySymbol" />${workPackage.workPackage.offeredCost}</td>
 							<td><spring:message code="generic.currencySymbol" />${workPackage.workPackage.totalCost}</td>
+							<td><a
+								class="searchByWorkPackageNameBtn btn btn-success custom-width" id="${workPackage.workPackage.workPackageNumber}">${workPackage.workPackage.workPackageNumber}</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>

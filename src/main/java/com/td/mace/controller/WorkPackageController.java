@@ -141,6 +141,8 @@ public class WorkPackageController {
 			BindingResult result, ModelMap model) {
 
 		if (result.hasErrors()) {
+			model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
+			model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 			return "workPackage";
 		}
 
@@ -192,6 +194,8 @@ public class WorkPackageController {
 			BindingResult result, ModelMap model, @PathVariable Integer id) {
 
 		if (result.hasErrors()) {
+			model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
+			model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 			model.addAttribute("projectslist", projectService.findAllProjects());
 			return "workPackage";
 		}
