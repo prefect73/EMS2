@@ -208,6 +208,65 @@ public class WorkPackageController {
 		
 		return "redirect:/WorkPackage/workPackageslist";
 	}
+	
+	/**
+	 * This method will provide the medium to update an existing workPackage.
+	 */
+	@RequestMapping(value = { "/edit-normal-user-workPackage-{id}" }, method = RequestMethod.GET)
+	public String editNormalUserWorkPackage(@PathVariable int id, ModelMap model) {
+		WorkPackage workPackage = workPackageService.findById(id);
+
+		if (!userService.isAdmin(getPrincipal())) {
+			//add two lists for allowed projects and worPackages
+			List<WorkPackageUserAllocation> allowedWorkPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
+			User loggedInUser = userService.findBySSO(getPrincipal());
+			for (WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()) {
+				if (workPackageUserAllocation.getUser().getId() == loggedInUser.getId()) {
+					allowedWorkPackageUserAllocations.add(workPackageUserAllocation);
+				}
+				workPackage.setWorkPackageUserAllocations(allowedWorkPackageUserAllocations);
+			}
+			//add two model attributes for allowed for projects and worPackages
+			model.addAttribute("workPackage", workPackage);
+			model.addAttribute("normalUserView", true);
+		} else {
+			model.addAttribute("workPackage", workPackage);
+		}
+		model.addAttribute("yearNameStart",
+				environment.getProperty("year.name.start"));
+		model.addAttribute("yearNameEnd",
+				environment.getProperty("year.name.end"));
+		model.addAttribute("userAttendancesUpdated",
+				userAttendanceService.findAllUserAttendancesUpdated());
+		model.addAttribute("edit", true);
+
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "workPackage";
+	}
+
+	/**
+	 * This method will be called on form submission, handling POST request for
+	 * updating workPackage in database. It also validates the workPackage input
+	 */
+	@RequestMapping(value = { "/edit-normal-user-workPackage-{id}" }, method = RequestMethod.POST)
+	public String updateNormalUserWorkPackage(@Valid WorkPackage workPackage,
+			BindingResult result, ModelMap model, @PathVariable Integer id) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
+			model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
+			model.addAttribute("projectslist", projectService.findAllProjects());
+			return "workPackage";
+		}
+		
+		if (!userService.isAdmin(getPrincipal())) {
+			workPackageService.updateWorkPackage(workPackage, userService.findBySSO(getPrincipal()));
+		}else{
+			workPackageService.updateWorkPackage(workPackage);
+		}
+		
+		return "redirect:/WorkPackage/workPackageslist";
+	}
 
 	/**
 	 * This method will delete an workPackage by it's SSOID value.

@@ -18,11 +18,14 @@
 		<li><a href="<c:url value='/Project/projectslist' />"><spring:message code="authheader.menu.projects"/></a></li>
 		</sec:authorize>
 				
-		<!-- <li><a href="#">Emp Allocations</a></li> -->
+		<sec:authorize access="!hasRole('ADMIN')">
+		<li><a href="<c:url value='/WorkPackage/edit-normal-user-workPackage-59' />"><spring:message code="authheader.menu.employee.workPackage.allocations"/></a></li>
+		</sec:authorize>
 		
+		<sec:authorize access="hasRole('ADMIN')">
 		<li><a href="<c:url value='/WorkPackage/workPackageslist' />"><spring:message code="authheader.menu.employee.workPackage.allocations"/></a></li>
 		<!-- <li><a href="#">Time Planning</a></li> -->
-		<sec:authorize access="hasRole('ADMIN')">
+		
 		 <li><a href="<c:url value='/Project/projectReport-0- ' />"><spring:message code="authheader.menu.projectReport"/></a></li>
 		</sec:authorize>
 		<li><a href="<c:url value='/UserAttendance/monthlyReport' />"><spring:message code="authheader.menu.monthlyReport"/></a></li>
