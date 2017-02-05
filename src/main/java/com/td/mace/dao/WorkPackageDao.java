@@ -25,6 +25,8 @@ public interface WorkPackageDao {
 	
 	List<WorkPackage> findAllWorkPackages();
 	
+	List<WorkPackage> findAllWorkPackagesByProjectIdAndSsoId(int projectId, String ssoId);
+	
 	List<WorkPackage> findByProjectID(int projectID);
 
 	List<WorkPackage> findAllWorkPackagesBySSOId(String ssoId);

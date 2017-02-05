@@ -18,6 +18,8 @@ public interface ProjectDao {
 	void deleteByProjectNumber(String projectNumber);
 	
 	List<Project> findAllProjects();
+	
+	List<Project> findAllProjectsBySsoId(String ssoId);
 
 }
 

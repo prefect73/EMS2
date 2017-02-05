@@ -212,11 +212,20 @@ public class WorkPackageController {
 	/**
 	 * This method will provide the medium to update an existing workPackage.
 	 */
-	@RequestMapping(value = { "/edit-normal-user-workPackage-{id}" }, method = RequestMethod.GET)
-	public String editNormalUserWorkPackage(@PathVariable int id, ModelMap model) {
-		WorkPackage workPackage = workPackageService.findById(id);
-
-		if (!userService.isAdmin(getPrincipal())) {
+	@RequestMapping(value = { "/edit-normal-user-workPackage-{projectId}-{workPackageId}" }, method = RequestMethod.GET)
+	public String editNormalUserWorkPackage(@PathVariable int projectId,@PathVariable int workPackageId, ModelMap model) {
+		WorkPackage workPackage = null ;
+		List<Project> projectsListByUser = projectService.findAllProjectsBySsoId(getPrincipal());
+		List<WorkPackage> workPackagesListByUser = workPackageService.findAllWorkPackagesByProjectIdAndSsoId(projectId,getPrincipal());
+		if(workPackageId > 0){
+			workPackage = workPackageService.findById(workPackageId);	
+			model.addAttribute("workPackagesListByUser",workPackagesListByUser);
+		}else{
+			workPackage = new WorkPackage();
+			model.addAttribute("workPackagesListByUser",workPackagesListByUser);
+			return "normalUserWorkPackage";
+		}
+		if (!userService.isAdmin(getPrincipal()) && workPackageId > 0 ) {
 			//add two lists for allowed projects and worPackages
 			List<WorkPackageUserAllocation> allowedWorkPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
 			User loggedInUser = userService.findBySSO(getPrincipal());
@@ -228,20 +237,18 @@ public class WorkPackageController {
 			}
 			//add two model attributes for allowed for projects and worPackages
 			model.addAttribute("workPackage", workPackage);
-			model.addAttribute("normalUserView", true);
+			
 		} else {
 			model.addAttribute("workPackage", workPackage);
 		}
-		model.addAttribute("yearNameStart",
-				environment.getProperty("year.name.start"));
-		model.addAttribute("yearNameEnd",
-				environment.getProperty("year.name.end"));
-		model.addAttribute("userAttendancesUpdated",
-				userAttendanceService.findAllUserAttendancesUpdated());
+		model.addAttribute("normalUserView", true);
+		model.addAttribute("projectsListByUser",projectsListByUser);
+		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
+		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
+		model.addAttribute("userAttendancesUpdated",userAttendanceService.findAllUserAttendancesUpdated());
 		model.addAttribute("edit", true);
-
 		model.addAttribute("loggedinuser", getPrincipal());
-		return "workPackage";
+		return "normalUserWorkPackage";
 	}
 
 	/**
@@ -256,7 +263,7 @@ public class WorkPackageController {
 			model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 			model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 			model.addAttribute("projectslist", projectService.findAllProjects());
-			return "workPackage";
+			return "normalUserWorkPackage";
 		}
 		
 		if (!userService.isAdmin(getPrincipal())) {
@@ -265,7 +272,7 @@ public class WorkPackageController {
 			workPackageService.updateWorkPackage(workPackage);
 		}
 		
-		return "redirect:/WorkPackage/workPackageslist";
+		return "normalUserWorkPackage";
 	}
 
 	/**

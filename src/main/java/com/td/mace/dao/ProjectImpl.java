@@ -4,19 +4,25 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.td.mace.model.Project;
+import com.td.mace.model.User;
 
 @Repository("projectDao")
 public class ProjectImpl extends AbstractDao<Integer, Project> implements
 		ProjectDao {
 
 	static final Logger logger = LoggerFactory.getLogger(ProjectImpl.class);
+	
+	@Autowired
+	private UserDao userDao;
 
 	public Project findById(int id) {
 		Project project = getByKey(id);
@@ -72,6 +78,16 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 		 */
 		return projects;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Project> findAllProjectsBySsoId(String ssoId) {
+		User user = userDao.findBySSO(ssoId);
+		Query query = getSession().createSQLQuery(
+				"SELECT DISTINCT p.* FROM project p JOIN work_package w ON p.id = w.project_id JOIN work_package_app_user_allocations wa ON w.id = wa.work_package_id WHERE wa.user_id = :userId").addEntity(Project.class);
+		query.setParameter("userId", user.getId());
+		List<Project> projects = query.list();
+		return projects;
+	}	
 
 	public void save(Project project) {
 		persist(project);

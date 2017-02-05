@@ -63,7 +63,13 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<Project> findAllProjects() {
 		return projectDao.findAllProjects();
 	}
-
+	
+	
+	
+	public List<Project> findAllProjectsBySsoId(String ssoId) {
+		return projectDao.findAllProjectsBySsoId(ssoId);
+	}	
+	
 	@Override
 	public boolean isProjectNumberUnique(Integer id, String projectNumber) {
 		Project project = findByProjectNumber(projectNumber);

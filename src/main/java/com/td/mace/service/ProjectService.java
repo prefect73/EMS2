@@ -19,7 +19,9 @@ public interface ProjectService {
 	
 	void deleteProjectByProjectNumber(String projectNumber);
 
-	List<Project> findAllProjects(); 
+	List<Project> findAllProjects();
+	
+	List<Project> findAllProjectsBySsoId(String ssoId);
 	
 	boolean isProjectNumberUnique(Integer id, String projectNumber);
 	

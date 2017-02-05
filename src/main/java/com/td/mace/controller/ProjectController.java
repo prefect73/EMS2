@@ -230,29 +230,13 @@ public class ProjectController {
 	@RequestMapping(value = { "/projectReport-{projectNumber}-{workPackageName}" }, method = RequestMethod.GET)
 	public String listProjectReports(@PathVariable int projectNumber,
 			@PathVariable String workPackageName, ModelMap model) {
-		// public String listProjectReports(@RequestParam(value =
-		// "projectNamesDropDownSelectedValue", required = false) Integer
-		// projectNumber, @RequestParam(value = "selectedWorkPackageName",
-		// required = false) String workPackageName, ModelMap model) {
-		/*
-		 * if(workPackageName == null) { // true when landed first time on the
-		 * project report page workPackageName = " "; }
-		 */
+		
+		
 		List<Project> projectsList = projectService.findAllProjects();
-		/*
-		 * Project defaultProject = new Project();defaultProject.setProjectName(
-		 * "--------------------------Wählen--------------------------");
-		 * projectsList.add(0,defaultProject); defaultProject.setOfferedCost(new
-		 * BigDecimal(0)); defaultProject.setTotalCost(new BigDecimal(0));
-		 */
-
+		
 		Project project = new Project();
 		List<WorkPackage> workPackages = workPackageService
 				.findAllWorkPackages();
-		// List<WorkPackage> workPackagesByProjectID =
-		// workPackageService.findByProjectID(projectNumber);
-		// List<WorkPackageUserAllocation> workPackageHoursForAllUsers =
-		// workPackageUserAllocationService.findAllWorkPackageUserAllocationsByWorkPackage(workPackage);
 		List<WorkPackageUserAllocation> workPackagesByProjectID = workPackageUserAllocationService
 				.findByProjectID(projectNumber);
 		if (projectNumber > 0) {

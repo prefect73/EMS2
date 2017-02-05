@@ -11,6 +11,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.td.mace.model.User;
@@ -20,6 +21,9 @@ import com.td.mace.model.WorkPackageUserAllocation;
 @Repository("workPackageDao")
 public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 		implements WorkPackageDao {
+	
+	@Autowired
+	UserDao userDao;
 
 	static final Logger logger = LoggerFactory
 			.getLogger(WorkPackageDaoImpl.class);
@@ -139,6 +143,16 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 				"select * from work_package where project_id = :projectId")
 				.addEntity(WorkPackage.class);
 		query.setParameter("projectId", projectID);
+		List<WorkPackage> workPackages = query.list();
+		return workPackages;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<WorkPackage> findAllWorkPackagesByProjectIdAndSsoId(int projectId, String ssoId) {
+		User user = userDao.findBySSO(ssoId);
+		Query query = getSession().createSQLQuery("SELECT DISTINCT w.* FROM work_package w JOIN work_package_app_user_allocations wa ON w.id = wa.work_package_id WHERE  w.PROJECT_ID = :projectId AND  wa.user_id = :userId").addEntity(WorkPackage.class);
+		query.setParameter("projectId", projectId);
+		query.setParameter("userId", user.getId());
 		List<WorkPackage> workPackages = query.list();
 		return workPackages;
 	}

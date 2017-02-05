@@ -812,9 +812,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 					<div class="well col-md-2">
 						<input type="submit"
 							value="<spring:message code="button.update"/>"
-							class="btn btn-primary btn-sm" /> or <a
+							class="btn btn-primary btn-sm" /> <%-- or <a
 							href="<c:url value='/WorkPackage/workPackageslist' />"><spring:message
-								code="button.cancel" /></a>
+								code="button.cancel" /></a> --%>
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -849,41 +849,51 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 
 			<c:choose>
 				<c:when test="${edit && normalUserView}">
-					<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="workPackageName"><spring:message
-							code="workPackage.label.workPackageName" /> </label>
-					<div class="col-md-3">
-						<form:input readonly="true"  type="text" path="workPackageName"
-							id="workPackageName" class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="workPackageName" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div>
-
-
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="project"><spring:message
 							code="workPackage.label.projectName" /> </label>
 					<div class="col-md-3">
-						<form:input readonly="true"  type="text" path="project.projectName"
-							id="project" class="form-control input-sm" />
-						<%-- <select class="form-control input-sm" name="project" id="project">
+						<%-- <form:input readonly="true"  type="text" path="project.projectName"
+							id="project" class="form-control input-sm" /> --%>
+						<select class="form-control input-sm" name="project" id="project">
 
-							<c:forEach items="${projectslist}" var="proj">
+							<c:forEach items="${projectsListByUser}" var="proj">
 								<option class="form-control input-sm" value="${proj.id}"
 									${proj.id == workPackage.project.id  ? 'selected' : ''}>${proj.projectName}</option>
 							</c:forEach>
-						</select> --%>
+						</select>
 						<div class="has-error">
 							<form:errors path="project" class="help-inline" />
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="workPackageName"><spring:message
+							code="workPackage.label.workPackageName" /> </label>
+					<div class="col-md-3">
+						<%-- <form:input  type="text" path="workPackageName"
+							id="workPackageName" class="form-control input-sm" /> --%>
+							<select class="form-control input-sm" name="workPackageName" id="workPackageName">
+
+							<c:forEach items="${workPackagesListByUser}" var="work">
+								<option class="form-control input-sm" value="${work.id}"
+									${work.id == workPackage.id  ? 'selected' : ''}>${work.workPackageName}</option>
+							</c:forEach>
+						</select>
+						<div class="has-error">
+							<form:errors path="workPackageName" class="help-inline" />
+						</div>
+					</div>
+					<div class="col-md-3">
+						<a id="searchByProjectNameBtn"
+							class="btn btn-success btn-sm "><spring:message code="button.search" /> </a>
+					</div>
+				</div>
+			</div>
+			
 				</c:when>
 				<c:otherwise>
 					<div class="row">

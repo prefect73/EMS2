@@ -29,5 +29,7 @@ public interface WorkPackageService {
 
 	List<WorkPackage> findAllWorkPackagesBySSOId(String ssoId);
 	
+	List<WorkPackage> findAllWorkPackagesByProjectIdAndSsoId(int projectId, String ssoId);
+	
 
 }
