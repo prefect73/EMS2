@@ -230,7 +230,7 @@ public class WorkPackageController {
 	  } else if(projectId > 0 && workPackageId == 0) {
 	   workPackage = new WorkPackage();
 	   model.addAttribute("workPackagesListByUser",workPackagesListByUser);
-	   model.addAttribute("projectAndWorkPackageSelected", false);
+	   model.addAttribute("projectSelected", true);
 	  }
 	  
 	  if (!userService.isAdmin(getPrincipal()) && workPackageId > 0 ) {
@@ -275,12 +275,20 @@ public class WorkPackageController {
 	  if (result.hasErrors()) {
 	   model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 	   model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
-	   model.addAttribute("projectslist", projectService.findAllProjects());
+	   /*model.addAttribute("projectslist", projectService.findAllProjects());*/
 	   return "normalUserWorkPackage";
 	  }
 	  
 	  if (!userService.isAdmin(getPrincipal())) {
 	   workPackageService.updateWorkPackage(workPackage, userService.findBySSO(getPrincipal()));
+	   List<WorkPackageUserAllocation> allowedWorkPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
+	   User loggedInUser = userService.findBySSO(getPrincipal());
+	   for (WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()) {
+	    if (workPackageUserAllocation.getUser().getId() == loggedInUser.getId()) {
+	     allowedWorkPackageUserAllocations.add(workPackageUserAllocation);
+	    }
+	    workPackage.setWorkPackageUserAllocations(allowedWorkPackageUserAllocations);
+	   }
 	  }else{
 	   workPackageService.updateWorkPackage(workPackage);
 	  }

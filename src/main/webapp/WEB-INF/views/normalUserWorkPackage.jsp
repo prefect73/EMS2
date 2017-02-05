@@ -64,21 +64,35 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 	var wPakAllocSize = '<c:out value="${fn:length(workPackage.workPackageUserAllocations)}"/>';
 	var editView = '<c:out value="${edit}"/>';
 	var globalYearName = "";
+	
 	$( document ).ready(function() {
 		var projectNamesDropDownSelectedValue = $('#selectedProjectNumber').val();
 		$('#projectNamesDropDown').change(function(e) {
-		    if($('#projectNamesDropDown :selected').val()) {
+			disableWorkPackageDropDownAndButton();
+			disableUpdateButton();
+			if($('#projectNamesDropDown :selected').val()) {
 		    	projectNamesDropDownSelectedValue = $('#projectNamesDropDown :selected').val();
 		    }
+			if($('#projectNamesDropDown :selected').val() == "NONE") {
+				disableProjectButton();
+			} else if($('#projectNamesDropDown :selected').val() != "NONE") {
+				enableProjectButton();
+			}
 		    console.log("pr" + projectNamesDropDownSelectedValue);
 		    $('#searchWorkPackagesByProjectNameBtn').attr('href','/EMS/WorkPackage/edit-normal-user-workPackage-' + projectNamesDropDownSelectedValue + '-0');        
 		});
 		
 		var workPackageNamesDropDownSelectedValue = $('#selectedWorkPackageNumber').val();
 		$('#workPackageNamesDropDown').change(function(e) {
+			disableUpdateButton();
 		    if($('#workPackageNamesDropDown :selected').val()) {
 		    	workPackageNamesDropDownSelectedValue = $('#workPackageNamesDropDown :selected').val();
 		    }
+		    if($('#workPackageNamesDropDown :selected').val() == "NONE") {
+				disableWorkPackageButton();
+			} else if($('#workPackageNamesDropDown :selected').val() != "NONE") {
+				enableWorkPackageButton();
+			}
 		    console.log("wpkg " + workPackageNamesDropDownSelectedValue);
 		    $('#searchByProjectNameAndWorkPackageBtn').attr('href','/EMS/WorkPackage/edit-normal-user-workPackage-' + projectNamesDropDownSelectedValue + '-' + workPackageNamesDropDownSelectedValue);        
 		});
@@ -117,6 +131,34 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		     
 		 });
 	
+	function disableUpdateButton() {
+		  $('#updateBtn').attr('disabled', 'disabled');
+	}
+	
+	function disableWorkPackageDropDownAndButton() {
+		$('#searchByProjectNameAndWorkPackageBtn').attr('disabled', 'disabled');
+		$('#workPackageNamesDropDown').find('option').remove();
+		$('#workPackageNamesDropDown').append('<option class="form-control input-sm" value="NONE">--------------------------Wählen--------------------------</option>');
+		$('#workPackageNamesDropDown').find('option:selected').removeAttr('selected');
+		$('#workPackageNamesDropDown').attr('disabled', 'disabled');
+	}
+	
+	function disableProjectButton() {
+		$('#searchWorkPackagesByProjectNameBtn').attr('disabled', 'disabled');
+	}
+	
+	function enableProjectButton() {
+		$('#searchWorkPackagesByProjectNameBtn').removeAttr('disabled');
+	}
+	
+	function disableWorkPackageButton() {
+		$('#searchByProjectNameAndWorkPackageBtn').attr('disabled', 'disabled');
+	}
+	
+	function enableWorkPackageButton() {
+		$('#searchByProjectNameAndWorkPackageBtn').removeAttr('disabled');
+	}
+ 	
 	function disabledFieldsForNormalUser(){
 		var normalUserView = '<c:out value="${normalUserView}"/>';
 		if(normalUserView){
@@ -829,7 +871,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 						<spring:message code="workPackage.update.title" />
 					</div>
 					<div class="well col-md-2">
-						<input type="submit"
+						<input type="submit" id="updateBtn"
 							value="<spring:message code="button.update"/>"
 							class="btn btn-primary btn-sm" /> <%-- or <a
 							href="<c:url value='/WorkPackage/workPackageslist' />"><spring:message
@@ -841,7 +883,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 						<spring:message code="workPackage.update.title" />
 					</div>
 					<div class="well col-md-2">
-						<input disabled type="submit"
+						<input disabled type="submit" id="updateBtn"
 							value="<spring:message code="button.update"/>"
 							class="btn btn-primary btn-sm" /> <%-- or <a
 							href="<c:url value='/WorkPackage/workPackageslist' />"><spring:message
@@ -885,94 +927,133 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 
 			<c:choose>
 				<c:when test="${edit && normalUserView}">
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="project"><spring:message
-							code="workPackage.label.projectName" /> </label>
-					<div class="col-md-3">
-						<%-- <form:input readonly="true"  type="text" path="project.projectName"
+					<div class="row">
+						<div class="form-group col-md-12">
+							<label class="col-md-2 control-lable" for="project"><spring:message
+									code="workPackage.label.projectName" /> </label>
+							<div class="col-md-3">
+								<%-- <form:input readonly="true"  type="text" path="project.projectName"
 							id="project" class="form-control input-sm" /> --%>
-						<select class="form-control input-sm" name="projectNamesDropDown" id="projectNamesDropDown">
-
-							<c:forEach items="${projectsListByUser}" var="proj">
-								<option class="form-control input-sm" value="${proj.id}"
-									${proj.id == workPackage.project.id  ? 'selected' : ''}>${proj.projectName}</option>
-							</c:forEach>
-						</select>
-						<div class="has-error">
-							<form:errors path="project" class="help-inline" />
+								<select class="form-control input-sm"
+									name="project" id="projectNamesDropDown">
+									<option value="NONE">--------------------------<spring:message code="generic.select.default.option" />--------------------------</option>
+									<c:forEach items="${projectsListByUser}" var="proj">
+							<%-- 			<option class="form-control input-sm" value="${proj.id}"
+											${proj.id == workPackage.project.id  ? 'selected' : ''}>${proj.projectName}</option>
+							 --%>		<option class="form-control input-sm" value="${proj.id}"
+											${proj.id == selectedProjectNumber  ? 'selected' : ''}>${proj.projectName}</option>
+							 	
+							 	</c:forEach>
+								</select>
+								<div class="has-error">
+									<form:errors path="project" class="help-inline" />
+								</div>
+							</div>
+							<div class="col-md-3">
+								<a id="searchWorkPackagesByProjectNameBtn"
+									class="btn btn-success btn-sm "><spring:message code="button.search.workPackages" />
+								</a>
+							</div>
 						</div>
 					</div>
-					<div class="col-md-3">
-						<a id="searchWorkPackagesByProjectNameBtn"
-							class="btn btn-success btn-sm ">Search WorkPackages<%-- <spring:message code="button.search" /> --%> </a>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="workPackageName"><spring:message
-							code="workPackage.label.workPackageName" /> </label>
-					<div class="col-md-3">
-						<%-- <form:input  type="text" path="workPackageName"
-							id="workPackageName" class="form-control input-sm" /> --%>
-							<select class="form-control input-sm" name="workPackageName" id="workPackageNamesDropDown">
-							<option value="NONE">--------------------------<spring:message code="generic.select.default.option" />--------------------------</option>
-							<c:forEach items="${workPackagesListByUser}" var="work">
-								<option class="form-control input-sm" value="${work.id}"
-									${work.id == workPackage.id  ? 'selected' : ''}>${work.workPackageName}</option>
-							</c:forEach>
-						</select>
-						<div class="has-error">
-							<form:errors path="workPackageName" class="help-inline" />
-						</div>
-					</div>
-					<div class="col-md-3">
-						<a id="searchByProjectNameAndWorkPackageBtn"
-							class="btn btn-success btn-sm ">Search Allocations<%-- <spring:message code="button.search" /> --%> </a>
-					</div>
-				</div>
-			</div>
-			
+					<c:choose>
+						<c:when test="${edit && !projectAndWorkPackageSelected && !projectSelected}">
+							<div class="row">
+								<div class="form-group col-md-12">
+									<label class="col-md-2 control-lable" for="workPackageName"><spring:message
+											code="workPackage.label.workPackageName" /> </label>
+									<div class="col-md-3">
+									<form:input  type="hidden" path="workPackageName"
+										id="workPackageName" class="form-control input-sm" />
+										<select disabled class="form-control input-sm"
+											name="workPackageNumber" id="workPackageNamesDropDown">
+											<option value="NONE">--------------------------<spring:message code="generic.select.default.option" />--------------------------</option>
+											<c:forEach items="${workPackagesListByUser}" var="work">
+												<option class="form-control input-sm" value="${work.id}"
+													${work.id == workPackage.id  ? 'selected' : ''}>${work.workPackageName}</option>
+											</c:forEach>
+										</select>
+										<div class="has-error">
+											<form:errors path="workPackageName" class="help-inline" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<a disabled id="searchByProjectNameAndWorkPackageBtn"
+											class="btn btn-success btn-sm "><spring:message code="button.search.workPackages.allocations" />
+										</a>
+									</div>
+								</div>
+							</div>
+						</c:when>
+						<c:when test="${edit && !projectAndWorkPackageSelected && projectSelected || edit && projectAndWorkPackageSelected && !projectSelected}">
+							<div class="row">
+								<div class="form-group col-md-12">
+									<label class="col-md-2 control-lable" for="workPackageName"><spring:message
+											code="workPackage.label.workPackageName" /> </label>
+									<div class="col-md-3">
+										<form:input  type="hidden" path="workPackageName"
+										id="workPackageName" class="form-control input-sm" />
+										<select class="form-control input-sm"
+											name="workPackageNumber" id="workPackageNamesDropDown">
+											<option value="NONE">--------------------------<spring:message code="generic.select.default.option" />--------------------------</option>
+											<c:forEach items="${workPackagesListByUser}" var="work">
+												<option class="form-control input-sm" value="${work.id}"
+													${work.id == workPackage.id  ? 'selected' : ''}>${work.workPackageName}</option>
+											</c:forEach>
+										</select>
+										<div class="has-error">
+											<form:errors path="workPackageName" class="help-inline" />
+										</div>
+									</div>
+									<div class="col-md-3">
+										<a id="searchByProjectNameAndWorkPackageBtn"
+											class="btn btn-success btn-sm "><spring:message code="button.search.workPackages.allocations" />
+										</a>
+									</div>
+								</div>
+							</div>
+						</c:when>
+					</c:choose>
 				</c:when>
 				<c:otherwise>
 					<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="workPackageName"><spring:message
-							code="workPackage.label.workPackageName" /> </label>
-					<div class="col-md-3">
-						<form:input type="text" path="workPackageName"
-							id="workPackageName" class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="workPackageName" class="help-inline" />
+						<div class="form-group col-md-12">
+							<label class="col-md-2 control-lable" for="workPackageName"><spring:message
+									code="workPackage.label.workPackageName" /> </label>
+							<div class="col-md-3">
+								<form:input type="text" path="workPackageName"
+									id="workPackageName" class="form-control input-sm" />
+								<div class="has-error">
+									<form:errors path="workPackageName" class="help-inline" />
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
 
 
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="project"><spring:message
-							code="workPackage.label.projectName" /> </label>
-					<div class="col-md-3">
+					<div class="row">
+						<div class="form-group col-md-12">
+							<label class="col-md-2 control-lable" for="project"><spring:message
+									code="workPackage.label.projectName" /> </label>
+							<div class="col-md-3">
 
-						<select class="form-control input-sm" name="project" id="projectNamesDropDown">
-							<option value="NONE">--------------------------<spring:message code="generic.select.default.option" />--------------------------</option>
-							<c:forEach items="${projectsListByUser}" var="proj">
-								<option class="form-control input-sm" value="${proj.id}"
-									${proj.id == workPackage.project.id  ? 'selected' : ''}>${proj.projectName}</option>
-							</c:forEach>
-						</select>
-						<div class="has-error">
-							<form:errors path="project" class="help-inline" />
+								<select class="form-control input-sm"
+									name="project" id="projectNamesDropDown">
+									<option value="NONE">--------------------------<spring:message code="generic.select.default.option" />--------------------------</option>
+									<c:forEach items="${projectsListByUser}" var="proj">
+										<option class="form-control input-sm" value="${proj.id}"
+											${proj.id == workPackage.project.id  ? 'selected' : ''}>${proj.projectName}</option>
+									</c:forEach>
+								</select>
+								<div class="has-error">
+									<form:errors path="project" class="help-inline" />
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
 				</c:otherwise>
 			</c:choose>
-			
+
 			<sec:authorize access="hasRole('ADMIN')">
 				<div class="row">
 					<div class="form-group col-md-12">
