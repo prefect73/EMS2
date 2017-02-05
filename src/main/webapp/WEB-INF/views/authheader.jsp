@@ -19,8 +19,8 @@
 		</sec:authorize>
 				
 		<sec:authorize access="!hasRole('ADMIN')">
-		<li><a href="<c:url value='/WorkPackage/edit-normal-user-workPackage-32-70' />"><spring:message code="authheader.menu.employee.workPackage.allocations"/></a></li>
-		</sec:authorize>
+	    <li><a href="<c:url value='/WorkPackage/edit-normal-user-workPackage-0-0' />"><spring:message code="authheader.menu.employee.workPackage.allocations"/></a></li>
+	    </sec:authorize>
 		
 		<sec:authorize access="hasRole('ADMIN')">
 		<li><a href="<c:url value='/WorkPackage/workPackageslist' />"><spring:message code="authheader.menu.employee.workPackage.allocations"/></a></li>
