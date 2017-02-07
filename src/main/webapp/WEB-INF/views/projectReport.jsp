@@ -300,6 +300,7 @@ $(document).ready(function() {
 						<th><spring:message code="workPackage.label.workPackageName"/></th>
 						<th><spring:message code="workPackage.label.offeredCost"/><spring:message code="generic.inCurrency" /></th>
 						<th><spring:message code="workPackage.label.totalCost"/><spring:message code="generic.inCurrency" /></th>
+						<th><spring:message code="workPackage.label.effectiveCost"/><spring:message code="generic.inCurrency" /></th>
 						<th><spring:message code="workPackage.label.workPackageNumber"/></th>
 					</tr>
 				</thead>
@@ -313,6 +314,7 @@ $(document).ready(function() {
 							<td>${workPackage.workPackage.workPackageName}</td>
 							<td><spring:message code="generic.currencySymbol" />${workPackage.workPackage.offeredCost}</td>
 							<td><spring:message code="generic.currencySymbol" />${workPackage.workPackage.totalCost}</td>
+							<td><spring:message code="generic.currencySymbol" />${workPackage.workPackage.effectiveCost}</td>
 							<td><a
 								class="searchByWorkPackageNameBtn btn btn-success custom-width" id="${workPackage.workPackage.workPackageNumber}">${workPackage.workPackage.workPackageNumber}</a></td>
 						</tr>

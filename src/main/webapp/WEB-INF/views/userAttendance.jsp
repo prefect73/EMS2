@@ -66,13 +66,17 @@ $(document).ready(function() {
 						</label>
 					<div class="col-md-2">
 					
-					<select readonly="true" class="form-control input-sm"  name="user">
+					<select disabled="disabled" class="form-control input-sm"  name="user">
 
 							<c:forEach items="${employeeslist}" var="usr">
 								<option class="form-control input-sm" value="${usr.id}"
 									${usr.id == userAttendance.user.id  ? 'selected' : ''}>${usr.firstName}</option>
 							</c:forEach>
 							</select>
+						<input type="hidden"
+						class="form-control input-sm" style="width: 55px;"
+						name="user"
+						value="${userAttendance.user.id}" />
 						<div class="has-error">
 							<form:errors path="user" class="help-inline" />
 						</div>

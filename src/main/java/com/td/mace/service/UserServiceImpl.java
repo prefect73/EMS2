@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	public List<User> findAllUsersBySSOId(String ssoId) {
-		boolean isAdmin = dao.isAdmin(ssoId);
+		boolean isAdmin = dao.isAdminOnly(ssoId);
 		if(isAdmin){
 			return dao.findAllUsers();
 		}

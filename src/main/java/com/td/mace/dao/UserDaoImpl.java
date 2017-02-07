@@ -10,6 +10,9 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 
 import com.td.mace.model.User;
@@ -19,9 +22,13 @@ import com.td.mace.model.UserProfile;
 
 
 @Repository("userDao")
+@PropertySource(value = { "classpath:application.properties" })
 public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
+	
+	@Autowired
+	private Environment environment;
 	
 	public User findById(int id) {
 		User user = getByKey(id);
@@ -104,7 +111,20 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		boolean isAdmin = false;
 		User user = findBySSO(ssoId);
 		for(UserProfile userProfile : user.getUserProfiles()){
-			if(userProfile.getType().equalsIgnoreCase("Admin")){
+			if(userProfile.getType().equalsIgnoreCase(environment.getProperty("default.admin.role.title")) || userProfile.getType().equalsIgnoreCase(environment.getProperty("default.project.lead.role.title")) ){
+				isAdmin = true;
+				return isAdmin;
+			}
+			
+		}
+		
+		return isAdmin;
+	}
+	public boolean isAdminOnly (String ssoId){
+		boolean isAdmin = false;
+		User user = findBySSO(ssoId);
+		for(UserProfile userProfile : user.getUserProfiles()){
+			if(userProfile.getType().equalsIgnoreCase(environment.getProperty("default.admin.role.title"))  ){
 				isAdmin = true;
 				return isAdmin;
 			}

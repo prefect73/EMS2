@@ -53,7 +53,7 @@
 			<div class="panel-heading">
 				<span class="lead"><spring:message code="projectslist.title" />
 				</span>
-				<sec:authorize access="hasRole('ADMIN')">
+				<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 					<a class="btn btn-primary floatRight"
 						href="<c:url value='/Project/newproject' />"><spring:message
 							code="projectslist.addNewProject" /></a>
@@ -73,19 +73,19 @@
 							</th>
 							<%-- <th><spring:message code="project.label.yearName" /> 
 							</th>--%>
-							<sec:authorize access="hasRole('ADMIN')">
+							<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 							<th><spring:message code="project.label.offeredCost" />
 							</th>
 							<th><spring:message code="project.label.totalCost" /></th>
 							</sec:authorize>
 							<%-- <th><spring:message code="project.label.effectiveCost" /></th> --%>
-							<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+							<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
 								<th width="100"></th>
 							</sec:authorize>
-							<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+							<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
 								<th width="100"></th>
 							</sec:authorize>
-							<sec:authorize access="hasRole('ADMIN')">
+							<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 								<th width="100"></th>
 							</sec:authorize>
 
@@ -98,22 +98,22 @@
 								<td>${project.projectName}</td>
 								<td>${project.customerName}</td>
 								<%-- <td>${project.yearName}</td> --%>
-								<sec:authorize access="hasRole('ADMIN')">
+								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 								<td><spring:message code="generic.currencySymbol" />${project.offeredCost}</td>
 								<td><spring:message code="generic.currencySymbol" />${project.totalCost}</td>
 								</sec:authorize>
 								<%-- <td><spring:message code="generic.currencySymbol" />${project.effectiveCost}</td> --%>
-								<sec:authorize access="hasRole('ADMIN')">
+								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 									<td><a class="btn btn-primary floatRight"
 										href="<c:url value='/WorkPackage/newworkPackage?projectId=${project.id}' />"><spring:message code="workPackageslist.addNewWorkPackage" /></a>
 										</td>
 								</sec:authorize>
-								<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
 									<td><a
 										href="<c:url value='/Project/edit-project-${project.projectNumber}' />"
 										class="btn btn-success "><spring:message code="button.edit" /></a></td>
 								</sec:authorize>
-								<sec:authorize access="hasRole('ADMIN')">
+								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 									<td><a
 										href="<c:url value='/Project/delete-project-${project.projectNumber}' />"
 										class="btn btn-danger"><spring:message code="button.delete" /></a></td>

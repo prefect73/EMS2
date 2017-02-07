@@ -21,7 +21,9 @@ public interface UserDao {
 
 	List<User> findAllUsersByType(String userProfileType);
 	
-	public boolean isAdmin (String ssoId);
+	boolean isAdmin (String ssoId);
+	
+	boolean isAdminOnly (String ssoId);
 
 	List<User> findAllUsersBySSOId(String ssoId);
 

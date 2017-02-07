@@ -1,6 +1,7 @@
 package com.td.mace.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
@@ -54,11 +55,13 @@ public class HibernateTokenRepositoryImpl extends AbstractDao<String, Persistent
 		logger.info("Removing Token if any for user : {}", username);
 		Criteria crit = createEntityCriteria();
 		crit.add(Restrictions.eq("username", username));
-		PersistentLogin persistentLogin = (PersistentLogin) crit.uniqueResult();
+		List<PersistentLogin> persistentLogins = crit.list();
+		for (PersistentLogin persistentLogin : persistentLogins){ 
 		if (persistentLogin != null) {
 			logger.info("rememberMe was selected");
 			delete(persistentLogin);
 		}
+	}
 
 	}
 

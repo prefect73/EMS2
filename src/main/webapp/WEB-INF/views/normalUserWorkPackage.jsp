@@ -257,7 +257,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				             dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
 				showYear: false,
 			 	changeMonth: false, 
-			 	changeYear: false,
+			 	changeYear: false,firstDay: 1,
 				close: false,
 			 	showButtonPanel: true,
 			 	defaultDate: d,
@@ -294,7 +294,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				             dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
 				showYear: false,
 			 	changeMonth: false, 
-			 	changeYear: false,
+			 	changeYear: false,firstDay: 1,
 				close: false,
 			 	showButtonPanel: true,
 			 	defaultDate: d,
@@ -330,7 +330,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				             dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
 				showYear: false,
 			 	changeMonth: false, 
-			 	changeYear: false,
+			 	changeYear: false,firstDay: 1,
 				close: false,
 			 	showButtonPanel: true,
 			 	defaultDate: d,
@@ -366,7 +366,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				             dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
 				showYear: false,
 			 	changeMonth: false, 
-			 	changeYear: false,
+			 	changeYear: false,firstDay: 1,
 				close: false,
 			 	showButtonPanel: true,
 			 	defaultDate: d,
@@ -402,7 +402,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				             dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
 				showYear: false,
 			 	changeMonth: false, 
-			 	changeYear: false,
+			 	changeYear: false,firstDay: 1,
 				close: false,
 			 	showButtonPanel: true,
 			 	defaultDate: d,
@@ -438,7 +438,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				             dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
 				showYear: false,
 			 	changeMonth: false, 
-			 	changeYear: false,
+			 	changeYear: false,firstDay: 1,
 				close: false,
 			 	showButtonPanel: true,
 			 	defaultDate: d,
@@ -474,7 +474,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				             dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
 				showYear: false,
 			 	changeMonth: false, 
-			 	changeYear: false,
+			 	changeYear: false,firstDay: 1,
 				close: false,
 			 	showButtonPanel: true,
 			 	defaultDate: d,
@@ -510,7 +510,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				             dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
 				showYear: false,
 			 	changeMonth: false, 
-			 	changeYear: false,
+			 	changeYear: false,firstDay: 1,
 				close: false,
 			 	showButtonPanel: true,
 			 	defaultDate: d,
@@ -546,7 +546,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				             dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
 				showYear: false,
 			 	changeMonth: false, 
-			 	changeYear: false,
+			 	changeYear: false,firstDay: 1,
 				close: false,
 			 	showButtonPanel: true,
 			 	defaultDate: d,
@@ -582,7 +582,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				             dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
 				showYear: false,
 			 	changeMonth: false, 
-			 	changeYear: false,
+			 	changeYear: false,firstDay: 1,
 				close: false,
 			 	showButtonPanel: true,
 			 	defaultDate: d,
@@ -618,7 +618,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				             dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
 				showYear: false,
 			 	changeMonth: false, 
-			 	changeYear: false,
+			 	changeYear: false,firstDay: 1,
 				close: false,
 			 	showButtonPanel: true,
 			 	defaultDate: d,
@@ -654,7 +654,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				             dayNamesMin: ['So','Mo','Di','Mi','Do','Fr','Sa'],
 				showYear: false,
 			 	changeMonth: false, 
-			 	changeYear: false,
+			 	changeYear: false,firstDay: 1,
 				close: false,
 			 	showButtonPanel: true,
 			 	defaultDate: d,
@@ -1214,7 +1214,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 														<td><input type="hidden"
 															value="${workPackageUserAllocation.id}"
 															name="workPackageUserAllocations[${status.index}].id" />
-															<select readonly="true"
+															<select disabled="disabled"
 															class="form-control input-sm userCombo"
 															name="workPackageUserAllocations[${status.index}].user">
 
@@ -1223,7 +1223,12 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 																	<option class="form-control input-sm" value="${emp.id}"
 																		${emp.id == workPackageUserAllocation.user.id  ? 'selected' : ''}>${emp.firstName}</option>
 																</c:forEach>
-														</select></td>
+														</select>
+														<input type="hidden"
+															class="form-control input-sm userCombo" style="width: 55px;"
+															name="workPackageUserAllocations[${status.index}].user"
+															value="${workPackageUserAllocation.user.id}" />
+														</td>
 
 														<td><input class="form-control input-sm"
 															style="width: 55px;"

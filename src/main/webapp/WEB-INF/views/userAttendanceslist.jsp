@@ -22,21 +22,28 @@
 $(document).ready(function() {
 if($("#defaultLanguage").val() == 'german'){
 	$('#userAttendancesTable').DataTable({
+		"bSort": false
+    },{
         "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
         }
     });
 	
 } else if ($("#defaultLanguage").val() == 'english'){
-	$('#userAttendancesTable').DataTable();
+	$('#userAttendancesTable').DataTable({
+		"bSort": false
+    });
 	
 } else {
 	$('#userAttendancesTable').DataTable({
+		"bSort": false
+    },{
         "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
         }
     });
 }
+$('.sorting_disabled').css({"font-size": "0.9em"});
 });
 </script>
 </head>
@@ -50,16 +57,16 @@ if($("#defaultLanguage").val() == 'german'){
 			<div class="panel-heading">
 				<span class="lead"><spring:message
 						code="userAttendanceslist.title" /></span>
-				<%-- <sec:authorize access="hasRole('ADMIN')"> --%>
+				<%-- <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')"> --%>
 					<a class="btn btn-primary floatRight"
 						href="<c:url value='/UserAttendance/newuserAttendance' />"><spring:message
 							code="userAttendanceslist.addNewEmployeeAttendance" /></a>
 				<%-- </sec:authorize> --%>
 			</div>
 			<div id="userAttendancesTableWrapper" style="padding: 2%;">
-				<table id="userAttendancesTable"
+				<table id="userAttendancesTable" 
 					class="table table-striped table-bordered dt-responsive nowrap"
-					cellspacing="0" width="100%">
+					cellspacing="0" style="font-size: : 0.1em !important;">
 					<thead>
 						<tr>
 							<th><spring:message
@@ -82,18 +89,18 @@ if($("#defaultLanguage").val() == 'german'){
 									code="workPackageUserAllocation.label.jul" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
 									code="workPackageUserAllocation.label.aug" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
-							<%--<th><spring:message
+							<th><spring:message
 									code="workPackageUserAllocation.label.sep" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
 									code="workPackageUserAllocation.label.oct" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							<th><spring:message
-									code="workPackageUserAllocation.label.nov" /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
+									code="workPackageUserAllocation.label.nov" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							 <th><spring:message
-									code="workPackageUserAllocation.label.dec" /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
-							 --%>
+									code="workPackageUserAllocation.label.dec" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
+							 
 							
 							<th></th>
-							<%-- <sec:authorize access="hasRole('ADMIN')"> --%>
+							<%-- <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')"> --%>
 								<th></th>
 							<%-- </sec:authorize> --%>
 
@@ -112,16 +119,16 @@ if($("#defaultLanguage").val() == 'german'){
 								<td>${userAttendance.mJun}</td>
 								<td>${userAttendance.mJul}</td>
 								<td>${userAttendance.mAug}</td>
-								<%--<td>${userAttendance.mSep}</td>
+								<td>${userAttendance.mSep}</td>
 								<td>${userAttendance.mOct}</td>
 								<td>${userAttendance.mNov}</td>
 								 <td>${userAttendance.mDec}</td>
 								
- --%>
+ 
 								<td><a
 									href="<c:url value='/UserAttendance/edit-userAttendance-${userAttendance.id}' />"
 									class="btn btn-success "><spring:message code="button.edit" /></a></td>
-								<%-- <sec:authorize access="hasRole('ADMIN')"> --%>
+								<%-- <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')"> --%>
 									<td><a
 										href="<c:url value='/UserAttendance/delete-userAttendance-${userAttendance.id}' />"
 										class="btn btn-danger "><spring:message code="button.delete" /></a></td>
