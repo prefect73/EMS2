@@ -57,11 +57,11 @@ $('.sorting_disabled').css({"font-size": "0.9em"});
 			<div class="panel-heading">
 				<span class="lead"><spring:message
 						code="userAttendanceslist.title" /></span>
-				<%-- <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')"> --%>
+				<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 					<a class="btn btn-primary floatRight"
 						href="<c:url value='/UserAttendance/newuserAttendance' />"><spring:message
 							code="userAttendanceslist.addNewEmployeeAttendance" /></a>
-				<%-- </sec:authorize> --%>
+				 </sec:authorize>
 			</div>
 			<div id="userAttendancesTableWrapper" style="padding: 2%;">
 				<table id="userAttendancesTable" 
@@ -128,11 +128,11 @@ $('.sorting_disabled').css({"font-size": "0.9em"});
 								<td><a
 									href="<c:url value='/UserAttendance/edit-userAttendance-${userAttendance.id}' />"
 									class="btn btn-success "><spring:message code="button.edit" /></a></td>
-								<%-- <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')"> --%>
+								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 									<td><a
 										href="<c:url value='/UserAttendance/delete-userAttendance-${userAttendance.id}' />"
 										class="btn btn-danger "><spring:message code="button.delete" /></a></td>
-								<%-- </sec:authorize> --%>
+								</sec:authorize>
 							</tr>
 						</c:forEach>
 					</tbody>
