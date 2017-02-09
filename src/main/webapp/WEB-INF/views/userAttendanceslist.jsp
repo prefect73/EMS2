@@ -57,7 +57,7 @@ $('.sorting_disabled').css({"font-size": "0.9em"});
 			<div class="panel-heading">
 				<span class="lead"><spring:message
 						code="userAttendanceslist.title" /></span>
-				<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+				<sec:authorize access="hasRole('ADMIN')">
 					<a class="btn btn-primary floatRight"
 						href="<c:url value='/UserAttendance/newuserAttendance' />"><spring:message
 							code="userAttendanceslist.addNewEmployeeAttendance" /></a>
@@ -98,11 +98,10 @@ $('.sorting_disabled').css({"font-size": "0.9em"});
 							 <th><spring:message
 									code="workPackageUserAllocation.label.dec" /><br /><span style="font-size: 0.6em;"><spring:message code="generic.inDays" /></span></th>
 							 
-							
+							<sec:authorize access="hasRole('ADMIN')">
 							<th></th>
-							<%-- <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')"> --%>
-								<th></th>
-							<%-- </sec:authorize> --%>
+							<th></th>
+							</sec:authorize>
 
 						</tr>
 					</thead>
@@ -124,11 +123,11 @@ $('.sorting_disabled').css({"font-size": "0.9em"});
 								<td>${userAttendance.mNov}</td>
 								 <td>${userAttendance.mDec}</td>
 								
- 
+ 								<sec:authorize access="hasRole('ADMIN')">
 								<td><a
 									href="<c:url value='/UserAttendance/edit-userAttendance-${userAttendance.id}' />"
 									class="btn btn-success "><spring:message code="button.edit" /></a></td>
-								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+								
 									<td><a
 										href="<c:url value='/UserAttendance/delete-userAttendance-${userAttendance.id}' />"
 										class="btn btn-danger "><spring:message code="button.delete" /></a></td>

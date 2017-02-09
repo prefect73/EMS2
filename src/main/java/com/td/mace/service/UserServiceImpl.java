@@ -91,4 +91,12 @@ public class UserServiceImpl implements UserService{
 		return dao.isAdmin(ssoId);
 	}
 	
+	public boolean isAdminOnly(String ssoId){
+		return dao.isAdminOnly(ssoId);
+	}
+	
+	public boolean isTLOnly(String ssoId){
+		return dao.isTLOnly(ssoId);
+	}
+	
 }

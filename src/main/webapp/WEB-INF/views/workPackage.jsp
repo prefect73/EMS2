@@ -52,6 +52,7 @@ button.ui-datepicker-current {
 }
 </style>
 <script type="text/javascript">
+
 var userAttendance = new Map();
 
 <c:forEach items="${userAttendancesUpdated}" var="usrAttend">
@@ -63,6 +64,22 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 	var wPakAllocSize = '<c:out value="${fn:length(workPackage.workPackageUserAllocations)}"/>';
 	var editView = '<c:out value="${edit}"/>';
 	var globalYearName = "";
+	
+	function disabledFieldsForTeamLead(){
+		var teamLeadView = '<c:out value="${teamLeadView}"/>';
+		console.log("teamLeadView=" + teamLeadView);
+		console.log("if(teamLeadView == 'true') " +(teamLeadView == 'true'));
+		if(teamLeadView == 'true'){
+			$( ".effectiveDays" ).attr('disabled','disabled');
+		}else{
+			$( ".effectiveDays" ).removeAttr('disabled');
+		}
+	}
+	$( document ).submit(function() {
+		if($( ".effectiveDays" ).is('[disabled=disabled]')){
+			$( ".effectiveDays" ).removeAttr('disabled');
+		}
+	});
 	$( document ).ready(function() {
 		$('input').on('keypress', function (event) {
 		    var regex = new RegExp("^[^,]+$");
@@ -76,6 +93,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		   addFirstRow();
 		  }
 		  disabledFieldsForNormalUser();
+		  disabledFieldsForTeamLead();
 		  poulateAvailableHours();
 		  validateAllocatedAndEffectiveHours();
 		  validateAttendanceAndAllocatedHours();
@@ -103,7 +121,6 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		if(normalUserView){
 			$( ".allocatedDays" ).attr('readonly','true');
 			$( "[id$=totalPlannedDays]" ).attr('readonly','true');
-			
 		}else{
 			$( "[id$=totalPlannedDays]" ).removeAttr('readonly');
 			$( ".allocatedDays" ).removeAttr('readonly');
@@ -923,7 +940,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				</c:otherwise>
 			</c:choose>
 			
-			<sec:authorize access="hasRole('ADMIN')">
+			<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 				<div class="row">
 					<div class="form-group col-md-12">
 						<label class="col-md-2 control-lable" for="offeredCost"><spring:message
@@ -1056,13 +1073,13 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 											code="workPackageUserAllocation.label.dec" /><br /> <span
 										style="font-size: 0.6em;"><spring:message
 												code="generic.inDays" /></span></th>
-									<sec:authorize access="hasRole('ADMIN')">
+									<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 									<th>&nbsp;</th>
 									</sec:authorize>
-									<!-- <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+									<!-- <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
 									<th width="100"></th>
 								</sec:authorize>
-								<sec:authorize access="hasRole('ADMIN')">
+								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 									<th width="100"></th>
 								</sec:authorize> -->
 								</tr>
@@ -1316,7 +1333,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 													style="width: 55px;"
 													value="${workPackageUserAllocation.eemDec}"
 													name="workPackageUserAllocations[${status.index}].eemDec" /></td>
-													<sec:authorize access="hasRole('ADMIN')">
+													<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 												<td>
 													<button type="button" class="btn btn-danger btn-sm"
 														onclick="deleteWpUsrAlloc(${workPackageUserAllocation.id},$(this).parent())">

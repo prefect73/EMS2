@@ -113,12 +113,26 @@ public class WorkPackageController {
 	public String newWorkPackage(ModelMap model, HttpServletRequest request) {
 		WorkPackage workPackage = new WorkPackage();
 
+		
 		if (request.getParameter("projectId") != null) {
 			int projectId = (Integer
 					.parseInt(request.getParameter("projectId")));
 			Project project = projectService.findById(projectId);
 			workPackage.setProject(project);
 		}
+		/*if(model.containsAttribute("teamLeadView")){
+			model.remove("teamLeadView");
+		}*/
+		if (userService.isAdminOnly(getPrincipal()) && userService.isTLOnly(getPrincipal())) {
+			model.addAttribute("teamLeadView", false);
+		}else if (userService.isAdminOnly(getPrincipal())) {
+			model.addAttribute("teamLeadView", false);
+		}else if (userService.isTLOnly(getPrincipal())) {
+			model.addAttribute("teamLeadView", true);
+		}else{
+			model.addAttribute("teamLeadView", false);
+		}
+		
 
 		model.addAttribute("workPackage", workPackage);
 		model.addAttribute("yearNameStart",
@@ -159,7 +173,19 @@ public class WorkPackageController {
 	public String editWorkPackage(@PathVariable int id, ModelMap model) {
 		WorkPackage workPackage = workPackageService.findById(id);
 
-		if (!userService.isAdmin(getPrincipal())) {
+		/*if(model.containsAttribute("teamLeadView")){
+			model.remove("teamLeadView");
+		}*/
+		if (userService.isAdminOnly(getPrincipal()) && userService.isTLOnly(getPrincipal())) {
+			model.addAttribute("teamLeadView", false);
+			model.addAttribute("workPackage", workPackage);
+		}else if (userService.isAdminOnly(getPrincipal())) {
+			model.addAttribute("teamLeadView", false);
+			model.addAttribute("workPackage", workPackage);
+		} else if (userService.isTLOnly(getPrincipal())) {
+			model.addAttribute("teamLeadView", true);
+			model.addAttribute("workPackage", workPackage);
+		} else {
 			List<WorkPackageUserAllocation> allowedWorkPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
 			User loggedInUser = userService.findBySSO(getPrincipal());
 			for (WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()) {
@@ -169,9 +195,8 @@ public class WorkPackageController {
 				workPackage.setWorkPackageUserAllocations(allowedWorkPackageUserAllocations);
 			}
 			model.addAttribute("workPackage", workPackage);
+			model.addAttribute("teamLeadView", false);
 			model.addAttribute("normalUserView", true);
-		} else {
-			model.addAttribute("workPackage", workPackage);
 		}
 		model.addAttribute("yearNameStart",
 				environment.getProperty("year.name.start"));

@@ -152,7 +152,7 @@ td.highlight {
 						 --%>
 							<tr>
 								<td><spring:message code="monthlyReport.plannedDays" /></td>
-								<td>${workPackageUserAllocationsBySum[status.index].yearName}</td>
+								<td>${monthlyAttendance.yearName}</td>
 								<td>${workPackageUserAllocationsBySum[status.index].mJan}</td>
 								<td>${workPackageUserAllocationsBySum[status.index].mFeb}</td>
 								<td>${workPackageUserAllocationsBySum[status.index].mMar}</td>

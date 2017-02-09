@@ -65,7 +65,7 @@ if($("#defaultLanguage").val() == 'german'){
 							<th><spring:message code="user.label.email" /></th>
 							<th><spring:message code="user.label.ssoId" /></th>
 							<th><spring:message code="user.label.perDayCost" /></th>
-							<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+							<sec:authorize access="hasRole('ADMIN')">
 								<th width="100"></th>
 							</sec:authorize>
 							<sec:authorize access="hasRole('ADMIN')">
@@ -82,7 +82,7 @@ if($("#defaultLanguage").val() == 'german'){
 								<td>${user.email}</td>
 								<td>${user.ssoId}</td>
 								<td>${user.perDayCost}</td>
-								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+								<sec:authorize access="hasRole('ADMIN')">
 									<td><a href="<c:url value='/edit-user-${user.id}' />"
 										class="btn btn-success "><spring:message code="button.edit" /></a></td>
 								</sec:authorize>

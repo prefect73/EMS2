@@ -133,4 +133,18 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		
 		return isAdmin;
 	}
+	
+	public boolean isTLOnly (String ssoId){
+		boolean isAdmin = false;
+		User user = findBySSO(ssoId);
+		for(UserProfile userProfile : user.getUserProfiles()){
+			if(userProfile.getType().equalsIgnoreCase(environment.getProperty("default.project.lead.role.title"))  ){
+				isAdmin = true;
+				return isAdmin;
+			}
+			
+		}
+		
+		return isAdmin;
+	}
 }
