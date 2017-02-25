@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,35 +36,35 @@ public class User implements Serializable {
 	private Integer id;
 
 	@NotEmpty
-	@Column(name = "SSO_ID", unique = true, nullable = false)
+	@Column(name = "sso_id", unique = true, nullable = false)
 	private String ssoId;
 
 	@NotEmpty
-	@Column(name = "PASSWORD", nullable = false)
+	@Column(name = "password", nullable = false)
 	private String password;
 
 	@NotEmpty
-	@Column(name = "FIRST_NAME", nullable = false)
+	@Column(name = "first_name", nullable = false)
 	private String firstName;
 
 	@NotEmpty
-	@Column(name = "LAST_NAME", nullable = false)
+	@Column(name = "last_name", nullable = false)
 	private String lastName;
 
 	@NotEmpty
-	@Column(name = "EMAIL", nullable = false)
+	@Column(name = "email", nullable = false)
 	private String email;
 
-	@Column(name = "PER_DAY_COST", precision = 10, scale = 2)
+	@Column(name = "per_day_cost", precision = 10, scale = 2)
 	// @DecimalMax("12.00")
 	private BigDecimal perDayCost;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
 	private Set<WorkPackageUserAllocation> workPackageUserAllocations = new HashSet<WorkPackageUserAllocation>();
 
 	@NotEmpty
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "APP_USER_USER_PROFILE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_PROFILE_ID") })
+	@JoinTable(name = "app_user_user_profile", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "user_profile_id") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
 	public Integer getId() {

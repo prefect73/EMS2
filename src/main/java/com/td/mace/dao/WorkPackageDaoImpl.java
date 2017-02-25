@@ -150,7 +150,7 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 	@SuppressWarnings("unchecked")
 	public List<WorkPackage> findAllWorkPackagesByProjectIdAndSsoId(int projectId, String ssoId) {
 		User user = userDao.findBySSO(ssoId);
-		Query query = getSession().createSQLQuery("SELECT DISTINCT w.* FROM work_package w JOIN work_package_app_user_allocations wa ON w.id = wa.work_package_id WHERE  w.PROJECT_ID = :projectId AND  wa.user_id = :userId").addEntity(WorkPackage.class);
+		Query query = getSession().createSQLQuery("select distinct w.* from work_package w join work_package_app_user_allocations wa on w.id = wa.work_package_id where  w.project_id = :projectId and  wa.user_id = :userId").addEntity(WorkPackage.class);
 		query.setParameter("projectId", projectId);
 		query.setParameter("userId", user.getId());
 		List<WorkPackage> workPackages = query.list();

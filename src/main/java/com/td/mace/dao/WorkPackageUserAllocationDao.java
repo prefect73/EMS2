@@ -26,10 +26,6 @@ public interface WorkPackageUserAllocationDao {
 	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum();
 
 	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySumOfAllMonths();
-
-	List<WorkPackageUserAllocation> getWorkPackageHoursForAllUsers();
-
-	List<WorkPackageUserAllocation> getTotalWorkPackageHours();
 	
 	List<WorkPackageUserAllocation> getWorkPackageHoursForAllUsers(String workPackageNumber);
 	

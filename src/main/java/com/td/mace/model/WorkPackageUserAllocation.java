@@ -37,150 +37,150 @@ public class WorkPackageUserAllocation implements Serializable {
 	private BigDecimal totalPlannedDays  = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mJan", precision = 10, scale = 2)
+	@Column(name = "mjan", precision = 10, scale = 2)
 	private BigDecimal mJan = new BigDecimal("0.00");
 
 	@DecimalMax(value = "29.00")
-	@Column(name = "mFeb", precision = 10, scale = 2)
+	@Column(name = "mfeb", precision = 10, scale = 2)
 	private BigDecimal mFeb = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mMar", precision = 10, scale = 2)
+	@Column(name = "mmar", precision = 10, scale = 2)
 	private BigDecimal mMar = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mApr", precision = 10, scale = 2)
+	@Column(name = "mapr", precision = 10, scale = 2)
 	private BigDecimal mApr = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mMay", precision = 10, scale = 2)
+	@Column(name = "mmay", precision = 10, scale = 2)
 	private BigDecimal mMay = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mJun", precision = 10, scale = 2)
+	@Column(name = "mjun", precision = 10, scale = 2)
 	private BigDecimal mJun = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mJul", precision = 10, scale = 2)
+	@Column(name = "mjul", precision = 10, scale = 2)
 	private BigDecimal mJul = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mAug", precision = 10, scale = 2)
+	@Column(name = "maug", precision = 10, scale = 2)
 	private BigDecimal mAug = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mSep", precision = 10, scale = 2)
+	@Column(name = "msep", precision = 10, scale = 2)
 	private BigDecimal mSep = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mOct", precision = 10, scale = 2)
+	@Column(name = "moct", precision = 10, scale = 2)
 	private BigDecimal mOct = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mNov", precision = 10, scale = 2)
+	@Column(name = "mnov", precision = 10, scale = 2)
 	private BigDecimal mNov = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mDec", precision = 10, scale = 2)
+	@Column(name = "mdec", precision = 10, scale = 2)
 	private BigDecimal mDec = new BigDecimal("0.00");
 	
 	@DecimalMax(value = "31.00")
-	@Column(name = "emJan", precision = 10, scale = 2)
+	@Column(name = "emjan", precision = 10, scale = 2)
 	private BigDecimal emJan = new BigDecimal("0.00");
 
 	@DecimalMax(value = "29.00")
-	@Column(name = "emFeb", precision = 10, scale = 2)
+	@Column(name = "emfeb", precision = 10, scale = 2)
 	private BigDecimal emFeb = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "emMar", precision = 10, scale = 2)
+	@Column(name = "emmar", precision = 10, scale = 2)
 	private BigDecimal emMar = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "emApr", precision = 10, scale = 2)
+	@Column(name = "emapr", precision = 10, scale = 2)
 	private BigDecimal emApr = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "emMay", precision = 10, scale = 2)
+	@Column(name = "emmay", precision = 10, scale = 2)
 	private BigDecimal emMay = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "emJun", precision = 10, scale = 2)
+	@Column(name = "emjun", precision = 10, scale = 2)
 	private BigDecimal emJun = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "emJul", precision = 10, scale = 2)
+	@Column(name = "emjul", precision = 10, scale = 2)
 	private BigDecimal emJul = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "emAug", precision = 10, scale = 2)
+	@Column(name = "emaug", precision = 10, scale = 2)
 	private BigDecimal emAug = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "emSep", precision = 10, scale = 2)
+	@Column(name = "emsep", precision = 10, scale = 2)
 	private BigDecimal emSep = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "emOct", precision = 10, scale = 2)
+	@Column(name = "emoct", precision = 10, scale = 2)
 	private BigDecimal emOct = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "emNov", precision = 10, scale = 2)
+	@Column(name = "emnov", precision = 10, scale = 2)
 	private BigDecimal emNov = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "emDec", precision = 10, scale = 2)
+	@Column(name = "emdec", precision = 10, scale = 2)
 	private BigDecimal emDec = new BigDecimal("0.00");
 
 	
-	@Column(name = "eemJan")
+	@Column(name = "eemjan")
 	private String eemJan;
 
 
-	@Column(name = "eemFeb")
+	@Column(name = "eemfeb")
 	private String eemFeb;
 
 
-	@Column(name = "eemMar")
+	@Column(name = "eemmar")
 	private String eemMar;
 
 
-	@Column(name = "eemApr")
+	@Column(name = "eemapr")
 	private String eemApr;
 
 
-	@Column(name = "eemMay")
+	@Column(name = "eemmay")
 	private String eemMay;
 
 
-	@Column(name = "eemJun")
+	@Column(name = "eemjun")
 	private String eemJun;
 
 
-	@Column(name = "eemJul")
+	@Column(name = "eemjul")
 	private String eemJul;
 
 
-	@Column(name = "eemAug")
+	@Column(name = "eemaug")
 	private String eemAug;
 
 
-	@Column(name = "eemSep")
+	@Column(name = "eemsep")
 	private String eemSep;
 
 
-	@Column(name = "eemOct")
+	@Column(name = "eemoct")
 	private String eemOct;
 
 
-	@Column(name = "eemNov")
+	@Column(name = "eemnov")
 	private String eemNov;
 
 
-	@Column(name = "eemDec")
+	@Column(name = "eemdec")
 	private String eemDec;
 
-	@Column(name = "Year_Name")
+	@Column(name = "year_name")
 	private String yearName;
 
 	// bi-directional many-to-one association to WorkPackage

@@ -21,7 +21,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "PROJECT")
+@Table(name = "project")
 public class Project implements Serializable {
 
 	/**
@@ -34,32 +34,32 @@ public class Project implements Serializable {
 	private Integer id;
 
 	// @NotEmpty
-	@Column(name = "PROJECT_NUMBER", unique = true, nullable = true)
+	@Column(name = "project_number", unique = true, nullable = true)
 	private String projectNumber;
 
 	@NotEmpty
-	@Column(name = "PROJECT_NAME", unique = true, nullable = false)
+	@Column(name = "project_name", unique = true, nullable = false)
 	private String projectName;
 
 	@NotEmpty
-	@Column(name = "CUSTOMER_NAME", nullable = false)
+	@Column(name = "customer_name", nullable = false)
 	private String customerName;
 
-	@Column(name = "OFFERED_COST", precision = 10, scale = 2)
+	@Column(name = "offered_cost", precision = 10, scale = 2)
 	private BigDecimal offeredCost = new BigDecimal("0.00");
 
-	@Column(name = "TOTAL_COST", precision = 10, scale = 2)
+	@Column(name = "total_cost", precision = 10, scale = 2)
 	private BigDecimal totalCost =  new BigDecimal("0.00");
 	
-	@Column(name = "EFFECTIVE_COST", precision = 10, scale = 2)
+	@Column(name = "effective_cost", precision = 10, scale = 2)
 	private BigDecimal effectiveCost=  new BigDecimal("0.00");
 
-	@Column(name = "Year_Name", precision = 10, scale = 2)
+	@Column(name = "year_name", precision = 10, scale = 2)
 	private String yearName;
 	
 	@NotEmpty
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "PROJECT_APP_USER", joinColumns = { @JoinColumn(name = "PROJECT_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
+	@JoinTable(name = "project_app_user", joinColumns = { @JoinColumn(name = "project_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
 	private Set<User> users = new HashSet<User>();
 
 	public Integer getId() {

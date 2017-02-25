@@ -121,7 +121,7 @@ public class WorkPackageUserAllocationDaoImpl extends
 	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum() {
 		Query query = getSession()
 				.createSQLQuery(
-						"select id, work_package_id, user_id, sum(total_planned_days) AS total_planned_days, sum(mJan) as mJan, sum(mFeb) as mFeb, sum(mMar) as mMar, sum(mApr) as mApr, sum(mMay) as mMay, sum(mJun) as mJun, sum(mJul) as mJul, sum(mAug) as mAug, sum(mSep) as mSep, sum(mOct) as mOct, sum(mNov) as mNov, sum(mDec) as mDec, sum(emJan) as emJan, sum(emFeb) as emFeb, sum(emMar) as emMar, sum(emApr) as emApr, sum(emMay) as emMay, sum(emJun) as emJun, sum(emJul) as emJul, sum(emAug) as emAug, sum(emSep) as emSep, sum(emOct) as emOct, sum(emNov) as emNov, sum(emDec) as emDec,eemJan,eemFeb,eemMar,eemApr,eemMay,eemJun,eemJul,eemAug,eemSep,eemOct,eemNov,eemDec, Year_Name from work_package_app_user_allocations group by user_id,year_name")
+						"select id, work_package_id, user_id, sum(total_planned_days) as total_planned_days, sum(mjan) as mjan, sum(mfeb) as mfeb, sum(mmar) as mmar, sum(mapr) as mapr, sum(mmay) as mmay, sum(mjun) as mjun, sum(mjul) as mjul, sum(maug) as maug, sum(msep) as msep, sum(moct) as moct, sum(mnov) as mnov, sum(mdec) as mdec, sum(emjan) as emjan, sum(emfeb) as emfeb, sum(emmar) as emmar, sum(emapr) as emapr, sum(emmay) as emmay, sum(emjun) as emjun, sum(emjul) as emjul, sum(emaug) as emaug, sum(emsep) as emsep, sum(emoct) as emoct, sum(emnov) as emnov, sum(emdec) as emdec,eemjan,eemfeb,eemmar,eemapr,eemmay,eemjun,eemjul,eemaug,eemsep,eemoct,eemnov,eemdec, year_name from work_package_app_user_allocations group by user_id,year_name")
 				.addEntity(WorkPackageUserAllocation.class);
 		List<WorkPackageUserAllocation> workPackageUserAllocationsBySum = query.list();
 		return workPackageUserAllocationsBySum;
@@ -130,59 +130,10 @@ public class WorkPackageUserAllocationDaoImpl extends
 	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySumOfAllMonths() {
 		Query query = getSession()
 				.createSQLQuery(
-						"select id, work_package_id, user_id,total_planned_days, mJan, mFeb, mMar, mApr, mMay, mJun, mJul, mAug, mSep, mOct, mNov, mDec, sum(mJan)+sum(mFeb)+sum(mMar)+sum(mApr)+sum(mMay)+sum(mJun)+sum(mJul)+sum(mAug)+sum(mSep)+sum(mOct)+sum(mNov)+sum(mDec) as totalYearHours, Year_Name from work_package_app_user_allocations group by work_package_id;")
+						"select id, work_package_id, user_id,total_planned_days, mjan, mfeb, mmar, mapr, mmay, mjun, mjul, maug, msep, moct, mnov, mdec, sum(mjan)+sum(mfeb)+sum(mmar)+sum(mapr)+sum(mmay)+sum(mjun)+sum(mjul)+sum(maug)+sum(msep)+sum(moct)+sum(mnov)+sum(mdec) as totalyearhours, year_name from work_package_app_user_allocations group by work_package_id")
 				.addEntity(WorkPackageUserAllocation.class);
 		List<WorkPackageUserAllocation> workPackageUserAllicationsBySumOfAllMonths = query.list();
 		return workPackageUserAllicationsBySumOfAllMonths;
-	}
-
-	public List<WorkPackageUserAllocation> getWorkPackageHoursForAllUsers() {
-		Query query = getSession()
-				.createSQLQuery(
-						"select id, work_package_id, user_id,total_planned_days, mJan, mFeb, mMar, mApr, mMay, mJun, mJul, mAug, mSep, mOct, mNov, mDec, Year_Name from work_package_app_user_allocations group by work_package_id;")
-				.addEntity(WorkPackageUserAllocation.class);
-		@SuppressWarnings("unchecked")
-		List<WorkPackageUserAllocation> workPackageIDs = query.list();
-		List<WorkPackageUserAllocation> workPackageHoursForAllUsers = new ArrayList<WorkPackageUserAllocation>();
-
-		for (WorkPackageUserAllocation workPackageID : workPackageIDs) {
-			Query internalQuery = getSession()
-					.createSQLQuery(
-							"SELECT id, work_package_id, user_id,SUM(total_planned_days) AS total_planned_days  , SUM(mJan) AS mJan, SUM(mFeb) AS mFeb, SUM(mMar) AS mMar, SUM(mApr) AS mApr, SUM(mMay) AS mMay, SUM(mJun) AS mJun, SUM(mJul) AS mJul, SUM(mAug) AS mAug, SUM(mSep) AS mSep, SUM(mOct) AS mOct, SUM(mNov) AS mNov, SUM(mDec) AS mDec, Year_Name FROM work_package_app_user_allocations WHERE work_package_id=44 GROUP BY user_id")
-					.addEntity(WorkPackageUserAllocation.class);
-			internalQuery.setParameter("workPackageID",
-					workPackageID.getWorkPackage());
-			@SuppressWarnings("unchecked")
-			List<WorkPackageUserAllocation> workPackageHoursByUserID = internalQuery
-					.list();
-			workPackageHoursForAllUsers.addAll(workPackageHoursByUserID);
-		}
-
-		return workPackageHoursForAllUsers;
-	}
-
-	public List<WorkPackageUserAllocation> getTotalWorkPackageHours() {
-		Query query = getSession()
-				.createSQLQuery(
-						"select id, work_package_id, user_id,total_planned_days, mJan, mFeb, mMar, mApr, mMay, mJun, mJul, mAug, mSep, mOct, mNov, mDec, Year_Name from work_package_app_user_allocations group by work_package_id;")
-				.addEntity(WorkPackageUserAllocation.class);
-		@SuppressWarnings("unchecked")
-		List<WorkPackageUserAllocation> workPackageIDs = query.list();
-		List<WorkPackageUserAllocation> allWorkPackageTotalHours = new ArrayList<WorkPackageUserAllocation>();
-
-		for (WorkPackageUserAllocation workPackageID : workPackageIDs) {
-			Query internalQuery = getSession()
-					.createSQLQuery(
-							"select id, work_package_id, user_id,SUM(total_planned_days) AS total_planned_days, sum(mJan) as mJan, sum(mFeb) as mFeb, sum(mMar) as mMar, sum(mApr) as mApr, sum(mMay) as mMay, sum(mJun) as mJun, sum(mJul) as mJul, sum(mAug) as mAug, sum(mSep) as mSep, sum(mOct) as mOct, sum(mNov) as mNov, sum(mDec) as mDec, Year_Name from work_package_app_user_allocations where work_package_id=:workPackageID")
-					.addEntity(WorkPackageUserAllocation.class);
-			internalQuery.setParameter("workPackageID",
-					workPackageID.getWorkPackage());
-			@SuppressWarnings("unchecked")
-			List<WorkPackageUserAllocation> workPackageHours = internalQuery
-					.list();
-			allWorkPackageTotalHours.addAll(workPackageHours);
-		}
-		return allWorkPackageTotalHours;
 	}
 
 	public List<WorkPackageUserAllocation> getWorkPackageHoursForAllUsers(
@@ -191,7 +142,7 @@ public class WorkPackageUserAllocationDaoImpl extends
 		// getSession().createSQLQuery("select id, work_package_id, user_id, sum(mJan) as mJan, sum(mFeb) as mFeb, sum(mMar) as mMar, sum(mApr) as mApr, sum(mMay) as mMay, sum(mJun) as mJun, sum(mJul) as mJul, sum(mAug) as mAug, sum(mSep) as mSep, sum(mOct) as mOct, sum(mNov) as mNov, sum(mDec) as mDec, Year_Name from work_package_app_user_allocations where work_package_id=:workPackageID group by user_id;").addEntity(WorkPackageUserAllocation.class);
 		Query query = getSession()
 				.createSQLQuery(
-						"select id, work_package_id, user_id,SUM(total_planned_days) AS total_planned_days, sum(mJan) as mJan, sum(mFeb) as mFeb, sum(mMar) as mMar, sum(mApr) as mApr, sum(mMay) as mMay, sum(mJun) as mJun, sum(mJul) as mJul, sum(mAug) as mAug, sum(mSep) as mSep, sum(mOct) as mOct, sum(mNov) as mNov, sum(mDec) as mDec,sum(emJan) as emJan, sum(emFeb) as emFeb, sum(emMar) as emMar, sum(emApr) as emApr, sum(emMay) as emMay, sum(emJun) as emJun, sum(emJul) as emJul, sum(emAug) as emAug, sum(emSep) as emSep, sum(emOct) as emOct, sum(emNov) as emNov, sum(emDec) as emDec,eemJan,eemFeb,eemMar,eemApr,eemMay,eemJun,eemJul,eemAug,eemSep,eemOct,eemNov,eemDec, Year_Name from work_package_app_user_allocations where work_package_id=(select id from work_package where work_package_number= :workPackageNumber) group by user_id")
+						"select id, work_package_id, user_id,sum(total_planned_days) as total_planned_days, sum(mjan) as mjan, sum(mfeb) as mfeb, sum(mmar) as mmar, sum(mapr) as mapr, sum(mmay) as mmay, sum(mjun) as mjun, sum(mjul) as mjul, sum(maug) as maug, sum(msep) as msep, sum(moct) as moct, sum(mnov) as mnov, sum(mdec) as mdec,sum(emjan) as emjan, sum(emfeb) as emfeb, sum(emmar) as emmar, sum(emapr) as emapr, sum(emmay) as emmay, sum(emjun) as emjun, sum(emjul) as emjul, sum(emaug) as emaug, sum(emsep) as emsep, sum(emoct) as emoct, sum(emnov) as emnov, sum(emdec) as emdec,eemjan,eemfeb,eemmar,eemapr,eemmay,eemjun,eemjul,eemaug,eemsep,eemoct,eemnov,eemdec, year_name from work_package_app_user_allocations where work_package_id=(select id from work_package where work_package_number= :workPackageNumber) group by user_id")
 				.addEntity(WorkPackageUserAllocation.class);
 		query.setParameter("workPackageNumber", workPackageNumber);
 		@SuppressWarnings("unchecked")

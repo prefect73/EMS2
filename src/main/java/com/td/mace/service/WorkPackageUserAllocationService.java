@@ -34,10 +34,6 @@ public interface WorkPackageUserAllocationService {
 	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum(String ssoId);
 
 	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySumOfAllMonths();
-
-	List<WorkPackageUserAllocation> getWorkPackageHoursForAllUsers();
-
-	List<WorkPackageUserAllocation> getTotalWorkPackageHours();
 	
 	List<WorkPackageUserAllocation> getWorkPackageHoursForAllUsers(String workPackageNumber);
 	

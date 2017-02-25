@@ -83,7 +83,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<User> findAllUsersByType(String userProfileType) {
-		Query query = getSession().createSQLQuery("SELECT au.* FROM app_user au , app_user_user_profile auup , user_profile up WHERE au.id = auup.user_id AND auup.user_profile_id = up.id  AND up.type = :type").addEntity(User.class);
+		Query query = getSession().createSQLQuery("select au.* from app_user au , app_user_user_profile auup , user_profile up where au.id = auup.user_id and auup.user_profile_id = up.id  and up.type = :type").addEntity(User.class);
 		query.setParameter("type", userProfileType);
 		List<User> users = query.list();
 		return users;

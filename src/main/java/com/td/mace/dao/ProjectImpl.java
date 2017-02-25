@@ -83,7 +83,7 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 	public List<Project> findAllProjectsBySsoId(String ssoId) {
 		User user = userDao.findBySSO(ssoId);
 		Query query = getSession().createSQLQuery(
-				"SELECT DISTINCT p.* FROM project p JOIN work_package w ON p.id = w.project_id JOIN work_package_app_user_allocations wa ON w.id = wa.work_package_id WHERE wa.user_id = :userId").addEntity(Project.class);
+				"select distinct p.* from project p join work_package w on p.id = w.project_id join work_package_app_user_allocations wa on w.id = wa.work_package_id where wa.user_id = :userId").addEntity(Project.class);
 		query.setParameter("userId", user.getId());
 		List<Project> projects = query.list();
 		return projects;

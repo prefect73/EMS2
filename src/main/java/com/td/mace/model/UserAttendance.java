@@ -17,8 +17,8 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.DecimalMax;
 
 @Entity
-@Table(name = "APP_USER_ATTENDANCE", uniqueConstraints = @UniqueConstraint(columnNames = {
-		"USER_ID", "Year_Name" }))
+@Table(name = "app_user_attendance", uniqueConstraints = @UniqueConstraint(columnNames = {
+		"user_id", "year_name" }))
 public class UserAttendance implements Serializable {
 
 	/**
@@ -31,58 +31,58 @@ public class UserAttendance implements Serializable {
 	private Integer id;
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mJan", precision = 10, scale = 2)
+	@Column(name = "mjan", precision = 10, scale = 2)
 	private BigDecimal mJan = new BigDecimal("0.00");
 
 	@DecimalMax(value = "29.00")
-	@Column(name = "mFeb", precision = 10, scale = 2)
+	@Column(name = "mfeb", precision = 10, scale = 2)
 	private BigDecimal mFeb = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mMar", precision = 10, scale = 2)
+	@Column(name = "mmar", precision = 10, scale = 2)
 	private BigDecimal mMar = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mApr", precision = 10, scale = 2)
+	@Column(name = "mapr", precision = 10, scale = 2)
 	private BigDecimal mApr = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mMay", precision = 10, scale = 2)
+	@Column(name = "mmay", precision = 10, scale = 2)
 	private BigDecimal mMay = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mJun", precision = 10, scale = 2)
+	@Column(name = "mjun", precision = 10, scale = 2)
 	private BigDecimal mJun = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mJul", precision = 10, scale = 2)
+	@Column(name = "mjul", precision = 10, scale = 2)
 	private BigDecimal mJul = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mAug", precision = 10, scale = 2)
+	@Column(name = "maug", precision = 10, scale = 2)
 	private BigDecimal mAug = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mSep", precision = 10, scale = 2)
+	@Column(name = "msep", precision = 10, scale = 2)
 	private BigDecimal mSep = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mOct", precision = 10, scale = 2)
+	@Column(name = "moct", precision = 10, scale = 2)
 	private BigDecimal mOct = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mNov", precision = 10, scale = 2)
+	@Column(name = "mnov", precision = 10, scale = 2)
 	private BigDecimal mNov = new BigDecimal("0.00");
 
 	@DecimalMax(value = "31.00")
-	@Column(name = "mDec", precision = 10, scale = 2)
+	@Column(name = "mdec", precision = 10, scale = 2)
 	private BigDecimal mDec = new BigDecimal("0.00");
 
-	@Column(name = "Year_Name", precision = 10, scale = 2)
+	@Column(name = "year_name", precision = 10, scale = 2)
 	private String yearName;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "USER_ID")
+	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	public Integer getId() {

@@ -111,16 +111,6 @@ public class WorkPackageUserAllocationServiceImpl implements
 	}
 
 	@Override
-	public List<WorkPackageUserAllocation> getWorkPackageHoursForAllUsers() {
-		return dao.getWorkPackageHoursForAllUsers();
-	}
-
-	@Override
-	public List<WorkPackageUserAllocation> getTotalWorkPackageHours() {
-		return dao.getTotalWorkPackageHours();
-	}
-
-	@Override
 	public List<WorkPackageUserAllocation> getWorkPackageHoursForAllUsers(
 			String workPackageNumber) {
 		return dao.getWorkPackageHoursForAllUsers(workPackageNumber);

@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "WORK_PACKAGE")
+@Table(name = "work_package")
 public class WorkPackage implements Serializable {
 
 	/**
@@ -32,24 +32,24 @@ public class WorkPackage implements Serializable {
 	private Integer id;
 
 	// @NotEmpty
-	@Column(name = "WORK_PACKAGE_NUMBER", unique = true, nullable = true)
+	@Column(name = "work_package_number", unique = true, nullable = true)
 	private String workPackageNumber;
 
 	@NotEmpty
-	@Column(name = "WORK_PACKAGE_NAME", nullable = false)
+	@Column(name = "work_package_name", nullable = false)
 	private String workPackageName;
 
-	@Column(name = "OFFERED_COST", precision = 10, scale = 2)
+	@Column(name = "offered_cost", precision = 10, scale = 2)
 	private BigDecimal offeredCost = new BigDecimal("0.00");
 
-	@Column(name = "TOTAL_COST", precision = 10, scale = 2)
+	@Column(name = "total_cost", precision = 10, scale = 2)
 	private BigDecimal totalCost =  new BigDecimal("0.00");
 	
-	@Column(name = "EFFECTIVE_COST", precision = 10, scale = 2)
+	@Column(name = "effective_cost", precision = 10, scale = 2)
 	private BigDecimal effectiveCost=  new BigDecimal("0.00");
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "PROJECT_ID")
+	@JoinColumn(name = "project_id")
 	private Project project;
 
 	// bi-directional many-to-one association to WorkPackageAppUserAllocation
