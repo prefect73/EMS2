@@ -10,23 +10,34 @@
 </div>
 <div>
 	<ul>
-		
-		<li><a href="<c:url value='/list' />"><spring:message code="authheader.menu.employees"/></a></li>
-		<li><a href="<c:url value='/UserAttendance/userAttendanceslist' />"><spring:message code="authheader.menu.emp.attendance"/></a></li>
+
+		<li><a href="<c:url value='/list' />"><spring:message
+					code="authheader.menu.employees" /></a></li>
+		<li><a
+			href="<c:url value='/UserAttendance/userAttendanceslist' />"><spring:message
+					code="authheader.menu.emp.attendance" /></a></li>
 		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-		<li><a href="<c:url value='/Project/projectslist' />"><spring:message code="authheader.menu.projects"/></a></li>
+			<li><a href="<c:url value='/Project/projectslist' />"><spring:message
+						code="authheader.menu.projects" /></a></li>
 		</sec:authorize>
-				
+
 		<sec:authorize access="!hasAnyRole('ADMIN', 'Projektleitung')">
-	    <li><a href="<c:url value='/WorkPackage/edit-normal-user-workPackage-0-0' />"><spring:message code="authheader.menu.employee.workPackage.allocations"/></a></li>
-	    </sec:authorize>
-		
-		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-		<li><a href="<c:url value='/WorkPackage/workPackageslist' />"><spring:message code="authheader.menu.employee.workPackage.allocations"/></a></li>
-		
-		
-		 <li><a href="<c:url value='/Project/projectReport-0- ' />"><spring:message code="authheader.menu.projectReport"/></a></li>
+			<li><a
+				href="<c:url value='/WorkPackage/edit-normal-user-workPackage-0-0' />"><spring:message
+						code="authheader.menu.employee.workPackage.allocations" /></a></li>
 		</sec:authorize>
-		<li><a href="<c:url value='/UserAttendance/monthlyReport' />"><spring:message code="authheader.menu.monthlyReport"/></a></li>
+
+		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+			<li><a href="<c:url value='/WorkPackage/workPackageslist' />"><spring:message
+						code="authheader.menu.employee.workPackage.allocations" /></a></li>
+			<li><a href="<c:url value='/Project/projectReport-0- ' />"><spring:message
+						code="authheader.menu.projectReport" /></a></li>
+		</sec:authorize>
+		<li><a href="<c:url value='/UserAttendance/monthlyReport' />"><spring:message
+					code="authheader.menu.monthlyReport" /></a></li>
+		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+			<li><a href="<c:url value="/Payment/paymentslist" />"><spring:message
+						code="authheader.menu.workPackage.payment" /></a></li>
+		</sec:authorize>
 	</ul>
 </div>
