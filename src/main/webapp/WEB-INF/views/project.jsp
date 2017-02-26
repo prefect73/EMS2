@@ -117,7 +117,7 @@
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="customerName"><spring:message
-							code="project.label.customerName" /> Name</label>
+							code="project.label.customerName" /> </label>
 					<div class="col-md-3">
 						<form:input type="text" path="customerName" id="customerName"
 							class="form-control input-sm" />
