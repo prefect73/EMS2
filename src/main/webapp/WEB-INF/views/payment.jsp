@@ -12,10 +12,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
 <c:choose>
 	<c:when test="${edit}">
-		<title><spring:message code="project.update.title" /></title>
+		<title><spring:message code="payment.update.title" /></title>
 	</c:when>
 	<c:otherwise>
-		<title><spring:message code="project.add.title" /></title>
+		<title><spring:message code="payment.add.title" /></title>
 	</c:otherwise>
 </c:choose>
 <link href="<c:url value='/static/css/bootstrap.css' />"
@@ -23,63 +23,34 @@
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
-<script>
-	function yearDropdownFill(startYear, endYear) {
-		console.log("start " + startYear + " end" + endYear);
-		for (i = startYear; i <= endYear; i++) {
-			$('#yearName').append($('<option />').val(i).html(i));
-		}
-
-	}
-
-	$(document).ready(
-			function() {
-				var startYear = '<c:out value="${yearNameStart}"/>';
-				var endYear = '<c:out value="${yearNameEnd}"/>';
-				yearDropdownFill(startYear, endYear);
-				var projectYear = '<c:out value="${project.yearName}"/>';
-				//$('#yearName option[value="' + projectYear +'"]').prop('selected', true);
-				$('#yearName option[value="' + projectYear + '"]').attr(
-						"selected", "selected");
-				var selectedLeadsIds = [];
-				<c:forEach items="${project.users}" var="usr">
-				selectedLeadsIds.push('${usr.id}');
-				</c:forEach>
-				$("#projLeads > option").each(function() {
-					if ($.inArray(this.value, selectedLeadsIds) > -1) {
-						$(this).attr("selected", "selected");
-					}
-				});
-			});
-</script>
 </head>
 
 <body>
 	<div class="generic-container">
 		<%@include file="authheader.jsp"%>
-		<form:form method="POST" modelAttribute="project"
+		<form:form method="POST" modelAttribute="payment"
 			class="form-horizontal">
 			<c:choose>
 				<c:when test="${edit}">
 					<div class="well lead col-md-5">
-						<spring:message code="project.update.title" />
+						<spring:message code="payment.update.title" />
 					</div>
 					<div class="well col-md-2">
 						<input type="submit"
 							value="<spring:message code="button.update"/>"
 							class="btn btn-primary btn-sm" /> or <a
-							href="<c:url value='/Project/projectslist' />"><spring:message
+							href="<c:url value='/Payment/paymentslist' />"><spring:message
 								code="button.cancel" /></a>
 					</div>
 				</c:when>
 				<c:otherwise>
 					<div class="well lead col-md-5">
-						<spring:message code="project.add.title" />
+						<spring:message code="payment.add.title" />
 					</div>
 					<div class="well col-md-2">
 						<input type="submit" value="<spring:message code="button.add"/>"
 							class="btn btn-primary btn-sm" /> or <a
-							href="<c:url value='/Project/projectslist' />"><spring:message
+							href="<c:url value='/Payment/paymentslist' />"><spring:message
 								code="button.cancel" /></a>
 					</div>
 				</c:otherwise>
@@ -90,13 +61,30 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="projectNumber"><spring:message
-							code="project.label.projectNumber" /> </label>
+					<label class="col-md-2 control-lable" for="paymentName"><spring:message
+							code="payment.label.paymentName" /> </label>
 					<div class="col-md-3">
-						<form:input type="text" path="projectNumber" id="projectNumber"
-							class="form-control input-sm" readonly="true" />
+						<form:input type="text" path="paymentName" id="paymentName"
+							class="form-control input-sm" />
 						<div class="has-error">
-							<form:errors path="projectNumber" class="help-inline" />
+							<form:errors path="paymentName" class="help-inline" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="workPackage.id"><spring:message
+							code="payment.label.workPackage" /> </label>
+					<div class="col-md-3">
+						<%-- 	<form:input type="text" path="workPackage.id" id="workPackage"
+							class="form-control input-sm" />
+					 --%>
+						<form:select path="workPackage.id" items="${workPackagesList}"
+							id="workPackages" multiple="false" itemValue="id"
+							itemLabel="workPackageName" class="form-control input-sm" />
+						<div class="has-error">
+							<form:errors path="workPackage.id" class="help-inline" />
 						</div>
 					</div>
 				</div>
@@ -104,13 +92,13 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="projectName"><spring:message
-							code="project.label.projectName" /> </label>
+					<label class="col-md-2 control-lable" for="amount"><spring:message
+							code="payment.label.amount" /> </label>
 					<div class="col-md-3">
-						<form:input type="text" path="projectName" id="projectName"
+						<form:input type="text" path="amount" id="amount"
 							class="form-control input-sm" />
 						<div class="has-error">
-							<form:errors path="projectName" class="help-inline" />
+							<form:errors path="amount" class="help-inline" />
 						</div>
 					</div>
 				</div>
@@ -118,30 +106,26 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="customerName"><spring:message
-							code="project.label.customerName" /> </label>
+					<label class="col-md-2 control-lable" for="balance"><spring:message
+							code="payment.label.balance" /> </label>
 					<div class="col-md-3">
-						<form:input type="text" path="customerName" id="customerName"
+						<form:input type="text" path="balance" id="balance"
 							class="form-control input-sm" />
 						<div class="has-error">
-							<form:errors path="customerName" class="help-inline" />
+							<form:errors path="balance" class="help-inline" />
 						</div>
 					</div>
 				</div>
 			</div>
 
-
-			<c:choose>
+			<%-- 			<c:choose>
 				<c:when test="${edit}">
-					<title><spring:message code="project.update.title" /></title>
+					<title><spring:message code="payment.update.title" /></title>
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label class="col-md-2 control-lable" for="yearName"><spring:message
-									code="project.label.yearName" /></label>
+									code="payment.label.yearName" /></label>
 							<div class="col-md-3">
-								<%-- <form:input readonly="true" type="text" path="yearName" id="yearName"
-							class="form-control input-sm" />
-						 --%>
 								<select class="form-control input-sm" id="yearName"
 									name="yearName">
 								</select>
@@ -156,17 +140,12 @@
 					<div class="row">
 						<div class="form-group col-md-12">
 							<label class="col-md-2 control-lable" for="yearName"><spring:message
-									code="project.label.yearName" /></label>
+									code="payment.label.yearName" /></label>
 							<div class="col-md-3">
-								<%-- <form:input type="text" path="yearName" id="yearName"
-							class="form-control input-sm" /> --%>
+								<form:input type="text" path="yearName" id="yearName"
+							class="form-control input-sm" />
 								<select class="form-control input-sm" id="yearName"
 									name="yearName">
-									<!-- 	<option class="form-control input-sm" value="2017">2017</option>
-								<option class="form-control input-sm" value="2018">2018</option>
-								<option class="form-control input-sm" value="2019">2019</option>
-								<option class="form-control input-sm" value="2020">2020</option>
-						 -->
 								</select>
 								<div class="has-error">
 									<form:errors path="yearName" class="help-inline" />
@@ -176,13 +155,12 @@
 					</div>
 				</c:otherwise>
 			</c:choose>
-
-			<div class="row">
+ 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="users"><spring:message
-							code="project.label.projectLeads" /> </label>
+							code="payment.label.paymentLeads" /> </label>
 					<div class="col-md-3">
-						<form:select path="users" items="${projectleadslist}"
+						<form:select path="users" items="${paymentleadslist}"
 							id="projLeads" multiple="true" itemValue="id"
 							itemLabel="firstName" class="form-control input-sm" />
 						<div class="has-error">
@@ -195,7 +173,7 @@
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="offeredCost"> <spring:message
-							code="project.label.offeredCost" /> <spring:message
+							code="payment.label.offeredCost" /> <spring:message
 							code="generic.inCurrency" />
 					</label>
 					<div class="col-md-3">
@@ -210,7 +188,7 @@
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="totalCost"> <spring:message
-							code="project.label.totalCost" /> <spring:message
+							code="payment.label.totalCost" /> <spring:message
 							code="generic.inCurrency" />
 					</label>
 					<div class="col-md-3">
@@ -225,7 +203,7 @@
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="effectiveCost">
-						<spring:message code="project.label.effectiveCost" /> <spring:message
+						<spring:message code="payment.label.effectiveCost" /> <spring:message
 							code="generic.inCurrency" />
 					</label>
 					<div class="col-md-3">
@@ -237,6 +215,7 @@
 					</div>
 				</div>
 			</div>
+			--%>
 		</form:form>
 	</div>
 </body>

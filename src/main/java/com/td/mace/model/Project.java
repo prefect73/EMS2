@@ -118,8 +118,6 @@ public class Project implements Serializable {
 		this.effectiveCost = effectiveCost;
 	}
 
-	
-	
 	public String getYearName() {
 		return yearName;
 	}
