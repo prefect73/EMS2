@@ -35,9 +35,9 @@
 		</sec:authorize>
 		<li><a href="<c:url value='/UserAttendance/monthlyReport' />"><spring:message
 					code="authheader.menu.monthlyReport" /></a></li>
-		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+		<%-- <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 			<li><a href="<c:url value="/Payment/paymentslist" />"><spring:message
 						code="authheader.menu.workPackage.payment" /></a></li>
-		</sec:authorize>
+		</sec:authorize> --%>
 	</ul>
 </div>

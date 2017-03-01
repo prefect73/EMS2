@@ -59,7 +59,7 @@ public class User implements Serializable {
 	// @DecimalMax("12.00")
 	private BigDecimal perDayCost;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	private Set<WorkPackageUserAllocation> workPackageUserAllocations = new HashSet<WorkPackageUserAllocation>();
 
 	@NotEmpty

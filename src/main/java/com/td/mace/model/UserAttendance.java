@@ -16,6 +16,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.DecimalMax;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "app_user_attendance", uniqueConstraints = @UniqueConstraint(columnNames = {
 		"user_id", "year_name" }))
@@ -81,8 +84,9 @@ public class UserAttendance implements Serializable {
 	@Column(name = "year_name", precision = 10, scale = 2)
 	private String yearName;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "user_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private User user;
 
 	public Integer getId() {

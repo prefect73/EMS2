@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
-@Table(name = "PAYMENT")
+@Table(name = "payment")
 public class Payment implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -26,17 +26,17 @@ public class Payment implements Serializable {
 	private Integer id;
 
 	@NotEmpty
-	@Column(name = "PAYMENT_NAME", unique = true, nullable = false)
+	@Column(name = "payment_name", unique = true, nullable = false)
 	private String paymentName;
 
-	@Column(name = "AMOUNT", precision = 10, scale = 2)
+	@Column(name = "amount", precision = 10, scale = 2)
 	private BigDecimal amount =  new BigDecimal("0.00");
 
-	@Column(name = "BALANCE", precision = 10, scale = 2)
+	@Column(name = "balance", precision = 10, scale = 2)
 	private BigDecimal balance =  new BigDecimal("0.00");
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "WORK_PACKAGE_ID")
+	@JoinColumn(name = "work_package_id")
 	private WorkPackage workPackage;
 
 	public Integer getId() {
