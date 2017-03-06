@@ -79,7 +79,7 @@ public class UserAttendanceServiceImpl implements UserAttendanceService {
 	}
 
 	public List<UserAttendance> findAllUserAttendancesBySSOId(String ssoId) {
-		boolean isAdmin = userDao.isAdmin(ssoId);
+		boolean isAdmin = userDao.isAdminOnly(ssoId);
 		if(isAdmin){
 			return dao.findAllUserAttendances();
 		}

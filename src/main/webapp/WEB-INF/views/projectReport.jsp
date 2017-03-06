@@ -34,12 +34,16 @@ function projectsByYear(){
 		 $('#projectNamesDropDown').append('<option class="form-control input-sm" value="NONE">--------------------------Wählen--------------------------</option>');
 		$('#projectNamesDropDown').find('option:selected').removeAttr('selected');
 		$.each(projects, function(key,value) {
-			console.log(selectedSelects.yearNamesDropDown == value.yearName);
+			/* console.log(selectedSelects.yearNamesDropDown == value.yearName);
 			console.log(selectedSelects.yearNamesDropDown);
-			console.log(value.yearName);
+			console.log(value.yearName); */
 			selectedSelects = JSON.parse(localStorage.getItem("selectOptions"));
-			if(selectedSelects.yearNamesDropDown == value.yearName ){
-		     $('#projectNamesDropDown').append($("<option class=\"form-control input-sm\" ></option>").attr('data-year-name',value.yearName).attr("value",value.projectId).text(value.projectName));
+			if(selectedSelects != null){
+				if(selectedSelects.yearNamesDropDown == value.yearName ){
+			     $('#projectNamesDropDown').append($("<option class=\"form-control input-sm\" ></option>").attr('data-year-name',value.yearName).attr("value",value.projectId).text(value.projectName));
+				}
+			}else if ($( "#yearNamesDropDown option:selected" ).val() == value.yearName){
+				$('#projectNamesDropDown').append($("<option class=\"form-control input-sm\" ></option>").attr('data-year-name',value.yearName).attr("value",value.projectId).text(value.projectName));
 			}
 		});	
 }
@@ -71,8 +75,9 @@ $(document).ready(function() {
 	var startYear = '<c:out value="${yearNameStart}"/>';
 	var endYear = '<c:out value="${yearNameEnd}"/>';
 	yearDropdownFill(startYear, endYear);
-	projectsByYear();
 	makeSelectsSelected();
+	projectsByYear();
+	
 	
 	if(parseInt($("#totalCost").val()) >  parseInt($("#offeredCost").val())){
 		$("#totalCost").css({ 'color': 'red'});
