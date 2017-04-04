@@ -15,7 +15,7 @@ public interface PaymentDao {
 	
 	void deletePaymentByWorkPackageId(String workPackageId);
 	
-	void deletePaymentByPaymentName(String paymentName);
+	void deletePaymentById(String paymentName);
 	
 	List<Payment> findAllPayments();
 	

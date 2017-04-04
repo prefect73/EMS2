@@ -122,12 +122,12 @@ public class PaymentController {
 			return "payment";
 		}
 
-		if (!paymentService.isPaymentNameUnique(payment.getId(),
-				payment.getPaymentName())) {
+		if (!paymentService.isIdUnique(payment.getId(),
+				payment.getId())) {
 			FieldError paymentNameError = new FieldError("payment",
-					"paymentName", messageSource.getMessage(
-							"non.unique.paymentName",
-							new String[] { payment.getPaymentName() },
+					"id", messageSource.getMessage(
+							"non.unique.id",
+							new String[] { payment.getId() },
 							Locale.getDefault()));
 			result.addError(paymentNameError);
 			return "payment";
@@ -148,9 +148,9 @@ public class PaymentController {
 	/**
 	 * This method will provide the medium to update an existing payment.
 	 */
-	@RequestMapping(value = { "/edit-payment-{paymentName}" }, method = RequestMethod.GET)
-	public String editPayment(@PathVariable String paymentName, ModelMap model) {
-		Payment payment = paymentService.findByPaymentName(paymentName);
+	@RequestMapping(value = { "/edit-payment-{id}" }, method = RequestMethod.GET)
+	public String editPayment(@PathVariable Integer id, ModelMap model) {
+		Payment payment = paymentService.findById(id);
 		model.addAttribute("payment", payment);
 		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
@@ -163,9 +163,9 @@ public class PaymentController {
 	 * This method will be called on form submission, handling POST request for
 	 * updating payment in database. It also validates the payment input
 	 */
-	@RequestMapping(value = { "/edit-payment-{paymentName}" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/edit-payment-{id}" }, method = RequestMethod.POST)
 	public String updatePayment(@Valid Payment payment, BindingResult result,
-			ModelMap model, @PathVariable String paymentName,
+			ModelMap model, @PathVariable String id,
 			HttpServletRequest request) {
 
 		if (result.hasErrors()) {
@@ -198,10 +198,10 @@ public class PaymentController {
 	/**
 	 * This method will delete an payment by it's SSOID value.
 	 */
-	@RequestMapping(value = { "/delete-payment-{paymentName}" }, method = RequestMethod.GET)
-	public String deletePayment(@PathVariable String paymentName,
+	@RequestMapping(value = { "/delete-payment-{id}" }, method = RequestMethod.GET)
+	public String deletePayment(@PathVariable String id,
 			HttpServletRequest request) {
-		paymentService.deletePaymentByPaymentName(paymentName);
+		paymentService.deletePaymentById(id);
 		request.getSession(false).setAttribute("paymentslist",
 				paymentService.findAllPayments());
 		return "redirect:/Payment/paymentslist";

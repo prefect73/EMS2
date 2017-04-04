@@ -34,7 +34,7 @@ public class PaymentDaoImpl extends AbstractDao<Integer, Payment> implements
 		delete(payment);
 	}
 	
-	public void deletePaymentByPaymentName(String paymentName) {
+	public void deletePaymentById(String paymentName) {
 		Criteria crit = createEntityCriteria();
 		crit.add(Restrictions.eq("paymentName", paymentName));
 		Payment payment = (Payment) crit.uniqueResult();
@@ -69,7 +69,7 @@ public class PaymentDaoImpl extends AbstractDao<Integer, Payment> implements
 	@Override
 	public List<Payment> findAllPayments() {
 		Criteria criteria = createEntityCriteria().addOrder(
-				Order.asc("paymentName"));
+				Order.asc("id"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
 																		// duplicates.
 		List<Payment> payments = (List<Payment>) criteria.list();

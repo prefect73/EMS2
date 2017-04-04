@@ -12,8 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.Max;
 
 @Entity
 @Table(name = "payment")
@@ -25,15 +24,24 @@ public class Payment implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@NotEmpty
-	@Column(name = "payment_name", unique = true, nullable = false)
-	private String paymentName;
+	@Column(name = "billing")
+	private String billing;
+
+	@Column(name = "time")
+	private String time;
 
 	@Column(name = "amount", precision = 10, scale = 2)
-	private BigDecimal amount =  new BigDecimal("0.00");
+	private BigDecimal amount = new BigDecimal("0.00");
 
-	@Column(name = "balance", precision = 10, scale = 2)
-	private BigDecimal balance =  new BigDecimal("0.00");
+	@Column(name = "remarks")
+	private String remarks;
+
+	@Column(name = "billed")
+	private boolean billed;
+
+	@Max(value = 100)
+	@Column(name = "finished_in")
+	private int finishedIn;
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "work_package_id")
@@ -47,12 +55,20 @@ public class Payment implements Serializable {
 		this.id = id;
 	}
 
-	public String getPaymentName() {
-		return paymentName;
+	public String getBilling() {
+		return billing;
 	}
 
-	public void setPaymentName(String paymentName) {
-		this.paymentName = paymentName;
+	public void setBilling(String billing) {
+		this.billing = billing;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 	public BigDecimal getAmount() {
@@ -63,12 +79,28 @@ public class Payment implements Serializable {
 		this.amount = amount;
 	}
 
-	public BigDecimal getBalance() {
-		return balance;
+	public String getRemarks() {
+		return remarks;
 	}
 
-	public void setBalance(BigDecimal balance) {
-		this.balance = balance;
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public boolean isBilled() {
+		return billed;
+	}
+
+	public void setBilled(boolean billed) {
+		this.billed = billed;
+	}
+
+	public int getFinishedIn() {
+		return finishedIn;
+	}
+
+	public void setFinishedIn(int finishedIn) {
+		this.finishedIn = finishedIn;
 	}
 
 	public WorkPackage getWorkPackage() {

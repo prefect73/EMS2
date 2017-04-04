@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.td.mace.dao.PaymentDao;
 import com.td.mace.model.Payment;
-import com.td.mace.model.Project;
 
 @Service("paymentService")
 @Transactional
@@ -20,11 +19,11 @@ public class PaymentServiceImpl implements PaymentService {
 	public Payment findById(int id) {
 		return paymentDao.findById(id);
 	}
-	
+
 	public Payment findByPaymentName(String paymentName) {
 		return paymentDao.findByPaymentName(paymentName);
 	}
-	
+
 	public void savePayment(Payment payment) {
 		paymentDao.save(payment);
 	}
@@ -38,24 +37,27 @@ public class PaymentServiceImpl implements PaymentService {
 	public void updatePayment(Payment payment) {
 		Payment entity = paymentDao.findById(payment.getId());
 		if (entity != null) {
-			entity.setPaymentName(payment.getPaymentName());
 			entity.setAmount(payment.getAmount());
-			entity.setBalance(payment.getBalance());
+			entity.setBilled(payment.isBilled());
+			entity.setBilling(payment.getBilling());
+			entity.setFinishedIn(payment.getFinishedIn());
+			entity.setRemarks(payment.getRemarks());
+			entity.setTime(payment.getTime());
 			entity.setWorkPackage((payment.getWorkPackage()));
-			/*entity.setWorkPackages(payment.getWorkPackages());*/
+			/* entity.setWorkPackages(payment.getWorkPackages()); */
 		}
 	}
 
 	public void deletePaymentByWorkPackageId(String workPackageId) {
 		paymentDao.deletePaymentByWorkPackageId(workPackageId);
 	}
-	
-	public void deletePaymentByPaymentName(String paymentName) {
-		paymentDao.deletePaymentByPaymentName(paymentName);
+
+	public void deletePaymentById(String id) {
+		paymentDao.deletePaymentById(id);
 	}
 
 	public List<Payment> findAllPayments() {
 		return paymentDao.findAllPayments();
 	}
-		
+
 }
