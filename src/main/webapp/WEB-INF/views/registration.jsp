@@ -7,7 +7,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <html>
-<head>
+<head>   
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
 <c:choose>
 	<c:when test="${edit}">
