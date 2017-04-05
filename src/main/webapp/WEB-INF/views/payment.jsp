@@ -58,20 +58,6 @@
 
 
 			<form:input type="hidden" path="id" id="id" />
-
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="paymentName"><spring:message
-							code="payment.label.paymentName" /> </label>
-					<div class="col-md-3">
-						<form:input type="text" path="paymentName" id="paymentName"
-							class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="paymentName" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div>
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="workPackage.id"><spring:message
@@ -85,6 +71,24 @@
 							itemLabel="workPackageName" class="form-control input-sm" />
 						<div class="has-error">
 							<form:errors path="workPackage.id" class="help-inline" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="billed"><spring:message
+							code="payment.label.billed" /> </label>
+					<div class="col-md-3">
+						<select class="form-control input-sm" id="billed" name="billed">
+							<option class="form-control input-sm" value="No"><spring:message
+							code="generic.select.option.no" /></option>
+							<option class="form-control input-sm" value="Yes"><spring:message
+							code="generic.select.option.yes" /></option>
+
+						</select>
+						<div class="has-error">
+							<form:errors path="billed" class="help-inline" />
 						</div>
 					</div>
 				</div>
@@ -106,65 +110,13 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="balance"><spring:message
-							code="payment.label.balance" /> </label>
+					<label class="col-md-2 control-lable" for="billing"><spring:message
+							code="payment.label.billing" /> </label>
 					<div class="col-md-3">
-						<form:input type="text" path="balance" id="balance"
+						<form:input type="text" path="billing" id="billing"
 							class="form-control input-sm" />
 						<div class="has-error">
-							<form:errors path="balance" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<%-- 			<c:choose>
-				<c:when test="${edit}">
-					<title><spring:message code="payment.update.title" /></title>
-					<div class="row">
-						<div class="form-group col-md-12">
-							<label class="col-md-2 control-lable" for="yearName"><spring:message
-									code="payment.label.yearName" /></label>
-							<div class="col-md-3">
-								<select class="form-control input-sm" id="yearName"
-									name="yearName">
-								</select>
-								<div class="has-error">
-									<form:errors path="yearName" class="help-inline" />
-								</div>
-							</div>
-						</div>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<div class="row">
-						<div class="form-group col-md-12">
-							<label class="col-md-2 control-lable" for="yearName"><spring:message
-									code="payment.label.yearName" /></label>
-							<div class="col-md-3">
-								<form:input type="text" path="yearName" id="yearName"
-							class="form-control input-sm" />
-								<select class="form-control input-sm" id="yearName"
-									name="yearName">
-								</select>
-								<div class="has-error">
-									<form:errors path="yearName" class="help-inline" />
-								</div>
-							</div>
-						</div>
-					</div>
-				</c:otherwise>
-			</c:choose>
- 			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="users"><spring:message
-							code="payment.label.paymentLeads" /> </label>
-					<div class="col-md-3">
-						<form:select path="users" items="${paymentleadslist}"
-							id="projLeads" multiple="true" itemValue="id"
-							itemLabel="firstName" class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="users" class="help-inline" />
+							<form:errors path="billing" class="help-inline" />
 						</div>
 					</div>
 				</div>
@@ -172,50 +124,63 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="offeredCost"> <spring:message
-							code="payment.label.offeredCost" /> <spring:message
-							code="generic.inCurrency" />
-					</label>
+					<label class="col-md-2 control-lable" for="time"><spring:message
+							code="payment.label.time" /> </label>
 					<div class="col-md-3">
-						<form:input type="text" path="offeredCost" id="offeredCost"
+						<form:input type="text" path="time" id="time"
 							class="form-control input-sm" />
 						<div class="has-error">
-							<form:errors path="offeredCost" class="help-inline" />
+							<form:errors path="time" class="help-inline" />
 						</div>
 					</div>
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="totalCost"> <spring:message
-							code="payment.label.totalCost" /> <spring:message
-							code="generic.inCurrency" />
-					</label>
+					<label class="col-md-2 control-lable" for="amount"><spring:message
+							code="payment.label.amount" /> </label>
 					<div class="col-md-3">
-						<form:input type="text" path="totalCost" id="totalCost"
-							class="form-control input-sm" readonly="true" />
+						<form:input type="text" path="amount" id="amount"
+							class="form-control input-sm" />
 						<div class="has-error">
-							<form:errors path="totalCost" class="help-inline" />
+							<form:errors path="amount" class="help-inline" />
 						</div>
 					</div>
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="effectiveCost">
-						<spring:message code="payment.label.effectiveCost" /> <spring:message
-							code="generic.inCurrency" />
-					</label>
+					<label class="col-md-2 control-lable" for="remarks"><spring:message
+							code="payment.label.remarks" /> </label>
 					<div class="col-md-3">
-						<form:input type="text" path="effectiveCost" id="effectiveCost"
-							class="form-control input-sm" readonly="true" />
+						<form:input type="text" path="remarks" id="remarks"
+							class="form-control input-sm" />
 						<div class="has-error">
-							<form:errors path="effectiveCost" class="help-inline" />
+							<form:errors path="remarks" class="help-inline" />
 						</div>
 					</div>
 				</div>
 			</div>
-			--%>
+
+			
+
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="finishedIn"><spring:message
+							code="payment.label.finishedIn" /> </label>
+					<div class="col-md-3">
+						<form:input type="text" path="finishedIn" id="finishedIn"
+							class="form-control input-sm" />
+						<div class="has-error">
+							<form:errors path="finishedIn" class="help-inline" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+
 		</form:form>
 	</div>
 </body>

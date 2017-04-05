@@ -52,7 +52,7 @@ public class PaymentServiceImpl implements PaymentService {
 		paymentDao.deletePaymentByWorkPackageId(workPackageId);
 	}
 
-	public void deletePaymentById(String id) {
+	public void deletePaymentById(Integer id) {
 		paymentDao.deletePaymentById(id);
 	}
 

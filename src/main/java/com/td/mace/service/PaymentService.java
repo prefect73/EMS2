@@ -16,7 +16,7 @@ public interface PaymentService {
 	
 	void deletePaymentByWorkPackageId(String workPackageId);
 	
-	void deletePaymentById(String paymentName);
+	void deletePaymentById(Integer id);
 
 	List<Payment> findAllPayments();
 	

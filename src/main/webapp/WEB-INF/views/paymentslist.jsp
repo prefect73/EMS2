@@ -65,15 +65,20 @@
 					cellspacing="0" width="100%">
 					<thead>
 						<tr>
+						<th><spring:message code="payment.label.workPackage" />
+							</th>
+							<th><spring:message code="payment.label.billed" />
+							</th>
 							<th><spring:message code="payment.label.billing" />
 							</th>
-							<th><spring:message code="payment.label.workPackage" />
-							</th>
-							<th><spring:message code="payment.label.billing" />
+							<th><spring:message code="payment.label.time" />
 							</th>
 							<th><spring:message code="payment.label.amount" />
 							</th>
-							<th><spring:message code="payment.label.balance" /></th>
+							<th><spring:message code="payment.label.remarks" />
+							</th>
+							<th><spring:message code="payment.label.finishedIn" />
+							</th>
 							<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
 								<th width="100"></th>
 							</sec:authorize>
@@ -86,18 +91,22 @@
 					<tbody>
 						<c:forEach items="${payments}" var="payment">
 							<tr>
-								<td>${payment.paymentName}</td>
 								<td>${payment.workPackage.workPackageName}</td>
+								<td>${payment.billed}</td>
+								<td>${payment.billing}</td>
+								<td>${payment.time}</td>
 								<td>${payment.amount}</td>
-								<td>${payment.balance}</td>
+								<td>${payment.remarks}</td>
+								<td>${payment.finishedIn}</td>
+								
 								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
 									<td><a
-										href="<c:url value='/Payment/edit-payment-${payment.paymentName}' />"
+										href="<c:url value='/Payment/edit-payment-${payment.id}' />"
 										class="btn btn-success "><spring:message code="button.edit" /></a></td>
 								</sec:authorize>
 								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 									<td><a
-										href="<c:url value='/Payment/delete-payment-${payment.paymentName}' />"
+										href="<c:url value='/Payment/delete-payment-${payment.id}' />"
 										class="btn btn-danger"><spring:message code="button.delete" /></a></td>
 								</sec:authorize>
 							</tr>

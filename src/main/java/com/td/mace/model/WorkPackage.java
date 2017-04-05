@@ -62,7 +62,7 @@ public class WorkPackage implements Serializable {
 	/*
 	 * @ManyToMany(fetch = FetchType.LAZY)
 	 * 
-	 * @JoinTable(name = "WORK_PACKAGE_APP_USER", joinColumns = {
+	 * @JoinTable(name = "WORK_PACKAGE_app_user", joinColumns = {
 	 * 
 	 * @JoinColumn(name = "WORK_PACKAGE_ID") }, inverseJoinColumns = {
 	 * 

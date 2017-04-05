@@ -34,9 +34,9 @@ public class PaymentDaoImpl extends AbstractDao<Integer, Payment> implements
 		delete(payment);
 	}
 	
-	public void deletePaymentById(String paymentName) {
+	public void deletePaymentById(Integer id) {
 		Criteria crit = createEntityCriteria();
-		crit.add(Restrictions.eq("paymentName", paymentName));
+		crit.add(Restrictions.eq("id", id));
 		Payment payment = (Payment) crit.uniqueResult();
 		delete(payment);
 	}

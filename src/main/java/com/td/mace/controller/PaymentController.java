@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.td.mace.model.Payment;
-import com.td.mace.model.User;
 import com.td.mace.model.WorkPackage;
 import com.td.mace.service.PaymentService;
 import com.td.mace.service.WorkPackageService;
@@ -39,10 +38,10 @@ public class PaymentController {
 
 	@Autowired
 	PaymentService paymentService;
-	
+
 	@Autowired
 	WorkPackageService workPackageService;
-	
+
 	@Autowired
 	MessageSource messageSource;
 
@@ -60,16 +59,17 @@ public class PaymentController {
 
 		List<Payment> payments = paymentService.findAllPayments();
 		model.addAttribute("payments", payments);
-		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
+		model.addAttribute("defaultLanguage",
+				environment.getProperty("default.language"));
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "paymentslist";
 	}
-	
+
 	@ModelAttribute("workPackagesList")
 	public List<WorkPackage> initializeWorkPackagesList() {
 		return workPackageService.findAllWorkPackages();
 	}
-	
+
 	/**
 	 * This method will provide the medium to add a new payment.
 	 */
@@ -79,9 +79,11 @@ public class PaymentController {
 		model.addAttribute("payment", payment);
 		model.addAttribute("edit", false);
 		/*
-		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
-		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
-		*/
+		 * model.addAttribute("yearNameStart",environment.getProperty(
+		 * "year.name.start"));
+		 * model.addAttribute("yearNameEnd",environment.getProperty
+		 * ("year.name.end"));
+		 */
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "payment";
 	}
@@ -95,8 +97,10 @@ public class PaymentController {
 			ModelMap model, HttpServletRequest request) {
 
 		if (result.hasErrors()) {
-			model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
-			model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
+			model.addAttribute("yearNameStart",
+					environment.getProperty("year.name.start"));
+			model.addAttribute("yearNameEnd",
+					environment.getProperty("year.name.end"));
 			return "payment";
 		}
 
@@ -109,30 +113,21 @@ public class PaymentController {
 		 * can fill custom errors outside the validation framework as well while
 		 * still using internationalized messages.
 		 */
-		
-		/*
-		if (!paymentService.isPaymentNumberUnique(payment.getId(),
-				payment.getPaymentNumber())) {
-			FieldError paymentNumberError = new FieldError("payment",
-					"paymentNumber", messageSource.getMessage(
-							"non.unique.paymentNumber",
-							new String[] { payment.getPaymentNumber() },
-							Locale.getDefault()));
-			result.addError(paymentNumberError);
-			return "payment";
-		}
 
-		if (!paymentService.isIdUnique(payment.getId(),
-				payment.getId())) {
-			FieldError paymentNameError = new FieldError("payment",
-					"id", messageSource.getMessage(
-							"non.unique.id",
-							new String[] { payment.getId() },
-							Locale.getDefault()));
-			result.addError(paymentNameError);
-			return "payment";
-		}
-		*/
+		/*
+		 * if (!paymentService.isPaymentNumberUnique(payment.getId(),
+		 * payment.getPaymentNumber())) { FieldError paymentNumberError = new
+		 * FieldError("payment", "paymentNumber", messageSource.getMessage(
+		 * "non.unique.paymentNumber", new String[] { payment.getPaymentNumber()
+		 * }, Locale.getDefault())); result.addError(paymentNumberError); return
+		 * "payment"; }
+		 * 
+		 * if (!paymentService.isIdUnique(payment.getId(), payment.getId())) {
+		 * FieldError paymentNameError = new FieldError("payment", "id",
+		 * messageSource.getMessage( "non.unique.id", new String[] {
+		 * payment.getId() }, Locale.getDefault()));
+		 * result.addError(paymentNameError); return "payment"; }
+		 */
 		paymentService.savePayment(payment);
 		paymentService.updatePayment(payment);
 
@@ -152,8 +147,10 @@ public class PaymentController {
 	public String editPayment(@PathVariable Integer id, ModelMap model) {
 		Payment payment = paymentService.findById(id);
 		model.addAttribute("payment", payment);
-		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
-		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
+		model.addAttribute("yearNameStart",
+				environment.getProperty("year.name.start"));
+		model.addAttribute("yearNameEnd",
+				environment.getProperty("year.name.end"));
 		model.addAttribute("edit", true);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "payment";
@@ -165,12 +162,13 @@ public class PaymentController {
 	 */
 	@RequestMapping(value = { "/edit-payment-{id}" }, method = RequestMethod.POST)
 	public String updatePayment(@Valid Payment payment, BindingResult result,
-			ModelMap model, @PathVariable String id,
-			HttpServletRequest request) {
+			ModelMap model, @PathVariable String id, HttpServletRequest request) {
 
 		if (result.hasErrors()) {
-			model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
-			model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
+			model.addAttribute("yearNameStart",
+					environment.getProperty("year.name.start"));
+			model.addAttribute("yearNameEnd",
+					environment.getProperty("year.name.end"));
 			return "payment";
 		}
 
@@ -199,7 +197,7 @@ public class PaymentController {
 	 * This method will delete an payment by it's SSOID value.
 	 */
 	@RequestMapping(value = { "/delete-payment-{id}" }, method = RequestMethod.GET)
-	public String deletePayment(@PathVariable String id,
+	public String deletePayment(@PathVariable Integer id,
 			HttpServletRequest request) {
 		paymentService.deletePaymentById(id);
 		request.getSession(false).setAttribute("paymentslist",
