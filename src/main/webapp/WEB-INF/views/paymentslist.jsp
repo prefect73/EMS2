@@ -65,9 +65,11 @@
 					cellspacing="0" width="100%">
 					<thead>
 						<tr>
-							<th><spring:message code="payment.label.paymentName" />
+							<th><spring:message code="payment.label.billing" />
 							</th>
 							<th><spring:message code="payment.label.workPackage" />
+							</th>
+							<th><spring:message code="payment.label.billing" />
 							</th>
 							<th><spring:message code="payment.label.amount" />
 							</th>

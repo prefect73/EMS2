@@ -987,6 +987,18 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 					</div>
 				</div>
 			</sec:authorize>
+			<!-- Payments List Section -->
+			<c:choose>
+				<c:when test="${edit}">
+					<div class="well lead col-md-6">
+					Payments List 
+						<spring:message
+							code="workPackage.label.updateEmployeesForThisWorkPackage" />
+					</div>
+					 
+				</c:when>
+				</c:choose>
+			<!-- Payments List Section -->
 			<div class="row">
 				<div class="form-group col-md-12">
 					<div id="empListForWorkPackageTableWrapper">
@@ -1364,115 +1376,6 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			</div>
 			<div id="effectiveDaysDialog"
 				style="display: none; font-size: 12px !important;">
-				<!-- <table>
-					<tr>
-						<td></td>
-						<td></td>
-						<td style="text-align: center;"><label>1</label><input
-							title="1" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>2</label><input
-							title="2" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>3</label><input
-							title="3" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>4</label><input
-							title="4" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>5</label><input
-							title="5" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-					</tr>
-					<tr>
-						<td style="text-align: center;"><label>6</label><input
-							title="6" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>7</label><input
-							title="7" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>8</label><input
-							title="8" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>9</label><input
-							title="9" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>10</label><input
-							title="10" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>11</label><input
-							title="11" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>12</label><input
-							title="12" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-					</tr>
-					<tr>
-						<td style="text-align: center;"><label>13</label><input
-							title="13" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>14</label><input
-							title="14" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>15</label><input
-							title="15" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>16</label><input
-							title="16" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>17</label><input
-							title="17" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>18</label><input
-							title="18" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>19</label><input
-							title="19" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-					</tr>
-					<tr>
-						<td style="text-align: center;"><label>20</label><input
-							title="20" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>21</label><input
-							title="21" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>22</label><input
-							title="22" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>23</label><input
-							title="23" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>24</label><input
-							title="24" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>25</label><input
-							title="25" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>26</label><input
-							title="26" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-					</tr>
-					<tr>
-						<td style="text-align: center;"><label>27</label><input
-							title="27" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>28</label><input
-							title="28" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>29</label><input
-							title="29" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>30</label><input
-							title="30" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td style="text-align: center;"><label>31</label><input
-							title="31" class="calendarTextBoxes" type="text"
-							style="width: 42px;" class="form-control input-sm"></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table> -->
 			</div>
 		</form:form>
 	</div>
