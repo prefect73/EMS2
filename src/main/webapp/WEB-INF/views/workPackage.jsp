@@ -957,6 +957,20 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				</div>
 				<div class="row">
 					<div class="form-group col-md-12">
+						<label class="col-md-2 control-lable" for="calculatedCost"><spring:message
+								code="workPackage.label.calculatedCost" /> <spring:message
+								code="generic.inCurrency" /> </label>
+						<div class="col-md-3">
+							<form:input type="text" path="calculatedCost" id="calculatedCost"
+								class="form-control input-sm" />
+							<div class="has-error">
+								<form:errors path="calculatedCost" class="help-inline" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-12">
 						<label class="col-md-2 control-lable" for="totalCost"><spring:message
 								code="workPackage.label.totalCost" /> <spring:message
 								code="generic.inCurrency" /> </label>
@@ -986,15 +1000,40 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 						</div>
 					</div>
 				</div>
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label class="col-md-2 control-lable" for="workDoneInPercent"><spring:message
+								code="workPackage.label.workDoneInPercent" />  </label>
+						<div class="col-md-3">
+							<form:input type="text" path="workDoneInPercent" id="workDoneInPercent"
+								class="form-control input-sm" />
+							<div class="has-error">
+								<form:errors path="workDoneInPercent" class="help-inline" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label class="col-md-2 control-lable" for="status"><spring:message
+								code="workPackage.label.status" />  </label>
+						<div class="col-md-3">
+							<form:input type="text" path="status" id="status"
+								class="form-control input-sm" />
+							<div class="has-error">
+								<form:errors path="status" class="help-inline" />
+							</div>
+						</div>
+					</div>
+				</div>
 			</sec:authorize>
 			<!-- Payments List Section -->
 			<c:choose>
 				<c:when test="${edit}">
 					<div class="well lead col-md-6">
-					Payments List 
-						<spring:message
-							code="workPackage.label.updateEmployeesForThisWorkPackage" />
+						<spring:message code="workPackage.label.paymentsList" />
 					</div>
+					
 					 
 				</c:when>
 				</c:choose>

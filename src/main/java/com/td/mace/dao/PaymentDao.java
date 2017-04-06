@@ -3,6 +3,7 @@ package com.td.mace.dao;
 import java.util.List;
 
 import com.td.mace.model.Payment;
+import com.td.mace.model.WorkPackage;
 
 
 public interface PaymentDao {
@@ -18,6 +19,8 @@ public interface PaymentDao {
 	void deletePaymentById(Integer id);
 	
 	List<Payment> findAllPayments();
+	
+	List<Payment> findAllPaymentsByWorkPackage(WorkPackage workPackage);
 	
 }
 

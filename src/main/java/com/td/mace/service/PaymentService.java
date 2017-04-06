@@ -3,6 +3,7 @@ package com.td.mace.service;
 import java.util.List;
 
 import com.td.mace.model.Payment;
+import com.td.mace.model.WorkPackage;
 
 public interface PaymentService {
 	
@@ -19,5 +20,7 @@ public interface PaymentService {
 	void deletePaymentById(Integer id);
 
 	List<Payment> findAllPayments();
+	
+	List<Payment> findAllPaymentsByWorkPackage(WorkPackage workPackage);
 	
 }

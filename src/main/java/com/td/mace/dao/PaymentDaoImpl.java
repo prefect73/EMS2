@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -12,14 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.td.mace.model.Payment;
-import com.td.mace.model.Project;
+import com.td.mace.model.WorkPackage;
 
 @Repository("paymentDao")
 public class PaymentDaoImpl extends AbstractDao<Integer, Payment> implements
 		PaymentDao {
 
 	static final Logger logger = LoggerFactory.getLogger(PaymentDaoImpl.class);
-	
+
 	@Autowired
 	private UserDao userDao;
 
@@ -33,7 +34,7 @@ public class PaymentDaoImpl extends AbstractDao<Integer, Payment> implements
 		Payment payment = (Payment) crit.uniqueResult();
 		delete(payment);
 	}
-	
+
 	public void deletePaymentById(Integer id) {
 		Criteria crit = createEntityCriteria();
 		crit.add(Restrictions.eq("id", id));
@@ -51,7 +52,7 @@ public class PaymentDaoImpl extends AbstractDao<Integer, Payment> implements
 
 		return payment;
 	}
-	
+
 	@Override
 	public Payment findByPaymentName(String paymentName) {
 		logger.info("PaymentName : {}", paymentName);
@@ -66,22 +67,23 @@ public class PaymentDaoImpl extends AbstractDao<Integer, Payment> implements
 		return payment;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Payment> findAllPayments() {
-		Criteria criteria = createEntityCriteria().addOrder(
-				Order.asc("id"));
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
-																		// duplicates.
+		Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid duplicates.
 		List<Payment> payments = (List<Payment>) criteria.list();
+		return payments;
+	}
 
-		// No need to fetch projectProfiles since we are not showing them on
-		// list page. Let them lazy load.
-		// Uncomment below lines for eagerly fetching of projectProfiles if you
-		// want.
-		/*
-		 * for(Project project : projects){
-		 * Hibernate.initialize(project.getProjectProfiles()); }
-		 */
+	@SuppressWarnings("unchecked")
+	public List<Payment> findAllPaymentsByWorkPackage(WorkPackage workPackage) {
+		Query query = getSession()
+				.createSQLQuery(
+						"select * from payment where work_package_id = :workPackageId")
+				.addEntity(Payment.class);
+		query.setParameter("workPackageId", workPackage.getId());
+		List<Payment> payments = query.list();
 		return payments;
 	}
 

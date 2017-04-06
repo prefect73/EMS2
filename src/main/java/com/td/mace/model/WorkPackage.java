@@ -41,6 +41,10 @@ public class WorkPackage implements Serializable {
 
 	@Column(name = "offered_cost", precision = 10, scale = 2)
 	private BigDecimal offeredCost = new BigDecimal("0.00");
+	
+
+	@Column(name = "calculated_cost", precision = 10, scale = 2)
+	private BigDecimal calculatedCost = new BigDecimal("0.00");
 
 	@Column(name = "total_cost", precision = 10, scale = 2)
 	private BigDecimal totalCost =  new BigDecimal("0.00");
@@ -48,6 +52,15 @@ public class WorkPackage implements Serializable {
 	@Column(name = "effective_cost", precision = 10, scale = 2)
 	private BigDecimal effectiveCost=  new BigDecimal("0.00");
 
+	
+	@Column(name = "work_done_in_percent", nullable = false)
+	private Integer workDoneInPercent;
+	
+	
+	@Column(name = "status", nullable = false)
+	private String status;
+	
+	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "project_id")
 	private Project project;
@@ -100,6 +113,14 @@ public class WorkPackage implements Serializable {
 	public void setOfferedCost(BigDecimal offeredCost) {
 		this.offeredCost = offeredCost;
 	}
+	
+	public BigDecimal getCalculatedCost() {
+		return calculatedCost;
+	}
+
+	public void setCalculatedCost(BigDecimal calculatedCost) {
+		this.calculatedCost = calculatedCost;
+	}
 
 	public BigDecimal getTotalCost() {
 		return totalCost;
@@ -115,6 +136,22 @@ public class WorkPackage implements Serializable {
 
 	public void setEffectiveCost(BigDecimal effectiveCost) {
 		this.effectiveCost = effectiveCost;
+	}
+
+	public Integer getWorkDoneInPercent() {
+		return workDoneInPercent;
+	}
+
+	public void setWorkDoneInPercent(Integer workDoneInPercent) {
+		this.workDoneInPercent = workDoneInPercent;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Project getProject() {

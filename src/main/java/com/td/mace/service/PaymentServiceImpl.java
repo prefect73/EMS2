@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.td.mace.dao.PaymentDao;
 import com.td.mace.model.Payment;
+import com.td.mace.model.WorkPackage;
 
 @Service("paymentService")
 @Transactional
@@ -58,6 +59,10 @@ public class PaymentServiceImpl implements PaymentService {
 
 	public List<Payment> findAllPayments() {
 		return paymentDao.findAllPayments();
+	}
+	
+	public List<Payment> findAllPaymentsByWorkPackage(WorkPackage workPackage) {
+		return paymentDao.findAllPaymentsByWorkPackage(workPackage);
 	}
 
 }

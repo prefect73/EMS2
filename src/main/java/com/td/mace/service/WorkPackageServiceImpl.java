@@ -61,8 +61,11 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 			entity.setWorkPackageNumber(Integer.toString(workPackage.getId()));
 			entity.setWorkPackageName(workPackage.getWorkPackageName());
 			entity.setOfferedCost(workPackage.getOfferedCost());
+			entity.setCalculatedCost(workPackage.getCalculatedCost());
 			entity.setTotalCost(getWorkPackageTotalCost(workPackage));
 			entity.setEffectiveCost(getWorkPackageEffectiveCost(workPackage));
+			entity.setWorkDoneInPercent(workPackage.getWorkDoneInPercent());
+			entity.setStatus(workPackage.getStatus());
 			entity.setProject(workPackage.getProject());
 			deleteAllWorkPackageUserAllocations(workPackage);
 			for (WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()) {

@@ -27,6 +27,7 @@ import com.td.mace.model.Project;
 import com.td.mace.model.User;
 import com.td.mace.model.WorkPackage;
 import com.td.mace.model.WorkPackageUserAllocation;
+import com.td.mace.service.PaymentService;
 import com.td.mace.service.ProjectService;
 import com.td.mace.service.UserAttendanceService;
 import com.td.mace.service.UserService;
@@ -65,6 +66,9 @@ public class WorkPackageController {
 
 	@Autowired
 	AuthenticationTrustResolver authenticationTrustResolver;
+	
+	@Autowired
+	PaymentService paymentService;
 
 	/**
 	 * This method will list all existing workPackages.
@@ -205,6 +209,8 @@ public class WorkPackageController {
 		model.addAttribute("userAttendancesUpdated",
 				userAttendanceService.findAllUserAttendancesUpdated());
 		model.addAttribute("edit", true);
+		
+		//model.addAttribute("payments",paymentService.findAllPaymentsByWorkPackage(workPackage));
 
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "workPackage";

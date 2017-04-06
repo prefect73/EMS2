@@ -71,8 +71,11 @@ $(document).ready(function() {
 							<th><spring:message code="workPackage.label.workPackageName" /></th>
 							<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 							<th><spring:message code="workPackage.label.offeredCost" /></th>
+							<th><spring:message code="workPackage.label.calculatedCost" /></th>
 							<th><spring:message code="workPackage.label.totalCost" /></th>
 							<th><spring:message code="workPackage.label.effectiveCost" /></th>
+							<th><spring:message code="workPackage.label.workDoneInPercent" /></th>
+							<th><spring:message code="workPackage.label.status" /></th>
 							</sec:authorize>
 							<%-- <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')"> --%>
 								<th width="100"></th>
@@ -91,8 +94,11 @@ $(document).ready(function() {
 								<td>${workPackage.workPackageName}</td>
 								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 								<td><spring:message code="generic.currencySymbol" />${workPackage.offeredCost}</td>
+								<td><spring:message code="generic.currencySymbol" />${workPackage.calculatedCost}</td>
 								<td><spring:message code="generic.currencySymbol" />${workPackage.totalCost}</td>
 								<td><spring:message code="generic.currencySymbol" />${workPackage.effectiveCost}</td>
+								<td>${workPackage.workDoneInPercent}</td>
+								<td>${workPackage.status}</td>
 								</sec:authorize>
 								<%-- <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')"> --%>
 									<td><a
