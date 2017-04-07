@@ -81,6 +81,26 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		}
 	});
 	$( document ).ready(function() {
+		
+		if($("#defaultLanguage").val() == 'german'){
+			$('#paymentsTable').DataTable({
+		        "language": {
+		            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+		        }
+		    });
+			
+		} else if ($("#defaultLanguage").val() == 'english'){
+			$('#paymentsTable').DataTable();
+			
+		} else {
+			$('#paymentsTable').DataTable({
+		        "language": {
+		            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+		        }
+		    });
+			
+		}
+		
 		$('input').on('keypress', function (event) {
 		    var regex = new RegExp("^[^,]+$");
 		    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
@@ -1018,9 +1038,16 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 						<label class="col-md-2 control-lable" for="status"><spring:message
 								code="workPackage.label.status" />  </label>
 						<div class="col-md-3">
-							<form:input type="text" path="status" id="status"
+							<%-- <form:input type="text" path="status" id="status"
 								class="form-control input-sm" />
-							<div class="has-error">
+							 --%>
+							 <select class="form-control input-sm"  id="status" name="status">
+								<option class="form-control input-sm" value="<spring:message code="workPackage.status.select.scheduled" />"><spring:message code="workPackage.status.select.scheduled" /></option>
+								<option class="form-control input-sm" value="<spring:message code="workPackage.status.select.delayed" />"><spring:message code="workPackage.status.select.delayed" /></option>
+								<option class="form-control input-sm" value="<spring:message code="workPackage.status.select.problem" />"><spring:message code="workPackage.status.select.problem" /></option>
+								<option class="form-control input-sm" value="<spring:message code="workPackage.status.select.finished" />"><spring:message code="workPackage.status.select.finished" /></option>
+							</select>
+							 <div class="has-error">
 								<form:errors path="status" class="help-inline" />
 							</div>
 						</div>
@@ -1030,11 +1057,77 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			<!-- Payments List Section -->
 			<c:choose>
 				<c:when test="${edit}">
-					<div class="well lead col-md-6">
+					<%-- <div class="well lead col-md-6">
 						<spring:message code="workPackage.label.paymentsList" />
-					</div>
+					</div> --%>
+					<div class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">
+				<span class="lead"><spring:message code="paymentslist.title" />
+				</span>
+				<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+					<a class="btn btn-primary floatRight"
+						href="<c:url value='/Payment/newpayment?workPackageId=${payment.workPackage.id}' />"><spring:message
+							code="paymentslist.addNewProject" /></a>
+				</sec:authorize>
+			</div>
+			<div id="paymentsTableWrapper">
+				<table id="paymentsTable"
+					class="table table-striped table-bordered dt-responsive nowrap"
+					cellspacing="0" width="100%">
+					<thead>
+						<tr>
+						<th><spring:message code="payment.label.workPackage" />
+							</th>
+							<th><spring:message code="payment.label.billed" />
+							</th>
+							<th><spring:message code="payment.label.billing" />
+							</th>
+							<th><spring:message code="payment.label.time" />
+							</th>
+							<th><spring:message code="payment.label.amount" />
+							</th>
+							<th><spring:message code="payment.label.remarks" />
+							</th>
+							<th><spring:message code="payment.label.finishedIn" />
+							</th>
+							<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
+								<th width="100"></th>
+							</sec:authorize>
+							<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+								<th width="100"></th>
+							</sec:authorize>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${payments}" var="payment">
+							<tr>
+								<td>${payment.workPackage.workPackageName}</td>
+								<td>${payment.billed}</td>
+								<td>${payment.billing}</td>
+								<td>${payment.time}</td>
+								<td>${payment.amount}</td>
+								<td>${payment.remarks}</td>
+								<td>${payment.finishedIn}</td>
+								
+								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
+									<td><a
+										href="<c:url value='/Payment/edit-payment-${payment.id}' />"
+										class="btn btn-success "><spring:message code="button.edit" /></a></td>
+								</sec:authorize>
+								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+									<td><a
+										href="<c:url value='/Payment/delete-payment-${payment.id}' />"
+										class="btn btn-danger"><spring:message code="button.delete" /></a></td>
+								</sec:authorize>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
 					
-					 
 				</c:when>
 				</c:choose>
 			<!-- Payments List Section -->

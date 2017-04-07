@@ -66,9 +66,17 @@
 						<%-- 	<form:input type="text" path="workPackage.id" id="workPackage"
 							class="form-control input-sm" />
 					 --%>
-						<form:select path="workPackage.id" items="${workPackagesList}"
+						<%-- <form:select path="workPackage.id" items="${workPackagesList}"
 							id="workPackages" multiple="false" itemValue="id"
-							itemLabel="workPackageName" class="form-control input-sm" />
+							itemLabel="workPackageName" class="form-control input-sm" /> --%>
+							<select class="form-control input-sm" name="workPackage" id="workPackage">
+
+							<c:forEach items="${workPackagesList}" var="work">
+								<option class="form-control input-sm" value="${work.id}"
+									${work.id == payment.workPackage.id  ? 'selected' : ''}>${work.workPackageName}</option>
+							</c:forEach>
+						</select>
+							
 						<div class="has-error">
 							<form:errors path="workPackage.id" class="help-inline" />
 						</div>

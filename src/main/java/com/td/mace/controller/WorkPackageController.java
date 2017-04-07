@@ -210,7 +210,7 @@ public class WorkPackageController {
 				userAttendanceService.findAllUserAttendancesUpdated());
 		model.addAttribute("edit", true);
 		
-		//model.addAttribute("payments",paymentService.findAllPaymentsByWorkPackage(workPackage));
+		model.addAttribute("payments",paymentService.findAllPaymentsByWorkPackage(workPackage));
 
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "workPackage";

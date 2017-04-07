@@ -74,8 +74,14 @@ public class PaymentController {
 	 * This method will provide the medium to add a new payment.
 	 */
 	@RequestMapping(value = { "/newpayment" }, method = RequestMethod.GET)
-	public String newPayment(ModelMap model) {
+	public String newPayment(ModelMap model,HttpServletRequest request) {
 		Payment payment = new Payment();
+		if (request.getParameter("workPackageId") != null) {
+			int workPackageId = (Integer
+					.parseInt(request.getParameter("workPackageId")));
+			WorkPackage workPackage = workPackageService.findById(workPackageId);
+			payment.setWorkPackage(workPackage);	
+		}
 		model.addAttribute("payment", payment);
 		model.addAttribute("edit", false);
 		/*
@@ -129,7 +135,7 @@ public class PaymentController {
 		 * result.addError(paymentNameError); return "payment"; }
 		 */
 		paymentService.savePayment(payment);
-		paymentService.updatePayment(payment);
+		//paymentService.updatePayment(payment);
 
 		// model.addAttribute("success", "Payment " + payment.getFirstName() +
 		// " "+ payment.getLastName() + " registered successfully");
@@ -137,7 +143,8 @@ public class PaymentController {
 		// return "success";
 		request.getSession(false).setAttribute("paymentslist",
 				paymentService.findAllPayments());
-		return "redirect:/Payment/paymentslist";
+		return "redirect:/WorkPackage/edit-workPackage-"+payment.getWorkPackage().getId();
+		//return "redirect:/Payment/paymentslist";
 	}
 
 	/**
@@ -190,7 +197,8 @@ public class PaymentController {
 		model.addAttribute("loggedinuser", getPrincipal());
 		request.getSession(false).setAttribute("paymentslist",
 				paymentService.findAllPayments());
-		return "redirect:/Payment/paymentslist";
+		return "redirect:/WorkPackage/edit-workPackage-"+payment.getWorkPackage().getId();
+		//return "redirect:/Payment/paymentslist";
 	}
 
 	/**
