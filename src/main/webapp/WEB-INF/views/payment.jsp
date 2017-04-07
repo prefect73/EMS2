@@ -60,7 +60,7 @@
 			<form:input type="hidden" path="id" id="id" />
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="workPackage.id"><spring:message
+					<label class="col-md-2 control-lable" for="workPackage"><spring:message
 							code="payment.label.workPackage" /> </label>
 					<div class="col-md-3">
 						<%-- 	<form:input type="text" path="workPackage.id" id="workPackage"
@@ -78,7 +78,7 @@
 						</select>
 							
 						<div class="has-error">
-							<form:errors path="workPackage.id" class="help-inline" />
+							<form:errors path="workPackage" class="help-inline" />
 						</div>
 					</div>
 				</div>
@@ -89,9 +89,11 @@
 							code="payment.label.billed" /> </label>
 					<div class="col-md-3">
 						<select class="form-control input-sm" id="billed" name="billed">
-							<option class="form-control input-sm" value="No"><spring:message
+							<option class="form-control input-sm" value="<spring:message
+							code="generic.select.option.no" />"><spring:message
 							code="generic.select.option.no" /></option>
-							<option class="form-control input-sm" value="Yes"><spring:message
+							<option class="form-control input-sm" value="<spring:message
+							code="generic.select.option.yes" />"><spring:message
 							code="generic.select.option.yes" /></option>
 
 						</select>

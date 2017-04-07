@@ -20,6 +20,13 @@
 </c:choose>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<link href="<c:url value='/static/css/bootstrap.css' />"
+	rel="stylesheet"></link>
+<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css" />
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
 <!-- <script type="text/javascript"
         src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/i18n/jquery-ui-i18n.min.js">
 </script> -->
@@ -1067,11 +1074,11 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				</span>
 				<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 					<a class="btn btn-primary floatRight"
-						href="<c:url value='/Payment/newpayment?workPackageId=${payment.workPackage.id}' />"><spring:message
+						href="<c:url value='/Payment/newpayment?workPackageId=${workPackage.id}' />"><spring:message
 							code="paymentslist.addNewProject" /></a>
 				</sec:authorize>
 			</div>
-			<div id="paymentsTableWrapper">
+			<div id="paymentsTableWrapper" style="padding: 2%;">
 				<table id="paymentsTable"
 					class="table table-striped table-bordered dt-responsive nowrap"
 					cellspacing="0" width="100%">

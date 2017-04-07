@@ -26,6 +26,7 @@ import org.springframework.web.servlet.view.JstlView;
 import com.td.mace.converter.ProjectLeadsListToUserConverter;
 import com.td.mace.converter.ProjectsListToProjectConverter;
 import com.td.mace.converter.RoleToUserProfileConverter;
+import com.td.mace.converter.WorkPackagesListToWorkPackageConverter;
 
 @Configuration
 @EnableWebMvc
@@ -44,7 +45,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
 	@Autowired
 	ProjectsListToProjectConverter projectsListToProjectConverter;
-
+	
+	@Autowired
+	WorkPackagesListToWorkPackageConverter workPackagesListToWorkPackageConverter;
+	
+	
 	/**
 	 * Configure ViewResolvers to deliver preferred views.
 	 */
@@ -77,6 +82,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		registry.addConverter(roleToUserProfileConverter);
 		registry.addConverter(projectLeadsListToUserConverter);
 		registry.addConverter(projectsListToProjectConverter);
+		registry.addConverter(workPackagesListToWorkPackageConverter);
 	}
 
 	/* Localization section is started */

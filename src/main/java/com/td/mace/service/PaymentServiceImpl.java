@@ -39,7 +39,7 @@ public class PaymentServiceImpl implements PaymentService {
 		Payment entity = paymentDao.findById(payment.getId());
 		if (entity != null) {
 			entity.setAmount(payment.getAmount());
-			entity.setBilled(payment.isBilled());
+			entity.setBilled(payment.getBilled());
 			entity.setBilling(payment.getBilling());
 			entity.setFinishedIn(payment.getFinishedIn());
 			entity.setRemarks(payment.getRemarks());

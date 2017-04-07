@@ -37,7 +37,7 @@ public class Payment implements Serializable {
 	private String remarks;
 
 	@Column(name = "billed")
-	private boolean billed;
+	private String billed;
 
 	@Max(value = 100)
 	@Column(name = "finished_in")
@@ -87,11 +87,11 @@ public class Payment implements Serializable {
 		this.remarks = remarks;
 	}
 
-	public boolean isBilled() {
+	public String getBilled() {
 		return billed;
 	}
 
-	public void setBilled(boolean billed) {
+	public void setBilled(String billed) {
 		this.billed = billed;
 	}
 

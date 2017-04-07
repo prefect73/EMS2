@@ -110,30 +110,6 @@ public class PaymentController {
 			return "payment";
 		}
 
-		/*
-		 * Preferred way to achieve uniqueness of field [paymentNumber] should
-		 * be implementing custom @Unique annotation and applying it on field
-		 * [paymentNumber] of Model class [Payment].
-		 * 
-		 * Below mentioned piece of code [if block] is to demonstrate that you
-		 * can fill custom errors outside the validation framework as well while
-		 * still using internationalized messages.
-		 */
-
-		/*
-		 * if (!paymentService.isPaymentNumberUnique(payment.getId(),
-		 * payment.getPaymentNumber())) { FieldError paymentNumberError = new
-		 * FieldError("payment", "paymentNumber", messageSource.getMessage(
-		 * "non.unique.paymentNumber", new String[] { payment.getPaymentNumber()
-		 * }, Locale.getDefault())); result.addError(paymentNumberError); return
-		 * "payment"; }
-		 * 
-		 * if (!paymentService.isIdUnique(payment.getId(), payment.getId())) {
-		 * FieldError paymentNameError = new FieldError("payment", "id",
-		 * messageSource.getMessage( "non.unique.id", new String[] {
-		 * payment.getId() }, Locale.getDefault()));
-		 * result.addError(paymentNameError); return "payment"; }
-		 */
 		paymentService.savePayment(payment);
 		//paymentService.updatePayment(payment);
 
@@ -178,18 +154,7 @@ public class PaymentController {
 					environment.getProperty("year.name.end"));
 			return "payment";
 		}
-
-		/*
-		 * //Uncomment below 'if block' if you WANT TO ALLOW UPDATING SSO_ID in
-		 * UI which is a unique key to a Payment.
-		 * if(!paymentService.isPaymentSSOUnique(payment.getId(),
-		 * payment.getPaymentNumber())){ FieldError paymentNumberError =new
-		 * FieldError("payment","paymentNumber",messageSource.getMessage(
-		 * "non.unique.paymentNumber", new String[]{payment.getPaymentNumber()},
-		 * Locale.getDefault())); result.addError(paymentNumberError); return
-		 * "payment"; }
-		 */
-
+		
 		paymentService.updatePayment(payment);
 
 		// model.addAttribute("success", "Payment " + payment.getFirstName() +
