@@ -17,13 +17,16 @@ import org.springframework.stereotype.Repository;
 import com.td.mace.model.User;
 import com.td.mace.model.WorkPackage;
 import com.td.mace.model.WorkPackageUserAllocation;
-
+	
 @Repository("workPackageDao")
 public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 		implements WorkPackageDao {
 	
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	PaymentDao paymentDao;
 
 	static final Logger logger = LoggerFactory
 			.getLogger(WorkPackageDaoImpl.class);

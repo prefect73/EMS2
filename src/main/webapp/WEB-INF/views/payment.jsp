@@ -106,20 +106,6 @@
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="amount"><spring:message
-							code="payment.label.amount" /> </label>
-					<div class="col-md-3">
-						<form:input type="text" path="amount" id="amount"
-							class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="amount" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="billing"><spring:message
 							code="payment.label.billing" /> </label>
 					<div class="col-md-3">

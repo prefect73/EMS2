@@ -111,6 +111,7 @@ public class PaymentController {
 		}
 
 		paymentService.savePayment(payment);
+		workPackageService.updateCalculatedCost(payment.getWorkPackage());
 		//paymentService.updatePayment(payment);
 
 		// model.addAttribute("success", "Payment " + payment.getFirstName() +
@@ -156,6 +157,7 @@ public class PaymentController {
 		}
 		
 		paymentService.updatePayment(payment);
+		workPackageService.updateCalculatedCost(payment.getWorkPackage());
 
 		// model.addAttribute("success", "Payment " + payment.getFirstName() +
 		// " "+ payment.getLastName() + " updated successfully");

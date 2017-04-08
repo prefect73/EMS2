@@ -31,5 +31,7 @@ public interface WorkPackageService {
 	
 	List<WorkPackage> findAllWorkPackagesByProjectIdAndSsoId(int projectId, String ssoId);
 	
+	void updateCalculatedCost(WorkPackage workPackage);
+	
 
 }

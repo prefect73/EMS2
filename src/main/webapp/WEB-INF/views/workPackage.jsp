@@ -989,7 +989,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 								code="generic.inCurrency" /> </label>
 						<div class="col-md-3">
 							<form:input type="text" path="calculatedCost" id="calculatedCost"
-								class="form-control input-sm" />
+								class="form-control input-sm" readonly="true" />
 							<div class="has-error">
 								<form:errors path="calculatedCost" class="help-inline" />
 							</div>

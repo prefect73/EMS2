@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.td.mace.dao.PaymentDao;
 import com.td.mace.dao.UserDao;
 import com.td.mace.dao.WorkPackageDao;
+import com.td.mace.model.Payment;
 import com.td.mace.model.User;
 import com.td.mace.model.WorkPackage;
 import com.td.mace.model.WorkPackageUserAllocation;
@@ -23,7 +25,9 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 	
 	@Autowired
 	private UserDao userDao;
-		
+	
+	@Autowired
+	private PaymentDao paymentDao;
 
 	public WorkPackage findById(int id) {
 		return dao.findById(id);
@@ -271,5 +275,17 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 	}
 	public List<WorkPackage> findAllWorkPackagesByProjectIdAndSsoId(int projectId, String ssoId) {
 		return dao.findAllWorkPackagesByProjectIdAndSsoId(projectId, ssoId);
+	}
+
+	@Override
+	public void updateCalculatedCost(WorkPackage workPackage) {
+		List<Payment> allPaymentsByWorkPackage = paymentDao.findAllPaymentsByWorkPackage(workPackage);
+		BigDecimal totalPayments = new BigDecimal("0.00");
+		for(Payment payment : allPaymentsByWorkPackage){
+			totalPayments = totalPayments.add(payment.getAmount());
+		}
+		workPackage.setCalculatedCost(totalPayments);
+		updateWorkPackage(workPackage);
+		
 	}
 }
