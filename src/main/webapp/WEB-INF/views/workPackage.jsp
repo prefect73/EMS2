@@ -1049,10 +1049,10 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 								class="form-control input-sm" />
 							 --%>
 							 <select class="form-control input-sm"  id="status" name="status">
-								<option class="form-control input-sm" value="<spring:message code="workPackage.status.select.scheduled" />"><spring:message code="workPackage.status.select.scheduled" /></option>
-								<option class="form-control input-sm" value="<spring:message code="workPackage.status.select.delayed" />"><spring:message code="workPackage.status.select.delayed" /></option>
-								<option class="form-control input-sm" value="<spring:message code="workPackage.status.select.problem" />"><spring:message code="workPackage.status.select.problem" /></option>
-								<option class="form-control input-sm" value="<spring:message code="workPackage.status.select.finished" />"><spring:message code="workPackage.status.select.finished" /></option>
+								<option style="color:lightgreen;" class="form-control input-sm" value="<spring:message code="workPackage.status.select.scheduled" />"><spring:message code="workPackage.status.select.scheduled" /></option>
+								<option style="color:orange;" class="form-control input-sm" value="<spring:message code="workPackage.status.select.delayed" />"><spring:message code="workPackage.status.select.delayed" /></option>
+								<option style="color:red;" class="form-control input-sm" value="<spring:message code="workPackage.status.select.problem" />"><spring:message code="workPackage.status.select.problem" /></option>
+								<option style="color:green;" class="form-control input-sm" value="<spring:message code="workPackage.status.select.finished" />"><spring:message code="workPackage.status.select.finished" /></option>
 							</select>
 							 <div class="has-error">
 								<form:errors path="status" class="help-inline" />
