@@ -63,7 +63,7 @@ $(document).ready(function() {
 			<div id="workPackagesTableWrapper" style="padding: 2%;">
 				<table id="workPackagesTable"
 					class="table table-striped table-bordered dt-responsive nowrap"
-					cellspacing="0" width="100%">
+					cellspacing="0" width="100%" style="font-size:100%;">
 					<thead>
 						<tr>
 							<th><spring:message code="project.label.projectName" /></th>
@@ -98,7 +98,38 @@ $(document).ready(function() {
 								<td><spring:message code="generic.currencySymbol" />${workPackage.totalCost}</td>
 								<td><spring:message code="generic.currencySymbol" />${workPackage.effectiveCost}</td>
 								<td>${workPackage.workDoneInPercent}</td>
-								<td>${workPackage.status}</td>
+								<td>
+									<spring:message code="workPackage.status.select.scheduled" var="scheduled"/>
+									<spring:message code="workPackage.status.select.delayed" var="delayed"/>
+									<spring:message code="workPackage.status.select.problem" var="problem"/>
+									<spring:message code="workPackage.status.select.finished" var="finished"/>
+										
+									<c:choose>
+										<c:when test="${fn:containsIgnoreCase(workPackage.status,scheduled)}">
+											<label style="color:lightgreen" class="form-control input-sm">
+												${workPackage.status}
+											</label>
+										</c:when>
+										<c:when test="${fn:containsIgnoreCase(workPackage.status,delayed)}">
+											<label style="color:orange" class="form-control input-sm">
+												${workPackage.status}
+											</label>
+										</c:when>
+										<c:when test="${fn:containsIgnoreCase(workPackage.status,problem)}">
+											<label style="color:red" class="form-control input-sm">
+												${workPackage.status}
+											</label>
+										</c:when>
+										<c:when test="${fn:containsIgnoreCase(workPackage.status,finished)}">
+											<label style="color:green" class="form-control input-sm">
+												${workPackage.status}
+											</label>
+										</c:when>
+										<c:otherwise>
+											${workPackage.status}
+										</c:otherwise>
+									</c:choose>
+								</td>
 								</sec:authorize>
 								<%-- <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')"> --%>
 									<td><a
