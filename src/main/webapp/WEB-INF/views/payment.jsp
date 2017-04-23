@@ -21,8 +21,29 @@
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
+<script type="text/javascript">
+$( document ).ready(function() {
+	var billedVal = '<c:out value="${payment.billed}"/>';
+	console.log("billed " + billedVal);
+	if(billedVal == 'Ja'){
+		$('#billed option[value=Ja]').attr('selected','selected');
+		
+	} else if(billedVal == 'Nein'){
+		$('#billed option[value=Nein]').attr('selected','selected');
+		
+	}  else if(billedVal == 'Yes'){
+		$('#billed option[value=Yes]').attr('selected','selected');
+		
+	} else if(billedVal == 'No'){
+		$('#billed option[value=No]').attr('selected','selected');
+		
+	}
+	
+});
+</script>
 </head>
 
 <body>
@@ -39,7 +60,7 @@
 						<input type="submit"
 							value="<spring:message code="button.update"/>"
 							class="btn btn-primary btn-sm" /> or <a
-							href="<c:url value='/Payment/paymentslist' />"><spring:message
+							href="<c:url value='/WorkPackage/edit-workPackage-${payment.workPackage.id}' />"><spring:message
 								code="button.cancel" /></a>
 					</div>
 				</c:when>
@@ -50,7 +71,7 @@
 					<div class="well col-md-2">
 						<input type="submit" value="<spring:message code="button.add"/>"
 							class="btn btn-primary btn-sm" /> or <a
-							href="<c:url value='/Payment/paymentslist' />"><spring:message
+							href="<c:url value='/WorkPackage/edit-workPackage-${payment.workPackage.id}' />"><spring:message
 								code="button.cancel" /></a>
 					</div>
 				</c:otherwise>

@@ -67,6 +67,11 @@ var userAttendance = new Map();
 <c:forEach items="${userAttendancesUpdated}" var="usrAttend">
 	userAttendance.set('${usrAttend.user.id}-${usrAttend.yearName}', {'mJan' : '${usrAttend.mJan}' , 'mFeb' : '${usrAttend.mFeb}', 'mMar' : '${usrAttend.mMar}', 'mApr' : '${usrAttend.mApr}', 'mMay' : '${usrAttend.mMay}', 'mJun' : '${usrAttend.mJun}', 'mJul' : '${usrAttend.mJul}', 'mAug' : '${usrAttend.mAug}', 'mSep' : '${usrAttend.mSep}', 'mOct' : '${usrAttend.mOct}', 'mNov' : '${usrAttend.mNov}', 'mDec' : '${usrAttend.mDec}' });
 </c:forEach>
+
+var allocatedDaysMap = new Map();
+<c:forEach items="${workPackage.workPackageUserAllocations}" var="workPackageUserAllocation">
+ allocatedDaysMap.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.yearName}', {'mJan' : '${workPackageUserAllocation.mJan}' , 'mFeb' : '${workPackageUserAllocation.mFeb}', 'mMar' : '${workPackageUserAllocation.mMar}', 'mApr' : '${workPackageUserAllocation.mApr}', 'mMay' : '${workPackageUserAllocation.mMay}', 'mJun' : '${workPackageUserAllocation.mJun}', 'mJul' : '${workPackageUserAllocation.mJul}', 'mAug' : '${workPackageUserAllocation.mAug}', 'mSep' : '${workPackageUserAllocation.mSep}', 'mOct' : '${workPackageUserAllocation.mOct}', 'mNov' : '${workPackageUserAllocation.mNov}', 'mDec' : '${workPackageUserAllocation.mDec}' });
+</c:forEach>
 var startYear = '<c:out value="${yearNameStart}"/>';
 var endYear = '<c:out value="${yearNameEnd}"/>';
 
@@ -108,6 +113,46 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		        }
 		    });
 			
+		}
+		
+		$( "#status" ).change(function() {
+			if($(this).val() == 'Planmäßig'){
+				$(this).css('color','lightgreen');
+			} else if($(this).val() == 'Verzögert'){
+				$(this).css('color','orange');
+			}  else if($(this).val() == 'Problem'){
+				$(this).css('color','red');
+			} else if($(this).val() == 'Abgeschlossen'){
+				$(this).css('color','green');
+			}
+		});
+		
+		var statusVal = '<c:out value="${workPackage.status}"/>';
+		console.log("status " + statusVal);
+		if(statusVal == 'Planmäßig'){
+			$('#status option[value=Planmäßig]').attr('selected','selected');
+			$('#status').css('color','lightgreen');
+		} else if(statusVal == 'Verzögert'){
+			$('#status option[value=Verzögert]').attr('selected','selected');
+			$('#status').css('color','orange');
+		}  else if(statusVal == 'Problem'){
+			$('#status option[value=Problem]').attr('selected','selected');
+			$('#status').css('color','red');
+		} else if(statusVal == 'Abgeschlossen'){
+			$('#status option[value=Abgeschlossen]').attr('selected','selected');
+			$('#status').css('color','green');
+		} else if(statusVal == 'Scheduled'){
+			$('#status option[value=Scheduled]').attr('selected','selected');
+			$('#status').css('color','lightgreen');
+		} else if(statusVal == 'Delayed'){
+			$('#status option[value=Delayed]').attr('selected','selected');
+			$('#status').css('color','orange');
+		}  else if(statusVal == 'Problem'){
+			$('#status option[value=Problem]').attr('selected','selected');
+			$('#status').css('color','red');
+		} else if(statusVal == 'Finished'){
+			$('#status option[value=Finished]').attr('selected','selected');
+			$('#status').css('color','green');
 		}
 		
 		$('input').on('keypress', function (event) {
@@ -201,15 +246,17 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 	}
 	
 	function validateAvailableAndAllocatedDays(updatedAllocatedDaysTextBoxValue) {
-		var allocatedDaysTextBoxValue = updatedAllocatedDaysTextBoxValue.val();
-		var availableDaysTextBoxValue = $(updatedAllocatedDaysTextBoxValue).closest('td').find('input:eq(0)').val();
-		var yearNameValue = $(updatedAllocatedDaysTextBoxValue).parent().siblings(":first").find('input').val() == undefined || null ? $(updatedAllocatedDaysTextBoxValue).parent().siblings(":first").find('select').val() : $(updatedAllocatedDaysTextBoxValue).parent().siblings(":first").find('input').val();
-		var usAtt = userAttendance.get($(updatedAllocatedDaysTextBoxValue).closest('tr').find('td:eq(1)').find('.userCombo option:selected').val() + "-" + yearNameValue);
-		var allocatedDaysTextBoxName = $(updatedAllocatedDaysTextBoxValue).attr('name');
-		var monthBeingUpdated = allocatedDaysTextBoxName.substr(allocatedDaysTextBoxName.indexOf(".") + 1);
-		var availableDaysTextBoxUpdatedValue =  usAtt[monthBeingUpdated] - allocatedDaysTextBoxValue; 
-		$(updatedAllocatedDaysTextBoxValue).prev('input').val(availableDaysTextBoxUpdatedValue.toFixed(2));
-	}
+		  var allocatedDaysTextBoxValue = updatedAllocatedDaysTextBoxValue.val();
+		  var availableDaysTextBoxValue = $(updatedAllocatedDaysTextBoxValue).closest('td').find('input:eq(0)').val();
+		  var yearNameValue = $(updatedAllocatedDaysTextBoxValue).parent().siblings(":first").find('input').val() == undefined || null ? $(updatedAllocatedDaysTextBoxValue).parent().siblings(":first").find('select').val() : $(updatedAllocatedDaysTextBoxValue).parent().siblings(":first").find('input').val();
+		  var usAtt = userAttendance.get($(updatedAllocatedDaysTextBoxValue).closest('tr').find('td:eq(1)').find('.userCombo option:selected').val() + "-" + yearNameValue);
+		  var allocatdDays = allocatedDaysMap.get($(updatedAllocatedDaysTextBoxValue).closest('tr').find('td:eq(1)').find('.userCombo option:selected').val() + "-" + yearNameValue);
+		  var allocatedDaysTextBoxName = $(updatedAllocatedDaysTextBoxValue).attr('name');
+		  var monthBeingUpdated = allocatedDaysTextBoxName.substr(allocatedDaysTextBoxName.indexOf(".") + 1);
+		  var temp =  usAtt[monthBeingUpdated] - allocatedDaysTextBoxValue;
+		  var availableDaysTextBoxUpdatedValue = parseFloat(temp) + parseFloat(allocatdDays[monthBeingUpdated]);
+		  $(updatedAllocatedDaysTextBoxValue).prev('input').val(availableDaysTextBoxUpdatedValue.toFixed(2));
+		 }
 	
 	function validateAvailableDays() {
 		$("[name$=mJan]").change(function() {
@@ -1136,7 +1183,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 							<%-- <form:input type="text" path="status" id="status"
 								class="form-control input-sm" />
 							 --%>
-							<select class="form-control input-sm" id="status" name="status">
+							<select style="color:lightgreen" class="form-control input-sm" id="status" name="status">
 								<option style="color: lightgreen;" class="form-control input-sm"
 									value="<spring:message code="workPackage.status.select.scheduled" />"><spring:message
 										code="workPackage.status.select.scheduled" /></option>

@@ -62,7 +62,7 @@
 			<div id="projectsTableWrapper" style="padding: 2%;">
 				<table id="projectsTable"
 					class="table table-striped table-bordered dt-responsive nowrap"
-					cellspacing="0" width="100%">
+					cellspacing="0" width="100%" style="font-size:100%;">
 					<thead>
 						<tr>
 							<th><spring:message code="project.label.projectNumber" />
