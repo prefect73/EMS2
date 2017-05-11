@@ -542,4 +542,26 @@ public class WorkPackageUserAllocation implements Serializable {
 		this.user = user;
 	}
 
+	@Override
+	public String toString() {
+		return "WorkPackageUserAllocation [id=" + id + ", totalPlannedDays="
+				+ totalPlannedDays + ", mJan=" + mJan + ", mFeb=" + mFeb
+				+ ", mMar=" + mMar + ", mApr=" + mApr + ", mMay=" + mMay
+				+ ", mJun=" + mJun + ", mJul=" + mJul + ", mAug=" + mAug
+				+ ", mSep=" + mSep + ", mOct=" + mOct + ", mNov=" + mNov
+				+ ", mDec=" + mDec + ", emJan=" + emJan + ", emFeb=" + emFeb
+				+ ", emMar=" + emMar + ", emApr=" + emApr + ", emMay=" + emMay
+				+ ", emJun=" + emJun + ", emJul=" + emJul + ", emAug=" + emAug
+				+ ", emSep=" + emSep + ", emOct=" + emOct + ", emNov=" + emNov
+				+ ", emDec=" + emDec + ", eemJan=" + eemJan + ", eemFeb="
+				+ eemFeb + ", eemMar=" + eemMar + ", eemApr=" + eemApr
+				+ ", eemMay=" + eemMay + ", eemJun=" + eemJun + ", eemJul="
+				+ eemJul + ", eemAug=" + eemAug + ", eemSep=" + eemSep
+				+ ", eemOct=" + eemOct + ", eemNov=" + eemNov + ", eemDec="
+				+ eemDec + ", yearName=" + yearName + ", workPackage="
+				+ workPackage + ", user=" + user + "]";
+	}
+	
+	
+
 }

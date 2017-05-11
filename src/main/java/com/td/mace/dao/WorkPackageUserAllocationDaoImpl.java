@@ -1,6 +1,5 @@
 package com.td.mace.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -88,6 +87,25 @@ public class WorkPackageUserAllocationDaoImpl extends
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsByUserAndYearName(
+			User user, String yearName) {
+		Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
+		criteria.add(Restrictions.eq("user.id", user.getId()));
+		criteria.add(Restrictions.eq("yearName", yearName));
+		// criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To
+		// avoid
+		// duplicates.
+		List<WorkPackageUserAllocation> workPackageUserAllocations = (List<WorkPackageUserAllocation>) criteria
+				.list();
+		for (WorkPackageUserAllocation workPackageUserAllocation : workPackageUserAllocations) {
+			Hibernate.initialize(workPackageUserAllocation.getWorkPackage());
+			Hibernate.initialize(workPackageUserAllocation.getUser());
+		}
+		return workPackageUserAllocations;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsByUserAndWorkPackage(
 			WorkPackage workPackage, User user) {
 		Criteria criteria = createEntityCriteria().addOrder(Order.asc("id"));
@@ -123,7 +141,8 @@ public class WorkPackageUserAllocationDaoImpl extends
 				.createSQLQuery(
 						"select id, work_package_id, user_id, sum(total_planned_days) as total_planned_days, sum(mjan) as mjan, sum(mfeb) as mfeb, sum(mmar) as mmar, sum(mapr) as mapr, sum(mmay) as mmay, sum(mjun) as mjun, sum(mjul) as mjul, sum(maug) as maug, sum(msep) as msep, sum(moct) as moct, sum(mnov) as mnov, sum(mdec) as mdec, sum(emjan) as emjan, sum(emfeb) as emfeb, sum(emmar) as emmar, sum(emapr) as emapr, sum(emmay) as emmay, sum(emjun) as emjun, sum(emjul) as emjul, sum(emaug) as emaug, sum(emsep) as emsep, sum(emoct) as emoct, sum(emnov) as emnov, sum(emdec) as emdec,eemjan,eemfeb,eemmar,eemapr,eemmay,eemjun,eemjul,eemaug,eemsep,eemoct,eemnov,eemdec, year_name from work_package_app_user_allocations group by user_id,year_name")
 				.addEntity(WorkPackageUserAllocation.class);
-		List<WorkPackageUserAllocation> workPackageUserAllocationsBySum = query.list();
+		List<WorkPackageUserAllocation> workPackageUserAllocationsBySum = query
+				.list();
 		return workPackageUserAllocationsBySum;
 	}
 
@@ -132,7 +151,8 @@ public class WorkPackageUserAllocationDaoImpl extends
 				.createSQLQuery(
 						"select id, work_package_id, user_id,total_planned_days, mjan, mfeb, mmar, mapr, mmay, mjun, mjul, maug, msep, moct, mnov, mdec, sum(mjan)+sum(mfeb)+sum(mmar)+sum(mapr)+sum(mmay)+sum(mjun)+sum(mjul)+sum(maug)+sum(msep)+sum(moct)+sum(mnov)+sum(mdec) as totalyearhours, year_name from work_package_app_user_allocations group by work_package_id")
 				.addEntity(WorkPackageUserAllocation.class);
-		List<WorkPackageUserAllocation> workPackageUserAllicationsBySumOfAllMonths = query.list();
+		List<WorkPackageUserAllocation> workPackageUserAllicationsBySumOfAllMonths = query
+				.list();
 		return workPackageUserAllicationsBySumOfAllMonths;
 	}
 

@@ -120,6 +120,12 @@ public class WorkPackageUserAllocationServiceImpl implements
 	public List<WorkPackageUserAllocation> findByProjectID(int projectID) {		
 		return dao.findByProjectID(projectID);
 	}
+
+	@Override
+	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsByUserAndYearName(
+			User user, String yearName) {
+		return dao.findAllWorkPackageUserAllocationsByUserAndYearName(user, yearName);
+	}
 	
 	
 

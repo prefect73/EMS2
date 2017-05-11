@@ -24,6 +24,11 @@
 		</sec:authorize>
 
 		<sec:authorize access="!hasAnyRole('ADMIN', 'Projektleitung')">
+			<li><a href="<c:url value='/TimeRecordingReport/timeRecording-2017' />"><spring:message
+						code="authheader.menu.workPackage.timeRecording" /></a></li>
+		</sec:authorize>
+
+		<sec:authorize access="!hasAnyRole('ADMIN', 'Projektleitung')">
 			<li><a
 				href="<c:url value='/WorkPackage/edit-normal-user-workPackage-0-0' />"><spring:message
 						code="authheader.menu.employee.workPackage.allocations" /></a></li>

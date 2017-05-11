@@ -25,6 +25,8 @@ public interface WorkPackageUserAllocationService {
 
 	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsByUser(
 			User user);
+	
+	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsByUserAndYearName(User user, String yearName);
 
 	List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsByUserAndWorkPackage(
 			WorkPackage workPackage, User user);
