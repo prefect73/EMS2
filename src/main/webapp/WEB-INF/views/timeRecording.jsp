@@ -61,6 +61,12 @@ button.ui-datepicker-current {
 }
 </style>
 <script>
+var allocatedDaysMap = new Map();
+<c:forEach items="${workPackageUserAllocations}" var="workPackageUserAllocation">
+ allocatedDaysMap.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.yearName}', {'mJan' : '${workPackageUserAllocation.mJan}' , 'mFeb' : '${workPackageUserAllocation.mFeb}', 'mMar' : '${workPackageUserAllocation.mMar}', 'mApr' : '${workPackageUserAllocation.mApr}', 'mMay' : '${workPackageUserAllocation.mMay}', 'mJun' : '${workPackageUserAllocation.mJun}', 'mJul' : '${workPackageUserAllocation.mJul}', 'mAug' : '${workPackageUserAllocation.mAug}', 'mSep' : '${workPackageUserAllocation.mSep}', 'mOct' : '${workPackageUserAllocation.mOct}', 'mNov' : '${workPackageUserAllocation.mNov}', 'mDec' : '${workPackageUserAllocation.mDec}' });
+</c:forEach>
+
+console.log(allocatedDaysMap);
 	function yearDropdownFill(startYear, endYear) {
 		for (i = startYear; i <= endYear; i++) {
 			$('#yearNamesDropDown').append($('<option />').val(i).html(i));
@@ -99,7 +105,7 @@ button.ui-datepicker-current {
 				makeCurrentMonthSelected();
 				makeCurrentWeekSelected();
 
-				$('.searchByWorkPackageNameBtn').on(
+				/* $('.searchByWorkPackageNameBtn').on(
 						'click',
 						function() {
 							var selectedWorkPackageName = $(this).text();
@@ -127,7 +133,7 @@ button.ui-datepicker-current {
 									'/EMS/Project/projectReport-'
 											+ projectNamesDropDownSelectedValue
 											+ '- ');
-						});
+						}); */
 
 			});
 </script>
@@ -165,9 +171,7 @@ button.ui-datepicker-current {
 						<select class="form-control input-sm" id="yearNamesDropDown"
 							name="yearNamesDropDown">
 						</select>
-						<div class="has-error">
-							<form:errors path="projectName" class="help-inline" />
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -192,9 +196,7 @@ button.ui-datepicker-current {
 							<option value="11"><spring:message code="timeRecording.label.month.november" /></option>
 							<option value="12"><spring:message code="timeRecording.label.month.december" /></option>
 						</select>
-						<div class="has-error">
-							<form:errors path="projectName" class="help-inline" />
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -211,9 +213,7 @@ button.ui-datepicker-current {
 							<option value="3">Week 3</option>
 							<option value="4">Week 4</option>
 						</select>
-						<div class="has-error">
-							<form:errors path="projectName" class="help-inline" />
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -223,7 +223,7 @@ button.ui-datepicker-current {
 						code="button.search" /> </a>
 			</div>
 
-		{{workPackageUserAllocations[0].yearName}}
+		${workPackageUserAllocations[0].workPackage.project.projectName}
 
 		</form:form>
 	</div>
