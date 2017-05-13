@@ -63,6 +63,28 @@ button.ui-datepicker-current {
 }
 </style>
 <script>
+	var allocatedDaysMap = new Map();
+	<c:forEach items="${workPackageUserAllocations}" var="workPackageUserAllocation">
+	allocatedDaysMap
+			.set(
+					'${workPackageUserAllocation.user.id}-${workPackageUserAllocation.yearName}',
+					{
+						'mJan' : '${workPackageUserAllocation.mJan}',
+						'mFeb' : '${workPackageUserAllocation.mFeb}',
+						'mMar' : '${workPackageUserAllocation.mMar}',
+						'mApr' : '${workPackageUserAllocation.mApr}',
+						'mMay' : '${workPackageUserAllocation.mMay}',
+						'mJun' : '${workPackageUserAllocation.mJun}',
+						'mJul' : '${workPackageUserAllocation.mJul}',
+						'mAug' : '${workPackageUserAllocation.mAug}',
+						'mSep' : '${workPackageUserAllocation.mSep}',
+						'mOct' : '${workPackageUserAllocation.mOct}',
+						'mNov' : '${workPackageUserAllocation.mNov}',
+						'mDec' : '${workPackageUserAllocation.mDec}'
+					});
+	</c:forEach>
+
+	console.log(allocatedDaysMap);
 	function yearDropdownFill(startYear, endYear) {
 		for (i = startYear; i <= endYear; i++) {
 			$('#yearNamesDropDown').append($('<option />').val(i).html(i));
@@ -95,47 +117,46 @@ button.ui-datepicker-current {
 
 	}
 	 */
-	$(document).ready(
-			function() {
-				var startYear = '<c:out value="${yearNameStart}"/>';
-				var endYear = '<c:out value="${yearNameEnd}"/>';
-				yearDropdownFill(startYear, endYear);
-				makeCurrentYearSelected();
-				makeCurrentMonthSelected();
-				//makeCurrentWeekSelected();
+	$(document).ready(function() {
+		var startYear = '<c:out value="${yearNameStart}"/>';
+		var endYear = '<c:out value="${yearNameEnd}"/>';
+		yearDropdownFill(startYear, endYear);
+		makeCurrentYearSelected();
+		makeCurrentMonthSelected();
+		//makeCurrentWeekSelected();
 
-				$('.searchByWorkPackageNameBtn').on(
-						'click',
-						function() {
-							var selectedWorkPackageName = $(this).text();
-							console.log("wpkg: " + selectedWorkPackageName);
-							var tr = $(this).closest('tr');
-							var row = table.row(tr);
-							$(this).attr(
-									'href',
-									'/EMS/TimeRecordingReport/timeRecording-'
-											+ yearNamesDropDownSelectedValue);
-						});
+		/* $('.searchByWorkPackageNameBtn').on(
+				'click',
+				function() {
+					var selectedWorkPackageName = $(this).text();
+					console.log("wpkg: " + selectedWorkPackageName);
+					var tr = $(this).closest('tr');
+					var row = table.row(tr);
+					$(this).attr(
+							'href',
+							'/EMS/TimeRecordingReport/timeRecording-'
+									+ yearNamesDropDownSelectedValue);
+				});
 
-				var projectNamesDropDownSelectedValue = $(
-						'#selectedProjectNumber').val();
-				$('#projectNamesDropDown').change(
-						function(e) {
-							if ($('#projectNamesDropDown :selected').val()) {
-								projectNamesDropDownSelectedValue = $(
-										'#projectNamesDropDown :selected')
-										.val();
-							}
-							console.log("pr"
-									+ projectNamesDropDownSelectedValue);
-							$('#searchByProjectNameBtn').attr(
-									'href',
-									'/EMS/Project/projectReport-'
-											+ projectNamesDropDownSelectedValue
-											+ '- ');
-						});
+		var projectNamesDropDownSelectedValue = $(
+				'#selectedProjectNumber').val();
+		$('#projectNamesDropDown').change(
+				function(e) {
+					if ($('#projectNamesDropDown :selected').val()) {
+						projectNamesDropDownSelectedValue = $(
+								'#projectNamesDropDown :selected')
+								.val();
+					}
+					console.log("pr"
+							+ projectNamesDropDownSelectedValue);
+					$('#searchByProjectNameBtn').attr(
+							'href',
+							'/EMS/Project/projectReport-'
+									+ projectNamesDropDownSelectedValue
+									+ '- ');
+				}); */
 
-			});
+	});
 </script>
 </head>
 <body>
@@ -157,11 +178,10 @@ button.ui-datepicker-current {
 						<select class="form-control input-sm" id="yearNamesDropDown"
 							name="yearNamesDropDown">
 						</select>
-
 					</div>
 				</div>
-				</div>
-				<div class="row">
+			</div>
+			<div class="row">
 				<div class="form-group col-md-5">
 					<label class="col-md-2 control-lable" for="monthName"><spring:message
 							code="timeRecording.label.monthName" /> </label>
@@ -196,67 +216,66 @@ button.ui-datepicker-current {
 
 					</div>
 				</div>
-				
+
 				<div class="col-md-2">
 					<a id="searchByYearBtn" class="btn btn-success custom-width"><spring:message
 							code="button.search" /> </a>
 				</div>
-				
+
 			</div>
 
 
 
 
-<div class="row" >
+			<div class="row">
 
-	<div class="form-group col-md-12" style="width:93%; left:5%;">
-		<div class="panel-group" id="accordion">
-			<c:forEach items="${workPackageUserAllocations}"
-				var="workPackageUserAllocation">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion"
-								href="<c:url value='#${workPackageUserAllocation.workPackage.project.projectName}' />">
-								${workPackageUserAllocation.workPackage.project.projectName}</a>
-						</h4>
-					</div>
-					<div
-						id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />"
-						class="panel-collapse collapse">
-						<div class="panel-body">
-							<table id="empListForWorkPackageTable"
-								class="table table-striped table-bordered dt-responsive nowrap"
-								cellspacing="0" width="100%">
-								<thead>
-									<tr>
-										<th><spring:message
-												code="workPackageUserAllocation.label.year" /></th>
-										<th><spring:message
-												code="workPackageUserAllocation.label.employeeName" /></th>
+				<div class="form-group col-md-12" style="width: 93%; left: 5%;">
+					<div class="panel-group" id="accordion">
+						<c:forEach items="${workPackageUserAllocations}"
+							var="workPackageUserAllocation">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion"
+											href="<c:url value='#${workPackageUserAllocation.workPackage.project.projectName}' />">
+											${workPackageUserAllocation.workPackage.project.projectName}</a>
+									</h4>
+								</div>
+								<div
+									id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />"
+									class="panel-collapse collapse">
+									<div class="panel-body">
+										<table id="empListForWorkPackageTable"
+											class="table table-striped table-bordered dt-responsive nowrap"
+											cellspacing="0" width="100%">
+											<thead>
+												<tr>
+													<th><spring:message
+															code="workPackageUserAllocation.label.year" /></th>
+													<th><spring:message
+															code="workPackageUserAllocation.label.employeeName" /></th>
 
-									</tr>
-								</thead>
-								<tbody>
-								<tr>
-								<td></td>
-								<td></td>
-								</tr>
-								</tbody>
-							</table>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td></td>
+													<td></td>
+												</tr>
+											</tbody>
+										</table>
 
 
-							${workPackageUserAllocation.workPackage.workPackageName}
-						</div>
+										${workPackageUserAllocation.workPackage.workPackageName}
+									</div>
+								</div>
+							</div>
+						</c:forEach>
 					</div>
 				</div>
-			</c:forEach>
-		</div>
-	</div>
+				</div>
+		</form:form>
 
-</div>
-
-</form:form>
 	</div>
 
 </body>
