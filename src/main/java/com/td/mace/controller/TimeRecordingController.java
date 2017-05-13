@@ -70,7 +70,7 @@ public class TimeRecordingController {
 		}
 
 		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
-		model.addAttribute("selectedYear",environment.getProperty("year.name.start"));
+		model.addAttribute("selectedYear", yearName);
 		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 		model.addAttribute("workPackageUserAllocations", workPackageUserAllocations);

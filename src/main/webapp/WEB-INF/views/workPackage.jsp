@@ -27,10 +27,6 @@
 	href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css" />
 <script type="text/javascript"
 	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
-<!-- <script type="text/javascript"
-        src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/i18n/jquery-ui-i18n.min.js">
-</script> -->
-<%-- <script src="<c:url value='/static/lib/year-select.js' />"></script> --%>
 
 <link rel="stylesheet"
 	href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />

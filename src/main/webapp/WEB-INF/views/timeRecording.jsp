@@ -18,29 +18,24 @@
 		<title><spring:message code="workPackage.add.title" /></title>
 	</c:otherwise>
 </c:choose>
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link href="<c:url value='/static/css/bootstrap.css' />"
-	rel="stylesheet"></link>
-<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css" />
-<script type="text/javascript"
-	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
-<!-- <script type="text/javascript"
-        src="http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/i18n/jquery-ui-i18n.min.js">
-</script> -->
-<%-- <script src="<c:url value='/static/lib/year-select.js' />"></script> --%>
 
-<link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
-<link href="<c:url value='/static/css/bootstrap.css' />"
-	rel="stylesheet"></link>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<!-- <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script> 
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script> 
+ -->
+<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
+<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 
 <style type="text/css">
+.collapse {
+        position: inherit;
+    }
+
 .ui-state-disabled, .ui-widget-content .ui-state-disabled,
 	.ui-widget-header .ui-state-disabled {
 	opacity: 1.35;
@@ -94,15 +89,21 @@ button.ui-datepicker-current {
 	function makeCurrentYearSelected() {
 		var d = new Date();
 		var currentYear = d.getFullYear();
-		//$('#yearNamesDropDown')).val(currentYear);	
-		$('#yearNamesDropDown option[value=' + currentYear + ']').attr(
-				'selected', 'selected');
+		console.log("sy " + <c:out value="${selectedYear}"/>);
+		if (<c:out value="${selectedYear}"/> == currentYear) {
+			$('#yearNamesDropDown option[value=' + currentYear + ']').attr(
+					'selected', 'selected');
+		} else {
+			$(
+					'#yearNamesDropDown option[value='
+							+ <c:out value="${selectedYear}"/> + ']').attr(
+					'selected', 'selected');
+		}
 	}
 
 	function makeCurrentMonthSelected() {
 		var d = new Date();
 		var currentMonth = d.getMonth();
-		//$('#yearNamesDropDown')).val(currentYear);	
 		$('#monthNamesDropDown option[value=' + currentMonth + ']').attr(
 				'selected', 'selected');
 
@@ -117,46 +118,37 @@ button.ui-datepicker-current {
 
 	}
 	 */
-	$(document).ready(function() {
-		var startYear = '<c:out value="${yearNameStart}"/>';
-		var endYear = '<c:out value="${yearNameEnd}"/>';
-		yearDropdownFill(startYear, endYear);
-		makeCurrentYearSelected();
-		makeCurrentMonthSelected();
-		//makeCurrentWeekSelected();
+	$(document).ready(
+			function() {
+				var startYear = '<c:out value="${yearNameStart}"/>';
+				var endYear = '<c:out value="${yearNameEnd}"/>';
+				yearDropdownFill(startYear, endYear);
+				makeCurrentYearSelected();
+				makeCurrentMonthSelected();
+				//makeCurrentWeekSelected();
 
-		/* $('.searchByWorkPackageNameBtn').on(
-				'click',
-				function() {
-					var selectedWorkPackageName = $(this).text();
-					console.log("wpkg: " + selectedWorkPackageName);
-					var tr = $(this).closest('tr');
-					var row = table.row(tr);
-					$(this).attr(
-							'href',
-							'/EMS/TimeRecordingReport/timeRecording-'
-									+ yearNamesDropDownSelectedValue);
-				});
-
-		var projectNamesDropDownSelectedValue = $(
-				'#selectedProjectNumber').val();
-		$('#projectNamesDropDown').change(
-				function(e) {
-					if ($('#projectNamesDropDown :selected').val()) {
-						projectNamesDropDownSelectedValue = $(
-								'#projectNamesDropDown :selected')
-								.val();
-					}
-					console.log("pr"
-							+ projectNamesDropDownSelectedValue);
-					$('#searchByProjectNameBtn').attr(
-							'href',
-							'/EMS/Project/projectReport-'
-									+ projectNamesDropDownSelectedValue
-									+ '- ');
-				}); */
-
-	});
+				$('#yearNamesDropDown').change(
+						function() {
+							var yearNamesDropDownSelectedValue = $(
+									"#yearNamesDropDown").val();
+							$("#searchByYearBtn").attr(
+									'href',
+									'/EMS/TimeRecordingReport/timeRecording-'
+											+ yearNamesDropDownSelectedValue);
+						});
+				//$(".workPackageCalendar").datepicker();
+				//$( document ).on( "click", "[class=workPackageCalendarDiv]", function() {
+					 $("#workPackageCalendar").datepicker();
+				//});
+				
+				   /*  $('#workPackageCalendar').datetimepicker({
+		                inline: true,
+		                sideBySide: true
+		            }); */
+		        
+			});
+	
+	 
 </script>
 </head>
 <body>
@@ -188,29 +180,29 @@ button.ui-datepicker-current {
 					<div class="col-md-3">
 						<select class="form-control input-sm" id="monthNamesDropDown"
 							name="monthNamesDropDown">
-							<option value="1"><spring:message
+							<option value="0"><spring:message
 									code="timeRecording.label.month.january" /></option>
-							<option value="2"><spring:message
+							<option value="1"><spring:message
 									code="timeRecording.label.month.february" /></option>
-							<option value="3"><spring:message
+							<option value="2"><spring:message
 									code="timeRecording.label.month.march" /></option>
-							<option value="4"><spring:message
+							<option value="3"><spring:message
 									code="timeRecording.label.month.april" /></option>
-							<option value="5"><spring:message
+							<option value="4"><spring:message
 									code="timeRecording.label.month.may" /></option>
-							<option value="6"><spring:message
+							<option value="5"><spring:message
 									code="timeRecording.label.month.june" /></option>
-							<option value="7"><spring:message
+							<option value="6"><spring:message
 									code="timeRecording.label.month.july" /></option>
-							<option value="8"><spring:message
+							<option value="7"><spring:message
 									code="timeRecording.label.month.august" /></option>
-							<option value="9"><spring:message
+							<option value="8"><spring:message
 									code="timeRecording.label.month.september" /></option>
-							<option value="10"><spring:message
+							<option value="9"><spring:message
 									code="timeRecording.label.month.october" /></option>
-							<option value="11"><spring:message
+							<option value="10"><spring:message
 									code="timeRecording.label.month.november" /></option>
-							<option value="12"><spring:message
+							<option value="11"><spring:message
 									code="timeRecording.label.month.december" /></option>
 						</select>
 
@@ -224,11 +216,7 @@ button.ui-datepicker-current {
 
 			</div>
 
-
-
-
 			<div class="row">
-
 				<div class="form-group col-md-12" style="width: 93%; left: 5%;">
 					<div class="panel-group" id="accordion">
 						<c:forEach items="${workPackageUserAllocations}"
@@ -245,37 +233,49 @@ button.ui-datepicker-current {
 									id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />"
 									class="panel-collapse collapse">
 									<div class="panel-body">
-										<table id="empListForWorkPackageTable"
-											class="table table-striped table-bordered dt-responsive nowrap"
-											cellspacing="0" width="100%">
-											<thead>
-												<tr>
-													<th><spring:message
-															code="workPackageUserAllocation.label.year" /></th>
-													<th><spring:message
-															code="workPackageUserAllocation.label.employeeName" /></th>
-
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td></td>
-													<td></td>
-												</tr>
-											</tbody>
-										</table>
-
-
-										${workPackageUserAllocation.workPackage.workPackageName}
+										<!-- workpackages accordion -->
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#accordion" class="workPackageCalendarDiv"
+													href="<c:url value='#${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />">
+													${workPackageUserAllocation.workPackage.workPackageName}</a>
+											</h4>
+										</div>
+										<div
+											id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />"
+											class="panel-collapse collapse">
+											<div class="panel-body workPackageCalendar">
+											<%-- 	<table id="empListForWorkPackageTable"
+													class="table table-striped table-bordered dt-responsive nowrap"
+													cellspacing="0" width="100%">
+													<thead>
+														<tr>
+															<th><spring:message
+																	code="workPackageUserAllocation.label.year" /></th>
+															<th><spring:message
+																	code="workPackageUserAllocation.label.employeeName" /></th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td></td>
+															<td></td>
+														</tr>
+													</tbody>
+												</table> --%>
+												
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</c:forEach>
 					</div>
 				</div>
-				</div>
+			</div>
 		</form:form>
-
+		<div id="workPackageCalendar">
+		</div>
 	</div>
 
 </body>
