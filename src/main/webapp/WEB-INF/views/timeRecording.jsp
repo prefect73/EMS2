@@ -20,8 +20,8 @@
 </c:choose>
 
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
-<!-- <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script> 
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script> 
  -->
 <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
