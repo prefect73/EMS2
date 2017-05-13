@@ -20,6 +20,8 @@
 </c:choose>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
@@ -66,30 +68,33 @@ button.ui-datepicker-current {
 			$('#yearNamesDropDown').append($('<option />').val(i).html(i));
 		}
 	}
-	
+
 	function makeCurrentYearSelected() {
 		var d = new Date();
 		var currentYear = d.getFullYear();
 		//$('#yearNamesDropDown')).val(currentYear);	
-		$('#yearNamesDropDown option[value=' + currentYear + ']').attr('selected','selected');
+		$('#yearNamesDropDown option[value=' + currentYear + ']').attr(
+				'selected', 'selected');
 	}
-	
+
 	function makeCurrentMonthSelected() {
 		var d = new Date();
 		var currentMonth = d.getMonth();
 		//$('#yearNamesDropDown')).val(currentYear);	
-		$('#monthNamesDropDown option[value=' + currentMonth + ']').attr('selected','selected');
-	
+		$('#monthNamesDropDown option[value=' + currentMonth + ']').attr(
+				'selected', 'selected');
+
 	}
-	
-	function makeCurrentWeekSelected() {
+
+	/* function makeCurrentWeekSelected() {
 		var date = new Date;
-	    var currenWeek = Math.ceil(date.getDate() / 7);
+		var currenWeek = Math.ceil(date.getDate() / 7);
 		//$('#yearNamesDropDown')).val(currentYear);	
-		$('#weekNamesDropDown option[value=' + currentWeek + ']').attr('selected','selected');
-	
+		$('#weekNamesDropDown option[value=' + currentWeek + ']').attr(
+				'selected', 'selected');
+
 	}
-	
+	 */
 	$(document).ready(
 			function() {
 				var startYear = '<c:out value="${yearNameStart}"/>';
@@ -97,7 +102,7 @@ button.ui-datepicker-current {
 				yearDropdownFill(startYear, endYear);
 				makeCurrentYearSelected();
 				makeCurrentMonthSelected();
-				makeCurrentWeekSelected();
+				//makeCurrentWeekSelected();
 
 				$('.searchByWorkPackageNameBtn').on(
 						'click',
@@ -112,7 +117,8 @@ button.ui-datepicker-current {
 											+ yearNamesDropDownSelectedValue);
 						});
 
-				var projectNamesDropDownSelectedValue = $('#selectedProjectNumber').val();
+				var projectNamesDropDownSelectedValue = $(
+						'#selectedProjectNumber').val();
 				$('#projectNamesDropDown').change(
 						function(e) {
 							if ($('#projectNamesDropDown :selected').val()) {
@@ -137,95 +143,120 @@ button.ui-datepicker-current {
 		<%@include file="authheader.jsp"%>
 		<form:form method="POST" modelAttribute="workPackageUserAllocations"
 			class="form-horizontal">
-			<%-- <form:input type="hidden" path="id" id="id" /> --%>
+			<input type="hidden" id="selectedYear" value='${selectedYear}' />
 
-			<%-- <div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="workPackageNumber"><spring:message
-							code="workPackage.label.workPackageNumber" /> </label>
-					<div class="col-md-3">
-						<form:input type="text" path="workPackageNumber"
-							id="workPackageNumber" class="form-control input-sm"
-							readonly="true" />
-						<div class="has-error">
-							<form:errors path="workPackageNumber" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div> --%>
 
-			<input type="hidden" id="selectedYear"
-				value='${selectedYear}' />
-
+			<div class="well lead col-md-12">
+				<spring:message code="project.update.title" />
+			</div>
 			<div class="row">
-				<div class="form-group col-md-12" style="margin-top: 2%;">
+				<div class="form-group col-md-5">
 					<label class="col-md-2 control-lable" for="yearName"><spring:message
 							code="timeRecording.label.yearName" /> </label>
 					<div class="col-md-3">
 						<select class="form-control input-sm" id="yearNamesDropDown"
 							name="yearNamesDropDown">
 						</select>
-						<div class="has-error">
-							<form:errors path="projectName" class="help-inline" />
-						</div>
+
 					</div>
 				</div>
-			</div>
-
-			<div class="row">
-				<div class="form-group col-md-12" style="margin-top: 2%;">
+				</div>
+				<div class="row">
+				<div class="form-group col-md-5">
 					<label class="col-md-2 control-lable" for="monthName"><spring:message
 							code="timeRecording.label.monthName" /> </label>
 					<div class="col-md-3">
 						<select class="form-control input-sm" id="monthNamesDropDown"
 							name="monthNamesDropDown">
-							<option value="1"><spring:message code="timeRecording.label.month.january" /></option>
-							<option value="2"><spring:message code="timeRecording.label.month.february" /></option>
-							<option value="3"><spring:message code="timeRecording.label.month.march" /></option>
-							<option value="4"><spring:message code="timeRecording.label.month.april" /></option>
-							<option value="5"><spring:message code="timeRecording.label.month.may" /></option>
-							<option value="6"><spring:message code="timeRecording.label.month.june" /></option>
-							<option value="7"><spring:message code="timeRecording.label.month.july" /></option>
-							<option value="8"><spring:message code="timeRecording.label.month.august" /></option>
-							<option value="9"><spring:message code="timeRecording.label.month.september" /></option>
-							<option value="10"><spring:message code="timeRecording.label.month.october" /></option>
-							<option value="11"><spring:message code="timeRecording.label.month.november" /></option>
-							<option value="12"><spring:message code="timeRecording.label.month.december" /></option>
+							<option value="1"><spring:message
+									code="timeRecording.label.month.january" /></option>
+							<option value="2"><spring:message
+									code="timeRecording.label.month.february" /></option>
+							<option value="3"><spring:message
+									code="timeRecording.label.month.march" /></option>
+							<option value="4"><spring:message
+									code="timeRecording.label.month.april" /></option>
+							<option value="5"><spring:message
+									code="timeRecording.label.month.may" /></option>
+							<option value="6"><spring:message
+									code="timeRecording.label.month.june" /></option>
+							<option value="7"><spring:message
+									code="timeRecording.label.month.july" /></option>
+							<option value="8"><spring:message
+									code="timeRecording.label.month.august" /></option>
+							<option value="9"><spring:message
+									code="timeRecording.label.month.september" /></option>
+							<option value="10"><spring:message
+									code="timeRecording.label.month.october" /></option>
+							<option value="11"><spring:message
+									code="timeRecording.label.month.november" /></option>
+							<option value="12"><spring:message
+									code="timeRecording.label.month.december" /></option>
 						</select>
-						<div class="has-error">
-							<form:errors path="projectName" class="help-inline" />
+
+					</div>
+				</div>
+				
+				<div class="col-md-2">
+					<a id="searchByYearBtn" class="btn btn-success custom-width"><spring:message
+							code="button.search" /> </a>
+				</div>
+				
+			</div>
+
+
+
+
+<div class="row" >
+
+	<div class="form-group col-md-12" style="width:93%; left:5%;">
+		<div class="panel-group" id="accordion">
+			<c:forEach items="${workPackageUserAllocations}"
+				var="workPackageUserAllocation">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion"
+								href="<c:url value='#${workPackageUserAllocation.workPackage.project.projectName}' />">
+								${workPackageUserAllocation.workPackage.project.projectName}</a>
+						</h4>
+					</div>
+					<div
+						id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />"
+						class="panel-collapse collapse">
+						<div class="panel-body">
+							<table id="empListForWorkPackageTable"
+								class="table table-striped table-bordered dt-responsive nowrap"
+								cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th><spring:message
+												code="workPackageUserAllocation.label.year" /></th>
+										<th><spring:message
+												code="workPackageUserAllocation.label.employeeName" /></th>
+
+									</tr>
+								</thead>
+								<tbody>
+								<tr>
+								<td></td>
+								<td></td>
+								</tr>
+								</tbody>
+							</table>
+
+
+							${workPackageUserAllocation.workPackage.workPackageName}
 						</div>
 					</div>
 				</div>
-			</div>
+			</c:forEach>
+		</div>
+	</div>
 
-			<div class="row">
-				<div class="form-group col-md-12" style="margin-top: 2%;">
-					<label class="col-md-2 control-lable" for="weekName"><spring:message
-							code="timeRecording.label.weekName" /> </label>
-					<div class="col-md-3">
-						<select class="form-control input-sm" id="weekNamesDropDown"
-							name="weekDropDown">
-							<option value="1">Week 1</option>
-							<option value="2">Week 2</option>
-							<option value="3">Week 3</option>
-							<option value="4">Week 4</option>
-						</select>
-						<div class="has-error">
-							<form:errors path="projectName" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div>
+</div>
 
-			<div class="col-md-3">
-				<a id="searchByYearBtn" class="btn btn-success custom-width"><spring:message
-						code="button.search" /> </a>
-			</div>
-
-		{{workPackageUserAllocations[0].yearName}}
-
-		</form:form>
+</form:form>
 	</div>
 
 </body>
