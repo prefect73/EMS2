@@ -75,6 +75,7 @@ button.ui-datepicker-current {
 	var effectiveDaysMap_11 = new Map();
 	var splittedCsv = "";
 	var effectiveDays = "";
+	var clickedWorkPackageCalendarAchorId = "";
 
 	<c:forEach items="${workPackageUserAllocations}" var="workPackageUserAllocation">
 	
@@ -144,7 +145,7 @@ button.ui-datepicker-current {
 	}
 	 */
 	 
-	function getCalendarValues(emMonth, selector) {
+	/* function getCalendarValues(emMonth, selector) {
 		 var daysSum = 0;
 		 var tempCSV = "";
 		 var effectiveDaysCSV = "";
@@ -163,8 +164,11 @@ button.ui-datepicker-current {
 		 $(emMonth).next().val(effectiveDaysCSV); 
 		 //$('#workPackageUserAllocations[0].emJan').val('31');		
 		 return daysSum;
-	}
+	} */
 	
+	 function daysInMonth(month,year) {
+		    return new Date(year, month, 0).getDate();
+		} 
 	 
 	$(document)
 			.ready(
@@ -203,16 +207,16 @@ button.ui-datepicker-current {
 								});
 						
 						
-					
-				/* 		"[id$=eDD]".change(function() {
-							console.log("workPackageCalendarTextBox " + $(this).attr('id'));
-						}); */
 						
 						$(document)
 								.on(
 										"click",
 										"[id$=workPackageCalendarAnchor]",
 										function() {
+											clickedWorkPackageCalendarAchorId = $(this);
+											//$(this).attr("disabled", "disabled");
+											
+
 											var d = new Date();
 											d.setMonth($("#monthNamesDropDown")
 													.val());
@@ -324,13 +328,18 @@ button.ui-datepicker-current {
 																			+ "-" 
 																			+ $('#monthNamesDropDown').val()) : '0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0';
 											
+											var daysInSelectedMonth = daysInMonth(parseInt($('#monthNamesDropDown').val() + 1), $('#yearNamesDropDown').val());
+											console.log("daysInSelectedMonth " + daysInSelectedMonth);
 											splittedCsv = effectiveDays.split(',');
 											$(".ui-datepicker-calendar .ui-state-default")
 													.each(
 															function(i) {
 																$(".ui-datepicker-prev, .ui-datepicker-next").remove();
-																$(this).html($(this).html()
+															//	console.log("dm " + daysInMonth(parseInt($('#monthNamesDropDown').val() + 1), $('#yearNamesDropDown').val()));
+																if(daysInSelectedMonth > i) {
+																	$(this).html($(this).html()
 																						+ "<input class=\"form-control input-sm workPackageCalendarTextBox\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "]." + $("#monthNamesDropDown").val() + "." + i + "\" value=\""+ splittedCsv[i] +"\" />");
+																}
 															});
 											$(this).parent().parent().next()
 													.find('div').attr("disabled", "disabled");
@@ -340,16 +349,28 @@ button.ui-datepicker-current {
 						.on("click", "[id$=submitButton]",
 							function(){
 							var j = 1;
-							var totalDaysSum = 0;								
+							var totalDaysSum = 0;
+							var tempCSV = "";
+							var effectiveDaysCSV = "";
+							var calendarTextBox = "";
 							var submitButtonId = $(this);
 							console.log("submit clicked");
 							$(this).parent().find(".ui-datepicker-calendar .ui-state-default")
 							.each(
 									function(j) {
-										totalDaysSum += parseFloat(splittedCsv[j]);
-										$(this).parent().parent().parent().parent().parent().parent().parent().next().next().val(totalDaysSum);
-										console.log("next id " + $(this).parent().parent().parent().parent().parent().parent().parent().next().next().attr("id"));
+										calendarTextBox = $(this);
+										//totalDaysSum += parseFloat(splittedCsv[j]);
+										totalDaysSum += parseFloat($(this).find("input").val());
+										console.log("text box value" + j + ": " + $(this).find("input").val());
+										tempCSV += "," + $(this).find("input").val();
+										
+										//console.log("next id " + $(this).parent().parent().parent().parent().parent().parent().parent().next().next().attr("id"));
 							});
+							effectiveDaysCSV = tempCSV.substring(1, tempCSV.length);
+							console.log("effectiveDaysCSV " + effectiveDaysCSV + " totalDaysSum " + totalDaysSum);
+							calendarTextBox.parent().parent().parent().parent().parent().parent().parent().next().next().val(totalDaysSum);
+							calendarTextBox.parent().parent().parent().parent().parent().parent().parent().next().next().next().val(effectiveDaysCSV);
+							
 						});
 
 					});
@@ -457,6 +478,8 @@ button.ui-datepicker-current {
 										</a>
 										<input type="hidden" 
 											id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarTotalDaysSum" />
+										<input type="hidden" 
+											id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarUpdatedCSV" />
 									</div>
 								</div>
 							</div>
