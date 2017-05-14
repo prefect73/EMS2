@@ -41,4 +41,8 @@ public interface WorkPackageUserAllocationService {
 	
 	List<WorkPackageUserAllocation> findByProjectID(int projectID);
 
+	void updateWorkPackageUserAllocationByYearAndByMonthAndByUser(
+			String yearName, String monthName, User user,
+			WorkPackageUserAllocation workPackageUserAllocation);
+
 }

@@ -126,6 +126,15 @@ public class WorkPackageUserAllocationServiceImpl implements
 			User user, String yearName) {
 		return dao.findAllWorkPackageUserAllocationsByUserAndYearName(user, yearName);
 	}
+
+	@Override
+	public void updateWorkPackageUserAllocationByYearAndByMonthAndByUser(
+			String yearName, String monthName, User user,
+			WorkPackageUserAllocation workPackageUserAllocation) {
+			dao.updateWorkPackageUserAllocationByYearAndByMonthAndByUser(
+					yearName,monthName,user,
+					workPackageUserAllocation);
+	}
 	
 	
 

@@ -3,6 +3,8 @@ package com.td.mace.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
@@ -13,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.td.mace.model.Project;
 import com.td.mace.model.User;
+import com.td.mace.model.WorkPackage;
 import com.td.mace.model.WorkPackageUserAllocation;
 import com.td.mace.service.ProjectService;
 import com.td.mace.service.UserService;
@@ -61,11 +65,36 @@ public class TimeRecordingController {
 	 * This method will list all existing workPackages.
 	 */
 	@RequestMapping(value = { "/timeRecording-{yearName}-{monthName}" }, method = RequestMethod.GET)
-	public String timeRecordingPage(@PathVariable String yearName, @PathVariable String monthName , ModelMap model) {
+	public String getTimeRecordings(@PathVariable String yearName, @PathVariable String monthName , ModelMap model) {
 
 		List<WorkPackageUserAllocation> workPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
 		if (getPrincipal() != null) {
 			User user = userService.findBySSO(getPrincipal());
+			workPackageUserAllocations = workPackageUserAllocationService.findAllWorkPackageUserAllocationsByUserAndYearName(user, yearName);
+		}
+
+		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
+		model.addAttribute("selectedYear", yearName);
+		model.addAttribute("selectedMonth", monthName);
+		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
+		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
+		model.addAttribute("workPackageUserAllocations", workPackageUserAllocations);
+		System.out.println("workPackageUserAllocations" + workPackageUserAllocations);
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "timeRecording";
+	}
+	
+	/**
+	 * This method will list all existing workPackages.
+	 */
+	@RequestMapping(value = { "/timeRecording-{yearName}-{monthName}" }, method = RequestMethod.POST)
+	public String postTimeRecordings(@PathVariable String yearName, @PathVariable String monthName , @Valid WorkPackageUserAllocation workPackageUserAllocation,
+			   BindingResult result, ModelMap model) {
+
+		List<WorkPackageUserAllocation> workPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
+		if (getPrincipal() != null) {
+			User user = userService.findBySSO(getPrincipal());
+			//workPackageUserAllocationService.updateWorkPackageUserAllocationByYearAndByMonthAndByUser(yearName, monthName , user, workPackageUserAllocation);
 			workPackageUserAllocations = workPackageUserAllocationService.findAllWorkPackageUserAllocationsByUserAndYearName(user, yearName);
 		}
 

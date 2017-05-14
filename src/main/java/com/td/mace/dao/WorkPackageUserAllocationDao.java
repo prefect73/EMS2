@@ -32,6 +32,10 @@ public interface WorkPackageUserAllocationDao {
 	List<WorkPackageUserAllocation> getWorkPackageHoursForAllUsers(String workPackageNumber);
 	
 	List<WorkPackageUserAllocation> findByProjectID(int projectID);
+
+	void updateWorkPackageUserAllocationByYearAndByMonthAndByUser(
+			String yearName, String monthName, User user,
+			WorkPackageUserAllocation workPackageUserAllocation);
 	
 	
 

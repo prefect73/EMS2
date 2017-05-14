@@ -385,11 +385,16 @@ button.ui-datepicker-current {
 			<input type="hidden" id="selectedYear" value='${selectedYear}' />
 			<input type="hidden" id="selectedMonth" value='${selectedMonth}' />
 			
-			<div class="well lead col-md-12">
-				<spring:message code="project.update.title" />
+			<div class="well lead col-md-5">
+				<spring:message code="timeRecording.enter.your.time" />
+			</div>
+			<div class="well col-md-2">
+				<input type="submit" id="updateBtn"
+					value="<spring:message code="button.update"/>"
+					class="btn btn-primary btn-sm" />
 			</div>
 			<div class="row">
-				<div class="form-group col-md-5">
+				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="yearName"><spring:message
 							code="timeRecording.label.yearName" /> </label>
 					<div class="col-md-3">
@@ -400,7 +405,7 @@ button.ui-datepicker-current {
 				</div>
 			</div>
 			<div class="row">
-				<div class="form-group col-md-5">
+				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="monthName"><spring:message
 							code="timeRecording.label.monthName" /> </label>
 					<div class="col-md-3">
@@ -433,12 +438,12 @@ button.ui-datepicker-current {
 						</select>
 
 					</div>
-				</div>
-
 				<div class="col-md-2">
 					<a id="searchByYearBtn" class="btn btn-success custom-width"><spring:message
 							code="button.search" /> </a>
 				</div>
+				</div>
+
 
 			</div>
 
@@ -480,6 +485,8 @@ button.ui-datepicker-current {
 											id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarTotalDaysSum" />
 										<input type="hidden" 
 											id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarUpdatedCSV" />
+											<input type="hidden" id="emMay" name="emMay" value="3" />
+											<input type="hidden" id="eemMay" name="eemMay" value="2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" />
 									</div>
 								</div>
 							</div>

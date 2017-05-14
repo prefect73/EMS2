@@ -1,5 +1,6 @@
 package com.td.mace.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -180,6 +181,85 @@ public class WorkPackageUserAllocationDaoImpl extends
 		query.setParameter("projectId", projectID);
 		List<WorkPackageUserAllocation> workPackages = query.list();
 		return workPackages;
+	}
+
+	@Override
+	public void updateWorkPackageUserAllocationByYearAndByMonthAndByUser(
+			String yearName, String monthName, User user,
+			WorkPackageUserAllocation workPackageUserAllocation) {
+		HashMap<String , String> monthNames = new HashMap<String, String>();
+		monthNames.put("0", "jan");
+		monthNames.put("1", "feb");
+		monthNames.put("2", "mar");
+		monthNames.put("3", "apr");
+		monthNames.put("4", "may");
+		monthNames.put("5", "jun");
+		monthNames.put("6", "jul");
+		monthNames.put("7", "aug");
+		monthNames.put("8", "sep");
+		monthNames.put("9", "oct");
+		monthNames.put("10", "Nov");
+		monthNames.put("11", "dec");
+		
+		
+		Query query = getSession()
+				.createSQLQuery("update work_package_app_user_allocations set em" + monthNames.get(monthName) + " = :monthTotal , eem" + monthNames.get(monthName) + " = :monthCSV"
+						+ " where year_name = :yearName AND user_id = :userId AND workPackage_id = :workPackageId");
+		if(monthName.equals("0")){
+			query.setParameter("monthTotal", workPackageUserAllocation.getEmJan());
+			query.setParameter("monthCSV", workPackageUserAllocation.getEemJan());
+		}
+		if(monthName.equals("1")){
+			query.setParameter("monthTotal", workPackageUserAllocation.getEmFeb());
+			query.setParameter("monthCSV", workPackageUserAllocation.getEemFeb());
+		}
+		if(monthName.equals("2")){
+			query.setParameter("monthTotal", workPackageUserAllocation.getEmMar());
+			query.setParameter("monthCSV", workPackageUserAllocation.getEemMar());
+		}
+		if(monthName.equals("3")){
+			query.setParameter("monthTotal", workPackageUserAllocation.getEmApr());
+			query.setParameter("monthCSV", workPackageUserAllocation.getEemApr());
+		}
+		if(monthName.equals("4")){
+			query.setParameter("monthTotal", workPackageUserAllocation.getEmMay());
+			query.setParameter("monthCSV", workPackageUserAllocation.getEemMay());
+		}
+		if(monthName.equals("5")){
+			query.setParameter("monthTotal", workPackageUserAllocation.getEmJun());
+			query.setParameter("monthCSV", workPackageUserAllocation.getEemJun());
+		}
+		if(monthName.equals("6")){
+			query.setParameter("monthTotal", workPackageUserAllocation.getEmJul());
+			query.setParameter("monthCSV", workPackageUserAllocation.getEemJul());
+		}
+		if(monthName.equals("7")){
+			query.setParameter("monthTotal", workPackageUserAllocation.getEmAug());
+			query.setParameter("monthCSV", workPackageUserAllocation.getEemAug());
+		}
+		if(monthName.equals("8")){
+			query.setParameter("monthTotal", workPackageUserAllocation.getEmSep());
+			query.setParameter("monthCSV", workPackageUserAllocation.getEemSep());
+		}
+		if(monthName.equals("9")){
+			query.setParameter("monthTotal", workPackageUserAllocation.getEmOct());
+			query.setParameter("monthCSV", workPackageUserAllocation.getEemOct());
+		}
+		if(monthName.equals("10")){
+			query.setParameter("monthTotal", workPackageUserAllocation.getEmNov());
+			query.setParameter("monthCSV", workPackageUserAllocation.getEemNov());
+		}
+		if(monthName.equals("11")){
+			query.setParameter("monthTotal", workPackageUserAllocation.getEmDec());
+			query.setParameter("monthCSV", workPackageUserAllocation.getEemDec());
+		}
+		
+		query.setParameter("yearName", yearName);
+		query.setParameter("userId", user.getId());
+		query.setParameter("workPackageId", workPackageUserAllocation.getWorkPackage().getId());
+		
+		int result = query.executeUpdate();
+
 	}
 
 }
