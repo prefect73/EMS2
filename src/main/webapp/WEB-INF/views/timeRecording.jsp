@@ -21,20 +21,22 @@
 
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script> 
- -->
-<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link href="<c:url value='/static/css/bootstrap.css' />"
+	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css" />
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
-<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+<link href="<c:url value='/static/css/bootstrap.css' />"
+	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 
 <style type="text/css">
 .collapse {
-        position: inherit;
-    }
+	position: inherit;
+}
 
 .ui-state-disabled, .ui-widget-content .ui-state-disabled,
 	.ui-widget-header .ui-state-disabled {
@@ -58,28 +60,52 @@ button.ui-datepicker-current {
 }
 </style>
 <script>
-	var allocatedDaysMap = new Map();
+	var loggedInUserId = "";
+	var effectiveDaysMap_0 = new Map();
+	var effectiveDaysMap_1 = new Map();
+	var effectiveDaysMap_2 = new Map();
+	var effectiveDaysMap_3 = new Map();
+	var effectiveDaysMap_4 = new Map();
+	var effectiveDaysMap_5 = new Map();
+	var effectiveDaysMap_6 = new Map();
+	var effectiveDaysMap_7 = new Map();
+	var effectiveDaysMap_8 = new Map();
+	var effectiveDaysMap_9 = new Map();
+	var effectiveDaysMap_10 = new Map();
+	var effectiveDaysMap_11 = new Map();
+	
+
 	<c:forEach items="${workPackageUserAllocations}" var="workPackageUserAllocation">
-	allocatedDaysMap
-			.set(
-					'${workPackageUserAllocation.user.id}-${workPackageUserAllocation.yearName}',
-					{
-						'mJan' : '${workPackageUserAllocation.mJan}',
-						'mFeb' : '${workPackageUserAllocation.mFeb}',
-						'mMar' : '${workPackageUserAllocation.mMar}',
-						'mApr' : '${workPackageUserAllocation.mApr}',
-						'mMay' : '${workPackageUserAllocation.mMay}',
-						'mJun' : '${workPackageUserAllocation.mJun}',
-						'mJul' : '${workPackageUserAllocation.mJul}',
-						'mAug' : '${workPackageUserAllocation.mAug}',
-						'mSep' : '${workPackageUserAllocation.mSep}',
-						'mOct' : '${workPackageUserAllocation.mOct}',
-						'mNov' : '${workPackageUserAllocation.mNov}',
-						'mDec' : '${workPackageUserAllocation.mDec}'
-					});
+	
+	loggedInUserId = '${workPackageUserAllocation.user.id}';
+
+	effectiveDaysMap_0.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+					+ "0", '${workPackageUserAllocation.eemJan}');
+	effectiveDaysMap_1.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+					+ "1", '${workPackageUserAllocation.eemFeb}');
+	effectiveDaysMap_2.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+					+ "2", '${workPackageUserAllocation.eemMar}');
+	effectiveDaysMap_3.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+					+ "3", '${workPackageUserAllocation.eemApr}');
+	effectiveDaysMap_4.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+					+ "4", '${workPackageUserAllocation.eemMay}');
+	effectiveDaysMap_5.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+					+ "5", '${workPackageUserAllocation.eemJun}');
+	effectiveDaysMap_6.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+					+ "6", '${workPackageUserAllocation.eemJul}');
+	effectiveDaysMap_7.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+					+ "7", '${workPackageUserAllocation.eemAug}');
+	effectiveDaysMap_8.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+					+ "8", '${workPackageUserAllocation.eemSep}');
+	effectiveDaysMap_9.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+					+ "9", '${workPackageUserAllocation.eemOct}');
+	effectiveDaysMap_10.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+					+ "10", '${workPackageUserAllocation.eemNov}');
+	effectiveDaysMap_11.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+					+ "11", '${workPackageUserAllocation.eemDec}');
+
 	</c:forEach>
 
-	console.log(allocatedDaysMap);
 	function yearDropdownFill(startYear, endYear) {
 		for (i = startYear; i <= endYear; i++) {
 			$('#yearNamesDropDown').append($('<option />').val(i).html(i));
@@ -89,24 +115,22 @@ button.ui-datepicker-current {
 	function makeCurrentYearSelected() {
 		var d = new Date();
 		var currentYear = d.getFullYear();
-		console.log("sy " + <c:out value="${selectedYear}"/>);
 		if (<c:out value="${selectedYear}"/> == currentYear) {
-			$('#yearNamesDropDown option[value=' + currentYear + ']').attr(
-					'selected', 'selected');
+			$('#yearNamesDropDown option[value=' + currentYear + ']').attr('selected', 'selected');
 		} else {
-			$(
-					'#yearNamesDropDown option[value='
-							+ <c:out value="${selectedYear}"/> + ']').attr(
-					'selected', 'selected');
+			$('#yearNamesDropDown option[value='+ <c:out value="${selectedYear}"/> + ']').attr('selected', 'selected');
 		}
 	}
 
 	function makeCurrentMonthSelected() {
 		var d = new Date();
 		var currentMonth = d.getMonth();
-		$('#monthNamesDropDown option[value=' + currentMonth + ']').attr(
-				'selected', 'selected');
-
+		if (<c:out value="${selectedMonth}"/> == currentMonth) {
+			$('#monthNamesDropDown option[value=' + currentMonth + ']').attr('selected', 'selected');
+		}
+		else {
+			$('#monthNamesDropDown option[value='+ <c:out value="${selectedMonth}"/> + ']').attr('selected', 'selected');
+		}
 	}
 
 	/* function makeCurrentWeekSelected() {
@@ -118,37 +142,166 @@ button.ui-datepicker-current {
 
 	}
 	 */
-	$(document).ready(
-			function() {
-				var startYear = '<c:out value="${yearNameStart}"/>';
-				var endYear = '<c:out value="${yearNameEnd}"/>';
-				yearDropdownFill(startYear, endYear);
-				makeCurrentYearSelected();
-				makeCurrentMonthSelected();
-				//makeCurrentWeekSelected();
+	$(document)
+			.ready(
+					function() {
+						var startYear = '<c:out value="${yearNameStart}"/>';
+						var endYear = '<c:out value="${yearNameEnd}"/>';
+						yearDropdownFill(startYear, endYear);
+						makeCurrentYearSelected();
+						makeCurrentMonthSelected();
+						//makeCurrentWeekSelected();
 
-				$('#yearNamesDropDown').change(
-						function() {
-							var yearNamesDropDownSelectedValue = $(
-									"#yearNamesDropDown").val();
-							$("#searchByYearBtn").attr(
-									'href',
-									'/EMS/TimeRecordingReport/timeRecording-'
-											+ yearNamesDropDownSelectedValue);
-						});
-				//$(".workPackageCalendar").datepicker();
-				//$( document ).on( "click", "[class=workPackageCalendarDiv]", function() {
-					 $("#workPackageCalendar").datepicker();
-				//});
-				
-				   /*  $('#workPackageCalendar').datetimepicker({
-		                inline: true,
-		                sideBySide: true
-		            }); */
-		        
-			});
-	
-	 
+						$('#yearNamesDropDown')
+								.change(
+										function() {
+											var yearNamesDropDownSelectedValue = $("#yearNamesDropDown").val();
+											var monthNamesDropDownSelectedValue = $("#monthNamesDropDown").val();
+											
+											$("#searchByYearBtn")
+													.attr(
+															'href',
+															'/EMS/TimeRecordingReport/timeRecording-'
+																	+ yearNamesDropDownSelectedValue + '-' + monthNamesDropDownSelectedValue);
+										});
+						
+						$('#monthNamesDropDown')
+						.change(
+								function() {
+									var yearNamesDropDownSelectedValue = $("#yearNamesDropDown").val();
+									var monthNamesDropDownSelectedValue = $("#monthNamesDropDown").val();
+									
+									$("#searchByYearBtn")
+											.attr(
+													'href',
+													'/EMS/TimeRecordingReport/timeRecording-'
+															+ yearNamesDropDownSelectedValue + '-' + monthNamesDropDownSelectedValue);
+								});
+
+						$(document)
+								.on(
+										"click",
+										"[id$=workPackageCalendarAnchor]",
+										function() {
+											var d = new Date();
+											d.setMonth($("#monthNamesDropDown")
+													.val());
+											d.setYear($("#yearNamesDropDown")
+													.val());
+											$(this)
+													.parent()
+													.parent()
+													.next()
+													.find('div')
+													.datepicker(
+															{
+																beforeShowDay : function(date) {return [false,'' ];},
+																monthNames : [
+																		'Januar',
+																		'Februar',
+																		'März',
+																		'April',
+																		'Mai',
+																		'Juni',
+																		'Juli',
+																		'August',
+																		'September',
+																		'Oktober',
+																		'November',
+																		'Dezember' ],
+																monthNamesShort : [
+																		'Jan',
+																		'Feb',
+																		'Mär',
+																		'Apr',
+																		'Mai',
+																		'Jun',
+																		'Jul',
+																		'Aug',
+																		'Sep',
+																		'Okt',
+																		'Nov',
+																		'Dez' ],
+																dayNames : [
+																		'Sonntag',
+																		'Montag',
+																		'Dienstag',
+																		'Mittwoch',
+																		'Donnerstag',
+																		'Freitag',
+																		'Samstag' ],
+																dayNamesShort : [
+																		'So',
+																		'Mo',
+																		'Di',
+																		'Mi',
+																		'Do',
+																		'Fr',
+																		'Sa' ],
+																dayNamesMin : [
+																		'So',
+																		'Mo',
+																		'Di',
+																		'Mi',
+																		'Do',
+																		'Fr',
+																		'Sa' ],
+																showYear : false,
+																changeMonth : false,
+																changeYear : false,
+																defaultDate: d,
+																firstDay : 1,
+																close : false,
+																showButtonPanel : true,
+																autoClose : false,
+																onClose : function(
+																		dateText,
+																		inst) {
+																	getCalendarValues("#" + $(this).attr('id'),'.mJan');
+																}
+															}).datepicker("show");
+											$(document).off('mousedown', $.datepicker._checkExternalClick);
+											var i = 1;
+											//var csvv = $(this).next().attr('value') != "" ? $(this).next().attr('value') : '0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0';
+											var selectedProjectName = $(this).parent().parent().parent().parent().attr('id');
+											var selectedWorkPackageName = $(this).text();
+											
+											var effectiveDays = eval("effectiveDaysMap_" + $('#monthNamesDropDown').val()).get(
+															loggedInUserId
+															+ "-"
+															+ selectedProjectName
+															+ '-'
+															+ selectedWorkPackageName
+															+ '-'
+															+ $("#yearNamesDropDown").val()
+															+ "-" 
+															+ $('#monthNamesDropDown').val())
+															!= "" ?
+																	eval("effectiveDaysMap_" + $('#monthNamesDropDown').val()).get(
+																			loggedInUserId
+																			+ "-"
+																			+ selectedProjectName
+																			+ '-'
+																			+ selectedWorkPackageName
+																			+ '-'
+																			+ $("#yearNamesDropDown").val()
+																			+ "-" 
+																			+ $('#monthNamesDropDown').val()) : '0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0';
+											
+											var splittedCsv = effectiveDays.split(',');
+											$(".ui-datepicker-calendar .ui-state-default")
+													.each(
+															function(i) {
+																$(".ui-datepicker-prev, .ui-datepicker-next").remove();
+																$(this).html($(this).html()
+																						+ "<input class=\"form-control input-sm mFeb\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemFeb" + i + "\" value=\""+ splittedCsv[i] +"\" />");
+															});
+											$(this).parent().parent().next()
+													.find('div').attr("disabled", "disabled");
+
+										});
+
+					});
 </script>
 </head>
 <body>
@@ -156,9 +309,10 @@ button.ui-datepicker-current {
 		<%@include file="authheader.jsp"%>
 		<form:form method="POST" modelAttribute="workPackageUserAllocations"
 			class="form-horizontal">
+			
 			<input type="hidden" id="selectedYear" value='${selectedYear}' />
-
-
+			<input type="hidden" id="selectedMonth" value='${selectedMonth}' />
+			
 			<div class="well lead col-md-12">
 				<spring:message code="project.update.title" />
 			</div>
@@ -236,35 +390,16 @@ button.ui-datepicker-current {
 										<!-- workpackages accordion -->
 										<div class="panel-heading">
 											<h4 class="panel-title">
-												<a data-toggle="collapse" data-parent="#accordion" class="workPackageCalendarDiv"
-													href="<c:url value='#${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />">
-													${workPackageUserAllocation.workPackage.workPackageName}</a>
+												<a data-toggle="collapse"
+													data-parent="#<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />"
+													id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarAnchor"
+													href="<c:url value='#${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendar">${workPackageUserAllocation.workPackage.workPackageName}</a>
 											</h4>
 										</div>
 										<div
-											id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />"
+											id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendar"
 											class="panel-collapse collapse">
-											<div class="panel-body workPackageCalendar">
-											<%-- 	<table id="empListForWorkPackageTable"
-													class="table table-striped table-bordered dt-responsive nowrap"
-													cellspacing="0" width="100%">
-													<thead>
-														<tr>
-															<th><spring:message
-																	code="workPackageUserAllocation.label.year" /></th>
-															<th><spring:message
-																	code="workPackageUserAllocation.label.employeeName" /></th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>
-															<td></td>
-															<td></td>
-														</tr>
-													</tbody>
-												</table> --%>
-												
-											</div>
+											<div class="panel-body"></div>
 										</div>
 									</div>
 								</div>
@@ -274,8 +409,6 @@ button.ui-datepicker-current {
 				</div>
 			</div>
 		</form:form>
-		<div id="workPackageCalendar">
-		</div>
 	</div>
 
 </body>

@@ -60,8 +60,8 @@ public class TimeRecordingController {
 	/**
 	 * This method will list all existing workPackages.
 	 */
-	@RequestMapping(value = { "/timeRecording-{yearName}" }, method = RequestMethod.GET)
-	public String timeRecordingPage(@PathVariable String yearName , ModelMap model) {
+	@RequestMapping(value = { "/timeRecording-{yearName}-{monthName}" }, method = RequestMethod.GET)
+	public String timeRecordingPage(@PathVariable String yearName, @PathVariable String monthName , ModelMap model) {
 
 		List<WorkPackageUserAllocation> workPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
 		if (getPrincipal() != null) {
@@ -71,6 +71,7 @@ public class TimeRecordingController {
 
 		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 		model.addAttribute("selectedYear", yearName);
+		model.addAttribute("selectedMonth", monthName);
 		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 		model.addAttribute("workPackageUserAllocations", workPackageUserAllocations);
