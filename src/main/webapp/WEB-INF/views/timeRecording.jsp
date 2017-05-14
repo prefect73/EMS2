@@ -73,7 +73,8 @@ button.ui-datepicker-current {
 	var effectiveDaysMap_9 = new Map();
 	var effectiveDaysMap_10 = new Map();
 	var effectiveDaysMap_11 = new Map();
-	
+	var splittedCsv = "";
+	var effectiveDays = "";
 
 	<c:forEach items="${workPackageUserAllocations}" var="workPackageUserAllocation">
 	
@@ -142,6 +143,29 @@ button.ui-datepicker-current {
 
 	}
 	 */
+	 
+	function getCalendarValues(emMonth, selector) {
+		 var daysSum = 0;
+		 var tempCSV = "";
+		 var effectiveDaysCSV = "";
+		 $(selector).each(function(){
+		     var th = $(this);
+		     
+		  if(!th.val())
+		   th.val('0.00');
+		  tempCSV += "," + th.val();
+		  effectiveDaysCSV = tempCSV.substring(1, tempCSV.length);
+		  //daysSum += parseFloat(th.val() > 4 ? 1 : th.val() > 0 && th.val() <= 4 ? 0.5 : 0  );
+		  daysSum += parseFloat(th.val()/8);
+		 });
+		 $(emMonth).removeAttr( "disabled");
+		 $(emMonth).val(daysSum);  
+		 $(emMonth).next().val(effectiveDaysCSV); 
+		 //$('#workPackageUserAllocations[0].emJan').val('31');		
+		 return daysSum;
+	}
+	
+	 
 	$(document)
 			.ready(
 					function() {
@@ -177,7 +201,13 @@ button.ui-datepicker-current {
 													'/EMS/TimeRecordingReport/timeRecording-'
 															+ yearNamesDropDownSelectedValue + '-' + monthNamesDropDownSelectedValue);
 								});
-
+						
+						
+					
+				/* 		"[id$=eDD]".change(function() {
+							console.log("workPackageCalendarTextBox " + $(this).attr('id'));
+						}); */
+						
 						$(document)
 								.on(
 										"click",
@@ -254,19 +284,25 @@ button.ui-datepicker-current {
 																close : false,
 																showButtonPanel : true,
 																autoClose : false,
+																closeText : "Ok",
 																onClose : function(
 																		dateText,
 																		inst) {
-																	getCalendarValues("#" + $(this).attr('id'),'.mJan');
+																	console.log("Closed");
+																	//getCalendarValues("#" + $(this).attr('id'),'.workPackageCalendarTextBox');
 																}
 															}).datepicker("show");
 											$(document).off('mousedown', $.datepicker._checkExternalClick);
+											
 											var i = 1;
-											//var csvv = $(this).next().attr('value') != "" ? $(this).next().attr('value') : '0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0';
 											var selectedProjectName = $(this).parent().parent().parent().parent().attr('id');
 											var selectedWorkPackageName = $(this).text();
+											console.log("selectedWorkPackageName");
+											$(".workPackageCalendarTextBox").each(function() {
+											    console.log($(this).val());
+											});
 											
-											var effectiveDays = eval("effectiveDaysMap_" + $('#monthNamesDropDown').val()).get(
+											effectiveDays = eval("effectiveDaysMap_" + $('#monthNamesDropDown').val()).get(
 															loggedInUserId
 															+ "-"
 															+ selectedProjectName
@@ -288,18 +324,33 @@ button.ui-datepicker-current {
 																			+ "-" 
 																			+ $('#monthNamesDropDown').val()) : '0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0';
 											
-											var splittedCsv = effectiveDays.split(',');
+											splittedCsv = effectiveDays.split(',');
 											$(".ui-datepicker-calendar .ui-state-default")
 													.each(
 															function(i) {
 																$(".ui-datepicker-prev, .ui-datepicker-next").remove();
 																$(this).html($(this).html()
-																						+ "<input class=\"form-control input-sm mFeb\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "].eemFeb" + i + "\" value=\""+ splittedCsv[i] +"\" />");
+																						+ "<input class=\"form-control input-sm workPackageCalendarTextBox\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "]." + $("#monthNamesDropDown").val() + "." + i + "\" value=\""+ splittedCsv[i] +"\" />");
 															});
 											$(this).parent().parent().next()
 													.find('div').attr("disabled", "disabled");
 
 										});
+						$(document)
+						.on("click", "[id$=submitButton]",
+							function(){
+							var j = 1;
+							var totalDaysSum = 0;								
+							var submitButtonId = $(this);
+							console.log("submit clicked");
+							$(this).parent().find(".ui-datepicker-calendar .ui-state-default")
+							.each(
+									function(j) {
+										totalDaysSum += parseFloat(splittedCsv[j]);
+										$(this).parent().parent().parent().parent().parent().parent().parent().next().next().val(totalDaysSum);
+										console.log("next id " + $(this).parent().parent().parent().parent().parent().parent().parent().next().next().attr("id"));
+							});
+						});
 
 					});
 </script>
@@ -401,6 +452,11 @@ button.ui-datepicker-current {
 											class="panel-collapse collapse">
 											<div class="panel-body"></div>
 										</div>
+										<a class="btn btn-primary btn-sm" id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-submitButton">
+											Submit
+										</a>
+										<input type="hidden" 
+											id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarTotalDaysSum" />
 									</div>
 								</div>
 							</div>
@@ -409,6 +465,7 @@ button.ui-datepicker-current {
 				</div>
 			</div>
 		</form:form>
+		<!-- <button id="submitWorkPackageUpdatedHours" class="btn btn-primary btn-sm">Update</button> -->
 	</div>
 
 </body>
