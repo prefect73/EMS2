@@ -7,6 +7,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
@@ -76,6 +77,20 @@ button.ui-datepicker-current {
 	var splittedCsv = "";
 	var effectiveDays = "";
 	var clickedWorkPackageCalendarAchorId = "";
+	var monthsNamesToIntegers = {
+		    '0' : 'Jan',
+		    '1' : 'Feb',
+		    '2' : 'Mar',
+		    '3' : 'Apr',
+		    '4' : 'May',
+		    '5' : 'Jun',
+		    '6' : 'Jul',
+		    '7' : 'Aug',
+		    '8' : 'Sep',
+		    '9' : 'Oct',
+		    '10' : 'Nov',
+		    '11' : 'Dec',
+		}
 
 	<c:forEach items="${workPackageUserAllocations}" var="workPackageUserAllocation">
 	
@@ -295,16 +310,18 @@ button.ui-datepicker-current {
 																	console.log("Closed");
 																	//getCalendarValues("#" + $(this).attr('id'),'.workPackageCalendarTextBox');
 																}
-															}).datepicker("show");
+															});
+											/* $(this)
+											.parent()
+											.parent()
+											.next()
+											.find('div')
+											.datepicker("show"); */
 											$(document).off('mousedown', $.datepicker._checkExternalClick);
 											
 											var i = 1;
 											var selectedProjectName = $(this).parent().parent().parent().parent().attr('id');
 											var selectedWorkPackageName = $(this).text();
-											console.log("selectedWorkPackageName");
-											$(".workPackageCalendarTextBox").each(function() {
-											    console.log($(this).val());
-											});
 											
 											effectiveDays = eval("effectiveDaysMap_" + $('#monthNamesDropDown').val()).get(
 															loggedInUserId
@@ -368,14 +385,38 @@ button.ui-datepicker-current {
 							});
 							effectiveDaysCSV = tempCSV.substring(1, tempCSV.length);
 							console.log("effectiveDaysCSV " + effectiveDaysCSV + " totalDaysSum " + totalDaysSum);
-							calendarTextBox.parent().parent().parent().parent().parent().parent().parent().next().next().val(totalDaysSum);
-							calendarTextBox.parent().parent().parent().parent().parent().parent().parent().next().next().next().val(effectiveDaysCSV);
+							
+							 
+							/* //setting id and name attributes for em hidden input fields
+							.parent().parent().parent().parent().parent().parent().next().next().attr("id", "em" + monthsNamesToIntegers[$('#monthNamesDropDown').val()]);
+							calendarTextBox.parent().parent().parent().parent().parent().parent().next().next().attr("name", "em" + monthsNamesToIntegers[$('#monthNamesDropDown').val()]);
+							
+							//setting id and name attributes for eem hidden input fields
+							calendarTextBox.parent().parent().parent().parent().parent().parent().next().next().next().attr("id", "eem" + monthsNamesToIntegers[$('#monthNamesDropDown').val()]);
+							calendarTextBox.parent().parent().parent().parent().parent().parent().next().next().next().attr("name", "eem" + monthsNamesToIntegers[$('#monthNamesDropDown').val()]);
+							 
+							//setting derived values for em and eem hidden input fields
+							//calendarTextBox.parent().parent().parent().parent().parent().parent().next().next().val(totalDaysSum);
+							//calendarTextBox.parent().parent().parent().parent().parent().parent().next().next().next().val(effectiveDaysCSV);
+							*/
+							 
+							$('.hidden-fields').each(function() {
+								if($(this).attr('id') === "em" + monthsNamesToIntegers[$('#monthNamesDropDown').val()])		
+									$(this).val(totalDaysSum.toFixed(2));
+								if($(this).attr('id') === "eem" + monthsNamesToIntegers[$('#monthNamesDropDown').val()])		
+									$(this).val(effectiveDaysCSV);
+							});
+							
+							//calendarTextBox.parent().parent().parent().parent().parent().parent().next().next().next().after("<input type=\"hidden\" id=\"eemJan\" name=\"eemJan\" value=\"${workPackageUserAllocation.eemJan}\"/>");
+							
+							//$(this).attr('href','/EMS/TimeReport/timeRecording-' + $('#yearNamesDropDown').val() + '-' + $('#monthNamesDropDown').val() + '-' + totalDaysSum + '-' + effectiveDaysCSV);
 							
 						});
 
 					});
 </script>
 </head>
+
 <body>
 	<div class="generic-container">
 		<%@include file="authheader.jsp"%>
@@ -395,7 +436,7 @@ button.ui-datepicker-current {
 			</div>
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="yearName"><spring:message
+					<label class="col-md-2 control-label"><spring:message
 							code="timeRecording.label.yearName" /> </label>
 					<div class="col-md-3">
 						<select class="form-control input-sm" id="yearNamesDropDown"
@@ -406,7 +447,7 @@ button.ui-datepicker-current {
 			</div>
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="monthName"><spring:message
+					<label class="col-md-2 control-label" for="monthName"><spring:message
 							code="timeRecording.label.monthName" /> </label>
 					<div class="col-md-3">
 						<select class="form-control input-sm" id="monthNamesDropDown"
@@ -477,16 +518,118 @@ button.ui-datepicker-current {
 											id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendar"
 											class="panel-collapse collapse">
 											<div class="panel-body"></div>
+											<a class="btn btn-primary btn-sm"
+												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-submitButton">
+												Persist Workpackage Allocation </a> 
+											<%-- <input type="hidden"
+												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarTotalDaysSum" />
+											<input type="hidden"
+												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarUpdatedCSV" />
+										 	 --%>
+										 	 
+										 	<input type="hidden" class="hidden-fields"
+												id="totalPlannedDays" name="totalPlannedDays" value="${workPackageUserAllocation.totalPlannedDays}"/>
+											
+											<input type="hidden" class="hidden-fields"
+												id="mJan" name="mJan" value="${workPackageUserAllocation.mJan}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="mFeb" name="mFeb" value="${workPackageUserAllocation.mFeb}"/>
+											<input type="hidden" class="hidden-fields"
+												id="mMar" name="mMar" value="${workPackageUserAllocation.mMar}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="mApr" name="mApr" value="${workPackageUserAllocation.mApr}"/>
+											<input type="hidden" class="hidden-fields"
+												id="mMay" name="mMay" value="${workPackageUserAllocation.mMay}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="mJun" name="mJun" value="${workPackageUserAllocation.mJun}"/>
+											<input type="hidden" class="hidden-fields"
+												id="mJul" name="mJul" value="${workPackageUserAllocation.mJul}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="mAug" name="mAug" value="${workPackageUserAllocation.mAug}"/>
+											<input type="hidden" class="hidden-fields"
+												id="mSep" name="mSep" value="${workPackageUserAllocation.mSep}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="mOct" name="mOct" value="${workPackageUserAllocation.mOct}"/>
+											<input type="hidden" class="hidden-fields"
+												id="mNov" name="mNov" value="${workPackageUserAllocation.mNov}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="mDec" name="mDec" value="${workPackageUserAllocation.mDec}"/>
+											
+											<input type="hidden" class="hidden-fields"
+												id="emJan" name="emJan" value="${workPackageUserAllocation.emJan}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="emFeb" name="emFeb" value="${workPackageUserAllocation.emFeb}"/>
+											<input type="hidden" class="hidden-fields"
+												id="emMar" name="emMar" value="${workPackageUserAllocation.emMar}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="emApr" name="emApr" value="${workPackageUserAllocation.emApr}"/>
+											<input type="hidden" class="hidden-fields"
+												id="emMay" name="emMay" value="${workPackageUserAllocation.emMay}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="emJun" name="emJun" value="${workPackageUserAllocation.emJun}"/>
+											<input type="hidden" class="hidden-fields"
+												id="emJul" name="emJul" value="${workPackageUserAllocation.emJul}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="emAug" name="emAug" value="${workPackageUserAllocation.emAug}"/>
+											<input type="hidden" class="hidden-fields"
+												id="emSep" name="emSep" value="${workPackageUserAllocation.emSep}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="emOct" name="emOct" value="${workPackageUserAllocation.emOct}"/>
+											<input type="hidden" class="hidden-fields"
+												id="emNov" name="emNov" value="${workPackageUserAllocation.emNov}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="emDec" name="emDec" value="${workPackageUserAllocation.emDec}"/>
+											
+											<input type="hidden" class="hidden-fields"
+												id="eemJan" name="eemJan" value="${workPackageUserAllocation.eemJan}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="eemFeb" name="eemFeb" value="${workPackageUserAllocation.eemFeb}"/>
+											<input type="hidden" class="hidden-fields"
+												id="eemMar" name="eemMar" value="${workPackageUserAllocation.eemMar}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="eemApr" name="eemApr" value="${workPackageUserAllocation.eemApr}"/>
+											<input type="hidden" class="hidden-fields"
+												id="eemMay" name="eemMay" value="${workPackageUserAllocation.eemMay}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="eemJun" name="eemJun" value="${workPackageUserAllocation.eemJun}"/>
+											<input type="hidden" class="hidden-fields"
+												id="eemJul" name="eemJul" value="${workPackageUserAllocation.eemJul}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="eemAug" name="eemAug" value="${workPackageUserAllocation.eemAug}"/>
+											<input type="hidden" class="hidden-fields"
+												id="eemSep" name="eemSep" value="${workPackageUserAllocation.eemSep}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="eemOct" name="eemOct" value="${workPackageUserAllocation.eemOct}"/>
+											<input type="hidden" class="hidden-fields"
+												id="eemNov" name="eemNov" value="${workPackageUserAllocation.eemNov}"/>
+										 	<input type="hidden" class="hidden-fields"
+												id="eemDec" name="eemDec" value="${workPackageUserAllocation.eemDec}"/>
+											
+											
+											<input type="hidden" class="hidden-fields"
+												id="yearName" name="yearName" value="${workPackageUserAllocation.yearName}"/>
+										 	
+										 	<input type="hidden"
+													class="hidden-fields"
+													name="user"
+													value="${workPackageUserAllocation.user.id}" />
+										 	
+										 	<input type="hidden"
+													class="hidden-fields"
+													name="workPackage"
+													value="${workPackageUserAllocation.workPackage.id}" />
+										 	<%-- 
+											<input type="hidden"
+												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarTotalDaysSum" />
+											<input type="hidden"
+												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarUpdatedCSV" />
+										 	--%>
+										 	<!-- 	
+										 	<input type="hidden" id="emMay" name="emMay" value="3" /> 
+										 	<input type="hidden" id="eemMay" name="eemMay"
+												value="2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" />
+										 	-->
 										</div>
-										<a class="btn btn-primary btn-sm" id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-submitButton">
-											Submit
-										</a>
-										<input type="hidden" 
-											id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarTotalDaysSum" />
-										<input type="hidden" 
-											id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarUpdatedCSV" />
-											<input type="hidden" id="emMay" name="emMay" value="3" />
-											<input type="hidden" id="eemMay" name="eemMay" value="2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" />
 									</div>
 								</div>
 							</div>

@@ -188,23 +188,23 @@ public class WorkPackageUserAllocationDaoImpl extends
 			String yearName, String monthName, User user,
 			WorkPackageUserAllocation workPackageUserAllocation) {
 		HashMap<String , String> monthNames = new HashMap<String, String>();
-		monthNames.put("0", "jan");
-		monthNames.put("1", "feb");
-		monthNames.put("2", "mar");
-		monthNames.put("3", "apr");
-		monthNames.put("4", "may");
-		monthNames.put("5", "jun");
-		monthNames.put("6", "jul");
-		monthNames.put("7", "aug");
-		monthNames.put("8", "sep");
-		monthNames.put("9", "oct");
+		monthNames.put("0", "Jan");
+		monthNames.put("1", "Feb");
+		monthNames.put("2", "Mar");
+		monthNames.put("3", "Apr");
+		monthNames.put("4", "May");
+		monthNames.put("5", "Jun");
+		monthNames.put("6", "Jul");
+		monthNames.put("7", "Aug");
+		monthNames.put("8", "Sep");
+		monthNames.put("9", "Oct");
 		monthNames.put("10", "Nov");
-		monthNames.put("11", "dec");
+		monthNames.put("11", "Dec");
 		
 		
 		Query query = getSession()
 				.createSQLQuery("update work_package_app_user_allocations set em" + monthNames.get(monthName) + " = :monthTotal , eem" + monthNames.get(monthName) + " = :monthCSV"
-						+ " where year_name = :yearName AND user_id = :userId AND workPackage_id = :workPackageId");
+						+ " where year_name = :yearName AND user_id = :userId AND work_package_id = :workPackageId");
 		if(monthName.equals("0")){
 			query.setParameter("monthTotal", workPackageUserAllocation.getEmJan());
 			query.setParameter("monthCSV", workPackageUserAllocation.getEemJan());
@@ -261,5 +261,37 @@ public class WorkPackageUserAllocationDaoImpl extends
 		int result = query.executeUpdate();
 
 	}
+
+	/*@Override
+	public void updateWorkPackageUserAllocationByYearAndByMonthAndByUser(
+			String yearName, String monthName, String monthTotal, String monthCSV, User user,
+			WorkPackageUserAllocation workPackageUserAllocation) {
+		HashMap<String , String> monthNames = new HashMap<String, String>();
+		monthNames.put("0", "jan");
+		monthNames.put("1", "feb");
+		monthNames.put("2", "mar");
+		monthNames.put("3", "apr");
+		monthNames.put("4", "may");
+		monthNames.put("5", "jun");
+		monthNames.put("6", "jul");
+		monthNames.put("7", "aug");
+		monthNames.put("8", "sep");
+		monthNames.put("9", "oct");
+		monthNames.put("10", "Nov");
+		monthNames.put("11", "dec");
+		
+		
+		Query query = getSession()
+				.createSQLQuery("update work_package_app_user_allocations set em" + monthNames.get(monthName) + " = :monthTotal , eem" + monthNames.get(monthName) + " = :monthCSV"
+						+ " where year_name = :yearName AND user_id = :userId AND workPackage_id = :workPackageId");
+		query.setParameter("monthTotal", monthTotal);
+		query.setParameter("monthCSV", monthCSV);
+		query.setParameter("yearName", yearName);
+		query.setParameter("userId", user.getId());
+		query.setParameter("workPackageId", workPackageUserAllocation.getWorkPackage().getId());
+		
+		int result = query.executeUpdate();
+
+	}*/
 
 }

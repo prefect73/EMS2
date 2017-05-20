@@ -45,4 +45,6 @@ public interface WorkPackageUserAllocationService {
 			String yearName, String monthName, User user,
 			WorkPackageUserAllocation workPackageUserAllocation);
 
+	/*void updateWorkPackageUserAllocationByYearAndByMonthAndByUser(String yearName, String monthName, String monthTotal,String monthCSV, User user,
+			WorkPackageUserAllocation workPackageUserAllocation);*/
 }
