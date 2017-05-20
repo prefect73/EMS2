@@ -491,8 +491,8 @@ button.ui-datepicker-current {
 			<div class="row">
 				<div class="form-group col-md-12" style="width: 93%; left: 5%;">
 					<div class="panel-group" id="accordion">
-						<c:forEach items="${workPackageUserAllocations}"
-							var="workPackageUserAllocation">
+						<c:forEach items="${workPackageUserAllocationsWrapper.workPackageUserAllocations}"
+							var="workPackageUserAllocation" varStatus="status">
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="panel-title">
@@ -527,98 +527,48 @@ button.ui-datepicker-current {
 												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarUpdatedCSV" />
 										 	 --%>
 										 	 
-										 	<input type="hidden" class="hidden-fields"
-												id="totalPlannedDays" name="totalPlannedDays" value="${workPackageUserAllocation.totalPlannedDays}"/>
-											
-											<input type="hidden" class="hidden-fields"
-												id="mJan" name="mJan" value="${workPackageUserAllocation.mJan}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="mFeb" name="mFeb" value="${workPackageUserAllocation.mFeb}"/>
-											<input type="hidden" class="hidden-fields"
-												id="mMar" name="mMar" value="${workPackageUserAllocation.mMar}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="mApr" name="mApr" value="${workPackageUserAllocation.mApr}"/>
-											<input type="hidden" class="hidden-fields"
-												id="mMay" name="mMay" value="${workPackageUserAllocation.mMay}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="mJun" name="mJun" value="${workPackageUserAllocation.mJun}"/>
-											<input type="hidden" class="hidden-fields"
-												id="mJul" name="mJul" value="${workPackageUserAllocation.mJul}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="mAug" name="mAug" value="${workPackageUserAllocation.mAug}"/>
-											<input type="hidden" class="hidden-fields"
-												id="mSep" name="mSep" value="${workPackageUserAllocation.mSep}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="mOct" name="mOct" value="${workPackageUserAllocation.mOct}"/>
-											<input type="hidden" class="hidden-fields"
-												id="mNov" name="mNov" value="${workPackageUserAllocation.mNov}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="mDec" name="mDec" value="${workPackageUserAllocation.mDec}"/>
-											
-											<input type="hidden" class="hidden-fields"
-												id="emJan" name="emJan" value="${workPackageUserAllocation.emJan}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="emFeb" name="emFeb" value="${workPackageUserAllocation.emFeb}"/>
-											<input type="hidden" class="hidden-fields"
-												id="emMar" name="emMar" value="${workPackageUserAllocation.emMar}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="emApr" name="emApr" value="${workPackageUserAllocation.emApr}"/>
-											<input type="hidden" class="hidden-fields"
-												id="emMay" name="emMay" value="${workPackageUserAllocation.emMay}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="emJun" name="emJun" value="${workPackageUserAllocation.emJun}"/>
-											<input type="hidden" class="hidden-fields"
-												id="emJul" name="emJul" value="${workPackageUserAllocation.emJul}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="emAug" name="emAug" value="${workPackageUserAllocation.emAug}"/>
-											<input type="hidden" class="hidden-fields"
-												id="emSep" name="emSep" value="${workPackageUserAllocation.emSep}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="emOct" name="emOct" value="${workPackageUserAllocation.emOct}"/>
-											<input type="hidden" class="hidden-fields"
-												id="emNov" name="emNov" value="${workPackageUserAllocation.emNov}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="emDec" name="emDec" value="${workPackageUserAllocation.emDec}"/>
-											
-											<input type="hidden" class="hidden-fields"
-												id="eemJan" name="eemJan" value="${workPackageUserAllocation.eemJan}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="eemFeb" name="eemFeb" value="${workPackageUserAllocation.eemFeb}"/>
-											<input type="hidden" class="hidden-fields"
-												id="eemMar" name="eemMar" value="${workPackageUserAllocation.eemMar}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="eemApr" name="eemApr" value="${workPackageUserAllocation.eemApr}"/>
-											<input type="hidden" class="hidden-fields"
-												id="eemMay" name="eemMay" value="${workPackageUserAllocation.eemMay}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="eemJun" name="eemJun" value="${workPackageUserAllocation.eemJun}"/>
-											<input type="hidden" class="hidden-fields"
-												id="eemJul" name="eemJul" value="${workPackageUserAllocation.eemJul}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="eemAug" name="eemAug" value="${workPackageUserAllocation.eemAug}"/>
-											<input type="hidden" class="hidden-fields"
-												id="eemSep" name="eemSep" value="${workPackageUserAllocation.eemSep}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="eemOct" name="eemOct" value="${workPackageUserAllocation.eemOct}"/>
-											<input type="hidden" class="hidden-fields"
-												id="eemNov" name="eemNov" value="${workPackageUserAllocation.eemNov}"/>
-										 	<input type="hidden" class="hidden-fields"
-												id="eemDec" name="eemDec" value="${workPackageUserAllocation.eemDec}"/>
-											
-											
-											<input type="hidden" class="hidden-fields"
-												id="yearName" name="yearName" value="${workPackageUserAllocation.yearName}"/>
-										 	
-										 	<input type="hidden"
-													class="hidden-fields"
-													name="user"
-													value="${workPackageUserAllocation.user.id}" />
-										 	
-										 	<input type="hidden"
-													class="hidden-fields"
-													name="workPackage"
-													value="${workPackageUserAllocation.workPackage.id}" />
-										 	<%-- 
+										 	<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].totalPlannedDays" value="${workPackageUserAllocation.totalPlannedDays}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].mJan" value="${workPackageUserAllocation.mJan}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].mFeb" value="${workPackageUserAllocation.mFeb}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].mMar" value="${workPackageUserAllocation.mMar}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].mApr" value="${workPackageUserAllocation.mApr}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].mMay" value="${workPackageUserAllocation.mMay}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].mJun" value="${workPackageUserAllocation.mJun}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].mJul" value="${workPackageUserAllocation.mJul}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].mAug" value="${workPackageUserAllocation.mAug}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].mSep" value="${workPackageUserAllocation.mSep}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].mOct" value="${workPackageUserAllocation.mOct}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].mNov" value="${workPackageUserAllocation.mNov}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].mDec" value="${workPackageUserAllocation.mDec}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].emJan" value="${workPackageUserAllocation.emJan}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].emFeb" value="${workPackageUserAllocation.emFeb}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].emMar" value="${workPackageUserAllocation.emMar}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].emApr" value="${workPackageUserAllocation.emApr}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].emMay" value="${workPackageUserAllocation.emMay}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].emJun" value="${workPackageUserAllocation.emJun}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].emJul" value="${workPackageUserAllocation.emJul}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].emAug" value="${workPackageUserAllocation.emAug}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].emSep" value="${workPackageUserAllocation.emSep}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].emOct" value="${workPackageUserAllocation.emOct}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].emNov" value="${workPackageUserAllocation.emNov}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].emDec" value="${workPackageUserAllocation.emDec}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].eemJan" value="${workPackageUserAllocation.eemJan}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].eemFeb" value="${workPackageUserAllocation.eemFeb}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].eemMar" value="${workPackageUserAllocation.eemMar}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].eemApr" value="${workPackageUserAllocation.eemApr}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].eemMay" value="${workPackageUserAllocation.eemMay}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].eemJun" value="${workPackageUserAllocation.eemJun}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].eemJul" value="${workPackageUserAllocation.eemJul}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].eemAug" value="${workPackageUserAllocation.eemAug}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].eemSep" value="${workPackageUserAllocation.eemSep}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].eemOct" value="${workPackageUserAllocation.eemOct}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].eemNov" value="${workPackageUserAllocation.eemNov}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].eemDec" value="${workPackageUserAllocation.eemDec}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].yearName" value="${workPackageUserAllocation.yearName}"/>
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].user"	value="${workPackageUserAllocation.user.id}" />
+											<input type="hidden" class="hidden-fields"  name="workPackageUserAllocations[${status.index}].workPackage" value="${workPackageUserAllocation.workPackage.id}" />
+
+				 	<%-- 
 											<input type="hidden"
 												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarTotalDaysSum" />
 											<input type="hidden"
