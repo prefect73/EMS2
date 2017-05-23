@@ -890,6 +890,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			
 			var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';
 			var totalPlannedDaysTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].totalPlannedDays" /></td>';
+			var rowHeaderOM = '<td><p style="padding-top:5px"/>Verf&uuml;gbar<p style="padding-top:23px"/>Geplant<p style="padding-top:17px"/>Zeiterfassung</td>';
 			var mJanTD ='<td><input class="form-control input-sm availableDays" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input id="workPackageUserAllocations'+index+'emJan" class="form-control input-sm effectiveDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" />&nbsp;<input type="hidden" id="workPackageUserAllocations['+index+'].eemJan" class="form-control input-sm effectiveDaysDistribution" style="width:55px;" name="workPackageUserAllocations['+index+'].eemJan" value="" /></td>';
 			var mFebTD ='<td><input class="form-control input-sm availableDays" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mFebAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].mFeb" />&nbsp;<input id="workPackageUserAllocations'+index+'emFeb" class="form-control input-sm effectiveDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].emFeb" />&nbsp;<input type="hidden" id="workPackageUserAllocations['+index+'].eemFeb" class="form-control input-sm effectiveDaysDistribution" style="width:55px;" name="workPackageUserAllocations['+index+'].eemFeb"  value="" /></td>';
 			var mMarTD ='<td><input class="form-control input-sm availableDays" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mMarAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].mMar" />&nbsp;<input id="workPackageUserAllocations'+index+'emMar" class="form-control input-sm effectiveDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].emMar" />&nbsp;<input type="hidden" id="workPackageUserAllocations['+index+'].eemMar" class="form-control input-sm effectiveDaysDistribution" style="width:55px;" name="workPackageUserAllocations['+index+'].eemMar" value="" /></td>';
@@ -904,7 +905,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			var mDecTD ='<td><input class="form-control input-sm availableDays" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mDecAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].mDec" />&nbsp;<input id="workPackageUserAllocations'+index+'emDec" class="form-control input-sm effectiveDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].emDec" />&nbsp;<input type="hidden" id="workPackageUserAllocations['+index+'].eemDec" class="form-control input-sm effectiveDaysDistribution" style="width:55px;" name="workPackageUserAllocations['+index+'].eemDec" value="" /></td>';
 			
 			
-			var formHtml = yearNameTD+ userTD +totalPlannedDaysTD +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD ;
+			var formHtml = yearNameTD+ userTD +totalPlannedDaysTD +rowHeaderOM +mJanTD +mFebTD +mMarTD +mAprTD +mMayTD +mJunTD +mJulTD +mAugTD +mSepTD +mOctTD +mNovTD +mDecTD ;
 			var formTR = $('<tr></tr>');
 			formTR.append(formHtml);
 			//add Button
@@ -1313,6 +1314,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 											code="workPackageUserAllocation.label.totalPlannedDays" /><br />
 										<span style="font-size: 0.6em;"><spring:message
 												code="generic.inDays" /></span></th>
+									<th>
+										<!-- OM: spacer -->
+									</th>
 									<th><spring:message
 											code="workPackageUserAllocation.label.jan" /><br /> <span
 										style="font-size: 0.6em;"><spring:message
@@ -1405,6 +1409,10 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 													name="workPackageUserAllocations[${status.index}].totalPlannedDays"
 													id="workPackageUserAllocations[${status.index}].totalPlannedDays"
 													value="${workPackageUserAllocation.totalPlannedDays}" /></td>
+												
+												<!-- added by OM -->
+												<td><p style="padding-top:5px"/>Verf&uuml;gbar<p style="padding-top:23px"/>Geplant<p style="padding-top:17px"/>Zeiterfassung</td>		
+													
 												<td><input class="form-control input-sm availableDays"
 													style="width: 55px;" disabled
 													id="workPackageUserAllocations[${status.index}].mJanAvailableHrs" />&nbsp;<input

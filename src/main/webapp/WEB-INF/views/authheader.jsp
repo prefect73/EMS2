@@ -23,10 +23,10 @@
 						code="authheader.menu.projects" /></a></li>
 		</sec:authorize>
 
-		<sec:authorize access="!hasAnyRole('ADMIN', 'Projektleitung')">
+
 			<li><a href="<c:url value='/TimeRecordingReport/timeRecording-2017-4' />"><spring:message
 						code="authheader.menu.workPackage.timeRecording" /></a></li>
-		</sec:authorize>
+
 
 		<sec:authorize access="!hasAnyRole('ADMIN', 'Projektleitung')">
 			<li><a
