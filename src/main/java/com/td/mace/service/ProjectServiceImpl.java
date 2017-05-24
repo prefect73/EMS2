@@ -1,7 +1,9 @@
 package com.td.mace.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class ProjectServiceImpl implements ProjectService {
 	@Autowired
 	private ProjectDao projectDao;
 
+	@Autowired
+	private WorkPackageService workPackageService;
+	
 	public Project findById(int id) {
 		return projectDao.findById(id);
 	}
@@ -89,26 +94,26 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public List<Project> findAllProjectsByYearNameAndUser(User user, String yearName) {
 		List<Project> allProjects = findAllProjects();
-		List<Project> projectsByYearName = new ArrayList<Project>();
-		List<Project> projectsByYearNameAndUser = new ArrayList<Project>();
-		
-		for(Project project : allProjects ){
+		List<Project> projectsByYearNameAndUserList = new ArrayList<Project>();
+		Set<Project> projectsByYearNameAndUserSet = new HashSet<Project>();
+		/*for(Project project : allProjects ){
 			if(project.getYearName().equals(yearName)){
 				projectsByYearName.add(project);
 			}
-		}
+		}*/
 		
-		for(Project projectByYear : projectsByYearName){
-			for(WorkPackage workPackage : projectByYear.getWorkPackages()){
+		for(Project project : allProjects){
+			for(WorkPackage workPackage : workPackageService.findAllWorkPackagesByUser(project.getId(),user.getSsoId())){
 				for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
-					if(workPackageUserAllocation.getUser().getId() == user.getId()){
-						projectsByYearNameAndUser.add(projectByYear);
+					if(workPackageUserAllocation.getUser().getId() == user.getId() && workPackageUserAllocation.getYearName().equals(yearName)){
+						projectsByYearNameAndUserSet.add(project);
 					}
 				}
 			}
 		}
+		projectsByYearNameAndUserList.addAll(projectsByYearNameAndUserSet);
 		
-		return projectsByYearNameAndUser;
+		return projectsByYearNameAndUserList;
 	}
 
 }

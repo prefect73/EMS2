@@ -85,7 +85,7 @@ button.ui-datepicker-current {
 		    '11' : 'Dec',
 		}
 
-	<c:forEach items="${projectsWrapper.projects}" var="project">
+	<c:forEach items="${projects}" var="project">
 		<c:forEach items="${project.workPackages}" var="workPackage">
 			<c:forEach items="${workPackage.workPackageUserAllocations}" var="workPackageUserAllocation">
 	loggedInUserId = '${workPackageUserAllocation.user.id}';
@@ -367,11 +367,15 @@ button.ui-datepicker-current {
 <body>
 	<div class="generic-container">
 		<%@include file="authheader.jsp"%>
-		<form:form method="POST" modelAttribute="projectsWrapper"
-			class="form-horizontal">
+		<form:form method="POST" modelAttribute="workP"
+			class="form-horizontal"> 
+			
+			<form:input type="hidden" path="projects" class="form-control input-sm" />
 			
 			<input type="hidden" id="selectedYear" value='${selectedYear}' />
 			<input type="hidden" id="selectedMonth" value='${selectedMonth}' />
+			<input type="hidden" id="userId" value='${userId}' />
+			
 			
 			<div class="well lead col-md-5">
 				<spring:message code="timeRecording.enter.your.time" />
@@ -444,27 +448,26 @@ button.ui-datepicker-current {
 			<div class="row">
 				<div class="form-group col-md-12" style="width: 93%; left: 5%;">
 					<div class="panel-group" id="accordion" >
-						<c:forEach items="${projectsWrapper.projects}" var="project">
-						<input type="hidden" class="hidden-fields"  name="id" value="${project.id}"/>
-						<input type="hidden" class="hidden-fields"  name="projectName" value="${project.projectName}"/>
-						<input type="hidden" class="hidden-fields"  name="customerName" value="${project.customerName}"/>
-						<input type="hidden" class="hidden-fields"  name="offeredCost" value="${project.offeredCost}"/>
-						<input type="hidden" class="hidden-fields"  name="totalCost" value="${project.totalCost}"/>
-						<input type="hidden" class="hidden-fields"  name="totalCost" value="${project.totalCost}"/>
-						<input type="hidden" class="hidden-fields"  name="effectiveCost" value="${project.effectiveCost}"/>
-						<input type="hidden" class="hidden-fields"  name="yearName" value="${project.yearName}"/>
-						<input type="hidden" class="hidden-fields"  name="users" value="${project.users}"/>
-						<input type="hidden" class="hidden-fields"  name="workPackages" value="${project.workPackages}"/>
+						<c:forEach items="${projects}" var="project" varStatus="status">
+						<input type="hidden" class="hidden-fields"  name="project[${status.index}].id" value="${project.id}"/>
+						<input type="hidden" class="hidden-fields"  name="project[${status.index}].projectName" value="${project.projectName}"/>
+						<input type="hidden" class="hidden-fields"  name="project[${status.index}].customerName" value="${project.customerName}"/>
+						<input type="hidden" class="hidden-fields"  name="project[${status.index}].offeredCost" value="${project.offeredCost}"/>
+						<input type="hidden" class="hidden-fields"  name="project[${status.index}].totalCost" value="${project.totalCost}"/>
+						<input type="hidden" class="hidden-fields"  name="project[${status.index}].effectiveCost" value="${project.effectiveCost}"/>
+						<input type="hidden" class="hidden-fields"  name="project[${status.index}].yearName" value="${project.yearName}"/>
+						<input type="hidden" class="hidden-fields"  name="project[${status.index}].users" value="${project.users}"/>
+						<input type="hidden" class="hidden-fields"  name="project[${status.index}].workPackages" value="${project.workPackages}"/>
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="panel-title">
 										<a data-toggle="collapse" data-parent="#accordion"
-											href="<c:url value='#${project.projectName}' />">
+											href="<c:url value='#${project.id}' />">
 											${project.projectName}</a>
 									</h4>
 								</div>
 								<div
-									id="<c:url value='${project.projectName}' />"
+									id="<c:url value='${project.id}' />"
 									class="panel-collapse collapse">
 									<div class="panel-body">
 										<!-- workpackages accordion -->
@@ -472,18 +475,20 @@ button.ui-datepicker-current {
 										<div class="panel-heading">
 											<h4 class="panel-title" style="border: 1px Solid lightgray; padding:1%;">
 												<a data-toggle="collapse"  
-													data-parent="#<c:url value='${workPackage.project.projectName}' />"
-													id="<c:url value='${workPackage.project.projectName}' />-<c:url value='${workPackage.workPackageName}' />-workPackageCalendarAnchor"
-													href="<c:url value='#${workPackage.project.projectName}' />-<c:url value='${workPackage.workPackageName}' />-workPackageCalendar">${workPackage.workPackageName}</a>
+													data-parent="#<c:url value='${workPackage.project.id}' />"
+													id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendarAnchor"
+													href="<c:url value='#${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar">${workPackage.workPackageName}</a>
 											</h4>
 										</div>
+											 <%-- <form:form id="<c:url value='${userId}' />-<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-wpuaForm" method="POST" modelAttribute="workPackageUserAllocation" class="form-horizontal"> --%> 
 										<div
-											id="<c:url value='${workPackage.project.projectName}' />-<c:url value='${workPackage.workPackageName}' />-workPackageCalendar"
+											id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar"
 											class="panel-collapse collapse">
-											 
-											<div class="panel-body"><a class="btn btn-primary btn-sm" style="margin-left:53.5%; margin-bottom:1%;"
-												id="<c:url value='${workPackage.project.projectName}' />-<c:url value='${workPackage.workPackageName}' />-submitButton">
-												Persist Workpackage Allocation </a> </div>
+											<div class="panel-body">
+												<a class="btn btn-primary btn-sm" style="margin-left:53.5%; margin-bottom:1%;"
+													id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-submitButton">
+													Persist Workpackage Allocation </a> 
+												</div>
 											
 											<%-- <input type="hidden"
 												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarTotalDaysSum" />
@@ -492,9 +497,10 @@ button.ui-datepicker-current {
 										 	 --%>
 										 	 
 										 	<input type="hidden"
-												id="<c:url value='${workPackage.project.projectName}' />-<c:url value='${workPackage.workPackageName}' />-calendarOnceOpened" />
+												id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-calendarOnceOpened" />
 										 	
 										 	<c:forEach items="${workPackage.workPackageUserAllocations}"  var="workPackageUserAllocation">
+										 	
 											 	<input type="hidden" class="hidden-fields"  name="totalPlannedDays" value="${workPackageUserAllocation.totalPlannedDays}"/>
 												<input type="hidden" class="hidden-fields"  name="mJan" value="${workPackageUserAllocation.mJan}"/>
 												<input type="hidden" class="hidden-fields"  name="mFeb" value="${workPackageUserAllocation.mFeb}"/>
@@ -548,7 +554,11 @@ button.ui-datepicker-current {
 										 	<input type="hidden" id="eemMay" name="eemMay"
 												value="2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" />
 										 	-->
+										 	<input type="submit" id="updateBtn"
+																value="<spring:message code="button.update"/>"
+																class="btn btn-primary btn-sm" />
 										</div>
+										<%-- </form:form> --%>
 										
 										</c:forEach>
 									</div>

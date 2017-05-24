@@ -1,6 +1,7 @@
 package com.td.mace.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -286,6 +287,24 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 		}
 		workPackage.setCalculatedCost(totalPayments);
 		updateWorkPackage(workPackage);
+		
+	}
+	
+	public List<WorkPackage> findAllWorkPackagesByUser(int projectId,String ssoId){
+		List<WorkPackage> findAllWorkPackagesByProjectIdAndSsoId = dao.findAllWorkPackagesByProjectIdAndSsoId(projectId, ssoId);
+		
+		for(WorkPackage workPackage : findAllWorkPackagesByProjectIdAndSsoId){
+			List<WorkPackageUserAllocation> workPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();  
+			workPackageUserAllocations.addAll(workPackage.getWorkPackageUserAllocations());
+			for(WorkPackageUserAllocation  workPackageUserAllocation : workPackage.getWorkPackageUserAllocations() ){
+				if(!workPackageUserAllocation.getUser().getSsoId().equals(ssoId) ){
+					workPackageUserAllocations.remove(workPackageUserAllocation);
+				}
+			}
+			workPackage.setWorkPackageUserAllocations(workPackageUserAllocations);
+		}
+		
+		return findAllWorkPackagesByProjectIdAndSsoId;
 		
 	}
 }

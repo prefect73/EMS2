@@ -64,7 +64,7 @@ public class TimeRecordingController {
 	AuthenticationTrustResolver authenticationTrustResolver;
 
 	/**
-	 * This method will list all existing workPackages.
+	 * GET
 	 */
 	@RequestMapping(value = { "/timeRecording-{yearName}-{monthName}" }, method = RequestMethod.GET)
 	public String getTimeRecordings(@PathVariable String yearName, @PathVariable String monthName , ModelMap model) {
@@ -83,39 +83,45 @@ public class TimeRecordingController {
 		model.addAttribute("selectedMonth", monthName);
 		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
-		model.addAttribute("projectsWrapper",projectsWrapper);
+		/*model.addAttribute("projectsWrapper",projectsWrapper);*/
+		model.addAttribute("projects",projectsByYearNameAndUser);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "timeRecording";
 	}
 	
+	/**
+	 * POST
+	 */
 	@RequestMapping(value = { "/timeRecording-{yearName}-{monthName}" }, method = RequestMethod.POST)
 	 public String postTimeRecordings(@PathVariable String yearName, @PathVariable String monthName , 
-	   @Valid ProjectsWrapper projectsWrapper,
+	   @Valid WorkPackageUserAllocation workPackageUserAllocation,
 	      BindingResult result, ModelMap model) {
 
 		
 	  User user = null;
-	  List<Project> projects = projectsWrapper.getProjects();
+	  List<Project> projects = new ArrayList<Project>();
 	  if (getPrincipal() != null) {
-		  for(Project project : projects){
-			  for(WorkPackage workPackage : project.getWorkPackages()){
-				  for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
+		  //for(Project project : projects){
+			  //for(WorkPackage workPackage : project.getWorkPackages()){
+				  //for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
 						   user = userService.findBySSO(getPrincipal());
 						   workPackageUserAllocationService.updateWorkPackageUserAllocationByYearAndByMonthAndByUser(yearName, monthName, user, workPackageUserAllocation);
 						   
-				  }
-			  }  
-		  }		  
+				  //}
+			  //}  
+		  //}		  
 	  }
 	  projects = projectService.findAllProjectsByYearNameAndUser(user, yearName);
-	  projectsWrapper.setProjects(projects);
+	  //projectsWrapper.setProjects(projects);
 	  model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 	  model.addAttribute("selectedYear", yearName);
 	  model.addAttribute("selectedMonth", monthName);
 	  model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 	  model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
-	  model.addAttribute("projectsWrapper",projectsWrapper);
+	  /*model.addAttribute("projectsWrapper",projectsWrapper);*/
+	  model.addAttribute("projects",projects);
 	  model.addAttribute("loggedinuser", getPrincipal());
+	  model.addAttribute("userId",user.getId());
 	  return "timeRecording";
 	 }
 	

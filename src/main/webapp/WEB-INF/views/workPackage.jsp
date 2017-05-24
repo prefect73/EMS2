@@ -1164,7 +1164,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 						<label class="col-md-2 control-lable" for="workDoneInPercent"><spring:message
 								code="workPackage.label.workDoneInPercent" /> </label>
 						<div class="col-md-3">
-							<form:input type="text" path="workDoneInPercent"
+							<form:input type="text" path="workDoneInPercent" value="0"
 								id="workDoneInPercent" class="form-control input-sm" />
 							<div class="has-error">
 								<form:errors path="workDoneInPercent" class="help-inline" />
