@@ -1,5 +1,6 @@
 package com.td.mace.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.td.mace.dao.ProjectDao;
 import com.td.mace.model.Project;
+import com.td.mace.model.User;
+import com.td.mace.model.WorkPackage;
+import com.td.mace.model.WorkPackageUserAllocation;
 
 @Service("projectService")
 @Transactional
@@ -80,6 +84,31 @@ public class ProjectServiceImpl implements ProjectService {
 	public boolean isProjectNameUnique(Integer id, String projectName) {
 		Project project = findByProjectName(projectName);
 		return (project == null || ((id != null) && (project.getId() == id)));
+	}
+
+	@Override
+	public List<Project> findAllProjectsByYearNameAndUser(User user, String yearName) {
+		List<Project> allProjects = findAllProjects();
+		List<Project> projectsByYearName = new ArrayList<Project>();
+		List<Project> projectsByYearNameAndUser = new ArrayList<Project>();
+		
+		for(Project project : allProjects ){
+			if(project.getYearName().equals(yearName)){
+				projectsByYearName.add(project);
+			}
+		}
+		
+		for(Project projectByYear : projectsByYearName){
+			for(WorkPackage workPackage : projectByYear.getWorkPackages()){
+				for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
+					if(workPackageUserAllocation.getUser().getId() == user.getId()){
+						projectsByYearNameAndUser.add(projectByYear);
+					}
+				}
+			}
+		}
+		
+		return projectsByYearNameAndUser;
 	}
 
 }

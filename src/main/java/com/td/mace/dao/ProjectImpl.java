@@ -29,6 +29,7 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 
 		if (project != null) {
 			Hibernate.initialize(project.getUsers());
+			Hibernate.initialize(project.getWorkPackages());
 		}
 
 		return project;
@@ -42,6 +43,7 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 
 		if (project != null) {
 			Hibernate.initialize(project.getUsers());
+			Hibernate.initialize(project.getWorkPackages());
 		}
 
 		return project;
@@ -55,6 +57,7 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 
 		if (project != null) {
 			Hibernate.initialize(project.getUsers());
+			Hibernate.initialize(project.getWorkPackages());
 		}
 
 		return project;

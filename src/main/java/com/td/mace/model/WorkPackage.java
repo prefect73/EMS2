@@ -60,28 +60,13 @@ public class WorkPackage implements Serializable {
 	@Column(name = "status", nullable = false)
 	private String status;
 	
-	
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "project_id")
 	private Project project;
 
-	// bi-directional many-to-one association to WorkPackageAppUserAllocation
 	@OneToMany(mappedBy = "workPackage")
-	// , cascade= CascadeType.REMOVE
 	private List<WorkPackageUserAllocation> workPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
 
-	// bi-directional many-to-many association to AppUser
-
-	/*
-	 * @ManyToMany(fetch = FetchType.LAZY)
-	 * 
-	 * @JoinTable(name = "WORK_PACKAGE_app_user", joinColumns = {
-	 * 
-	 * @JoinColumn(name = "WORK_PACKAGE_ID") }, inverseJoinColumns = {
-	 * 
-	 * @JoinColumn(name = "USER_ID") }) private List<User> users = new
-	 * HashList<User>();
-	 */
 	public Integer getId() {
 		return id;
 	}

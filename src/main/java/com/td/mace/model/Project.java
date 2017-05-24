@@ -2,7 +2,9 @@ package com.td.mace.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -14,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -61,6 +64,9 @@ public class Project implements Serializable {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "project_app_user", joinColumns = { @JoinColumn(name = "project_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
 	private Set<User> users = new HashSet<User>();
+	
+	@OneToMany(mappedBy = "project")
+	private List<WorkPackage> workPackages = new ArrayList<WorkPackage>();
 
 	public Integer getId() {
 		return id;
@@ -134,5 +140,15 @@ public class Project implements Serializable {
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
+
+	public List<WorkPackage> getWorkPackages() {
+		return workPackages;
+	}
+
+	public void setWorkPackages(List<WorkPackage> workPackages) {
+		this.workPackages = workPackages;
+	}
+	
+	
 
 }

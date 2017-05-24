@@ -30,6 +30,7 @@ import com.td.mace.service.ProjectService;
 import com.td.mace.service.UserService;
 import com.td.mace.service.WorkPackageService;
 import com.td.mace.service.WorkPackageUserAllocationService;
+import com.td.mace.wrapper.ProjectsWrapper;
 import com.td.mace.wrapper.WorkPackageUserAllocationsWrapper;
 
 @Controller
@@ -68,76 +69,52 @@ public class TimeRecordingController {
 	@RequestMapping(value = { "/timeRecording-{yearName}-{monthName}" }, method = RequestMethod.GET)
 	public String getTimeRecordings(@PathVariable String yearName, @PathVariable String monthName , ModelMap model) {
 
-		List<WorkPackageUserAllocation> workPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
-		WorkPackageUserAllocationsWrapper workPackageUserAllocationsWrapper = new WorkPackageUserAllocationsWrapper();
+		List<Project> projectsByYearNameAndUser = new ArrayList<Project>();
+		ProjectsWrapper projectsWrapper = new ProjectsWrapper();
 		
 		if (getPrincipal() != null) {
 			User user = userService.findBySSO(getPrincipal());
-			workPackageUserAllocations = workPackageUserAllocationService.findAllWorkPackageUserAllocationsByUserAndYearName(user, yearName);
-			workPackageUserAllocationsWrapper.setWorkPackageUserAllocations(workPackageUserAllocations);
+			projectsByYearNameAndUser = projectService.findAllProjectsByYearNameAndUser(user, yearName);
+			projectsWrapper.setProjects(projectsByYearNameAndUser);
 		}
 		
-		
-
 		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 		model.addAttribute("selectedYear", yearName);
 		model.addAttribute("selectedMonth", monthName);
 		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
-		model.addAttribute("workPackageUserAllocations", workPackageUserAllocations);
-		model.addAttribute("workPackageUserAllocationsWrapper",workPackageUserAllocationsWrapper);
-		//System.out.println("workPackageUserAllocations" + workPackageUserAllocations);
+		model.addAttribute("projectsWrapper",projectsWrapper);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "timeRecording";
 	}
 	
-	/**
-	 * This method will list all existing workPackages.
-	 *//*
-	@RequestMapping(value = { "/timeRecording-{yearName}-{monthName}" }, method = RequestMethod.POST)
-	public String postTimeRecordings(@PathVariable String yearName, @PathVariable String monthName , 
-			@Valid WorkPackageUserAllocationsWrapper workPackageUserAllocationsWrapper,
-			   BindingResult result, ModelMap model) {
-
-		List<WorkPackageUserAllocation> workPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
-		if (getPrincipal() != null) {
-			User user = userService.findBySSO(getPrincipal());
-			//workPackageUserAllocationService.updateWorkPackageUserAllocationByYearAndByMonthAndByUser(yearName, monthName , user, workPackageUserAllocation);
-			for(WorkPackageUserAllocation workPackageUserAllocation : workPackageUserAllocationsWrapper.getWorkPackageUserAllocations()){				
-				workPackageUserAllocationService.updateWorkPackageUserAllocationByYearAndByMonthAndByUser(yearName, monthName, user, workPackageUserAllocation);
-			}
-			workPackageUserAllocations = workPackageUserAllocationService.findAllWorkPackageUserAllocationsByUserAndYearName(user, yearName);
-		}
-		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
-		model.addAttribute("selectedYear", yearName);
-		model.addAttribute("selectedMonth", monthName);
-		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
-		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
-		model.addAttribute("workPackageUserAllocations", workPackageUserAllocations);
-		System.out.println("workPackageUserAllocations" + workPackageUserAllocations);
-		model.addAttribute("loggedinuser", getPrincipal());
-		return "timeRecording";
-	}*/
-	
 	@RequestMapping(value = { "/timeRecording-{yearName}-{monthName}" }, method = RequestMethod.POST)
 	 public String postTimeRecordings(@PathVariable String yearName, @PathVariable String monthName , 
-	   @Valid WorkPackageUserAllocation workPackageUserAllocation,
+	   @Valid ProjectsWrapper projectsWrapper,
 	      BindingResult result, ModelMap model) {
 
-	  List<WorkPackageUserAllocation> workPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
+		
+	  User user = null;
+	  List<Project> projects = projectsWrapper.getProjects();
 	  if (getPrincipal() != null) {
-	   User user = userService.findBySSO(getPrincipal());
-	   //workPackageUserAllocationService.updateWorkPackageUserAllocationByYearAndByMonthAndByUser(yearName, monthName , user, workPackageUserAllocation);
-	   workPackageUserAllocationService.updateWorkPackageUserAllocationByYearAndByMonthAndByUser(yearName, monthName, user, workPackageUserAllocation);
-	   workPackageUserAllocations = workPackageUserAllocationService.findAllWorkPackageUserAllocationsByUserAndYearName(user, yearName);
+		  for(Project project : projects){
+			  for(WorkPackage workPackage : project.getWorkPackages()){
+				  for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
+						   user = userService.findBySSO(getPrincipal());
+						   workPackageUserAllocationService.updateWorkPackageUserAllocationByYearAndByMonthAndByUser(yearName, monthName, user, workPackageUserAllocation);
+						   
+				  }
+			  }  
+		  }		  
 	  }
+	  projects = projectService.findAllProjectsByYearNameAndUser(user, yearName);
+	  projectsWrapper.setProjects(projects);
 	  model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 	  model.addAttribute("selectedYear", yearName);
 	  model.addAttribute("selectedMonth", monthName);
 	  model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 	  model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
-	  model.addAttribute("workPackageUserAllocations", workPackageUserAllocations);
-	  System.out.println("workPackageUserAllocations" + workPackageUserAllocations);
+	  model.addAttribute("projectsWrapper",projectsWrapper);
 	  model.addAttribute("loggedinuser", getPrincipal());
 	  return "timeRecording";
 	 }
