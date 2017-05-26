@@ -103,10 +103,11 @@ public class ProjectServiceImpl implements ProjectService {
 		}*/
 		
 		for(Project project : allProjects){
+			
 			for(WorkPackage workPackage : workPackageService.findAllWorkPackagesByUser(project.getId(),user.getSsoId())){
 				for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
 					if(workPackageUserAllocation.getUser().getId() == user.getId() && workPackageUserAllocation.getYearName().equals(yearName)){
-						projectsByYearNameAndUserSet.add(project);
+						projectsByYearNameAndUserSet.add(workPackageUserAllocation.getWorkPackage().getProject());
 					}
 				}
 			}

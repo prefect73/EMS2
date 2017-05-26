@@ -75,10 +75,12 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 		// list page. Let them lazy load.
 		// Uncomment below lines for eagerly fetching of projectProfiles if you
 		// want.
-		/*
-		 * for(Project project : projects){
-		 * Hibernate.initialize(project.getProjectProfiles()); }
-		 */
+		
+		  for(Project project : projects){
+			  Hibernate.initialize(project.getUsers());
+				Hibernate.initialize(project.getWorkPackages()); 
+		  }
+		 
 		return projects;
 	}
 	

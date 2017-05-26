@@ -367,8 +367,8 @@ button.ui-datepicker-current {
 <body>
 	<div class="generic-container">
 		<%@include file="authheader.jsp"%>
-		<form:form method="POST" modelAttribute="workP"
-			class="form-horizontal"> 
+		<%-- <form:form method="POST" modelAttribute="workP"
+			class="form-horizontal"> --%> 
 			
 			<form:input type="hidden" path="projects" class="form-control input-sm" />
 			
@@ -395,7 +395,7 @@ button.ui-datepicker-current {
 						</select>
 					</div>
 					<div class="col-md-2">
-						<input id="showAllWorkPackages" name ="showAllWorkPackages" type="checkbox" checked="checked" />
+						<input id="showAllWorkPackages" name ="showAllWorkPackages" type="checkbox" checked="checked" value="1" />
 					<label  for="showAllWorkPackages"><spring:message
 							code="timeRecording.label.showAllWorkPackages" /> </label>
 					</div>
@@ -480,7 +480,7 @@ button.ui-datepicker-current {
 													href="<c:url value='#${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar">${workPackage.workPackageName}</a>
 											</h4>
 										</div>
-											 <%-- <form:form id="<c:url value='${userId}' />-<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-wpuaForm" method="POST" modelAttribute="workPackageUserAllocation" class="form-horizontal"> --%> 
+											 <form:form id="<c:url value='${userId}' />-<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-wpuaForm" method="POST" modelAttribute="workPackageUserAllocation" class="form-horizontal"> 
 										<div
 											id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar"
 											class="panel-collapse collapse">
@@ -558,7 +558,7 @@ button.ui-datepicker-current {
 																value="<spring:message code="button.update"/>"
 																class="btn btn-primary btn-sm" />
 										</div>
-										<%-- </form:form> --%>
+										</form:form>
 										
 										</c:forEach>
 									</div>
@@ -568,7 +568,7 @@ button.ui-datepicker-current {
 					</div>
 				</div>
 			</div>
-		</form:form>
+		<%-- </form:form> --%>
 		<!-- <button id="submitWorkPackageUpdatedHours" class="btn btn-primary btn-sm">Update</button> -->
 	</div>
 
