@@ -307,4 +307,22 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 		return findAllWorkPackagesByProjectIdAndSsoId;
 		
 	}
+	
+	public List<WorkPackage> findAllUnfinishedWorkPackagesByUser(int projectId,String ssoId){
+		List<WorkPackage> findAllWorkPackagesByProjectIdAndSsoId = dao.findAllWorkPackagesByProjectIdAndSsoIdAndStatus(projectId, ssoId);
+		
+		for(WorkPackage workPackage : findAllWorkPackagesByProjectIdAndSsoId){
+			List<WorkPackageUserAllocation> workPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();  
+			workPackageUserAllocations.addAll(workPackage.getWorkPackageUserAllocations());
+			for(WorkPackageUserAllocation  workPackageUserAllocation : workPackage.getWorkPackageUserAllocations() ){
+				if(!workPackageUserAllocation.getUser().getSsoId().equals(ssoId) ){
+					workPackageUserAllocations.remove(workPackageUserAllocation);
+				}
+			}
+			workPackage.setWorkPackageUserAllocations(workPackageUserAllocations);
+		}
+		
+		return findAllWorkPackagesByProjectIdAndSsoId;
+		
+	}
 }

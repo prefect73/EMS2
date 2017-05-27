@@ -66,21 +66,22 @@ public class TimeRecordingController {
 	/**
 	 * GET
 	 */
-	@RequestMapping(value = { "/timeRecording-{yearName}-{monthName}" }, method = RequestMethod.GET)
-	public String getTimeRecordings(@PathVariable String yearName, @PathVariable String monthName , ModelMap model) {
+	@RequestMapping(value = { "/timeRecording-{yearName}-{monthName}-{showAll}" }, method = RequestMethod.GET)
+	public String getTimeRecordings(@PathVariable String yearName, @PathVariable String monthName ,@PathVariable String showAll , ModelMap model) {
 
 		List<Project> projectsByYearNameAndUser = new ArrayList<Project>();
 		ProjectsWrapper projectsWrapper = new ProjectsWrapper();
 		
 		if (getPrincipal() != null) {
 			User user = userService.findBySSO(getPrincipal());
-			projectsByYearNameAndUser = projectService.findAllProjectsByYearNameAndUser(user, yearName);
+			projectsByYearNameAndUser = projectService.findAllProjectsByYearNameAndUser(user, yearName, "1");
 			projectsWrapper.setProjects(projectsByYearNameAndUser);
 		}
 		
 		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 		model.addAttribute("selectedYear", yearName);
 		model.addAttribute("selectedMonth", monthName);
+		model.addAttribute("showAll",showAll );
 		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 		/*model.addAttribute("projectsWrapper",projectsWrapper);*/
@@ -92,8 +93,8 @@ public class TimeRecordingController {
 	/**
 	 * POST
 	 */
-	@RequestMapping(value = { "/timeRecording-{yearName}-{monthName}" }, method = RequestMethod.POST)
-	 public String postTimeRecordings(@PathVariable String yearName, @PathVariable String monthName , 
+	@RequestMapping(value = { "/timeRecording-{yearName}-{monthName}-{showAll}" }, method = RequestMethod.POST)
+	 public String postTimeRecordings(@PathVariable String yearName, @PathVariable String monthName ,@PathVariable String showAll , 
 	   @Valid WorkPackageUserAllocation workPackageUserAllocation,
 	      BindingResult result, ModelMap model) {
 
@@ -111,11 +112,12 @@ public class TimeRecordingController {
 			  //}  
 		  //}		  
 	  }
-	  projects = projectService.findAllProjectsByYearNameAndUser(user, yearName);
+	  projects = projectService.findAllProjectsByYearNameAndUser(user, yearName, "1");
 	  //projectsWrapper.setProjects(projects);
 	  model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 	  model.addAttribute("selectedYear", yearName);
 	  model.addAttribute("selectedMonth", monthName);
+	  model.addAttribute("showAll",showAll );
 	  model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 	  model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 	  /*model.addAttribute("projectsWrapper",projectsWrapper);*/

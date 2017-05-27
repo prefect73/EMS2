@@ -33,6 +33,8 @@ public interface WorkPackageService {
 	
 	List<WorkPackage> findAllWorkPackagesByUser(int projectId,String ssoId);
 	
+	List<WorkPackage> findAllUnfinishedWorkPackagesByUser(int projectId,String ssoId);
+	
 	void updateCalculatedCost(WorkPackage workPackage);
 	
 

@@ -92,7 +92,7 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<Project> findAllProjectsByYearNameAndUser(User user, String yearName) {
+	public List<Project> findAllProjectsByYearNameAndUser(User user, String yearName, String showAll) {
 		List<Project> allProjects = findAllProjects();
 		List<Project> projectsByYearNameAndUserList = new ArrayList<Project>();
 		Set<Project> projectsByYearNameAndUserSet = new HashSet<Project>();
@@ -103,13 +103,27 @@ public class ProjectServiceImpl implements ProjectService {
 		}*/
 		
 		for(Project project : allProjects){
-			
-			for(WorkPackage workPackage : workPackageService.findAllWorkPackagesByUser(project.getId(),user.getSsoId())){
-				for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
-					if(workPackageUserAllocation.getUser().getId() == user.getId() && workPackageUserAllocation.getYearName().equals(yearName)){
-						projectsByYearNameAndUserSet.add(workPackageUserAllocation.getWorkPackage().getProject());
+
+			//findAllUnfinishedWorkPackagesByUser
+			if(showAll.equalsIgnoreCase("1")){
+				for(WorkPackage workPackage : workPackageService.findAllWorkPackagesByUser(project.getId(),user.getSsoId())){
+					for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
+						if(workPackageUserAllocation.getUser().getId() == user.getId() && workPackageUserAllocation.getYearName().equals(yearName)){
+							projectsByYearNameAndUserSet.add(workPackageUserAllocation.getWorkPackage().getProject());
+						}
+						
 					}
 				}
+			} else {
+				for(WorkPackage workPackage : workPackageService.findAllUnfinishedWorkPackagesByUser(project.getId(),user.getSsoId())){
+					for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
+						if(workPackageUserAllocation.getUser().getId() == user.getId() && workPackageUserAllocation.getYearName().equals(yearName)){
+							projectsByYearNameAndUserSet.add(workPackageUserAllocation.getWorkPackage().getProject());
+						}
+						
+					}
+				}
+			
 			}
 		}
 		projectsByYearNameAndUserList.addAll(projectsByYearNameAndUserSet);

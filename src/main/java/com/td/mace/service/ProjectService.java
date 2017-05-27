@@ -27,6 +27,6 @@ public interface ProjectService {
 
 	boolean isProjectNameUnique(Integer id, String projectName);
 
-	List<Project> findAllProjectsByYearNameAndUser(User user, String yearName);
+	List<Project> findAllProjectsByYearNameAndUser(User user, String yearName, String showAll);
 
 }
