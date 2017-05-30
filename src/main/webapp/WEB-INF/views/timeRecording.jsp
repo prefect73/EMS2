@@ -165,12 +165,13 @@ button.ui-datepicker-current {
 										function() {
 											var yearNamesDropDownSelectedValue = $("#yearNamesDropDown").val();
 											var monthNamesDropDownSelectedValue = $("#monthNamesDropDown").val();
+											var showAllWorkPackagesSelectedValue = $("#showAllWorkPackages").val();
 											
 											$("#searchByYearBtn")
 													.attr(
 															'href',
 															'/EMS/TimeRecordingReport/timeRecording-'
-																	+ yearNamesDropDownSelectedValue + '-' + monthNamesDropDownSelectedValue);
+																	+ yearNamesDropDownSelectedValue + '-' + monthNamesDropDownSelectedValue + '-' + showAllWorkPackagesSelectedValue);
 										});
 						
 						$('#monthNamesDropDown')
@@ -178,13 +179,38 @@ button.ui-datepicker-current {
 								function() {
 									var yearNamesDropDownSelectedValue = $("#yearNamesDropDown").val();
 									var monthNamesDropDownSelectedValue = $("#monthNamesDropDown").val();
+									var showAllWorkPackagesSelectedValue = $("#showAllWorkPackages").val();
 									
 									$("#searchByYearBtn")
 											.attr(
 													'href',
 													'/EMS/TimeRecordingReport/timeRecording-'
-															+ yearNamesDropDownSelectedValue + '-' + monthNamesDropDownSelectedValue);
+															+ yearNamesDropDownSelectedValue + '-' + monthNamesDropDownSelectedValue + '-' + showAllWorkPackagesSelectedValue);
 								});
+						
+						$('#showAllWorkPackages').change(function(){
+							var yearNamesDropDownSelectedValue = $("#yearNamesDropDown").val();
+							var monthNamesDropDownSelectedValue = $("#monthNamesDropDown").val();
+							
+							if($(this).is(':checked')) {
+								$(this).val(1);
+								var showAllWorkPackagesSelectedValue = $("#showAllWorkPackages").val();
+							    $("#searchByYearBtn")
+								.attr(
+										'href',
+										'/EMS/TimeRecordingReport/timeRecording-'
+												+ yearNamesDropDownSelectedValue + '-' + monthNamesDropDownSelectedValue + '-' + showAllWorkPackagesSelectedValue);
+						    } else {
+						    	$(this).val(0);
+						    	var showAllWorkPackagesSelectedValue = $("#showAllWorkPackages").val();
+							    $("#searchByYearBtn")
+								.attr(
+										'href',
+										'/EMS/TimeRecordingReport/timeRecording-'
+												+ yearNamesDropDownSelectedValue + '-' + monthNamesDropDownSelectedValue + '-' + showAllWorkPackagesSelectedValue);
+						    }
+						});
+						
 					
 						$(document)
 								.on(
@@ -193,10 +219,7 @@ button.ui-datepicker-current {
 										function() {
 											clickedWorkPackageCalendarAchorId = $(this);
 											if(clickedWorkPackageCalendarAchorId.attr('opened') != 'true') {
-											//setTimeout( function(){
 											console.log("clickedWorkPackageCalendarAchorId.parent().parent().next()" + clickedWorkPackageCalendarAchorId.parent().parent().next().attr('class'));
-											//if(clickedWorkPackageCalendarAchorId.parent().parent().next().hasClass('in'))
-											//{
 											clickedWorkPackageCalendarAchorId.attr('opened', 'true');
 											var d = new Date();
 											d.setMonth($("#monthNamesDropDown")
@@ -273,7 +296,6 @@ button.ui-datepicker-current {
 																		dateText,
 																		inst) {
 																	console.log("Closed");
-																	//getCalendarValues("#" + $(this).attr('id'),'.workPackageCalendarTextBox');
 																}
 															});
 											var i = 1;
@@ -320,10 +342,8 @@ button.ui-datepicker-current {
 											}
 											clickedWorkPackageCalendarAchorId.parent().parent().next().find('a').next().val("y");
 											}
-											//}, 3000); 
-											
-											//$(this).parent().parent().next().find('div').attr("disabled", "disabled");
 										});
+						
 						$(document)
 						.on("click", "[id$=submitButton]",
 							function(){
@@ -359,7 +379,6 @@ button.ui-datepicker-current {
 							});
 							
 						});
-
 					});
 </script>
 </head>

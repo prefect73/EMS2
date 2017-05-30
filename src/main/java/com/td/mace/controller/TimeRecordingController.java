@@ -74,14 +74,14 @@ public class TimeRecordingController {
 		
 		if (getPrincipal() != null) {
 			User user = userService.findBySSO(getPrincipal());
-			projectsByYearNameAndUser = projectService.findAllProjectsByYearNameAndUser(user, yearName, "1");
+			projectsByYearNameAndUser = projectService.findAllProjectsByYearNameAndUser(user, yearName, showAll);
 			projectsWrapper.setProjects(projectsByYearNameAndUser);
 		}
 		
 		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 		model.addAttribute("selectedYear", yearName);
 		model.addAttribute("selectedMonth", monthName);
-		model.addAttribute("showAll",showAll );
+		model.addAttribute("showAll", showAll);
 		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 		/*model.addAttribute("projectsWrapper",projectsWrapper);*/
