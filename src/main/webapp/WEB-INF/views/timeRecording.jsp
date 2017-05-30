@@ -148,7 +148,16 @@ button.ui-datepicker-current {
 	
 	 function daysInMonth(month,year) {
 		    return new Date(year, month, 0).getDate();
-		} 
+	}
+	 
+	function makeShowAllWorkPackagesBooleanSelected() {
+		if($('#showAllWorkPackagesBoolean').val() == 0) {
+			$('#showAllWorkPackages').prop('checked', false);
+		}
+		else if($('#showAllWorkPackagesBoolean').val() == 1) {
+			$('#showAllWorkPackages').prop('checked', true);
+		}
+	}
 	 
 	$(document)
 			.ready(
@@ -158,6 +167,7 @@ button.ui-datepicker-current {
 						yearDropdownFill(startYear, endYear);
 						makeCurrentYearSelected();
 						makeCurrentMonthSelected();
+						makeShowAllWorkPackagesBooleanSelected();
 						//makeCurrentWeekSelected();
 
 						$('#yearNamesDropDown')
@@ -219,7 +229,6 @@ button.ui-datepicker-current {
 										function() {
 											clickedWorkPackageCalendarAchorId = $(this);
 											if(clickedWorkPackageCalendarAchorId.attr('opened') != 'true') {
-											console.log("clickedWorkPackageCalendarAchorId.parent().parent().next()" + clickedWorkPackageCalendarAchorId.parent().parent().next().attr('class'));
 											clickedWorkPackageCalendarAchorId.attr('opened', 'true');
 											var d = new Date();
 											d.setMonth($("#monthNamesDropDown")
@@ -295,18 +304,13 @@ button.ui-datepicker-current {
 																onClose : function(
 																		dateText,
 																		inst) {
-																	console.log("Closed");
+																//	console.log("Closed");
 																}
 															});
 											var i = 1;
-											var selectedProjectName = clickedWorkPackageCalendarAchorId.parent().parent().parent().parent().attr('id');
+											var selectedProjectName = clickedWorkPackageCalendarAchorId.parent().parent().parent().parent().parent().prev().find('h4').find('a').text().replace(/^\s+|\s+$/g,'');
 											var selectedWorkPackageName = clickedWorkPackageCalendarAchorId.text();
 											
-											console.log("selectedProjectName " + selectedProjectName);
-											console.log("selectedWorkPackageName " + selectedWorkPackageName);
-											console.log("$(#yearNamesDropDown).val() " + $("#yearNamesDropDown").val());
-											console.log("$(#monthNamesDropDown).val() " + $("#monthNamesDropDown").val());
-											console.log("loggedInUserId " + loggedInUserId);
 											
 											effectiveDays = eval("effectiveDaysMap_" + $('#monthNamesDropDown').val()).get(
 															loggedInUserId
@@ -332,10 +336,8 @@ button.ui-datepicker-current {
 																			
 											
 											var daysInSelectedMonth = daysInMonth(parseInt($('#monthNamesDropDown').val() + 1), $('#yearNamesDropDown').val());
-											console.log("effectiveDays " + effectiveDays);
 											splittedCsv = effectiveDays.split(',');
 											var calendarOnceOpened = clickedWorkPackageCalendarAchorId.parent().parent().next().find('a').next().val();
-											console.log("calendarOnceOpened " + calendarOnceOpened);
 											if(calendarOnceOpened != 'y') {
 												clickedWorkPackageCalendarAchorId.parent().parent().next().find(".ui-datepicker-calendar .ui-state-default")
 													.each(
@@ -360,23 +362,18 @@ button.ui-datepicker-current {
 							var effectiveDaysCSV = "";
 							var calendarTextBox = "";
 							var submitButtonId = $(this);
-							console.log("submit clicked");
 							$(this).parent().find(".ui-datepicker-calendar .ui-state-default")
 							.each(
 									function(j) {
 										calendarTextBox = $(this);
 										//totalDaysSum += parseFloat(splittedCsv[j]);
 										totalDaysSum += parseFloat($(this).find("input").val());
-										console.log("text box value" + j + ": " + $(this).find("input").val());
 										tempCSV += "," + $(this).find("input").val();
 										
-										//console.log("next id " + $(this).parent().parent().parent().parent().parent().parent().parent().next().next().attr("id"));
 							});
 							effectiveDaysCSV = tempCSV.substring(1, tempCSV.length);
-							console.log("effectiveDaysCSV " + effectiveDaysCSV + " totalDaysSum " + totalDaysSum);
 							 
 							$('.hidden-fields').each(function(i) {
-								console.log("index:" + i );
 								
 								//for loop 
 								if($(this).attr('name') === "em" + monthsNamesToIntegers[$('#monthNamesDropDown').val()])		
@@ -401,16 +398,13 @@ button.ui-datepicker-current {
 			<input type="hidden" id="selectedYear" value='${selectedYear}' />
 			<input type="hidden" id="selectedMonth" value='${selectedMonth}' />
 			<input type="hidden" id="userId" value='${userId}' />
+			<input type="hidden" id="showAllWorkPackagesBoolean" value='${showAll}' />
 			
 			
 			<div class="well lead col-md-5">
 				<spring:message code="timeRecording.enter.your.time" />
 			</div>
-			<div class="well col-md-2">
-				<input type="submit" id="updateBtn"
-					value="<spring:message code="button.update"/>"
-					class="btn btn-primary btn-sm" />
-			</div>
+			
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-label"><spring:message
@@ -502,6 +496,7 @@ button.ui-datepicker-current {
 												<c:when test="${showAll == 0}">
 												<c:choose>
 												<c:when test="${workPackage.status != 'Finished'}">
+										<form:form id="<c:url value='${userId}' />-<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-wpuaForm" method="POST" modelAttribute="workPackageUserAllocation" class="form-horizontal"> 
 												
 										<div class="panel-heading">
 											<h4 class="panel-title" style="border: 1px Solid lightgray; padding:1%;">
@@ -511,7 +506,6 @@ button.ui-datepicker-current {
 													href="<c:url value='#${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar">${workPackage.workPackageName}</a>
 											</h4>
 										</div>
-											 <form:form id="<c:url value='${userId}' />-<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-wpuaForm" method="POST" modelAttribute="workPackageUserAllocation" class="form-horizontal"> 
 										<div
 											id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar"
 											class="panel-collapse collapse">
@@ -589,14 +583,14 @@ button.ui-datepicker-current {
 																value="<spring:message code="button.update"/>"
 																class="btn btn-primary btn-sm" />
 										</div>
-										</form:form>
-										</c:when>
+									  	</form:form> 
+									 	</c:when>
 										</c:choose>
 										</c:when>
 										</c:choose>
 										<c:choose>
 												<c:when test="${showAll == 1}">
-												
+										<form:form id="<c:url value='${userId}' />-<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-wpuaForm" method="POST" modelAttribute="workPackageUserAllocation" class="form-horizontal"> 
 										<div class="panel-heading">
 											<h4 class="panel-title" style="border: 1px Solid lightgray; padding:1%;">
 												<a data-toggle="collapse"  
@@ -605,7 +599,6 @@ button.ui-datepicker-current {
 													href="<c:url value='#${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar">${workPackage.workPackageName}</a>
 											</h4>
 										</div>
-											 <form:form id="<c:url value='${userId}' />-<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-wpuaForm" method="POST" modelAttribute="workPackageUserAllocation" class="form-horizontal"> 
 										<div
 											id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar"
 											class="panel-collapse collapse">
