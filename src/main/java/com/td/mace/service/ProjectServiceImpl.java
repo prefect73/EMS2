@@ -105,16 +105,7 @@ public class ProjectServiceImpl implements ProjectService {
 		for(Project project : allProjects){
 
 			//findAllUnfinishedWorkPackagesByUser
-			if(showAll.equalsIgnoreCase("1")){
-				for(WorkPackage workPackage : workPackageService.findAllWorkPackagesByUser(project.getId(),user.getSsoId())){
-					for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
-						if(workPackageUserAllocation.getUser().getId() == user.getId() && workPackageUserAllocation.getYearName().equals(yearName)){
-							projectsByYearNameAndUserSet.add(workPackageUserAllocation.getWorkPackage().getProject());
-						}
-						
-					}
-				}
-			} else {
+			/*if(showAll.equalsIgnoreCase("1")){
 				for(WorkPackage workPackage : workPackageService.findAllUnfinishedWorkPackagesByUser(project.getId(),user.getSsoId())){
 					for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
 						if(workPackageUserAllocation.getUser().getId() == user.getId() && workPackageUserAllocation.getYearName().equals(yearName)){
@@ -123,8 +114,17 @@ public class ProjectServiceImpl implements ProjectService {
 						
 					}
 				}
+			} else {*/
+				for(WorkPackage workPackage : workPackageService.findAllWorkPackagesByUser(project.getId(),user.getSsoId())){
+					for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
+						if(workPackageUserAllocation.getUser().getId() == user.getId() && workPackageUserAllocation.getYearName().equals(yearName)){
+							projectsByYearNameAndUserSet.add(workPackageUserAllocation.getWorkPackage().getProject());
+						}
+						
+					}
+				}
 			
-			}
+			/*}*/
 		}
 		projectsByYearNameAndUserList.addAll(projectsByYearNameAndUserSet);
 		

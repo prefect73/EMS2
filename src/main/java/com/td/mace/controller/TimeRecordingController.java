@@ -112,7 +112,7 @@ public class TimeRecordingController {
 			  //}  
 		  //}		  
 	  }
-	  projects = projectService.findAllProjectsByYearNameAndUser(user, yearName, "1");
+	  projects = projectService.findAllProjectsByYearNameAndUser(user, yearName, showAll);
 	  //projectsWrapper.setProjects(projects);
 	  model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 	  model.addAttribute("selectedYear", yearName);
