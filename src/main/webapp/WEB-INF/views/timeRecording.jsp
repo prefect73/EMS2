@@ -90,30 +90,31 @@ button.ui-datepicker-current {
 			<c:forEach items="${workPackage.workPackageUserAllocations}" var="workPackageUserAllocation">
 	loggedInUserId = '${workPackageUserAllocation.user.id}';
 
+	
 	effectiveDaysMap_0.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
-					+ "0", '${workPackageUserAllocation.eemJan}');
+			+ "0", '${workPackageUserAllocation.eemJan}');
 	effectiveDaysMap_1.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
-					+ "1", '${workPackageUserAllocation.eemFeb}');
+			+ "1", '${workPackageUserAllocation.eemFeb}');
 	effectiveDaysMap_2.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
-					+ "2", '${workPackageUserAllocation.eemMar}');
+			+ "2", '${workPackageUserAllocation.eemMar}');
 	effectiveDaysMap_3.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
-					+ "3", '${workPackageUserAllocation.eemApr}');
+			+ "3", '${workPackageUserAllocation.eemApr}');
 	effectiveDaysMap_4.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
-					+ "4", '${workPackageUserAllocation.eemMay}');
+			+ "4", '${workPackageUserAllocation.eemMay}');
 	effectiveDaysMap_5.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
-					+ "5", '${workPackageUserAllocation.eemJun}');
+			+ "5", '${workPackageUserAllocation.eemJun}');
 	effectiveDaysMap_6.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
-					+ "6", '${workPackageUserAllocation.eemJul}');
+			+ "6", '${workPackageUserAllocation.eemJul}');
 	effectiveDaysMap_7.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
-					+ "7", '${workPackageUserAllocation.eemAug}');
+			+ "7", '${workPackageUserAllocation.eemAug}');
 	effectiveDaysMap_8.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
-					+ "8", '${workPackageUserAllocation.eemSep}');
+			+ "8", '${workPackageUserAllocation.eemSep}');
 	effectiveDaysMap_9.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
-					+ "9", '${workPackageUserAllocation.eemOct}');
+			+ "9", '${workPackageUserAllocation.eemOct}');
 	effectiveDaysMap_10.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
-					+ "10", '${workPackageUserAllocation.eemNov}');
+			+ "10", '${workPackageUserAllocation.eemNov}');
 	effectiveDaysMap_11.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
-					+ "11", '${workPackageUserAllocation.eemDec}');
+			+ "11", '${workPackageUserAllocation.eemDec}');
 
 	</c:forEach>
 	</c:forEach>
@@ -129,9 +130,13 @@ button.ui-datepicker-current {
 		var d = new Date();
 		var currentYear = d.getFullYear();
 		if (<c:out value="${selectedYear}"/> == currentYear) {
-			$('#yearNamesDropDown option[value=' + currentYear + ']').attr('selected', 'selected');
+			$('#yearNamesDropDown option[value=' + currentYear + ']').attr(
+					'selected', 'selected');
 		} else {
-			$('#yearNamesDropDown option[value='+ <c:out value="${selectedYear}"/> + ']').attr('selected', 'selected');
+			$(
+					'#yearNamesDropDown option[value='
+							+ <c:out value="${selectedYear}"/> + ']').attr(
+					'selected', 'selected');
 		}
 	}
 
@@ -139,26 +144,30 @@ button.ui-datepicker-current {
 		var d = new Date();
 		var currentMonth = d.getMonth();
 		if (<c:out value="${selectedMonth}"/> == currentMonth) {
-			$('#monthNamesDropDown option[value=' + currentMonth + ']').attr('selected', 'selected');
-		}
-		else {
-			$('#monthNamesDropDown option[value='+ <c:out value="${selectedMonth}"/> + ']').attr('selected', 'selected');
+			$('#monthNamesDropDown option[value=' + currentMonth + ']').attr(
+					'selected', 'selected');
+		} else {
+			$(
+					'#monthNamesDropDown option[value='
+							+ <c:out value="${selectedMonth}"/> + ']').attr(
+					'selected', 'selected');
 		}
 	}
-	
-	 function daysInMonth(month,year) {
-		    return new Date(year, month, 0).getDate();
+
+	function daysInMonth(month, year) {
+		return new Date(year, month, 0).getDate();
 	}
-	 
+
 	function makeShowAllWorkPackagesBooleanSelected() {
-		if($('#showAllWorkPackagesBoolean').val() == 0) {
+		if ($('#showAllWorkPackagesBoolean').val() == 0) {
 			$('#showAllWorkPackages').prop('checked', false);
-		}
-		else if($('#showAllWorkPackagesBoolean').val() == 1) {
+			$('#showAllWorkPackages').val(0);
+		} else if ($('#showAllWorkPackagesBoolean').val() == 1) {
 			$('#showAllWorkPackages').prop('checked', true);
+			$('#showAllWorkPackages').val(1);
 		}
 	}
-	 
+
 	$(document)
 			.ready(
 					function() {
@@ -173,216 +182,372 @@ button.ui-datepicker-current {
 						$('#yearNamesDropDown')
 								.change(
 										function() {
-											var yearNamesDropDownSelectedValue = $("#yearNamesDropDown").val();
-											var monthNamesDropDownSelectedValue = $("#monthNamesDropDown").val();
-											var showAllWorkPackagesSelectedValue = $("#showAllWorkPackages").val();
-											
+											var yearNamesDropDownSelectedValue = $(
+													"#yearNamesDropDown").val();
+											var monthNamesDropDownSelectedValue = $(
+													"#monthNamesDropDown")
+													.val();
+											var showAllWorkPackagesSelectedValue = $(
+													"#showAllWorkPackages")
+													.val();
+
 											$("#searchByYearBtn")
 													.attr(
 															'href',
 															'/EMS/TimeRecordingReport/timeRecording-'
-																	+ yearNamesDropDownSelectedValue + '-' + monthNamesDropDownSelectedValue + '-' + showAllWorkPackagesSelectedValue);
+																	+ yearNamesDropDownSelectedValue
+																	+ '-'
+																	+ monthNamesDropDownSelectedValue
+																	+ '-'
+																	+ showAllWorkPackagesSelectedValue);
 										});
-						
+
 						$('#monthNamesDropDown')
-						.change(
-								function() {
-									var yearNamesDropDownSelectedValue = $("#yearNamesDropDown").val();
-									var monthNamesDropDownSelectedValue = $("#monthNamesDropDown").val();
-									var showAllWorkPackagesSelectedValue = $("#showAllWorkPackages").val();
-									
-									$("#searchByYearBtn")
-											.attr(
-													'href',
-													'/EMS/TimeRecordingReport/timeRecording-'
-															+ yearNamesDropDownSelectedValue + '-' + monthNamesDropDownSelectedValue + '-' + showAllWorkPackagesSelectedValue);
-								});
-						
-						$('#showAllWorkPackages').change(function(){
-							var yearNamesDropDownSelectedValue = $("#yearNamesDropDown").val();
-							var monthNamesDropDownSelectedValue = $("#monthNamesDropDown").val();
-							
-							if($(this).is(':checked')) {
-								$(this).val(1);
-								var showAllWorkPackagesSelectedValue = $("#showAllWorkPackages").val();
-							    $("#searchByYearBtn")
-								.attr(
-										'href',
-										'/EMS/TimeRecordingReport/timeRecording-'
-												+ yearNamesDropDownSelectedValue + '-' + monthNamesDropDownSelectedValue + '-' + showAllWorkPackagesSelectedValue);
-						    } else {
-						    	$(this).val(0);
-						    	var showAllWorkPackagesSelectedValue = $("#showAllWorkPackages").val();
-							    $("#searchByYearBtn")
-								.attr(
-										'href',
-										'/EMS/TimeRecordingReport/timeRecording-'
-												+ yearNamesDropDownSelectedValue + '-' + monthNamesDropDownSelectedValue + '-' + showAllWorkPackagesSelectedValue);
-						    }
-						});
-						
-					
+								.change(
+										function() {
+											var yearNamesDropDownSelectedValue = $(
+													"#yearNamesDropDown").val();
+											var monthNamesDropDownSelectedValue = $(
+													"#monthNamesDropDown")
+													.val();
+											var showAllWorkPackagesSelectedValue = $(
+													"#showAllWorkPackages")
+													.val();
+
+											$("#searchByYearBtn")
+													.attr(
+															'href',
+															'/EMS/TimeRecordingReport/timeRecording-'
+																	+ yearNamesDropDownSelectedValue
+																	+ '-'
+																	+ monthNamesDropDownSelectedValue
+																	+ '-'
+																	+ showAllWorkPackagesSelectedValue);
+										});
+
+						$('#showAllWorkPackages')
+								.change(
+										function() {
+											var yearNamesDropDownSelectedValue = $(
+													"#yearNamesDropDown").val();
+											var monthNamesDropDownSelectedValue = $(
+													"#monthNamesDropDown")
+													.val();
+
+											if ($(this).is(':checked')) {
+												$(this).val(1);
+												var showAllWorkPackagesSelectedValue = $(
+														"#showAllWorkPackages")
+														.val();
+												$("#searchByYearBtn")
+														.attr(
+																'href',
+																'/EMS/TimeRecordingReport/timeRecording-'
+																		+ yearNamesDropDownSelectedValue
+																		+ '-'
+																		+ monthNamesDropDownSelectedValue
+																		+ '-'
+																		+ showAllWorkPackagesSelectedValue);
+											} else {
+												$(this).val(0);
+												var showAllWorkPackagesSelectedValue = $(
+														"#showAllWorkPackages")
+														.val();
+												$("#searchByYearBtn")
+														.attr(
+																'href',
+																'/EMS/TimeRecordingReport/timeRecording-'
+																		+ yearNamesDropDownSelectedValue
+																		+ '-'
+																		+ monthNamesDropDownSelectedValue
+																		+ '-'
+																		+ showAllWorkPackagesSelectedValue);
+											}
+										});
+
 						$(document)
 								.on(
 										"click",
 										"[id$=workPackageCalendarAnchor]",
 										function() {
 											clickedWorkPackageCalendarAchorId = $(this);
-											if(clickedWorkPackageCalendarAchorId.attr('opened') != 'true') {
-											clickedWorkPackageCalendarAchorId.attr('opened', 'true');
-											var d = new Date();
-											d.setMonth($("#monthNamesDropDown")
-													.val());
-											d.setYear($("#yearNamesDropDown")
-													.val());
-											clickedWorkPackageCalendarAchorId
-													.parent()
-													.parent()
-													.next()
-													.find('div')
-													.datepicker(
-															{
-																beforeShowDay : function(date) {return [false,'' ];},
-																monthNames : [
-																		'Januar',
-																		'Februar',
-																		'März',
-																		'April',
-																		'Mai',
-																		'Juni',
-																		'Juli',
-																		'August',
-																		'September',
-																		'Oktober',
-																		'November',
-																		'Dezember' ],
-																monthNamesShort : [
-																		'Jan',
-																		'Feb',
-																		'Mär',
-																		'Apr',
-																		'Mai',
-																		'Jun',
-																		'Jul',
-																		'Aug',
-																		'Sep',
-																		'Okt',
-																		'Nov',
-																		'Dez' ],
-																dayNames : [
-																		'Sonntag',
-																		'Montag',
-																		'Dienstag',
-																		'Mittwoch',
-																		'Donnerstag',
-																		'Freitag',
-																		'Samstag' ],
-																dayNamesShort : [
-																		'So',
-																		'Mo',
-																		'Di',
-																		'Mi',
-																		'Do',
-																		'Fr',
-																		'Sa' ],
-																dayNamesMin : [
-																		'So',
-																		'Mo',
-																		'Di',
-																		'Mi',
-																		'Do',
-																		'Fr',
-																		'Sa' ],
-																showYear : false,
-																changeMonth : false,
-																changeYear : false,
-																defaultDate: d,
-																firstDay : 1,
-																close : false,
-																showButtonPanel : true,
-																autoClose : false,
-																onClose : function(
-																		dateText,
-																		inst) {
-																//	console.log("Closed");
-																}
-															});
-											var i = 1;
-											var selectedProjectName = clickedWorkPackageCalendarAchorId.parent().parent().parent().parent().parent().prev().find('h4').find('a').text().replace(/^\s+|\s+$/g,'');
-											var selectedWorkPackageName = clickedWorkPackageCalendarAchorId.text();
-											
-											
-											effectiveDays = eval("effectiveDaysMap_" + $('#monthNamesDropDown').val()).get(
-															loggedInUserId
-															+ "-"
-															+ selectedProjectName
-															+ '-'
-															+ selectedWorkPackageName
-															+ '-'
-															+ $("#yearNamesDropDown").val()
-															+ "-" 
-															+ $('#monthNamesDropDown').val())
-															!= "" ?
-																	eval("effectiveDaysMap_" + $('#monthNamesDropDown').val()).get(
-																			loggedInUserId
-																			+ "-"
-																			+ selectedProjectName
-																			+ '-'
-																			+ selectedWorkPackageName
-																			+ '-'
-																			+ $("#yearNamesDropDown").val()
-																			+ "-" 
-																			+ $('#monthNamesDropDown').val()) : '0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0'; 
-																			
-											
-											var daysInSelectedMonth = daysInMonth(parseInt($('#monthNamesDropDown').val() + 1), $('#yearNamesDropDown').val());
-											splittedCsv = effectiveDays.split(',');
-											var calendarOnceOpened = clickedWorkPackageCalendarAchorId.parent().parent().next().find('a').next().val();
-											if(calendarOnceOpened != 'y') {
-												clickedWorkPackageCalendarAchorId.parent().parent().next().find(".ui-datepicker-calendar .ui-state-default")
-													.each(
-															function(i) {
-																$(".ui-datepicker-prev, .ui-datepicker-next").remove();
-																if(daysInSelectedMonth > i) {
-																	$(this).html($(this).html()
-																						+ "<input class=\"form-control input-sm workPackageCalendarTextBox\" style=\"width:42px;\" type=\"text\" id=\"eDD[" + i + "]." + $("#monthNamesDropDown").val() + "." + i + "\" value=\""+ splittedCsv[i] +"\" />");
-																}
-															});
-											}
-											clickedWorkPackageCalendarAchorId.parent().parent().next().find('a').next().val("y");
+											if (clickedWorkPackageCalendarAchorId
+													.attr('opened') != 'true') {
+												clickedWorkPackageCalendarAchorId
+														.attr('opened', 'true');
+												var d = new Date();
+												d.setMonth($(
+														"#monthNamesDropDown")
+														.val());
+												d.setYear($(
+														"#yearNamesDropDown")
+														.val());
+												clickedWorkPackageCalendarAchorId
+														.parent()
+														.parent()
+														.next()
+														.find('div')
+														.datepicker(
+																{
+																	beforeShowDay : function(
+																			date) {
+																		return [
+																				false,
+																				'' ];
+																	},
+																	monthNames : [
+																			'Januar',
+																			'Februar',
+																			'März',
+																			'April',
+																			'Mai',
+																			'Juni',
+																			'Juli',
+																			'August',
+																			'September',
+																			'Oktober',
+																			'November',
+																			'Dezember' ],
+																	monthNamesShort : [
+																			'Jan',
+																			'Feb',
+																			'Mär',
+																			'Apr',
+																			'Mai',
+																			'Jun',
+																			'Jul',
+																			'Aug',
+																			'Sep',
+																			'Okt',
+																			'Nov',
+																			'Dez' ],
+																	dayNames : [
+																			'Sonntag',
+																			'Montag',
+																			'Dienstag',
+																			'Mittwoch',
+																			'Donnerstag',
+																			'Freitag',
+																			'Samstag' ],
+																	dayNamesShort : [
+																			'So',
+																			'Mo',
+																			'Di',
+																			'Mi',
+																			'Do',
+																			'Fr',
+																			'Sa' ],
+																	dayNamesMin : [
+																			'So',
+																			'Mo',
+																			'Di',
+																			'Mi',
+																			'Do',
+																			'Fr',
+																			'Sa' ],
+																	showYear : false,
+																	changeMonth : false,
+																	changeYear : false,
+																	defaultDate : d,
+																	firstDay : 1,
+																	close : false,
+																	showButtonPanel : true,
+																	autoClose : false,
+																	onClose : function(
+																			dateText,
+																			inst) {
+																		//	console.log("Closed");
+																	}
+																});
+												var i = 1;
+												var selectedProjectName = clickedWorkPackageCalendarAchorId
+														.parent().parent()
+														.parent().parent()
+														.parent().prev().find(
+																'h4').find('a')
+														.text().replace(
+																/^\s+|\s+$/g,
+																'');
+												var selectedWorkPackageName = clickedWorkPackageCalendarAchorId
+														.text();
+
+												var selectedProjectId = clickedWorkPackageCalendarAchorId
+														.parent().parent()
+														.parent().parent()
+														.parent().prev().find(
+																'h4').find('a')
+														.attr('data-proj-id');
+												var selectedWorkPackageId = clickedWorkPackageCalendarAchorId
+														.attr('data-wpkg-id');
+												console
+														.log("selectedWorkPackageId "
+																+ selectedWorkPackageId);
+												console
+												.log("selectedProjectId "
+														+ selectedProjectId);
+												
+												var generatedDefaultZeroValues = 0;
+												var daysInSelectedMonth = daysInMonth(
+														parseInt($('#monthNamesDropDown')
+																.val()) + 1,
+														$('#yearNamesDropDown')
+																.val());
+												
+												for(var i = 1; i < daysInSelectedMonth; i++) {
+													generatedDefaultZeroValues += ",0";
+												}
+												
+												effectiveDays = eval(
+														"effectiveDaysMap_"
+																+ $(
+																		'#monthNamesDropDown')
+																		.val())
+														.get(
+																loggedInUserId
+																		+ "-"
+																		+ selectedProjectName
+																		+ '-'
+																		+ selectedWorkPackageName
+																		+ '-'
+																		+ $(
+																				"#yearNamesDropDown")
+																				.val()
+																		+ "-"
+																		+ $(
+																				'#monthNamesDropDown')
+																				.val()) != "" ? eval(
+														"effectiveDaysMap_"
+																+ $(
+																		'#monthNamesDropDown')
+																		.val())
+														.get(
+																loggedInUserId
+																		+ "-"
+																		+ selectedProjectName
+																		+ '-'
+																		+ selectedWorkPackageName
+																		+ '-'
+																		+ $(
+																				"#yearNamesDropDown")
+																				.val()
+																		+ "-"
+																		+ $(
+																				'#monthNamesDropDown')
+																				.val())
+														: generatedDefaultZeroValues;
+
+												
+												splittedCsv = effectiveDays
+														.split(',');
+												var calendarOnceOpened = clickedWorkPackageCalendarAchorId
+														.parent().parent()
+														.next().find('a')
+														.next().val();
+												if (calendarOnceOpened != 'y') {
+													clickedWorkPackageCalendarAchorId
+															.parent()
+															.parent()
+															.next()
+															.find(
+																	".ui-datepicker-calendar .ui-state-default")
+															.each(
+																	function(i) {
+																		$(
+																				".ui-datepicker-prev, .ui-datepicker-next")
+																				.remove();
+																		if (daysInSelectedMonth > i) {
+																			$(
+																					this)
+																					.html(
+																							$(
+																									this)
+																									.html()
+																									+ "<input class=\"form-control input-sm workPackageCalendarTextBox\" style=\"width:42px;\" type=\"text\" id=\"eDD["
+																									+ i
+																									+ "]."
+																									+ $(
+																											"#monthNamesDropDown")
+																											.val()
+																									+ "."
+																									+ i
+																									+ "\" value=\""
+																									+ splittedCsv[i]
+																									+ "\" />");
+																		}
+																	});
+												}
+												clickedWorkPackageCalendarAchorId
+														.parent().parent()
+														.next().find('a')
+														.next().val("y");
 											}
 										});
-						
+
 						$(document)
-						.on("click", "[id$=submitButton]",
-							function(){
-							var j = 1;
-							var totalDaysSum = 0;
-							var tempCSV = "";
-							var effectiveDaysCSV = "";
-							var calendarTextBox = "";
-							var submitButtonId = $(this);
-							$(this).parent().find(".ui-datepicker-calendar .ui-state-default")
-							.each(
-									function(j) {
-										calendarTextBox = $(this);
-										//totalDaysSum += parseFloat(splittedCsv[j]);
-										totalDaysSum += parseFloat($(this).find("input").val());
-										tempCSV += "," + $(this).find("input").val();
-										
-							});
-							effectiveDaysCSV = tempCSV.substring(1, tempCSV.length);
-							 
-							$('.hidden-fields').each(function(i) {
-								
-								//for loop 
-								if($(this).attr('name') === "em" + monthsNamesToIntegers[$('#monthNamesDropDown').val()])		
-									$(this).val(totalDaysSum.toFixed(2));
-								if($(this).attr('name') === "eem" + monthsNamesToIntegers[$('#monthNamesDropDown').val()])		
-									$(this).val(effectiveDaysCSV);
-							});
-							
-						});
+								.on(
+										"click",
+										"[id$=submitButton]",
+										function() {
+											var j = 1;
+											var totalDaysSum = 0;
+											var tempCSV = "";
+											var effectiveDaysCSV = "";
+											var calendarTextBox = "";
+											var submitButtonId = $(this);
+											$(this)
+													.parent()
+													.find(
+															".ui-datepicker-calendar .ui-state-default")
+													.each(
+															function(j) {
+																calendarTextBox = $(this);
+																//totalDaysSum += parseFloat(splittedCsv[j]);
+																totalDaysSum += parseFloat($(
+																		this)
+																		.find(
+																				"input")
+																		.val());
+																tempCSV += ","
+																		+ $(
+																				this)
+																				.find(
+																						"input")
+																				.val();
+
+															});
+											effectiveDaysCSV = tempCSV
+													.substring(1,
+															tempCSV.length);
+
+											$('.hidden-fields')
+													.each(
+															function(i) {
+
+																//for loop 
+																if ($(this)
+																		.attr(
+																				'name') === "em"
+																		+ monthsNamesToIntegers[$(
+																				'#monthNamesDropDown')
+																				.val()])
+																	$(this)
+																			.val(
+																					totalDaysSum
+																							.toFixed(2));
+																if ($(this)
+																		.attr(
+																				'name') === "eem"
+																		+ monthsNamesToIntegers[$(
+																				'#monthNamesDropDown')
+																				.val()])
+																	$(this)
+																			.val(
+																					effectiveDaysCSV);
+															});
+											
+											$(this).parent().parent().parent().submit();
+
+										});
 					});
 </script>
 </head>
@@ -482,7 +647,8 @@ button.ui-datepicker-current {
 								<div class="panel-heading">
 									<h4 class="panel-title">
 										<a data-toggle="collapse" data-parent="#accordion"
-											href="<c:url value='#${project.id}' />">
+											href="<c:url value='#${project.id}' />"
+											data-proj-id="<c:url value='${project.id}' />">
 											${project.projectName}</a>
 									</h4>
 								</div>
@@ -502,6 +668,7 @@ button.ui-datepicker-current {
 											<h4 class="panel-title" style="border: 1px Solid lightgray; padding:1%;">
 												<a data-toggle="collapse"  
 													data-parent="#<c:url value='${workPackage.project.id}' />"
+													data-wpkg-id="<c:url value='${workPackage.id}' />"
 													id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendarAnchor"
 													href="<c:url value='#${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar">${workPackage.workPackageName}</a>
 											</h4>
@@ -566,7 +733,6 @@ button.ui-datepicker-current {
 												<input type="hidden" class="hidden-fields"  name="yearName" value="${workPackageUserAllocation.yearName}"/>
 												<input type="hidden" class="hidden-fields" name="user" value="${workPackageUserAllocation.user.id}" />
 												<input type="hidden" class="hidden-fields" name="workPackage" value="${workPackageUserAllocation.workPackage.id}" />
-												<input style="margin-left:65.5%;" type="submit" id="updateBtn" value="<spring:message code="button.update"/>" class="btn btn-primary btn-sm" />	
 											</c:forEach>		
 										 	
 										</div>
@@ -582,6 +748,7 @@ button.ui-datepicker-current {
 											<h4 class="panel-title" style="border: 1px Solid lightgray; padding:1%;">
 												<a data-toggle="collapse"  
 													data-parent="#<c:url value='${workPackage.project.id}' />"
+													data-wpkg-id="<c:url value='${workPackage.id}' />"
 													id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendarAnchor"
 													href="<c:url value='#${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar">${workPackage.workPackageName}</a>
 											</h4>
@@ -590,7 +757,6 @@ button.ui-datepicker-current {
 											id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar"
 											class="panel-collapse collapse">
 											<div class="panel-body">
-													<%-- <input type="submit" id="updateBtn" value="<spring:message code="button.update"/>" class="btn btn-primary btn-sm" /> --%> 
 												<a class="btn btn-primary btn-sm" style="margin-left:53.5%; margin-bottom:1%;"
 													id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-submitButton">
 													<spring:message code="button.persist.workPackage.allocation"/></a>
@@ -642,8 +808,7 @@ button.ui-datepicker-current {
 												<input type="hidden" class="hidden-fields" name="user" value="${workPackageUserAllocation.user.id}" />
 												<input type="hidden" class="hidden-fields" name="workPackage" value="${workPackageUserAllocation.workPackage.id}" />
 													
-										 	<input style="margin-left:65.5%;" type="submit" id="updateBtn" value="<spring:message code="button.update"/>" class="btn btn-primary btn-sm" />
-											</c:forEach>		
+										 	</c:forEach>		
 										</div>
 										</form:form>
 										</c:when>
