@@ -21,6 +21,8 @@ public interface WorkPackageService {
 	
 	void updateWorkPackage(WorkPackage workPackage, User user);
 	
+	void updateWorkPackageForTimeRecording(WorkPackage workPackage, User user);
+	
 	void deleteWorkPackageById(int id);
 
 	List<WorkPackage> findAllWorkPackages(); 
@@ -32,8 +34,6 @@ public interface WorkPackageService {
 	List<WorkPackage> findAllWorkPackagesByProjectIdAndSsoId(int projectId, String ssoId);
 	
 	List<WorkPackage> findAllWorkPackagesByUser(int projectId,String ssoId);
-	
-	List<WorkPackage> findAllUnfinishedWorkPackagesByUser(int projectId,String ssoId);
 	
 	void updateCalculatedCost(WorkPackage workPackage);
 	

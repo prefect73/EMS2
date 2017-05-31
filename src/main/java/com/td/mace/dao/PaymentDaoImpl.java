@@ -78,7 +78,7 @@ public class PaymentDaoImpl extends AbstractDao<Integer, Payment> implements
 
 	@SuppressWarnings("unchecked")
 	public List<Payment> findAllPaymentsByWorkPackage(WorkPackage workPackage) {
-		Query query = getSession()
+		Query query = getCurrentSession()
 				.createSQLQuery(
 						"select * from payment where work_package_id = :workPackageId")
 				.addEntity(Payment.class);

@@ -84,7 +84,6 @@ public class TimeRecordingController {
 		model.addAttribute("showAll", showAll);
 		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
-		/*model.addAttribute("projectsWrapper",projectsWrapper);*/
 		model.addAttribute("projects",projectsByYearNameAndUser);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "timeRecording";
@@ -102,15 +101,10 @@ public class TimeRecordingController {
 	  User user = null;
 	  List<Project> projects = new ArrayList<Project>();
 	  if (getPrincipal() != null) {
-		  //for(Project project : projects){
-			  //for(WorkPackage workPackage : project.getWorkPackages()){
-				  //for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
-						   user = userService.findBySSO(getPrincipal());
-						   workPackageUserAllocationService.updateWorkPackageUserAllocationByYearAndByMonthAndByUser(yearName, monthName, user, workPackageUserAllocation);
-						   
-				  //}
-			  //}  
-		  //}		  
+		user = userService.findBySSO(getPrincipal());
+		workPackageUserAllocationService.updateWorkPackageUserAllocationByYearAndByMonthAndByUser(yearName, monthName, user, workPackageUserAllocation);
+		workPackageService.updateWorkPackageForTimeRecording(workPackageUserAllocation.getWorkPackage(), user);				   
+		  
 	  }
 	  projects = projectService.findAllProjectsByYearNameAndUser(user, yearName, showAll);
 	  //projectsWrapper.setProjects(projects);
@@ -120,7 +114,6 @@ public class TimeRecordingController {
 	  model.addAttribute("showAll",showAll );
 	  model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 	  model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
-	  /*model.addAttribute("projectsWrapper",projectsWrapper);*/
 	  model.addAttribute("projects",projects);
 	  model.addAttribute("loggedinuser", getPrincipal());
 	  model.addAttribute("userId",user.getId());

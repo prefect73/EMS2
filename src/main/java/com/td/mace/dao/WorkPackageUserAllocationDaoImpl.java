@@ -138,7 +138,7 @@ public class WorkPackageUserAllocationDaoImpl extends
 	}
 
 	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySum() {
-		Query query = getSession()
+		Query query = getCurrentSession()
 				.createSQLQuery(
 						"select id, work_package_id, user_id, sum(total_planned_days) as total_planned_days, sum(mjan) as mjan, sum(mfeb) as mfeb, sum(mmar) as mmar, sum(mapr) as mapr, sum(mmay) as mmay, sum(mjun) as mjun, sum(mjul) as mjul, sum(maug) as maug, sum(msep) as msep, sum(moct) as moct, sum(mnov) as mnov, sum(mdec) as mdec, sum(emjan) as emjan, sum(emfeb) as emfeb, sum(emmar) as emmar, sum(emapr) as emapr, sum(emmay) as emmay, sum(emjun) as emjun, sum(emjul) as emjul, sum(emaug) as emaug, sum(emsep) as emsep, sum(emoct) as emoct, sum(emnov) as emnov, sum(emdec) as emdec,eemjan,eemfeb,eemmar,eemapr,eemmay,eemjun,eemjul,eemaug,eemsep,eemoct,eemnov,eemdec, year_name from work_package_app_user_allocations group by user_id,year_name")
 				.addEntity(WorkPackageUserAllocation.class);
@@ -148,7 +148,7 @@ public class WorkPackageUserAllocationDaoImpl extends
 	}
 
 	public List<WorkPackageUserAllocation> findAllWorkPackageUserAllocationsBySumOfAllMonths() {
-		Query query = getSession()
+		Query query = getCurrentSession()
 				.createSQLQuery(
 						"select id, work_package_id, user_id,total_planned_days, mjan, mfeb, mmar, mapr, mmay, mjun, mjul, maug, msep, moct, mnov, mdec, sum(mjan)+sum(mfeb)+sum(mmar)+sum(mapr)+sum(mmay)+sum(mjun)+sum(mjul)+sum(maug)+sum(msep)+sum(moct)+sum(mnov)+sum(mdec) as totalyearhours, year_name from work_package_app_user_allocations group by work_package_id")
 				.addEntity(WorkPackageUserAllocation.class);
@@ -161,7 +161,7 @@ public class WorkPackageUserAllocationDaoImpl extends
 			String workPackageNumber) {
 		// Query internalQuery =
 		// getSession().createSQLQuery("select id, work_package_id, user_id, sum(mJan) as mJan, sum(mFeb) as mFeb, sum(mMar) as mMar, sum(mApr) as mApr, sum(mMay) as mMay, sum(mJun) as mJun, sum(mJul) as mJul, sum(mAug) as mAug, sum(mSep) as mSep, sum(mOct) as mOct, sum(mNov) as mNov, sum(mDec) as mDec, Year_Name from work_package_app_user_allocations where work_package_id=:workPackageID group by user_id;").addEntity(WorkPackageUserAllocation.class);
-		Query query = getSession()
+		Query query = getCurrentSession()
 				.createSQLQuery(
 						"select id, work_package_id, user_id,sum(total_planned_days) as total_planned_days, sum(mjan) as mjan, sum(mfeb) as mfeb, sum(mmar) as mmar, sum(mapr) as mapr, sum(mmay) as mmay, sum(mjun) as mjun, sum(mjul) as mjul, sum(maug) as maug, sum(msep) as msep, sum(moct) as moct, sum(mnov) as mnov, sum(mdec) as mdec,sum(emjan) as emjan, sum(emfeb) as emfeb, sum(emmar) as emmar, sum(emapr) as emapr, sum(emmay) as emmay, sum(emjun) as emjun, sum(emjul) as emjul, sum(emaug) as emaug, sum(emsep) as emsep, sum(emoct) as emoct, sum(emnov) as emnov, sum(emdec) as emdec,eemjan,eemfeb,eemmar,eemapr,eemmay,eemjun,eemjul,eemaug,eemsep,eemoct,eemnov,eemdec, year_name from work_package_app_user_allocations where work_package_id=(select id from work_package where work_package_number= :workPackageNumber) group by user_id")
 				.addEntity(WorkPackageUserAllocation.class);
@@ -174,7 +174,7 @@ public class WorkPackageUserAllocationDaoImpl extends
 
 	@SuppressWarnings("unchecked")
 	public List<WorkPackageUserAllocation> findByProjectID(int projectID) {
-		Query query = getSession()
+		Query query = getCurrentSession()
 				.createSQLQuery(
 						"select * from work_package_app_user_allocations al, work_package pkg where al.work_package_id=pkg.work_package_number and pkg.project_id=:projectId group by pkg.work_package_number;")
 				.addEntity(WorkPackageUserAllocation.class);
@@ -202,7 +202,7 @@ public class WorkPackageUserAllocationDaoImpl extends
 		monthNames.put("11", "Dec");
 		
 		
-		Query query = getSession()
+		Query query = getCurrentSession()
 				.createSQLQuery("update work_package_app_user_allocations set em" + monthNames.get(monthName) + " = :monthTotal , eem" + monthNames.get(monthName) + " = :monthCSV"
 						+ " where year_name = :yearName AND user_id = :userId AND work_package_id = :workPackageId");
 		if(monthName.equals("0")){

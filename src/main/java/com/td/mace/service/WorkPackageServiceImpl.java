@@ -108,6 +108,29 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 		updateProjectTotalAndEffectiveCosts(entity.getProject().getId());
 		
 	}
+	
+	public void updateWorkPackageForTimeRecording(WorkPackage workPackage, User user) {
+		WorkPackage entity = dao.findById(workPackage.getId());
+		if (entity != null) {
+			for(WorkPackageUserAllocation workPackageUserAllocation : entity.getWorkPackageUserAllocations()){
+				if(workPackageUserAllocation.getUser().getId() != user.getId()){
+					workPackage.getWorkPackageUserAllocations().add(workPackageUserAllocation);
+				}
+			}
+			entity.setWorkPackageNumber(Integer.toString(workPackage.getId()));
+			entity.setWorkPackageName(workPackage.getWorkPackageName());
+			entity.setOfferedCost(workPackage.getOfferedCost());
+			entity.setTotalCost(getWorkPackageTotalCost(workPackage));
+			entity.setEffectiveCost(getWorkPackageEffectiveCost(workPackage));
+			//entity.setProject(workPackage.getProject());
+			/*deleteAllWorkPackageUserAllocations(workPackage);
+			for (WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()) {
+				insertWorkPackageUserAllocation(workPackage,workPackageUserAllocation);
+			}*/
+		}
+		updateProjectTotalAndEffectiveCosts(entity.getProject().getId());
+		
+	}
 
 	private BigDecimal getWorkPackageEffectiveCost(WorkPackage workPackage) {
 		BigDecimal workPackageEffectiveCost = new BigDecimal("0.00");
@@ -308,21 +331,4 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 		
 	}
 	
-	public List<WorkPackage> findAllUnfinishedWorkPackagesByUser(int projectId,String ssoId){
-		List<WorkPackage> findAllWorkPackagesByProjectIdAndSsoId = dao.findAllWorkPackagesByProjectIdAndSsoIdAndStatus(projectId, ssoId);
-		
-		for(WorkPackage workPackage : findAllWorkPackagesByProjectIdAndSsoId){
-			List<WorkPackageUserAllocation> workPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();  
-			workPackageUserAllocations.addAll(workPackage.getWorkPackageUserAllocations());
-			for(WorkPackageUserAllocation  workPackageUserAllocation : workPackage.getWorkPackageUserAllocations() ){
-				if(!workPackageUserAllocation.getUser().getSsoId().equals(ssoId) ){
-					workPackageUserAllocations.remove(workPackageUserAllocation);
-				}
-			}
-			workPackage.setWorkPackageUserAllocations(workPackageUserAllocations);
-		}
-		
-		return findAllWorkPackagesByProjectIdAndSsoId;
-		
-	}
 }

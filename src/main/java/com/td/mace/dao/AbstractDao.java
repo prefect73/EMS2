@@ -21,29 +21,37 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	protected Session getSession(){
+	protected Session getCurrentSession(){
 		return sessionFactory.getCurrentSession();
+	}
+	
+	protected Session getNewSession(){
+		return sessionFactory.openSession();
+	}
+	
+	protected void closeSession(){
+		 sessionFactory.close();
 	}
 
 	@SuppressWarnings("unchecked")
 	public T getByKey(PK key) {
-		return (T) getSession().get(persistentClass, key);
+		return (T) getCurrentSession().get(persistentClass, key);
 	}
 
 	public void persist(T entity) {
-		getSession().saveOrUpdate(entity);
+		getCurrentSession().saveOrUpdate(entity);
 	}
 
 	public void update(T entity) {
-		getSession().update(entity);
+		getCurrentSession().update(entity);
 	}
 
 	public void delete(T entity) {
-		getSession().delete(entity);
+		getCurrentSession().delete(entity);
 	}
 	
 	protected Criteria createEntityCriteria(){
-		return getSession().createCriteria(persistentClass);
+		return getCurrentSession().createCriteria(persistentClass);
 	}
 
 }
