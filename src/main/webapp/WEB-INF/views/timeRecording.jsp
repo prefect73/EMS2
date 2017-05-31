@@ -631,7 +631,7 @@ button.ui-datepicker-current {
 			</div>
 
 			<div class="row">
-				<div class="form-group col-md-12" style="width: 93%; left: 5%;">
+				<div class="form-group col-md-12" style="width: 93%; left: 5%; font-size:100%;">
 					<div class="panel-group" id="accordion" >
 						<c:forEach items="${projects}" var="project" varStatus="status">
 							<div class="panel panel-default">

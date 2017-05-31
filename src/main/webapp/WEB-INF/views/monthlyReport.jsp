@@ -83,9 +83,9 @@ td.highlight {
 						Work Package</a>
 				</sec:authorize> --%>
 			</div>
-			<div id="monthlyReportTableWrapper" style="padding: 2%;">
+			<div id="monthlyReportTableWrapper" style="padding: 2%; min-height:75%; max-height:75%; overflow-y:scroll;">
 				<table id="monthlyReportTable"
-					class="table table-striped table-bordered dt-responsive nowrap"
+					class="table table-striped table-bordered dt-responsive nowrap" style="font-size:100%;"
 					cellspacing="0" width="100%">
 					<thead>
 						<tr>

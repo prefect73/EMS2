@@ -26,7 +26,7 @@ var projects = [];
 projects.push({projectId : '${pr.id}', yearName : '${pr.yearName}', projectName : '${pr.projectName}'});
 </c:forEach>
 function format () {
-	return '<table id="workPackageDetailsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"><tr><td><spring:message code="projectReport.label.totalDays" /></td><c:forEach items="${workPackageHoursForAllUsers}" var="employeeNames"><td>${employeeNames.user.firstName}(<spring:message code="generic.currencySymbol" />${employeeNames.user.perDayCost})</td></c:forEach></tr><tr><td id="totalWorkPackageHoursColumn"></td><c:forEach items="${workPackageHoursForAllUsers}" var="workPackageUserAllocation"><td class="totalWorkPackageUserHoursColumn">${workPackageUserAllocation.mJan +workPackageUserAllocation.mFeb + workPackageUserAllocation.mMar + workPackageUserAllocation.mApr + workPackageUserAllocation.mMay + workPackageUserAllocation.mJun + workPackageUserAllocation.mJul + workPackageUserAllocation.mAug +workPackageUserAllocation.mSep + workPackageUserAllocation.mOct + workPackageUserAllocation.mNov + workPackageUserAllocation.mDec}</td></c:forEach></tr></table>';
+	return '<table style="font-size:100%;" id="workPackageDetailsTable" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"><tr><td><spring:message code="projectReport.label.totalDays" /></td><c:forEach items="${workPackageHoursForAllUsers}" var="employeeNames"><td>${employeeNames.user.firstName}(<spring:message code="generic.currencySymbol" />${employeeNames.user.perDayCost})</td></c:forEach></tr><tr><td id="totalWorkPackageHoursColumn"></td><c:forEach items="${workPackageHoursForAllUsers}" var="workPackageUserAllocation"><td class="totalWorkPackageUserHoursColumn">${workPackageUserAllocation.mJan +workPackageUserAllocation.mFeb + workPackageUserAllocation.mMar + workPackageUserAllocation.mApr + workPackageUserAllocation.mMay + workPackageUserAllocation.mJun + workPackageUserAllocation.mJul + workPackageUserAllocation.mAug +workPackageUserAllocation.mSep + workPackageUserAllocation.mOct + workPackageUserAllocation.mNov + workPackageUserAllocation.mDec}</td></c:forEach></tr></table>';
 }
 var  selectedSelects = JSON.parse(localStorage.getItem("selectOptions"));
 function projectsByYear(){
@@ -297,7 +297,7 @@ $(document).ready(function() {
 		class="form-horizontal">
 		<div id="projectReportTableWrapper" style="padding: 2%;">
 			<table id="projectReportTable"
-				class="table table-striped table-bordered dt-responsive nowrap"
+				class="table table-striped table-bordered dt-responsive nowrap" style="font-size:100%;"
 				cellspacing="0" width="100%">
 				<thead>
 					<tr>
