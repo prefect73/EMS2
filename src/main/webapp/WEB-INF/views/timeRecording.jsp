@@ -566,22 +566,9 @@ button.ui-datepicker-current {
 												<input type="hidden" class="hidden-fields"  name="yearName" value="${workPackageUserAllocation.yearName}"/>
 												<input type="hidden" class="hidden-fields" name="user" value="${workPackageUserAllocation.user.id}" />
 												<input type="hidden" class="hidden-fields" name="workPackage" value="${workPackageUserAllocation.workPackage.id}" />
-													
+												<input style="margin-left:65.5%;" type="submit" id="updateBtn" value="<spring:message code="button.update"/>" class="btn btn-primary btn-sm" />	
 											</c:forEach>		
-										 	<%-- 
-											<input type="hidden"
-												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarTotalDaysSum" />
-											<input type="hidden"
-												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarUpdatedCSV" />
-										 	--%>
-										 	<!-- 	
-										 	<input type="hidden" id="emMay" name="emMay" value="3" /> 
-										 	<input type="hidden" id="eemMay" name="eemMay"
-												value="2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" />
-										 	-->
-										 	<input type="submit" id="updateBtn"
-																value="<spring:message code="button.update"/>"
-																class="btn btn-primary btn-sm" />
+										 	
 										</div>
 									  	</form:form> 
 									 	</c:when>
@@ -603,18 +590,13 @@ button.ui-datepicker-current {
 											id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar"
 											class="panel-collapse collapse">
 											<div class="panel-body">
+													<%-- <input type="submit" id="updateBtn" value="<spring:message code="button.update"/>" class="btn btn-primary btn-sm" /> --%> 
 												<a class="btn btn-primary btn-sm" style="margin-left:53.5%; margin-bottom:1%;"
 													id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-submitButton">
-													Persist Workpackage Allocation </a> 
+													<spring:message code="button.persist.workPackage.allocation"/></a>
 												</div>
 											
-											<%-- <input type="hidden"
-												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarTotalDaysSum" />
 											<input type="hidden"
-												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarUpdatedCSV" />
-										 	 --%>
-										 	 
-										 	<input type="hidden"
 												id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-calendarOnceOpened" />
 										 	
 										 	<c:forEach items="${workPackage.workPackageUserAllocations}"  var="workPackageUserAllocation">
@@ -660,21 +642,8 @@ button.ui-datepicker-current {
 												<input type="hidden" class="hidden-fields" name="user" value="${workPackageUserAllocation.user.id}" />
 												<input type="hidden" class="hidden-fields" name="workPackage" value="${workPackageUserAllocation.workPackage.id}" />
 													
+										 	<input style="margin-left:65.5%;" type="submit" id="updateBtn" value="<spring:message code="button.update"/>" class="btn btn-primary btn-sm" />
 											</c:forEach>		
-										 	<%-- 
-											<input type="hidden"
-												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarTotalDaysSum" />
-											<input type="hidden"
-												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarUpdatedCSV" />
-										 	--%>
-										 	<!-- 	
-										 	<input type="hidden" id="emMay" name="emMay" value="3" /> 
-										 	<input type="hidden" id="eemMay" name="eemMay"
-												value="2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" />
-										 	-->
-										 	<input type="submit" id="updateBtn"
-																value="<spring:message code="button.update"/>"
-																class="btn btn-primary btn-sm" />
 										</div>
 										</form:form>
 										</c:when>

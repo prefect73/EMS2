@@ -66,7 +66,7 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 	@SuppressWarnings("unchecked")
 	public List<Project> findAllProjects() {
 		Criteria criteria = createEntityCriteria().addOrder(
-				Order.asc("projectNumber"));
+				Order.asc("id"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
 																		// duplicates.
 		List<Project> projects = (List<Project>) criteria.list();
