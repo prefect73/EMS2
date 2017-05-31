@@ -24,7 +24,7 @@
 		</sec:authorize>
 
 
-			<li><a href="<c:url value='/TimeRecordingReport/timeRecording-2017-4-1' />"><spring:message
+			<li><a href="<c:url value='/TimeRecordingReport/timeRecording-2017-5-1' />"><spring:message
 						code="authheader.menu.workPackage.timeRecording" /></a></li>
 
 

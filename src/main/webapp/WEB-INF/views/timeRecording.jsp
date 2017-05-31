@@ -634,15 +634,6 @@ button.ui-datepicker-current {
 				<div class="form-group col-md-12" style="width: 93%; left: 5%;">
 					<div class="panel-group" id="accordion" >
 						<c:forEach items="${projects}" var="project" varStatus="status">
-						<input type="hidden" class="hidden-fields"  name="project[${status.index}].id" value="${project.id}"/>
-						<input type="hidden" class="hidden-fields"  name="project[${status.index}].projectName" value="${project.projectName}"/>
-						<input type="hidden" class="hidden-fields"  name="project[${status.index}].customerName" value="${project.customerName}"/>
-						<input type="hidden" class="hidden-fields"  name="project[${status.index}].offeredCost" value="${project.offeredCost}"/>
-						<input type="hidden" class="hidden-fields"  name="project[${status.index}].totalCost" value="${project.totalCost}"/>
-						<input type="hidden" class="hidden-fields"  name="project[${status.index}].effectiveCost" value="${project.effectiveCost}"/>
-						<input type="hidden" class="hidden-fields"  name="project[${status.index}].yearName" value="${project.yearName}"/>
-						<input type="hidden" class="hidden-fields"  name="project[${status.index}].users" value="${project.users}"/>
-						<input type="hidden" class="hidden-fields"  name="project[${status.index}].workPackages" value="${project.workPackages}"/>
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="panel-title">
@@ -681,12 +672,6 @@ button.ui-datepicker-current {
 													id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-submitButton">
 													Persist Workpackage Allocation </a> 
 												</div>
-											
-											<%-- <input type="hidden"
-												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarTotalDaysSum" />
-											<input type="hidden"
-												id="<c:url value='${workPackageUserAllocation.workPackage.project.projectName}' />-<c:url value='${workPackageUserAllocation.workPackage.workPackageName}' />-workPackageCalendarUpdatedCSV" />
-										 	 --%>
 										 	 
 										 	<input type="hidden"
 												id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-calendarOnceOpened" />
@@ -757,9 +742,9 @@ button.ui-datepicker-current {
 											id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar"
 											class="panel-collapse collapse">
 											<div class="panel-body">
-												<a class="btn btn-primary btn-sm" style="margin-left:53.5%; margin-bottom:1%;"
+												<a class="btn btn-primary btn-sm" style="margin-left:63.5%; margin-bottom:1%;"
 													id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-submitButton">
-													<spring:message code="button.persist.workPackage.allocation"/></a>
+													<spring:message code="button.update"/></a>
 												</div>
 											
 											<input type="hidden"

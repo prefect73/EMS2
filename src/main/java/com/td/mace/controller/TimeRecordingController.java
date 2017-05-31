@@ -24,14 +24,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.td.mace.model.Project;
 import com.td.mace.model.User;
-import com.td.mace.model.WorkPackage;
 import com.td.mace.model.WorkPackageUserAllocation;
 import com.td.mace.service.ProjectService;
 import com.td.mace.service.UserService;
 import com.td.mace.service.WorkPackageService;
 import com.td.mace.service.WorkPackageUserAllocationService;
 import com.td.mace.wrapper.ProjectsWrapper;
-import com.td.mace.wrapper.WorkPackageUserAllocationsWrapper;
 
 @Controller
 @RequestMapping("/TimeRecordingReport")
@@ -62,7 +60,7 @@ public class TimeRecordingController {
 
 	@Autowired
 	AuthenticationTrustResolver authenticationTrustResolver;
-
+	
 	/**
 	 * GET
 	 */
@@ -107,7 +105,6 @@ public class TimeRecordingController {
 		  
 	  }
 	  projects = projectService.findAllProjectsByYearNameAndUser(user, yearName, showAll);
-	  //projectsWrapper.setProjects(projects);
 	  model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 	  model.addAttribute("selectedYear", yearName);
 	  model.addAttribute("selectedMonth", monthName);

@@ -112,22 +112,12 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 	public void updateWorkPackageForTimeRecording(WorkPackage workPackage, User user) {
 		WorkPackage entity = dao.findById(workPackage.getId());
 		if (entity != null) {
-			for(WorkPackageUserAllocation workPackageUserAllocation : entity.getWorkPackageUserAllocations()){
-				if(workPackageUserAllocation.getUser().getId() != user.getId()){
-					workPackage.getWorkPackageUserAllocations().add(workPackageUserAllocation);
-				}
-			}
 			entity.setWorkPackageNumber(Integer.toString(workPackage.getId()));
 			entity.setWorkPackageName(workPackage.getWorkPackageName());
 			entity.setOfferedCost(workPackage.getOfferedCost());
 			entity.setTotalCost(getWorkPackageTotalCost(workPackage));
 			entity.setEffectiveCost(getWorkPackageEffectiveCost(workPackage));
-			//entity.setProject(workPackage.getProject());
-			/*deleteAllWorkPackageUserAllocations(workPackage);
-			for (WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()) {
-				insertWorkPackageUserAllocation(workPackage,workPackageUserAllocation);
-			}*/
-		}
+			}
 		updateProjectTotalAndEffectiveCosts(entity.getProject().getId());
 		
 	}
