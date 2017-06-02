@@ -619,17 +619,12 @@ button.ui-datepicker-current {
 							<option value="11"><spring:message
 									code="timeRecording.label.month.december" /></option>
 						</select>
-
 					</div>
 				<div class="col-md-2">
-					<a id="searchByYearBtn" class="btn btn-success custom-width"><spring:message
-							code="button.search" /> </a>
+					<a id="searchByYearBtn" class="btn btn-success custom-width"><spring:message code="button.search" /> </a>
 				</div>
 				</div>
-
-
 			</div>
-
 			<div class="row">
 				<div class="form-group col-md-12" style="width: 93%; left: 5%; font-size:100%;">
 					<div class="panel-group" id="accordion" >
