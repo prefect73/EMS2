@@ -13,18 +13,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
 <title><spring:message code="timeRecording.enter.your.time" /></title>
 
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<!-- <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<link href="<c:url value='/static/css/bootstrap.css' />"
-	rel="stylesheet"></link>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" rel="stylesheet"  /> -->
+<script src="<c:url value='/static/js/jquery-1.11.1.min.js' />"></script>
+<script src="<c:url value='/static/js/jquery-ui.min.js' />"></script>
+<script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+<link href="<c:url value='/static/css/jquery-ui.css' />" rel="stylesheet"  />
+<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
-<link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
-<link href="<c:url value='/static/css/bootstrap.css' />"
-	rel="stylesheet"></link>
+<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 
 <style type="text/css">
