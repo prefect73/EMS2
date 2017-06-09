@@ -13,16 +13,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
 <title><spring:message code="timeRecording.enter.your.time" /></title>
 
-<!-- <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" rel="stylesheet"  /> -->
-<script src="<c:url value='/static/js/jquery-1.11.1.min.js' />"></script>
+<link href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" rel="stylesheet"  />
+<%-- <script src="<c:url value='/static/js/jquery-1.11.1.min.js' />"></script>
 <script src="<c:url value='/static/js/jquery-ui.min.js' />"></script>
 <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
-<link href="<c:url value='/static/css/jquery-ui.css' />" rel="stylesheet"  />
-<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
-<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+<link href="<c:url value='/static/css/jquery-ui.css' />" rel="stylesheet"  /> --%>
 <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 
@@ -90,29 +88,29 @@ button.ui-datepicker-current {
 	loggedInUserId = '${workPackageUserAllocation.user.id}';
 
 	
-	effectiveDaysMap_0.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+	effectiveDaysMap_0.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.id}-${workPackageUserAllocation.workPackage.id}-${workPackageUserAllocation.yearName}-'
 			+ "0", '${workPackageUserAllocation.eemJan}');
-	effectiveDaysMap_1.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+	effectiveDaysMap_1.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.id}-${workPackageUserAllocation.workPackage.id}-${workPackageUserAllocation.yearName}-'
 			+ "1", '${workPackageUserAllocation.eemFeb}');
-	effectiveDaysMap_2.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+	effectiveDaysMap_2.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.id}-${workPackageUserAllocation.workPackage.id}-${workPackageUserAllocation.yearName}-'
 			+ "2", '${workPackageUserAllocation.eemMar}');
-	effectiveDaysMap_3.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+	effectiveDaysMap_3.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.id}-${workPackageUserAllocation.workPackage.id}-${workPackageUserAllocation.yearName}-'
 			+ "3", '${workPackageUserAllocation.eemApr}');
-	effectiveDaysMap_4.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+	effectiveDaysMap_4.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.id}-${workPackageUserAllocation.workPackage.id}-${workPackageUserAllocation.yearName}-'
 			+ "4", '${workPackageUserAllocation.eemMay}');
-	effectiveDaysMap_5.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+	effectiveDaysMap_5.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.id}-${workPackageUserAllocation.workPackage.id}-${workPackageUserAllocation.yearName}-'
 			+ "5", '${workPackageUserAllocation.eemJun}');
-	effectiveDaysMap_6.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+	effectiveDaysMap_6.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.id}-${workPackageUserAllocation.workPackage.id}-${workPackageUserAllocation.yearName}-'
 			+ "6", '${workPackageUserAllocation.eemJul}');
-	effectiveDaysMap_7.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+	effectiveDaysMap_7.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.id}-${workPackageUserAllocation.workPackage.id}-${workPackageUserAllocation.yearName}-'
 			+ "7", '${workPackageUserAllocation.eemAug}');
-	effectiveDaysMap_8.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+	effectiveDaysMap_8.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.id}-${workPackageUserAllocation.workPackage.id}-${workPackageUserAllocation.yearName}-'
 			+ "8", '${workPackageUserAllocation.eemSep}');
-	effectiveDaysMap_9.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+	effectiveDaysMap_9.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.id}-${workPackageUserAllocation.workPackage.id}-${workPackageUserAllocation.yearName}-'
 			+ "9", '${workPackageUserAllocation.eemOct}');
-	effectiveDaysMap_10.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+	effectiveDaysMap_10.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.id}-${workPackageUserAllocation.workPackage.id}-${workPackageUserAllocation.yearName}-'
 			+ "10", '${workPackageUserAllocation.eemNov}');
-	effectiveDaysMap_11.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.projectName}-${workPackageUserAllocation.workPackage.workPackageName}-${workPackageUserAllocation.yearName}-'
+	effectiveDaysMap_11.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.workPackage.project.id}-${workPackageUserAllocation.workPackage.id}-${workPackageUserAllocation.yearName}-'
 			+ "11", '${workPackageUserAllocation.eemDec}');
 
 	</c:forEach>
@@ -404,9 +402,9 @@ button.ui-datepicker-current {
 														.get(
 																loggedInUserId
 																		+ "-"
-																		+ selectedProjectName
+																		+ selectedProjectId
 																		+ '-'
-																		+ selectedWorkPackageName
+																		+ selectedWorkPackageId
 																		+ '-'
 																		+ $(
 																				"#yearNamesDropDown")
@@ -422,9 +420,9 @@ button.ui-datepicker-current {
 														.get(
 																loggedInUserId
 																		+ "-"
-																		+ selectedProjectName
+																		+ selectedProjectId
 																		+ '-'
-																		+ selectedWorkPackageName
+																		+ selectedWorkPackageId
 																		+ '-'
 																		+ $(
 																				"#yearNamesDropDown")
