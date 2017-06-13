@@ -644,7 +644,7 @@ button.ui-datepicker-current {
 										<c:choose>
 												<c:when test="${showAll == 0}">
 												<c:choose>
-												<c:when test="${workPackage.status != 'Finished'}">
+												<c:when test="${workPackage.status != 'Abgeschlossen' }">
 										<form:form id="<c:url value='${userId}' />-<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-wpuaForm" method="POST" modelAttribute="workPackageUserAllocation" class="form-horizontal"> 
 												
 										<div class="panel-heading">
