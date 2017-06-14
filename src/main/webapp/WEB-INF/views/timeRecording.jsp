@@ -660,9 +660,9 @@ button.ui-datepicker-current {
 											id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar"
 											class="panel-collapse collapse">
 											<div class="panel-body">
-												<a class="btn btn-primary btn-sm" style="margin-left:53.5%; margin-bottom:1%;"
+												<a class="btn btn-primary btn-sm" style="margin-left:63.5%; margin-bottom:1%;"
 													id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-submitButton">
-													Persist Workpackage Allocation </a> 
+													<spring:message code="button.update"/> </a> 
 												</div>
 										 	 
 										 	<input type="hidden"

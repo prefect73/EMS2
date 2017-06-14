@@ -90,45 +90,32 @@ public class ProjectServiceImpl implements ProjectService {
 		Project project = findByProjectName(projectName);
 		return (project == null || ((id != null) && (project.getId() == id)));
 	}
-
+		
 	@Override
 	public List<Project> findAllProjectsByYearNameAndUser(User user, String yearName, String showAll) {
-		List<Project> allProjects = findAllProjects();
-		List<Project> projectsByYearNameAndUserList = new ArrayList<Project>();
-		Set<Project> projectsByYearNameAndUserSet = new HashSet<Project>();
-		/*for(Project project : allProjects ){
-			if(project.getYearName().equals(yearName)){
-				projectsByYearName.add(project);
+		List<Project> allProjects = new ArrayList<Project>();
+		Set<Project> allProjectsSet = new HashSet<Project>();
+		List<Project> allProjectsBySsoId = findAllProjectsBySsoId(user.getSsoId());
+		for (Project project : allProjectsBySsoId) {
+			List<WorkPackage> workPackages = project.getWorkPackages();
+			List<WorkPackage> tempWorkPackages = new ArrayList<WorkPackage>();
+			for (WorkPackage workPackage : workPackages) {
+				List<WorkPackageUserAllocation> workPackageUserAllocations = workPackage.getWorkPackageUserAllocations();
+				List<WorkPackageUserAllocation> tempWorkPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
+				for (WorkPackageUserAllocation workPackageUserAllocation : workPackageUserAllocations) {
+					if(workPackageUserAllocation.getUser().getId() == user.getId() && workPackageUserAllocation.getYearName().equals(yearName)){
+						Project pr = workPackageUserAllocation.getWorkPackage().getProject();
+						WorkPackage wp = workPackageUserAllocation.getWorkPackage();
+						tempWorkPackageUserAllocations.add(workPackageUserAllocation);
+						wp.setWorkPackageUserAllocations(tempWorkPackageUserAllocations);
+						tempWorkPackages.add(wp);
+						pr.setWorkPackages(tempWorkPackages);
+						allProjectsSet.add(pr);
+					}
+				}
 			}
-		}*/
-		
-		for(Project project : allProjects){
-
-			//findAllUnfinishedWorkPackagesByUser
-			/*if(showAll.equalsIgnoreCase("1")){
-				for(WorkPackage workPackage : workPackageService.findAllUnfinishedWorkPackagesByUser(project.getId(),user.getSsoId())){
-					for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
-						if(workPackageUserAllocation.getUser().getId() == user.getId() && workPackageUserAllocation.getYearName().equals(yearName)){
-							projectsByYearNameAndUserSet.add(workPackageUserAllocation.getWorkPackage().getProject());
-						}
-						
-					}
-				}
-			} else {*/
-				for(WorkPackage workPackage : workPackageService.findAllWorkPackagesByUser(project.getId(),user.getSsoId())){
-					for(WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()){
-						if(workPackageUserAllocation.getUser().getId() == user.getId() && workPackageUserAllocation.getYearName().equals(yearName)){
-							projectsByYearNameAndUserSet.add(workPackageUserAllocation.getWorkPackage().getProject());
-						}
-						
-					}
-				}
-			
-			/*}*/
 		}
-		projectsByYearNameAndUserList.addAll(projectsByYearNameAndUserSet);
-		
-		return projectsByYearNameAndUserList;
+		allProjects.addAll(allProjectsSet);
+		return allProjects;
 	}
-
 }
