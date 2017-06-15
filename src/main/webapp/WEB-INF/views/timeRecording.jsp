@@ -641,10 +641,6 @@ button.ui-datepicker-current {
 									<div class="panel-body">
 										<!-- workpackages accordion -->
 										<c:forEach items="${project.workPackages}"  var="workPackage">
-										<c:choose>
-												<c:when test="${showAll == 0}">
-												<c:choose>
-												<c:when test="${workPackage.status != 'Abgeschlossen' }">
 										<form:form id="<c:url value='${userId}' />-<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-wpuaForm" method="POST" modelAttribute="workPackageUserAllocation" class="form-horizontal"> 
 												
 										<div class="panel-heading">
@@ -714,82 +710,6 @@ button.ui-datepicker-current {
 										 	
 										</div>
 									  	</form:form> 
-									 	</c:when>
-										</c:choose>
-										</c:when>
-										</c:choose>
-										<c:choose>
-												<c:when test="${showAll == 1}">
-										<form:form id="<c:url value='${userId}' />-<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-wpuaForm" method="POST" modelAttribute="workPackageUserAllocation" class="form-horizontal"> 
-										<div class="panel-heading">
-											<h4 class="panel-title" style="border: 1px Solid lightgray; padding:1%;">
-												<a data-toggle="collapse"  
-													data-parent="#<c:url value='${workPackage.project.id}' />"
-													data-wpkg-id="<c:url value='${workPackage.id}' />"
-													id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendarAnchor"
-													href="<c:url value='#${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar">${workPackage.workPackageName}</a>
-											</h4>
-										</div>
-										<div
-											id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-workPackageCalendar"
-											class="panel-collapse collapse">
-											<div class="panel-body">
-												<a class="btn btn-primary btn-sm" style="margin-left:63.5%; margin-bottom:1%;"
-													id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-submitButton">
-													<spring:message code="button.update"/></a>
-												</div>
-											
-											<input type="hidden"
-												id="<c:url value='${workPackage.project.id}' />-<c:url value='${workPackage.id}' />-calendarOnceOpened" />
-										 	
-										 	<c:forEach items="${workPackage.workPackageUserAllocations}"  var="workPackageUserAllocation">
-										 	
-											 	<input type="hidden" class="hidden-fields"  name="totalPlannedDays" value="${workPackageUserAllocation.totalPlannedDays}"/>
-												<input type="hidden" class="hidden-fields"  name="mJan" value="${workPackageUserAllocation.mJan}"/>
-												<input type="hidden" class="hidden-fields"  name="mFeb" value="${workPackageUserAllocation.mFeb}"/>
-												<input type="hidden" class="hidden-fields"  name="mMar" value="${workPackageUserAllocation.mMar}"/>
-												<input type="hidden" class="hidden-fields"  name="mApr" value="${workPackageUserAllocation.mApr}"/>
-												<input type="hidden" class="hidden-fields"  name="mMay" value="${workPackageUserAllocation.mMay}"/>
-												<input type="hidden" class="hidden-fields"  name="mJun" value="${workPackageUserAllocation.mJun}"/>
-												<input type="hidden" class="hidden-fields"  name="mJul" value="${workPackageUserAllocation.mJul}"/>
-												<input type="hidden" class="hidden-fields"  name="mAug" value="${workPackageUserAllocation.mAug}"/>
-												<input type="hidden" class="hidden-fields"  name="mSep" value="${workPackageUserAllocation.mSep}"/>
-												<input type="hidden" class="hidden-fields"  name="mOct" value="${workPackageUserAllocation.mOct}"/>
-												<input type="hidden" class="hidden-fields"  name="mNov" value="${workPackageUserAllocation.mNov}"/>
-												<input type="hidden" class="hidden-fields"  name="mDec" value="${workPackageUserAllocation.mDec}"/>
-												<input type="hidden" class="hidden-fields"  name="emJan" value="${workPackageUserAllocation.emJan}"/>
-												<input type="hidden" class="hidden-fields"  name="emFeb" value="${workPackageUserAllocation.emFeb}"/>
-												<input type="hidden" class="hidden-fields"  name="emMar" value="${workPackageUserAllocation.emMar}"/>
-												<input type="hidden" class="hidden-fields"  name="emApr" value="${workPackageUserAllocation.emApr}"/>
-												<input type="hidden" class="hidden-fields"  name="emMay" value="${workPackageUserAllocation.emMay}"/>
-												<input type="hidden" class="hidden-fields"  name="emJun" value="${workPackageUserAllocation.emJun}"/>
-												<input type="hidden" class="hidden-fields"  name="emJul" value="${workPackageUserAllocation.emJul}"/>
-												<input type="hidden" class="hidden-fields"  name="emAug" value="${workPackageUserAllocation.emAug}"/>
-												<input type="hidden" class="hidden-fields"  name="emSep" value="${workPackageUserAllocation.emSep}"/>
-												<input type="hidden" class="hidden-fields"  name="emOct" value="${workPackageUserAllocation.emOct}"/>
-												<input type="hidden" class="hidden-fields"  name="emNov" value="${workPackageUserAllocation.emNov}"/>
-												<input type="hidden" class="hidden-fields"  name="emDec" value="${workPackageUserAllocation.emDec}"/>
-												<input type="hidden" class="hidden-fields"  name="eemJan" value="${workPackageUserAllocation.eemJan}"/> 
-												<input type="hidden" class="hidden-fields"  name="eemFeb" value="${workPackageUserAllocation.eemFeb}"/> 
-												<input type="hidden" class="hidden-fields"  name="eemMar" value="${workPackageUserAllocation.eemMar}"/> 
-												<input type="hidden" class="hidden-fields"  name="eemApr" value="${workPackageUserAllocation.eemApr}"/> 
-												<input type="hidden" class="hidden-fields"  name="eemMay" value="${workPackageUserAllocation.eemMay}"/> 
-												<input type="hidden" class="hidden-fields"  name="eemJun" value="${workPackageUserAllocation.eemJun}"/> 
-												<input type="hidden" class="hidden-fields"  name="eemJul" value="${workPackageUserAllocation.eemJul}"/> 
-												<input type="hidden" class="hidden-fields"  name="eemAug" value="${workPackageUserAllocation.eemAug}"/> 
-												<input type="hidden" class="hidden-fields"  name="eemSep" value="${workPackageUserAllocation.eemSep}"/> 
-												<input type="hidden" class="hidden-fields"  name="eemOct" value="${workPackageUserAllocation.eemOct}"/> 
-												<input type="hidden" class="hidden-fields"  name="eemNov" value="${workPackageUserAllocation.eemNov}"/> 
-												<input type="hidden" class="hidden-fields"  name="eemDec" value="${workPackageUserAllocation.eemDec}"/> 											
-												<input type="hidden" class="hidden-fields"  name="yearName" value="${workPackageUserAllocation.yearName}"/>
-												<input type="hidden" class="hidden-fields" name="user" value="${workPackageUserAllocation.user.id}" />
-												<input type="hidden" class="hidden-fields" name="workPackage" value="${workPackageUserAllocation.workPackage.id}" />
-													
-										 	</c:forEach>		
-										</div>
-										</form:form>
-										</c:when>
-										</c:choose>
 										</c:forEach>
 									</div>
 								</div>

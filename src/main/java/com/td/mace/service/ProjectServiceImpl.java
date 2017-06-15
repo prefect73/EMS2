@@ -2,6 +2,7 @@ package com.td.mace.service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -109,6 +110,9 @@ public class ProjectServiceImpl implements ProjectService {
 						tempWorkPackageUserAllocations.add(workPackageUserAllocation);
 						wp.setWorkPackageUserAllocations(tempWorkPackageUserAllocations);
 						tempWorkPackages.add(wp);
+						if(showAll.equals("0") && wp.getStatus().equals("Abgeschlossen") || showAll.equals("0") && wp.getStatus().equals("Finished") ){
+							tempWorkPackages.remove(wp);
+						}
 						pr.setWorkPackages(tempWorkPackages);
 						allProjectsSet.add(pr);
 					}
@@ -116,6 +120,14 @@ public class ProjectServiceImpl implements ProjectService {
 			}
 		}
 		allProjects.addAll(allProjectsSet);
+		
+		for (Iterator iterator = allProjects.iterator();  iterator.hasNext();) {
+			Project project = (Project) iterator.next();
+			if(project.getWorkPackages().size() == 0){
+				iterator.remove();
+			}
+		}
+		
 		return allProjects;
 	}
 }
