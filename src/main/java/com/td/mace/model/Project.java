@@ -60,7 +60,7 @@ public class Project implements Serializable {
 	@Column(name = "year_name", precision = 10, scale = 2)
 	private String yearName;
 	
-	@NotEmpty
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "project_app_user", joinColumns = { @JoinColumn(name = "project_id") }, inverseJoinColumns = { @JoinColumn(name = "user_id") })
 	private Set<User> users = new HashSet<User>();

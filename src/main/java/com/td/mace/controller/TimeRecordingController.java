@@ -3,6 +3,7 @@ package com.td.mace.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.td.mace.model.Project;
 import com.td.mace.model.User;
+import com.td.mace.model.WorkPackage;
 import com.td.mace.model.WorkPackageUserAllocation;
 import com.td.mace.service.ProjectService;
 import com.td.mace.service.UserService;
@@ -82,7 +84,8 @@ public class TimeRecordingController {
 		model.addAttribute("showAll", showAll);
 		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
-		model.addAttribute("projects",projectsByYearNameAndUser);
+		model.addAttribute("projectsWrapper",projectsWrapper);
+		/*model.addAttribute("projects",projectsByYearNameAndUser);*/
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "timeRecording";
 	}
@@ -92,26 +95,35 @@ public class TimeRecordingController {
 	 */
 	@RequestMapping(value = { "/timeRecording-{yearName}-{monthName}-{showAll}" }, method = RequestMethod.POST)
 	 public String postTimeRecordings(@PathVariable String yearName, @PathVariable String monthName ,@PathVariable String showAll , 
-	   @Valid WorkPackageUserAllocation workPackageUserAllocation,
-	      BindingResult result, ModelMap model) {
+	   @Valid ProjectsWrapper projectsWrapper,
+	      BindingResult result, ModelMap model, HttpServletRequest request) {
 
 		
 	  User user = null;
 	  List<Project> projects = new ArrayList<Project>();
 	  if (getPrincipal() != null) {
 		user = userService.findBySSO(getPrincipal());
-		workPackageUserAllocationService.updateWorkPackageUserAllocationByYearAndByMonthAndByUser(yearName, monthName, user, workPackageUserAllocation);
-		workPackageService.updateWorkPackageForTimeRecording(workPackageUserAllocation.getWorkPackage(), user);				   
+		for (Project project : projectsWrapper.getProjects()) {
+			for (WorkPackage workPackage : project.getWorkPackages()) {
+				for (WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()) {
+					workPackageUserAllocationService.updateWorkPackageUserAllocationByYearAndByMonthAndByUser(yearName, monthName, user, workPackageUserAllocation);
+					workPackageService.updateWorkPackageForTimeRecording(workPackageUserAllocation.getWorkPackage(), user);				   
+					
+				}
+			}
+		}
 		  
 	  }
 	  projects = projectService.findAllProjectsByYearNameAndUser(user, yearName, showAll);
+	  projectsWrapper.setProjects(projects);
 	  model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 	  model.addAttribute("selectedYear", yearName);
 	  model.addAttribute("selectedMonth", monthName);
 	  model.addAttribute("showAll",showAll );
 	  model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 	  model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
-	  model.addAttribute("projects",projects);
+	  model.addAttribute("projectsWrapper",projectsWrapper);
+	  /*model.addAttribute("projects",projects);*/
 	  model.addAttribute("loggedinuser", getPrincipal());
 	  model.addAttribute("userId",user.getId());
 	  return "timeRecording";
