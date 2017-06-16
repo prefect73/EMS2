@@ -376,12 +376,6 @@ button.ui-datepicker-current {
 														.attr('data-proj-id');
 												var selectedWorkPackageId = clickedWorkPackageCalendarAchorId
 														.attr('data-wpkg-id');
-												console
-														.log("selectedWorkPackageId "
-																+ selectedWorkPackageId);
-												console
-												.log("selectedProjectId "
-														+ selectedProjectId);
 												
 												var generatedDefaultZeroValues = 0;
 												var daysInSelectedMonth = daysInMonth(
@@ -480,72 +474,36 @@ button.ui-datepicker-current {
 											}
 										});
 
-						$(document)
-								.on(
-										"click",
-										"[id$=submitButton]",
-										function() {
-											var j = 1;
-											var totalDaysSum = 0;
-											var tempCSV = "";
-											var effectiveDaysCSV = "";
-											var calendarTextBox = "";
-											var submitButtonId = $(this);
-											$(this)
-													.parent()
-													.find(
-															".ui-datepicker-calendar .ui-state-default")
-													.each(
-															function(j) {
-																calendarTextBox = $(this);
-																//totalDaysSum += parseFloat(splittedCsv[j]);
-																totalDaysSum += parseFloat($(
-																		this)
-																		.find(
-																				"input")
-																		.val());
-																tempCSV += ","
-																		+ $(
-																				this)
-																				.find(
-																						"input")
-																				.val();
+								
+		$(document).on("keyup", ".ui-datepicker-calendar .ui-state-default",
+				function() {
+				var totalDaysSum = 0;
+				var tempCSV = "";
+				var effectiveDaysCSV = "";
+				var calendarTextBox = "";
+				
+				$(this).parent().parent().parent().parent().parent().parent()
+				.find(".ui-datepicker-calendar .ui-state-default")
+					.each(
+						function(j) {
+							calendarTextBox = $(this);
+							totalDaysSum += parseFloat($(this).find("input").val());
+							tempCSV += "," + $(this).find("input").val();
 
-															});
-											effectiveDaysCSV = tempCSV
-													.substring(1,
-															tempCSV.length);
-
-											$('.hidden-fields')
-													.each(
-															function(i) {
-
-																//for loop 
-																if ($(this)
-																		.attr(
-																				'name') === "em"
-																		+ monthsNamesToIntegers[$(
-																				'#monthNamesDropDown')
-																				.val()])
-																	$(this)
-																			.val(
-																					totalDaysSum
-																							.toFixed(2));
-																if ($(this)
-																		.attr(
-																				'name') === "eem"
-																		+ monthsNamesToIntegers[$(
-																				'#monthNamesDropDown')
-																				.val()])
-																	$(this)
-																			.val(
-																					effectiveDaysCSV);
-															});
-											
-											$(this).parent().parent().parent().submit();
-
-										});
-					});
+						});
+				effectiveDaysCSV = tempCSV.substring(1, tempCSV.length);
+				$(this).parent().parent().parent().parent().parent().parent().parent().parent()
+				.find('.hidden-fields')
+					.each(
+						function(i) {
+							if ($(this).attr('name').indexOf("em" + monthsNamesToIntegers[$('#monthNamesDropDown').val()]) !== -1)
+								$(this).val(totalDaysSum.toFixed(2));
+							if ($(this).attr('name').indexOf("eem" + monthsNamesToIntegers[$('#monthNamesDropDown').val()]) !== -1)
+								$(this).val(effectiveDaysCSV);
+						});
+	
+ 			});
+		});
 </script>
 </head>
 
@@ -564,7 +522,8 @@ button.ui-datepicker-current {
 				<spring:message code="timeRecording.enter.your.time" />
 			</div>
 			<div class="well col-md-2">
-			<input type="submit" value="<spring:message code="button.update"/>" class="btn btn-primary btn-sm" /></div>
+				<input type="submit" value="<spring:message code="button.update"/>" class="btn btn-primary btn-sm" />
+			</div> 
 			
 			<div class="row">
 				<div class="form-group col-md-12">
