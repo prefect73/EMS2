@@ -54,7 +54,7 @@ $(document).ready(function() {
 		<div class="panel panel-default">
 			<!-- Default panel contents -->
 			<div class="panel-heading">
-				<span class="lead">List of Work Packages </span>
+				<span class="lead">Arbeitspakete</span>
 				<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 					<a class="btn btn-primary floatRight"
 						href="<c:url value='/WorkPackage/newworkPackage' />"><spring:message code="workPackageslist.addNewWorkPackage" /></a>
