@@ -79,6 +79,20 @@ $( document ).ready(function() {
 
 
 			<form:input type="hidden" path="id" id="id" />
+			
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="project"><spring:message
+							code="payment.label.project" /> </label>
+					<div class="col-md-3">
+						<input type="text" id="project" readonly="readonly" value="${payment.workPackage.project.projectName} "  class="form-control input-sm" />
+						<%-- <div class="has-error">
+							<form:errors path="project" class="help-inline" />
+						</div> --%>
+					</div>
+				</div>
+			</div>
+			
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="workPackage"><spring:message
