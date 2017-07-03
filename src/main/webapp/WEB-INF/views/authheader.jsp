@@ -13,23 +13,22 @@
 </div>
 <div>
 	<ul>
+		<!-- Mitarbeiter -->
 		<li><a href="<c:url value='/list' />"><spring:message
 						code="authheader.menu.employees" /></a></li>
 		
+		<!-- Verfügbarkeiten -->
 		<li><a
 			href="<c:url value='/UserAttendance/userAttendanceslist' />"><spring:message
 						code="authheader.menu.emp.attendance" /></a></li>
 		
+		<!-- Projekte -->
 		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 			<li><a href="<c:url value='/Project/projectslist' />"><spring:message
 						code="authheader.menu.projects" /></a></li>
 		</sec:authorize>
 
-
-		<li><a href="<c:url value='/TimeRecordingReport/timeRecording-2017-5-1' />"><spring:message
-						code="authheader.menu.workPackage.timeRecording" /></a></li>
-
-
+		<!-- Arbeitspakete -->
 		<sec:authorize access="!hasAnyRole('ADMIN', 'Projektleitung')">
 			<li><a
 				href="<c:url value='/WorkPackage/edit-normal-user-workPackage-0-0' />"><spring:message
@@ -39,13 +38,23 @@
 		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 			<li><a href="<c:url value='/WorkPackage/workPackageslist' />"><spring:message
 						code="authheader.menu.employee.workPackage.allocations" /></a></li>
+		</sec:authorize>
+
+		<!-- Zeiterfassung -->
+		<li><a href="<c:url value='/TimeRecordingReport/timeRecording-2017-5-1' />"><spring:message
+						code="authheader.menu.workPackage.timeRecording" /></a></li>
+
+		<!-- Bericht Projekte -->
+		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 			<li><a href="<c:url value='/Project/projectReport-0- ' />"><spring:message
 						code="authheader.menu.projectReport" /></a></li>
 		</sec:authorize>
-		
+
+		<!-- Bericht Mitarbeiter -->		
 		<li><a href="<c:url value='/UserAttendance/monthlyReport' />"><spring:message
 					code="authheader.menu.monthlyReport" /></a></li>
-		
+
+		<!-- Faktura -->		
 		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 			<li><a href="<c:url value="/Payment/paymentslist" />"><spring:message
 						code="authheader.menu.workPackage.payment" /></a></li>
