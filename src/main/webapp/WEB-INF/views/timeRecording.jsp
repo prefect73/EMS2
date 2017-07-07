@@ -487,7 +487,7 @@ button.ui-datepicker-current {
 					.each(
 						function(j) {
 							calendarTextBox = $(this);
-							totalDaysSum += parseFloat($(this).find("input").val());
+							totalDaysSum += parseFloat($(this).find("input").val()/8);
 							tempCSV += "," + $(this).find("input").val();
 
 						});

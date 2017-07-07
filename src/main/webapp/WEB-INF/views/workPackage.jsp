@@ -1221,12 +1221,12 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 						</div>
 						<div id="paymentsTableWrapper" style="padding: 2%;">
 							<table id="paymentsTable"
-								class="table table-striped table-bordered dt-responsive nowrap"
+								class="table table-striped table-bordered dt-responsive nowrap" style="font-size:100%;"
 								cellspacing="0" width="100%">
 								<thead>
 									<tr>
-										<th><spring:message code="payment.label.workPackage" />
-										</th>
+										<th><spring:message code="payment.label.project" /></th>
+										<th><spring:message code="payment.label.workPackage" /></th>
 										<th><spring:message code="payment.label.billed" /></th>
 										<th><spring:message code="payment.label.billing" /></th>
 										<th><spring:message code="payment.label.time" /></th>
@@ -1246,6 +1246,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 								<tbody>
 									<c:forEach items="${payments}" var="payment">
 										<tr>
+											<td>${payment.workPackage.project.projectName}</td>
 											<td>${payment.workPackage.workPackageName}</td>
 											<td>${payment.billed}</td>
 											<td>${payment.billing}</td>

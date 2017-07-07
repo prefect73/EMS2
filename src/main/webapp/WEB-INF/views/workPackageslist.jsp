@@ -54,7 +54,7 @@ $(document).ready(function() {
 		<div class="panel panel-default">
 			<!-- Default panel contents -->
 			<div class="panel-heading">
-				<span class="lead">List of Work Packages </span>
+				<span class="lead"><spring:message code="workPackageslist.title" /></span>
 				<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 					<a class="btn btn-primary floatRight"
 						href="<c:url value='/WorkPackage/newworkPackage' />"><spring:message code="workPackageslist.addNewWorkPackage" /></a>
@@ -62,8 +62,8 @@ $(document).ready(function() {
 			</div>
 			<div id="workPackagesTableWrapper" style="padding: 2%;">
 				<table id="workPackagesTable"
-					class="table table-striped table-bordered dt-responsive nowrap"
-					cellspacing="0" width="100%" style="font-size:100%;">
+					class="table table-striped table-bordered dt-responsive nowrap" style="font-size:100%;"
+					cellspacing="0" width="100%" >
 					<thead>
 						<tr>
 							<th><spring:message code="project.label.projectName" /></th>
@@ -149,4 +149,3 @@ $(document).ready(function() {
 		</div>
 	</div>
 </body>
-</html>
