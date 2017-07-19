@@ -1,5 +1,6 @@
 package com.td.mace.dao;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +18,14 @@ import org.springframework.stereotype.Repository;
 import com.td.mace.model.User;
 import com.td.mace.model.WorkPackage;
 import com.td.mace.model.WorkPackageUserAllocation;
-	
+
 @Repository("workPackageDao")
 public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 		implements WorkPackageDao {
-	
+
 	@Autowired
 	UserDao userDao;
-	
+
 	@Autowired
 	PaymentDao paymentDao;
 
@@ -48,17 +49,21 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 		List<WorkPackageUserAllocation> allowedWorkPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();
 		if (workPackage != null) {
 			Hibernate.initialize(workPackage.getWorkPackageUserAllocations());
-			workPackageUserAllocations = workPackage.getWorkPackageUserAllocations();
-			for(WorkPackageUserAllocation workPackageUserAllocation : workPackageUserAllocations){
+			workPackageUserAllocations = workPackage
+					.getWorkPackageUserAllocations();
+			for (WorkPackageUserAllocation workPackageUserAllocation : workPackageUserAllocations) {
 				User user = workPackageUserAllocation.getUser();
-				if(user.getSsoId() == ssoId){
-					allowedWorkPackageUserAllocations.add(workPackageUserAllocation);
+				if (user.getSsoId() == ssoId) {
+					allowedWorkPackageUserAllocations
+							.add(workPackageUserAllocation);
 				}
 			}
 		}
-		workPackage.setWorkPackageUserAllocations((allowedWorkPackageUserAllocations));
+		workPackage
+				.setWorkPackageUserAllocations((allowedWorkPackageUserAllocations));
 		return workPackage;
 	}
+
 	public WorkPackage findByWorkPackageNumber(String workPackageNumber) {
 		logger.info("WorkPackageNumber : {}", workPackageNumber);
 		Criteria crit = createEntityCriteria();
@@ -149,15 +154,31 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 		List<WorkPackage> workPackages = query.list();
 		return workPackages;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public List<WorkPackage> findAllWorkPackagesByProjectIdAndSsoId(int projectId, String ssoId) {
+	public List<WorkPackage> findAllWorkPackagesByProjectIdAndSsoId(
+			int projectId, String ssoId) {
 		User user = userDao.findBySSO(ssoId);
-		Query query = getNewSession().createSQLQuery("select distinct w.* from work_package w join work_package_app_user_allocations wa on w.id = wa.work_package_id where  w.project_id = :projectId and  wa.user_id = :userId").addEntity(WorkPackage.class);
+		Query query = getNewSession()
+				.createSQLQuery(
+						"select distinct w.* from work_package w join work_package_app_user_allocations wa on w.id = wa.work_package_id where  w.project_id = :projectId and  wa.user_id = :userId")
+				.addEntity(WorkPackage.class);
 		query.setParameter("projectId", projectId);
 		query.setParameter("userId", user.getId());
 		List<WorkPackage> workPackages = query.list();
 		return workPackages;
+	}
+
+	public void updateWorkPackageCalculatedCost(BigDecimal calculatedCost,
+			Integer workPackageId) {
+		Query query = getCurrentSession()
+				.createSQLQuery(
+						"update work_package set calculated_cost = :calculatedCost where id = :workPackageId")
+				.addEntity(WorkPackage.class);
+		query.setParameter("calculatedCost", calculatedCost);
+		query.setParameter("workPackageId", workPackageId);
+
+		query.executeUpdate();
 	}
 
 	@Override

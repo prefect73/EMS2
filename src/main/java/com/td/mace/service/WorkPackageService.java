@@ -35,5 +35,7 @@ public interface WorkPackageService {
 	
 	void updateCalculatedCost(WorkPackage workPackage);
 	
+	void updateWorkPackageCalculatedCost(WorkPackage workPackage);
+	
 
 }

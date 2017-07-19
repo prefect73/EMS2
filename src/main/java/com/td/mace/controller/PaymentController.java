@@ -174,10 +174,16 @@ public class PaymentController {
 	@RequestMapping(value = { "/delete-payment-{id}" }, method = RequestMethod.GET)
 	public String deletePayment(@PathVariable Integer id,
 			HttpServletRequest request) {
+		Payment payment = paymentService.findById(id);
+		WorkPackage workPackage = new WorkPackage();
+		workPackage = payment.getWorkPackage();
 		paymentService.deletePaymentById(id);
+		
+		workPackageService.updateWorkPackageCalculatedCost(workPackage);
 		request.getSession(false).setAttribute("paymentslist",
 				paymentService.findAllPayments());
-		return "redirect:/Payment/paymentslist";
+		return "redirect:/WorkPackage/edit-workPackage-"+payment.getWorkPackage().getId();
+		//return "redirect:/Payment/paymentslist";
 	}
 
 	/**

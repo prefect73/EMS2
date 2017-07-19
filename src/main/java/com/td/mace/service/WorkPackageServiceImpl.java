@@ -300,5 +300,19 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 		workPackage.setCalculatedCost(totalPayments);
 		updateWorkPackage(workPackage);
 		
-	}	
+	}
+	
+	@Override
+	 public void updateWorkPackageCalculatedCost(WorkPackage workPackage) {
+	  List<Payment> allPaymentsByWorkPackage = paymentDao.findAllPaymentsByWorkPackage(workPackage);
+	  BigDecimal totalPayments = new BigDecimal("0.00");
+	  for(Payment payment : allPaymentsByWorkPackage){
+	   totalPayments = totalPayments.add(payment.getAmount());
+	  }
+	  dao.updateWorkPackageCalculatedCost(totalPayments, workPackage.getId());
+	  
+	  //workPackage.setCalculatedCost(totalPayments);
+	  //updateWorkPackage(workPackage);
+	  
+	 }	
 }

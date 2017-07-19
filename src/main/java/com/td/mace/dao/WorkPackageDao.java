@@ -1,5 +1,6 @@
 package com.td.mace.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -30,6 +31,8 @@ public interface WorkPackageDao {
 	List<WorkPackage> findByProjectID(int projectID);
 
 	List<WorkPackage> findAllWorkPackagesBySSOId(String ssoId);
+
+	void updateWorkPackageCalculatedCost(BigDecimal totalPayments, Integer id);
 
 }
 
