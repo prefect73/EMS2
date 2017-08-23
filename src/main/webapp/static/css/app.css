@@ -110,3 +110,9 @@ li a {
 li a:hover {
     background-color: #111;
 }
+
+table#summaryTable th, table#summaryTable td{
+	text-align: center;
+	padding: 4px;
+	vertical-align: middle;
+}

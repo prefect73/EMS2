@@ -23,7 +23,10 @@
 <link href="<c:url value='/static/css/jquery-ui.css' />" rel="stylesheet"  /> --%>
 <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
-
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css" />
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
 <style type="text/css">
 .collapse {
 	position: inherit;
@@ -512,6 +515,14 @@ button.ui-datepicker-current {
 		    }
 		});	
 		});
+/*	$(document).ready(function() {
+	    $('#summaryTable').DataTable( {
+	        "paging":   false,
+	        "ordering": false,
+	        "info":     false,
+	        "searching": false
+	    } );
+	} );*/
 </script>
 </head>
 
@@ -531,8 +542,7 @@ button.ui-datepicker-current {
 			</div>
 			<div class="well col-md-2">
 				<input type="submit" value="<spring:message code="button.update"/>" class="btn btn-primary btn-sm" />
-			</div> 
-			
+			</div>
 			<div class="row">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-label"><spring:message
@@ -586,6 +596,44 @@ button.ui-datepicker-current {
 				<div class="col-md-2">
 					<a id="searchByYearBtn" class="btn btn-success custom-width"><spring:message code="button.search" /> </a>
 				</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div style="overflow-x: auto;">
+								<table id="summaryTable" style="font-size: 12px;"
+									class="table table-striped table-bordered dt-responsive nowrap">
+									<thead>
+										<tr>
+											<th>Wochentag</th>
+											<c:forEach items="${monthSummary.tableHeader}" var="entry">
+												<th><c:out value="${entry}" /></th>
+											</c:forEach>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Gesamt</td>
+											<c:forEach items="${monthSummary.tableBody}" var="entry">
+												<th><c:out value="${entry}" /></th>
+											</c:forEach>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-body">
+						<jsp:include page="templates/projectSummary.jsp"></jsp:include>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="row">

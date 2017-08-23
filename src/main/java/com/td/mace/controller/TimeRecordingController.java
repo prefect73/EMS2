@@ -1,11 +1,14 @@
 package com.td.mace.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
@@ -32,6 +35,8 @@ import com.td.mace.service.UserService;
 import com.td.mace.service.WorkPackageService;
 import com.td.mace.service.WorkPackageUserAllocationService;
 import com.td.mace.wrapper.ProjectsWrapper;
+
+import utils.DayOfWeek;
 
 @Controller
 @RequestMapping("/TimeRecordingReport")
@@ -87,6 +92,26 @@ public class TimeRecordingController {
 		model.addAttribute("projectsWrapper",projectsWrapper);
 		/*model.addAttribute("projects",projectsByYearNameAndUser);*/
 		model.addAttribute("loggedinuser", getPrincipal());
+
+		// Top page table
+		LocalDate month = new LocalDate(Integer.parseInt(yearName), Integer.parseInt(monthName) + 1, 1);
+
+		// get first day of the selected month
+		LocalDate firstDay = month.withDayOfMonth(1);
+		// get first day of next month
+		LocalDate nextMonthFirstDay = firstDay.plusMonths(1);
+
+		Map<String, List<?>> monthSummary = new HashMap<>();
+		List<String> tableHeader = new ArrayList<>();
+		List<Integer> tableBody = new ArrayList<>();
+		while (firstDay.isBefore(nextMonthFirstDay)) {
+			tableHeader.add(firstDay.getDayOfMonth() + ", " + DayOfWeek.getDayName(firstDay.getDayOfWeek()));
+			tableBody.add(0);
+			firstDay = firstDay.plusDays(1);
+		}
+		monthSummary.put("tableHeader", tableHeader);
+		monthSummary.put("tableBody", tableBody);
+		model.addAttribute("monthSummary", monthSummary);
 		return "timeRecording";
 	}
 	
