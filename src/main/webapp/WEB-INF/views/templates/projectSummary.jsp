@@ -5,18 +5,24 @@
 <table class="table table-striped table-bordered dt-responsive nowrap">
 	<thead>
 		<tr>
-			<th>Wochentag</th>
-<%-- 			<c:forEach items="${monthSummary.tableHeader}" var="entry">
+			<th>Projekt A</th>
+			<c:forEach items="${monthSummary.tableHeader}" var="entry">
 				<th><c:out value="${entry}" /></th>
-			</c:forEach> --%>
+			</c:forEach>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td>Gesamt</td>
-<%-- 			<c:forEach items="${monthSummary.tableBody}" var="entry">
+			<td>Summe Project</td>
+			<c:forEach items="${monthSummary.tableBody}" var="entry">
 				<th><c:out value="${entry}" /></th>
-			</c:forEach> --%>
+			</c:forEach>
 		</tr>
+		<tr>
+		<td>Arbeitspaket 1</td>
+		</tr>
+<%-- 		<c:forEach items="${monthSummary.tableHeader}" var="entry">
+			<th><c:out value="${entry}" /></th>
+		</c:forEach> --%>
 	</tbody>
 </table>

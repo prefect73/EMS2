@@ -113,6 +113,9 @@ public class TimeRecordingController {
 		monthSummary.put("tableBody", tableBody);
 		model.addAttribute("monthSummary", monthSummary);
 		return "timeRecording";
+		// select p.project_name, wa.eemjun, wa.year_name from project p join
+		// work_package w on p.id = w.project_id join work_package_app_user_allocations
+		// wa on w.id = wa.work_package_id where wa.user_id = 10;
 	}
 	
 	/**
