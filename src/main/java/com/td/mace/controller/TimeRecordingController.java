@@ -1,6 +1,8 @@
 package com.td.mace.controller;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +38,9 @@ import com.td.mace.service.UserService;
 import com.td.mace.service.WorkPackageService;
 import com.td.mace.service.WorkPackageUserAllocationService;
 import com.td.mace.wrapper.ProjectsWrapper;
+import com.td.mace.wrapper.TMProject;
+import com.td.mace.wrapper.TMWorkPackage;
+import com.td.mace.wrapper.TimeRecordingWrapper;
 
 import utils.DayOfWeek;
 
@@ -70,9 +76,11 @@ public class TimeRecordingController {
 	
 	/**
 	 * GET
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
 	 */
 	@RequestMapping(value = { "/timeRecording-{yearName}-{monthName}-{showAll}" }, method = RequestMethod.GET)
-	public String getTimeRecordings(@PathVariable String yearName, @PathVariable String monthName ,@PathVariable String showAll , ModelMap model) {
+	public String getTimeRecordings(@PathVariable String yearName, @PathVariable String monthName ,@PathVariable String showAll , ModelMap model) throws IllegalArgumentException, IllegalAccessException {
 
 		List<Project> projectsByYearNameAndUser = new ArrayList<Project>();
 		ProjectsWrapper projectsWrapper = new ProjectsWrapper();
@@ -112,6 +120,35 @@ public class TimeRecordingController {
 		monthSummary.put("tableHeader", tableHeader);
 		monthSummary.put("tableBody", tableBody);
 		model.addAttribute("monthSummary", monthSummary);
+		List<TMProject> tmProjects = new ArrayList<>();
+		for(Project project: projectsWrapper.getProjects()) {
+			TMProject tmProject = new TMProject();
+			List<TMWorkPackage> tmWorkPackages = new ArrayList<>();
+			for(WorkPackage workPackage: project.getWorkPackages()) {
+				TMWorkPackage tmWorkPackage = new TMWorkPackage();
+				tmWorkPackage.setName(workPackage.getWorkPackageName());
+				
+				WorkPackageUserAllocation userAllocation = workPackage.getWorkPackageUserAllocations().get(0);
+				Field field = ReflectionUtils.findField(userAllocation.getClass(), "eemJun");
+				ReflectionUtils.makeAccessible(field);
+				String value = (String) field.get(userAllocation);
+				
+				if(value.length() > 0 && value.contains(",")) {					
+					List<String> hours = Arrays.asList(value.split(","));
+					tmWorkPackage.setHours(hours);
+				}
+				
+				
+				tmWorkPackages.add(tmWorkPackage);
+			}
+			
+			tmProject.setName(project.getProjectName());
+			tmProject.setWorkPackages(tmWorkPackages);
+			
+			tmProjects.add(tmProject);
+			
+		}
+		model.addAttribute("tmProjects",tmProjects);
 		return "timeRecording";
 		// select p.project_name, wa.eemjun, wa.year_name from project p join
 		// work_package w on p.id = w.project_id join work_package_app_user_allocations
