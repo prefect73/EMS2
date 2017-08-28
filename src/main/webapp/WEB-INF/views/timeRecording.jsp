@@ -14,6 +14,16 @@
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.4.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.2.2/js/dataTables.select.min.js"></script>
+<script src="<c:url value='/static/js/dataTables.cellEdit.js' />"></script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script src="<c:url value='/static/js/time-recording/timeRecording.js' />"></script>
+
 <link href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" rel="stylesheet" />
 <%-- <script src="<c:url value='/static/js/jquery-1.11.1.min.js' />"></script>
 <script src="<c:url value='/static/js/jquery-ui.min.js' />"></script>
@@ -585,11 +595,12 @@ button.ui-datepicker-current {
 											}
 										});
 					});
+
 </script>
 </head>
 
 <body>
-	<div class="generic-container">
+	<div class="generic-container timeRecordingWrapper">
 		<%@include file="authheader.jsp"%>
 		<form:form method="POST" modelAttribute="projectsWrapper" class="form-horizontal">
 
@@ -660,7 +671,7 @@ button.ui-datepicker-current {
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<div style="overflow-x: auto;">
-								<table id="summaryTable" style="font-size: 12px;" class="table table-striped table-bordered dt-responsive nowrap">
+								<table id="summaryTable" style="font-size: 12px;" class="table table-striped table-bordered dt-responsive">
 									<thead>
 										<tr>
 											<th>Wochentag</th>
@@ -685,19 +696,64 @@ button.ui-datepicker-current {
 			</div>
 			<div class="row">
 				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<div style="overflow-x: auto;">
+								<c:forEach items="${tmProjects}" var="project" varStatus="projectStatus">
+
+									<table id="tmProjectDatatable${projectStatus.index}" style="font-size: 12px;" class="table table-striped table-bordered dt-responsive">
+										<thead>
+											<tr>
+												<th>${project.name}</th>
+												<c:forEach items="${monthSummary.tableHeader}" var="entry">
+													<th><c:out value="${entry}" /></th>
+												</c:forEach>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Summe Project</td>
+												<c:forEach items="${monthSummary.tableHeader}" var="entry">
+													<td>0</td>
+												</c:forEach>
+											</tr>
+											<c:forEach items="${project.workPackages}" var="workPackage">
+												<tr id="${workPackage.wpUserId}">
+													<td><c:out value="${workPackage.name}" /></td>
+													<c:forEach items="${workPackage.hours}" var="hour">
+														<td data-hour><c:out value="${hour}" /></td>
+													</c:forEach>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</c:forEach>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
 					<div class="panel-group" id="accordion">
-						<c:forEach items="${projectsWrapper.projects}" var="project">
+						<c:forEach items="${tmProjects}" var="project">
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="panel-title">
-										<a href="#"> ${project.projectName} </a>
+										<a href="#"> ${project.name} </a>
 									</h4>
 								</div>
 								<div class="panel-body">
-									<c:forEach items="${project.workPackages}" var="workPackage" varStatus="workPackageStatus">
+									<c:forEach items="${project.workPackages}" var="workPackage">
 										<div class="panel panel-default">
-											<div class="panel-heading">${workPackage.workPackageName}</div>
-											<div class="panel-body"></div>
+											<div class="panel-heading">${workPackage.name}</div>
+											<div class="panel-body">
+											<table>
+											<thead>
+											
+											</thead>
+											</table>
+											</div>
 										</div>
 									</c:forEach>
 								</div>

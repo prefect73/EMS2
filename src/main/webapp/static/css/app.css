@@ -111,8 +111,15 @@ li a:hover {
     background-color: #111;
 }
 
-table#summaryTable th, table#summaryTable td{
+ table#summaryTable th:not(:first-child){
 	text-align: center;
-	padding: 4px;
+} 
+.timeRecordingWrapper tbody td:not(:first-child), 
+.timeRecordingWrapper thead th:not(:first-child){
+	text-align: center;
 	vertical-align: middle;
+}
+.timeRecordingWrapper td:first-child { width: 15% ;}
+.my-input-class{
+	max-width: 50px;
 }

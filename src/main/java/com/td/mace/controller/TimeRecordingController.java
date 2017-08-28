@@ -40,7 +40,6 @@ import com.td.mace.service.WorkPackageUserAllocationService;
 import com.td.mace.wrapper.ProjectsWrapper;
 import com.td.mace.wrapper.TMProject;
 import com.td.mace.wrapper.TMWorkPackage;
-import com.td.mace.wrapper.TimeRecordingWrapper;
 
 import utils.DayOfWeek;
 
@@ -128,7 +127,10 @@ public class TimeRecordingController {
 				TMWorkPackage tmWorkPackage = new TMWorkPackage();
 				tmWorkPackage.setName(workPackage.getWorkPackageName());
 				
+
 				WorkPackageUserAllocation userAllocation = workPackage.getWorkPackageUserAllocations().get(0);
+				tmWorkPackage.setWpUserId(userAllocation.getId());
+
 				Field field = ReflectionUtils.findField(userAllocation.getClass(), "eemJun");
 				ReflectionUtils.makeAccessible(field);
 				String value = (String) field.get(userAllocation);
@@ -136,6 +138,10 @@ public class TimeRecordingController {
 				if(value.length() > 0 && value.contains(",")) {					
 					List<String> hours = Arrays.asList(value.split(","));
 					tmWorkPackage.setHours(hours);
+				} else {
+					String[] hours = new String[tableBody.size()];
+					Arrays.fill(hours, "0");
+					tmWorkPackage.setHours(Arrays.asList(hours));
 				}
 				
 				
