@@ -93,7 +93,8 @@ jQuery.fn.dataTable.Api.register('MakeCellsEditable()', function (settings) {
 
     if (table != null) {
         // On cell click
-        $(table.body()).on('click', 'td', function () {
+    	// TODO remove hard coded attribute
+        $(table.body()).on('click', 'td[data-hour]', function () {
 
             var currentColumnIndex = table.cell(this).index().column;
 

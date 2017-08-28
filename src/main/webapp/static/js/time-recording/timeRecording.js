@@ -9,15 +9,16 @@ $(document).ready(function() {
 			"paging" : false,
 			"ordering" : false,
 			"info" : false,
+			"autoWidth": false,
 			"searching" : false,
 			"createdRow": function ( row, data, index ) {
 				console.log(row);
 			}		
 	});
-//		table.MakeCellsEditable({
-//			"onUpdate": myCallbackFunction,
-//			 "inputCss":'my-input-class'
-//		});
+		table.MakeCellsEditable({
+			"onUpdate": myCallbackFunction,
+			 "inputCss":'my-input-class'
+		});
 
 
 });
