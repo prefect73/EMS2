@@ -700,7 +700,6 @@ button.ui-datepicker-current {
 						<div class="panel-body">
 							<div style="overflow-x: auto;">
 								<c:forEach items="${tmProjects}" var="project" varStatus="projectStatus">
-
 									<table id="tmProjectDatatable${projectStatus.index}" style="font-size: 12px;" class="table table-striped table-bordered dt-responsive">
 										<thead>
 											<tr>
@@ -709,14 +708,14 @@ button.ui-datepicker-current {
 													<th><c:out value="${entry}" /></th>
 												</c:forEach>
 											</tr>
-										</thead>
-										<tbody>
 											<tr style="background: antiquewhite; font-weight: bold;">
-												<td>Summe Project</td>
+												<td>Summe Projekt</td>
 												<c:forEach items="${project.totalHours}" var="entry">
-													<td><c:out value="${entry}" /></td>
+													<th><c:out value="${entry}" /></th>
 												</c:forEach>
 											</tr>
+										</thead>
+										<tbody>
 											<c:forEach items="${project.workPackages}" var="workPackage">
 												<tr id="${workPackage.wpUserId}">
 													<td><c:out value="${workPackage.name}" /></td>

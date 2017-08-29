@@ -6,7 +6,7 @@ public class TMProject {
 	
 	private String name;
 	
-	private List<Integer> totalHours;
+	private List<Double> totalHours;
 
 	private List<TMWorkPackage> workPackages;
 
@@ -19,11 +19,11 @@ public class TMProject {
 		this.name = name;
 	}
 
-	public List<Integer> getTotalHours() {
+	public List<Double> getTotalHours() {
 		return totalHours;
 	}
 
-	public void setTotalHours(List<Integer> totalHours) {
+	public void setTotalHours(List<Double> totalHours) {
 		this.totalHours = totalHours;
 	}
 

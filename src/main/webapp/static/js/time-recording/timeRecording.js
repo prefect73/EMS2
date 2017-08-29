@@ -13,7 +13,7 @@ $(document).ready(function() {
 			}
 		})
 		.then(function (response) {
-			location.reload;
+			location.reload();
 		})
 		.catch(function (error) {
 			console.log(error);

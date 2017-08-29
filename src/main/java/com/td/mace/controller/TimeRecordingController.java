@@ -112,7 +112,7 @@ public class TimeRecordingController {
 
 		Map<String, List<?>> monthSummary = new HashMap<>();
 		List<String> tableHeader = new ArrayList<>();
-		List<Integer> summaryTableBody = new ArrayList<>();
+		List<Double> summaryTableBody = new ArrayList<>();
 		while (firstDay.isBefore(nextMonthFirstDay)) {
 			tableHeader.add(firstDay.getDayOfMonth() + ", " + DayOfWeek.getDayName(firstDay.getDayOfWeek()));
 			firstDay = firstDay.plusDays(1);
@@ -170,19 +170,19 @@ public class TimeRecordingController {
 					} else {
 						hours = foundHours;
 					}
-					List<Integer> intHours = new ArrayList<>();
+					List<Double> doubleHours = new ArrayList<>();
 					for (String s : hours) {
 						try {
-						intHours.add(Integer.valueOf(s));
+							doubleHours.add(Double.parseDouble(s));
 						} catch (Exception exception) {
-							intHours.add(0);
+							doubleHours.add(0d);
 						}
 					}
 
-					tmWorkPackage.setHours(intHours);
+					tmWorkPackage.setHours(doubleHours);
 				} else {
-					Integer[] hours = new Integer[tableHeader.size()];
-					Arrays.fill(hours, 0);
+					Double[] hours = new Double[tableHeader.size()];
+					Arrays.fill(hours, 0d);
 					tmWorkPackage.setHours(Arrays.asList(hours));
 				}
 				
@@ -201,10 +201,10 @@ public class TimeRecordingController {
 		// Calculate total hours summary
 
 		for (TMProject project : tmProjects) {
-			List<Integer> projectTotalHours = new ArrayList<>();
+			List<Double> projectTotalHours = new ArrayList<>();
 
 			for (int i = 0; i < tableHeader.size(); i++) {
-				int wpSummary = 0;
+				double wpSummary = 0d;
 				for (TMWorkPackage tmWorkPackage : project.getWorkPackages()) {
 					wpSummary += tmWorkPackage.getHours().get(i);
 				}
@@ -217,7 +217,7 @@ public class TimeRecordingController {
 		}
 
 		for (int i = 0; i < tableHeader.size(); i++) {
-			int totalMonthSummary = 0;
+			double totalMonthSummary = 0;
 			for (TMProject project : tmProjects) {
 				totalMonthSummary += project.getTotalHours().get(i);
 			}
