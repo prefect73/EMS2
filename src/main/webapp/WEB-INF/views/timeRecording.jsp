@@ -665,12 +665,20 @@ button.ui-datepicker-current {
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<div style="overflow-x: auto;">
+						<c:set var="weekendsDays" value="0" />
 							<table id="summaryTable" style="font-size: 12px;" class="table table-striped table-bordered dt-responsive">
 								<thead>
 									<tr style="background: rgba(95, 158, 160, 0.28);">
 										<th><spring:message code="timeRecording.label.weekday" /></th>
-										<c:forEach items="${monthSummary.tableHeader}" var="entry">
-											<th><c:out value="${entry}" /></th>
+										<c:forEach items="${monthSummary.tableHeader}" var="entry"
+											varStatus="headerStatus">
+											<c:if
+												test="${fn:containsIgnoreCase(entry, 'So') or fn:containsIgnoreCase(entry, 'Sa')}">
+												<c:set var="weekendsDays" value="${weekendsDays.concat(',').concat(headerStatus.index)}" />
+											</c:if>
+											<th
+												class="${fn:containsIgnoreCase(entry, 'So') or fn:containsIgnoreCase(entry, 'Sa') ? 'weekendDay' : '' }"><c:out
+													value="${entry}" /></th>
 										</c:forEach>
 									</tr>
 								</thead>
@@ -683,6 +691,10 @@ button.ui-datepicker-current {
 									</tr>
 								</tbody>
 							</table>
+							<script>
+								var weekendDays = [<c:out value="${weekendsDays}" />];
+									weekendDays.shift();
+							</script>
 						</div>
 					</div>
 				</div>
@@ -699,7 +711,7 @@ button.ui-datepicker-current {
 										<tr style="background: rgba(95, 158, 160, 0.28);">
 											<th>${project.name}</th>
 											<c:forEach items="${monthSummary.tableHeader}" var="entry">
-												<th><c:out value="${entry}" /></th>
+												<th class="${fn:containsIgnoreCase(entry, 'So') or fn:containsIgnoreCase(entry, 'Sa') ? 'weekendDay' : '' }"><c:out value="${entry}" /></th>
 											</c:forEach>
 										</tr>
 										<tr style="background: rgba(161, 175, 140, 0.19);font-weight: bold;">
@@ -730,4 +742,8 @@ button.ui-datepicker-current {
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+weekendDays.forEach(function(element){$("table tr th:nth-child("+(element+2)+")").addClass('weekendDay')});  
+weekendDays.forEach(function(element){$("table tr td:nth-child("+(element+2)+")").addClass('weekendDay')}); 
+</script>
 </html>

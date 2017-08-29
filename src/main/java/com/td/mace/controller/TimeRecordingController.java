@@ -155,6 +155,8 @@ public class TimeRecordingController {
 					List<String> foundHours = new ArrayList<>(tableHeader.size());
 					foundHours.addAll(Arrays.asList(value.split(",")));
 					List<String> hours = new ArrayList<>();
+					
+					// if string has more numbers that days in month
 					if (foundHours.size() > tableHeader.size()) {
 						hours = foundHours.subList(0, tableHeader.size());
 					} else if (foundHours.size() < tableHeader.size()) {

@@ -123,3 +123,6 @@ li a:hover {
 .inline-input-class{
 	max-width: 50px;
 }
+.weekendDay{
+	background: rgba(249, 192, 168, 0.62);
+}
