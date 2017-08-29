@@ -5,7 +5,7 @@ import java.util.List;
 public class TMWorkPackage {
 	private String name;
 	private Integer wpUserId;
-	private List<String> hours;
+	private List<Integer> hours;
 	public String getName() {
 		return name;
 	}
@@ -20,10 +20,12 @@ public class TMWorkPackage {
 	public void setWpUserId(Integer wpUserId) {
 		this.wpUserId = wpUserId;
 	}
-	public List<String> getHours() {
+
+	public List<Integer> getHours() {
 		return hours;
 	}
-	public void setHours(List<String> hours) {
+
+	public void setHours(List<Integer> hours) {
 		this.hours = hours;
 	}
 

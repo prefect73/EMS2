@@ -711,10 +711,10 @@ button.ui-datepicker-current {
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
+											<tr style="background: antiquewhite; font-weight: bold;">
 												<td>Summe Project</td>
-												<c:forEach items="${monthSummary.tableHeader}" var="entry">
-													<td>0</td>
+												<c:forEach items="${project.totalHours}" var="entry">
+													<td><c:out value="${entry}" /></td>
 												</c:forEach>
 											</tr>
 											<c:forEach items="${project.workPackages}" var="workPackage">
@@ -730,35 +730,6 @@ button.ui-datepicker-current {
 								</c:forEach>
 							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="panel-group" id="accordion">
-						<c:forEach items="${tmProjects}" var="project">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a href="#"> ${project.name} </a>
-									</h4>
-								</div>
-								<div class="panel-body">
-									<c:forEach items="${project.workPackages}" var="workPackage">
-										<div class="panel panel-default">
-											<div class="panel-heading">${workPackage.name}</div>
-											<div class="panel-body">
-											<table>
-											<thead>
-											
-											</thead>
-											</table>
-											</div>
-										</div>
-									</c:forEach>
-								</div>
-							</div>
-						</c:forEach>
 					</div>
 				</div>
 			</div>

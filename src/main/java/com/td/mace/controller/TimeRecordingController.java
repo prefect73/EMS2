@@ -110,14 +110,28 @@ public class TimeRecordingController {
 
 		Map<String, List<?>> monthSummary = new HashMap<>();
 		List<String> tableHeader = new ArrayList<>();
-		List<Integer> tableBody = new ArrayList<>();
+		List<Integer> summaryTableBody = new ArrayList<>();
 		while (firstDay.isBefore(nextMonthFirstDay)) {
 			tableHeader.add(firstDay.getDayOfMonth() + ", " + DayOfWeek.getDayName(firstDay.getDayOfWeek()));
-			tableBody.add(0);
 			firstDay = firstDay.plusDays(1);
 		}
+
+		HashMap<String, String> monthNames = new HashMap<String, String>();
+		monthNames.put("0", "Jan");
+		monthNames.put("1", "Feb");
+		monthNames.put("2", "Mar");
+		monthNames.put("3", "Apr");
+		monthNames.put("4", "May");
+		monthNames.put("5", "Jun");
+		monthNames.put("6", "Jul");
+		monthNames.put("7", "Aug");
+		monthNames.put("8", "Sep");
+		monthNames.put("9", "Oct");
+		monthNames.put("10", "Nov");
+		monthNames.put("11", "Dec");
+
 		monthSummary.put("tableHeader", tableHeader);
-		monthSummary.put("tableBody", tableBody);
+		monthSummary.put("tableBody", summaryTableBody);
 		model.addAttribute("monthSummary", monthSummary);
 		List<TMProject> tmProjects = new ArrayList<>();
 		for(Project project: projectsWrapper.getProjects()) {
@@ -127,24 +141,40 @@ public class TimeRecordingController {
 				TMWorkPackage tmWorkPackage = new TMWorkPackage();
 				tmWorkPackage.setName(workPackage.getWorkPackageName());
 				
-
+				
 				WorkPackageUserAllocation userAllocation = workPackage.getWorkPackageUserAllocations().get(0);
 				tmWorkPackage.setWpUserId(userAllocation.getId());
-
-				Field field = ReflectionUtils.findField(userAllocation.getClass(), "eemJun");
+				
+				Field field = ReflectionUtils.findField(userAllocation.getClass(), "eem" + monthNames.get(monthName));
 				ReflectionUtils.makeAccessible(field);
 				String value = (String) field.get(userAllocation);
 				
 				if(value.length() > 0 && value.contains(",")) {					
-					List<String> hours = Arrays.asList(value.split(","));
-					tmWorkPackage.setHours(hours);
+					List<String> foundHours = Arrays.asList(value.split(","));
+					List<String> hours = new ArrayList<>();
+					if (foundHours.size() > tableHeader.size()) {
+						hours = foundHours.subList(0, tableHeader.size());
+					} else {
+						hours = foundHours;
+					}
+					List<Integer> intHours = new ArrayList<>();
+					for (String s : hours) {
+						try {
+						intHours.add(Integer.valueOf(s));
+						} catch (Exception exception) {
+							intHours.add(0);
+						}
+					}
+
+					tmWorkPackage.setHours(intHours);
 				} else {
-					String[] hours = new String[tableBody.size()];
-					Arrays.fill(hours, "0");
+					Integer[] hours = new Integer[tableHeader.size()];
+					Arrays.fill(hours, 0);
 					tmWorkPackage.setHours(Arrays.asList(hours));
 				}
 				
 				
+
 				tmWorkPackages.add(tmWorkPackage);
 			}
 			
@@ -154,6 +184,34 @@ public class TimeRecordingController {
 			tmProjects.add(tmProject);
 			
 		}
+
+		// Calculate total hours summary
+
+		for (TMProject project : tmProjects) {
+			List<Integer> projectTotalHours = new ArrayList<>();
+
+			for (int i = 0; i < tableHeader.size(); i++) {
+				int wpSummary = 0;
+				for (TMWorkPackage tmWorkPackage : project.getWorkPackages()) {
+					wpSummary += tmWorkPackage.getHours().get(i);
+				}
+				projectTotalHours.add(wpSummary);
+
+			}
+
+			project.setTotalHours(projectTotalHours);
+
+		}
+
+		for (int i = 0; i < tableHeader.size(); i++) {
+			int totalMonthSummary = 0;
+			for (TMProject project : tmProjects) {
+				totalMonthSummary += project.getTotalHours().get(i);
+			}
+			summaryTableBody.add(totalMonthSummary);
+		}
+
+
 		model.addAttribute("tmProjects",tmProjects);
 		return "timeRecording";
 		// select p.project_name, wa.eemjun, wa.year_name from project p join
