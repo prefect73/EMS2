@@ -120,6 +120,6 @@ li a:hover {
 	vertical-align: middle;
 }
 .timeRecordingWrapper td:first-child { width: 15% ;}
-.my-input-class{
+.inline-input-class{
 	max-width: 50px;
 }

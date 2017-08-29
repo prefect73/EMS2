@@ -30,7 +30,8 @@ $(document).ready(function() {
 			"searching" : false		
 	});
 		table.MakeCellsEditable({
-			"onUpdate": myCallbackFunction
+			"onUpdate": myCallbackFunction,
+			"inputCss":'inline-input-class'
 		});
 
 
