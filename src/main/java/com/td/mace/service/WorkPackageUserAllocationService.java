@@ -10,6 +10,8 @@ public interface WorkPackageUserAllocationService {
 
 	WorkPackageUserAllocation findById(int id);
 
+	int saveWorkPackageUserAllocation(Integer id, String monthName, String hours);
+
 	void saveWorkPackageUserAllocation(
 			WorkPackageUserAllocation workPackageUserAllocation);
 

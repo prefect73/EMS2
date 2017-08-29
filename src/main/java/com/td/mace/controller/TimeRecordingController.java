@@ -3,6 +3,8 @@ package com.td.mace.controller;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -150,10 +152,21 @@ public class TimeRecordingController {
 				String value = (String) field.get(userAllocation);
 				
 				if(value.length() > 0 && value.contains(",")) {					
-					List<String> foundHours = Arrays.asList(value.split(","));
+					List<String> foundHours = new ArrayList<>(tableHeader.size());
+					foundHours.addAll(Arrays.asList(value.split(",")));
 					List<String> hours = new ArrayList<>();
 					if (foundHours.size() > tableHeader.size()) {
 						hours = foundHours.subList(0, tableHeader.size());
+					} else if (foundHours.size() < tableHeader.size()) {
+						// if list of hours from db its not for all days in the months
+						// then set this days as 0
+						int missingHours = tableHeader.size() - foundHours.size();
+						String[] missingHoursArr = new String[missingHours];
+						for (int j = 0; j < missingHours; j++) {
+							missingHoursArr[j] = "0";
+						}
+						foundHours.addAll(new ArrayList<>(Arrays.asList(missingHoursArr)));
+						hours = foundHours;
 					} else {
 						hours = foundHours;
 					}
@@ -210,13 +223,20 @@ public class TimeRecordingController {
 			}
 			summaryTableBody.add(totalMonthSummary);
 		}
+		
+		// sort projects
+		
+		Collections.sort(tmProjects, new Comparator<TMProject>() {
+			@Override
+			public int compare(TMProject o1, TMProject o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+
+		});
 
 
 		model.addAttribute("tmProjects",tmProjects);
 		return "timeRecording";
-		// select p.project_name, wa.eemjun, wa.year_name from project p join
-		// work_package w on p.id = w.project_id join work_package_app_user_allocations
-		// wa on w.id = wa.work_package_id where wa.user_id = 10;
 	}
 	
 	/**
