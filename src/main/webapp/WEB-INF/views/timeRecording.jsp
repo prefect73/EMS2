@@ -668,7 +668,7 @@ button.ui-datepicker-current {
 							<table id="summaryTable" style="font-size: 12px;" class="table table-striped table-bordered dt-responsive">
 								<thead>
 									<tr style="background: rgba(95, 158, 160, 0.28);">
-										<th>Wochentag</th>
+										<th><spring:message code="timeRecording.label.weekday" /></th>
 										<c:forEach items="${monthSummary.tableHeader}" var="entry">
 											<th><c:out value="${entry}" /></th>
 										</c:forEach>
@@ -676,7 +676,7 @@ button.ui-datepicker-current {
 								</thead>
 								<tbody>
 									<tr style="background: rgba(161, 175, 140, 0.19);font-weight: bold;">
-										<td>Gesamt</td>
+										<td><spring:message code="timeRecording.label.total" /></td>
 										<c:forEach items="${monthSummary.tableBody}" var="entry">
 											<th><c:out value="${entry}" /></th>
 										</c:forEach>
@@ -703,7 +703,9 @@ button.ui-datepicker-current {
 											</c:forEach>
 										</tr>
 										<tr style="background: rgba(161, 175, 140, 0.19);font-weight: bold;">
-											<td><a data-toggle="collapse" aria-expanded="false" class="collapsed" href="<c:url value='#projectIndex${projectStatus.index}' />"> Summe Projekt</a></td>
+											<td><a data-toggle="collapse" aria-expanded="false" class="collapsed" href="<c:url value='#projectIndex${projectStatus.index}' />"> 
+											<spring:message code="timeRecording.label.totalProject" /></a>
+											</td>
 											<c:forEach items="${project.totalHours}" var="entry">
 												<th><c:out value="${entry}" /></th>
 											</c:forEach>
