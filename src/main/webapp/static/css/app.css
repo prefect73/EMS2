@@ -110,3 +110,19 @@ li a {
 li a:hover {
     background-color: #111;
 }
+
+ table#summaryTable th:not(:first-child){
+	text-align: center;
+} 
+.timeRecordingWrapper tbody td:not(:first-child), 
+.timeRecordingWrapper thead th:not(:first-child){
+	text-align: center;
+	vertical-align: middle;
+}
+.timeRecordingWrapper td:first-child { width: 15% ;}
+.inline-input-class{
+	max-width: 50px;
+}
+.weekendDay{
+	background: rgba(249, 192, 168, 0.62);
+}

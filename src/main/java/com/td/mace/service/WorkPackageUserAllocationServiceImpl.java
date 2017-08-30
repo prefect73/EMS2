@@ -1,11 +1,14 @@
 package com.td.mace.service;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ReflectionUtils;
 
 import com.td.mace.dao.WorkPackageUserAllocationDao;
 import com.td.mace.model.User;
@@ -28,6 +31,7 @@ public class WorkPackageUserAllocationServiceImpl implements
 			WorkPackageUserAllocation workPackageUserAllocation) {
 		dao.save(workPackageUserAllocation);
 	}
+
 
 	/*
 	 * Since the method is running with Transaction, No need to call hibernate
@@ -135,7 +139,42 @@ public class WorkPackageUserAllocationServiceImpl implements
 					yearName,monthName,user,
 					workPackageUserAllocation);
 	}
-	
+
+	@Override
+	public int saveWorkPackageUserAllocation(Integer id, String monthName, String hours) {
+		WorkPackageUserAllocation workPackageUserAllocation  = dao.findById(id);
+		
+		HashMap<String, String> monthNames = new HashMap<String, String>();
+		monthNames.put("0", "Jan");
+		monthNames.put("1", "Feb");
+		monthNames.put("2", "Mar");
+		monthNames.put("3", "Apr");
+		monthNames.put("4", "May");
+		monthNames.put("5", "Jun");
+		monthNames.put("6", "Jul");
+		monthNames.put("7", "Aug");
+		monthNames.put("8", "Sep");
+		monthNames.put("9", "Oct");
+		monthNames.put("10", "Nov");
+		monthNames.put("11", "Dec");
+		
+		Field field = ReflectionUtils.findField(workPackageUserAllocation.getClass(), "eem" + monthNames.get(monthName));
+		ReflectionUtils.makeAccessible(field);
+		try {
+			field.set(workPackageUserAllocation, hours);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		dao.save(workPackageUserAllocation);
+
+		return 1;
+	}
+
 	/*@Override
 	public void updateWorkPackageUserAllocationByYearAndByMonthAndByUser(String yearName, String monthName, String monthTotal,String monthCSV, User user,
 			WorkPackageUserAllocation workPackageUserAllocation) {
