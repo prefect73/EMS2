@@ -18,8 +18,6 @@ $(document).ready(function() {
 		
 		timeRecordingToSave.set(id, {id:id, hours: hours, monthIndex:monthIndex});
 		
-		console.log(timeRecordingToSave);
-		
 	}
 	
 	$('#closeModalAndReloadBtn').on('click', function (e) {

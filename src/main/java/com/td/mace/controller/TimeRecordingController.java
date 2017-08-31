@@ -114,7 +114,7 @@ public class TimeRecordingController {
 		List<String> tableHeader = new ArrayList<>();
 		List<Double> summaryTableBody = new ArrayList<>();
 		while (firstDay.isBefore(nextMonthFirstDay)) {
-			tableHeader.add(firstDay.getDayOfMonth() + ", " + DayOfWeek.getDayName(firstDay.getDayOfWeek()));
+			tableHeader.add(firstDay.getDayOfMonth() + ". " + DayOfWeek.getDayName(firstDay.getDayOfWeek()));
 			firstDay = firstDay.plusDays(1);
 		}
 
