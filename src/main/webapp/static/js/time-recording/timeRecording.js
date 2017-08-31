@@ -1,25 +1,62 @@
 $(document).ready(function() {
+	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	
+	var responseJsonObject = [];
+	
+	var timeRecordingToSave = new Map();
+	
 	function myCallbackFunction (updatedCell, updatedRow, oldValue) {
 		var id = updatedRow.node().id;
-		updatedRow.data().shift();
-		var hours = updatedRow.data().join(",");
-		var monthName = $("#monthNamesDropDown").val();
+		var rowCopy =  updatedRow.data().slice();
 		
-		axios.get('/EMS/timeRecording/save', {
-			params:{
-				id: id,
-				hours: hours,
-				monthName:monthName	
-			}
-		})
-		.then(function (response) {
-			location.reload();
-		})
-		.catch(function (error) {
-			console.log(error);
-		});
+		//remove first column
+		rowCopy.shift();
+		var hours = rowCopy.join(",");
+		var monthIndex = $("#monthNamesDropDown").val();
+		
+		timeRecordingToSave.set(id, {id:id, hours: hours, monthIndex:monthIndex});
+		
+		console.log(timeRecordingToSave);
 		
 	}
+	
+	$('#closeModalAndReloadBtn').on('click', function (e) {
+		location.reload();
+	});
+	
+
+	// save recording data
+	$("#saveInputDataBtn").on('click', function(event){
+		event.preventDefault();
+		
+		// set loading spinner		
+		$("#saveInputDataBtn").button('loading')
+		
+		// prepare date to send
+		timeRecordingToSave.forEach(function(value, key, map){
+			responseJsonObject.push({id:value.id, hours: value.hours, monthIndex:value.monthIndex});
+		});
+		
+		$.ajax({
+	        type: "POST",
+	        url: '/EMS/timeRecording/save',
+	        data: JSON.stringify(responseJsonObject),
+	        contentType: "application/json",
+	        beforeSend: function(xhr) {
+	            xhr.setRequestHeader(header, token);
+	        },
+	        success: function(obj) {	        	
+	            setTimeout(function() {
+	                $("#saveInputDataBtn").button('reset');
+	            }, 100);
+	            $('#successDataSaved').modal({backdrop:false, keyboard:false})
+	            
+	        }})
+		
+		
+	});
 
 	$("table[id^='tmProjectDatatable']").each(function(i, el) {
 		var table = $(this).DataTable({

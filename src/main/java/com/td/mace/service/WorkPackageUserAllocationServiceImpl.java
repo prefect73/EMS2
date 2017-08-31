@@ -141,24 +141,25 @@ public class WorkPackageUserAllocationServiceImpl implements
 	}
 
 	@Override
-	public int saveWorkPackageUserAllocation(Integer id, String monthName, String hours) {
+	public int saveWorkPackageUserAllocation(Integer id, Integer monthIndex, String hours) {
 		WorkPackageUserAllocation workPackageUserAllocation  = dao.findById(id);
 		
-		HashMap<String, String> monthNames = new HashMap<String, String>();
-		monthNames.put("0", "Jan");
-		monthNames.put("1", "Feb");
-		monthNames.put("2", "Mar");
-		monthNames.put("3", "Apr");
-		monthNames.put("4", "May");
-		monthNames.put("5", "Jun");
-		monthNames.put("6", "Jul");
-		monthNames.put("7", "Aug");
-		monthNames.put("8", "Sep");
-		monthNames.put("9", "Oct");
-		monthNames.put("10", "Nov");
-		monthNames.put("11", "Dec");
+		HashMap<Integer, String> monthNames = new HashMap<Integer, String>();
+		monthNames.put(0, "Jan");
+		monthNames.put(1, "Feb");
+		monthNames.put(2, "Mar");
+		monthNames.put(3, "Apr");
+		monthNames.put(4, "May");
+		monthNames.put(5, "Jun");
+		monthNames.put(6, "Jul");
+		monthNames.put(7, "Aug");
+		monthNames.put(8, "Sep");
+		monthNames.put(9, "Oct");
+		monthNames.put(10, "Nov");
+		monthNames.put(11, "Dec");
 		
-		Field field = ReflectionUtils.findField(workPackageUserAllocation.getClass(), "eem" + monthNames.get(monthName));
+		Field field = ReflectionUtils.findField(workPackageUserAllocation.getClass(),
+				"eem" + monthNames.get(monthIndex));
 		ReflectionUtils.makeAccessible(field);
 		try {
 			field.set(workPackageUserAllocation, hours);

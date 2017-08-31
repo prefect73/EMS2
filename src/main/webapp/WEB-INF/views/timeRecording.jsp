@@ -8,6 +8,9 @@
 
 <html>
 <head>
+<meta name="_csrf" content="${_csrf.token}" />
+<!-- default header name is X-CSRF-TOKEN -->
+<meta name="_csrf_header" content="${_csrf.headerName}" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
 <title><spring:message code="timeRecording.enter.your.time" /></title>
 
@@ -20,7 +23,6 @@
 <script src="https://cdn.datatables.net/select/1.2.2/js/dataTables.select.min.js"></script>
 <script src="<c:url value='/static/js/dataTables.cellEdit.js' />"></script>
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script src="<c:url value='/static/js/time-recording/timeRecording.js' />"></script>
 
@@ -30,6 +32,8 @@
 <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
 <link href="<c:url value='/static/css/jquery-ui.css' />" rel="stylesheet"  /> --%>
 <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" 
+integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 
 <style type="text/css">
@@ -658,6 +662,29 @@ button.ui-datepicker-current {
 					</div>
 				</div>
 			</div>
+			<div class="col-md-3 col-sm-4 col-lg-2">
+				<div class="panel panel-default" style="margin-top: 12px;">
+					<div class="panel-body">
+						<form id="saveRecodrdingTimeForm" method="post" action="/EMS/timeRecording/saveone">
+							<label for="saveInputDataBtn"><spring:message code="timeRecording.label.saveInputData" /></label> <input type="hidden" name="asdsa43" value="df34" />
+							<div class="form-group">
+								<button id="saveInputDataBtn" type="submit" class="btn btn-info"  data-loading-text="<i class='fa fa-spinner fa-spin'></i> <spring:message code="button.update" />">
+									<spring:message code="button.update" />
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Small modal -->
+
+		<div id="successDataSaved" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+			<div class="modal-dialog modal-sm" role="document">
+				<div class="modal-content alert alert-success"><strong>Eingaben gespeichert</strong> 
+				<button id="closeModalAndReloadBtn" type="button" class="btn btn-sm btn-default" style="margin-left:40px;">OK</button>
+				</div>
+			</div>
 		</div>
 		<!-- Start of summary table  -->
 		<div class="row">
@@ -665,25 +692,21 @@ button.ui-datepicker-current {
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<div style="overflow-x: auto;">
-						<c:set var="weekendsDays" value="0" />
+							<c:set var="weekendsDays" value="0" />
 							<table id="summaryTable" style="font-size: 12px;" class="table table-striped table-bordered dt-responsive">
 								<thead>
 									<tr style="background: rgba(95, 158, 160, 0.28);">
 										<th><spring:message code="timeRecording.label.weekday" /></th>
-										<c:forEach items="${monthSummary.tableHeader}" var="entry"
-											varStatus="headerStatus">
-											<c:if
-												test="${fn:containsIgnoreCase(entry, 'So') or fn:containsIgnoreCase(entry, 'Sa')}">
+										<c:forEach items="${monthSummary.tableHeader}" var="entry" varStatus="headerStatus">
+											<c:if test="${fn:containsIgnoreCase(entry, 'So') or fn:containsIgnoreCase(entry, 'Sa')}">
 												<c:set var="weekendsDays" value="${weekendsDays.concat(',').concat(headerStatus.index)}" />
 											</c:if>
-											<th
-												class="${fn:containsIgnoreCase(entry, 'So') or fn:containsIgnoreCase(entry, 'Sa') ? 'weekendDay' : '' }"><c:out
-													value="${entry}" /></th>
+											<th class="${fn:containsIgnoreCase(entry, 'So') or fn:containsIgnoreCase(entry, 'Sa') ? 'weekendDay' : '' }"><c:out value="${entry}" /></th>
 										</c:forEach>
 									</tr>
 								</thead>
 								<tbody>
-									<tr style="background: rgba(161, 175, 140, 0.19);font-weight: bold;">
+									<tr style="background: rgba(161, 175, 140, 0.19); font-weight: bold;">
 										<td><spring:message code="timeRecording.label.total" /></td>
 										<c:forEach items="${monthSummary.tableBody}" var="entry">
 											<th><c:out value="${entry}" /></th>
@@ -714,10 +737,8 @@ button.ui-datepicker-current {
 												<th class="${fn:containsIgnoreCase(entry, 'So') or fn:containsIgnoreCase(entry, 'Sa') ? 'weekendDay' : '' }"><c:out value="${entry}" /></th>
 											</c:forEach>
 										</tr>
-										<tr style="background: rgba(161, 175, 140, 0.19);font-weight: bold;">
-											<td><a data-toggle="collapse" aria-expanded="false" class="collapsed" href="<c:url value='#projectIndex${projectStatus.index}' />"> 
-											<spring:message code="timeRecording.label.totalProject" /></a>
-											</td>
+										<tr style="background: rgba(161, 175, 140, 0.19); font-weight: bold;">
+											<td><a data-toggle="collapse" aria-expanded="false" class="collapsed" href="<c:url value='#projectIndex${projectStatus.index}' />"> <spring:message code="timeRecording.label.totalProject" /></a></td>
 											<c:forEach items="${project.totalHours}" var="entry">
 												<th><c:out value="${entry}" /></th>
 											</c:forEach>

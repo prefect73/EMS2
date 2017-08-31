@@ -126,3 +126,7 @@ li a:hover {
 .weekendDay{
 	background: rgba(249, 192, 168, 0.62);
 }
+.modal-dialog{
+	margin-top: 10%;
+}
+
