@@ -41,7 +41,7 @@
 		</sec:authorize>
 
 		<!-- Zeiterfassung -->
-		<li><a href="<c:url value='/TimeRecordingReport/timeRecording-2017-5-1' />"><spring:message
+		<li><a id="timeAndAttendanceLink" href="<c:url value='/TimeRecordingReport/timeRecording' />"><spring:message
 						code="authheader.menu.workPackage.timeRecording" /></a></li>
 
 		<!-- Bericht Projekte -->
@@ -61,3 +61,16 @@
 		</sec:authorize>
 	</ul>
 </div>
+<script>
+
+	(function() {
+		var currDate = new Date();
+		var month = currDate.getMonth()
+		var year = currDate.getFullYear();
+		var url = $("#timeAndAttendanceLink").attr('href');
+		url = url + "-" + year + "-" + month + "-1";
+		$("#timeAndAttendanceLink").attr('href', function(i, val) {
+			return url;
+		});
+	})();
+</script>

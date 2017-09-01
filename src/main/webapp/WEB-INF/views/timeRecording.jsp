@@ -174,6 +174,7 @@ button.ui-datepicker-current {
 
 	function makeCurrentMonthSelected() {
 		var d = new Date();
+		console.log("dd:"+d);
 		var currentMonth = d.getMonth();
 		if (<c:out value="${selectedMonth}"/> == currentMonth) {
 			$('#monthNamesDropDown option[value=' + currentMonth + ']').attr(

@@ -227,7 +227,6 @@ public class TimeRecordingController {
 		}
 		
 		// sort projects
-		
 		Collections.sort(tmProjects, new Comparator<TMProject>() {
 			@Override
 			public int compare(TMProject o1, TMProject o2) {
@@ -235,6 +234,17 @@ public class TimeRecordingController {
 			}
 
 		});
+
+		// sort workpackages
+		for (TMProject project : tmProjects) {
+			Collections.sort(project.getWorkPackages(), new Comparator<TMWorkPackage>() {
+				@Override
+				public int compare(TMWorkPackage o1, TMWorkPackage o2) {
+					return o1.getName().compareTo(o2.getName());
+				}
+
+			});
+		}
 
 
 		model.addAttribute("tmProjects",tmProjects);
