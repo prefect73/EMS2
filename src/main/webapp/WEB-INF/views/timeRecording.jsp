@@ -766,5 +766,6 @@ button.ui-datepicker-current {
 <script type="text/javascript">
 weekendDays.forEach(function(element){$("table tr th:nth-child("+(element+2)+")").addClass('weekendDay')});  
 weekendDays.forEach(function(element){$("table tr td:nth-child("+(element+2)+")").addClass('weekendDay')}); 
+
 </script>
 </html>
