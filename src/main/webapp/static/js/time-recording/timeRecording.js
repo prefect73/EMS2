@@ -18,16 +18,20 @@ $(document).ready(function() {
 		
 		timeRecordingToSave.set(id, {id:id, hours: hours, monthIndex:monthIndex});
 		
+		window.onbeforeunload = function(e) {
+			  var dialogText = 'Dialog text here';
+			  e.returnValue = dialogText;
+			  return dialogText;
+			};
 	}
 	
 	$('#closeModalAndReloadBtn').on('click', function (e) {
 		location.reload();
 	});
-	
-
 	// save recording data
 	$("#saveInputDataBtn").on('click', function(event){
 		event.preventDefault();
+		
 		
 		// set loading spinner		
 		$("#saveInputDataBtn").button('loading')
@@ -45,7 +49,8 @@ $(document).ready(function() {
 	        beforeSend: function(xhr) {
 	            xhr.setRequestHeader(header, token);
 	        },
-	        success: function(obj) {	        	
+	        success: function(obj) {	 
+	        	window.onbeforeunload = function(e){};
 	            setTimeout(function() {
 	                $("#saveInputDataBtn").button('reset');
 	            }, 100);

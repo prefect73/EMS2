@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ExceptionControllerAdvice {
 	@ExceptionHandler(Exception.class)
 	public void handleIOException(HttpServletRequest request, Exception ex) {
-		System.out.println("ok");
+		ex.fillInStackTrace();
 	}
 }
