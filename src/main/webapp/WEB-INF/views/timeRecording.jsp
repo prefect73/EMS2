@@ -681,7 +681,7 @@ button.ui-datepicker-current {
 
 		<div id="successDataSaved" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
 			<div class="modal-dialog modal-sm" role="document">
-				<div class="modal-content alert alert-success"><strong>Eingaben gespeichert</strong> 
+				<div class="modal-content alert alert-success"><strong><spring:message code="timeRecording.label.succesSave" /></strong> 
 				<button id="closeModalAndReloadBtn" type="button" class="btn btn-sm btn-default" style="margin-left:40px;">OK</button>
 				</div>
 			</div>
