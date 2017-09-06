@@ -1,7 +1,6 @@
 package com.td.mace.service;
 
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -159,24 +158,12 @@ public class WorkPackageUserAllocationServiceImpl implements
 		monthNames.put(10, "Nov");
 		monthNames.put(11, "Dec");
 		
-		// calculate monthly total
-		double monthTotalSummary = 0d;
-
-		String[] hoursStringArr = hours.split(",");
-
-		for (int i = 0; i < hoursStringArr.length; i++) {
-			monthTotalSummary += Double.parseDouble(hoursStringArr[i]);
-		}
 
 		Field field = ReflectionUtils.findField(workPackageUserAllocation.getClass(),
 				"eem" + monthNames.get(monthIndex));
-		Field monthTotalField = ReflectionUtils.findField(workPackageUserAllocation.getClass(),
-				"em" + monthNames.get(monthIndex));
 		ReflectionUtils.makeAccessible(field);
-		ReflectionUtils.makeAccessible(monthTotalField);
 		try {
 			field.set(workPackageUserAllocation, hours);
-			monthTotalField.set(workPackageUserAllocation, new BigDecimal(monthTotalSummary));
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
