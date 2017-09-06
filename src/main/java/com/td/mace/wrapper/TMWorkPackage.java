@@ -29,6 +29,11 @@ public class TMWorkPackage {
 		this.hours = hours;
 	}
 
+	@Override
+	public String toString() {
+		return "TMWorkPackage [name=" + name + ", wpUserId=" + wpUserId + ", hours=" + hours + "]";
+	}
+
 
 
 }

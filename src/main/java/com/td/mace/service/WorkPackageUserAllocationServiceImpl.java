@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,7 @@ import com.td.mace.model.WorkPackageUserAllocation;
 @Transactional
 public class WorkPackageUserAllocationServiceImpl implements
 		WorkPackageUserAllocationService {
+	static final Logger logger = LoggerFactory.getLogger(WorkPackageUserAllocationServiceImpl.class);
 
 	@Autowired
 	private WorkPackageUserAllocationDao dao;
@@ -170,8 +173,12 @@ public class WorkPackageUserAllocationServiceImpl implements
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
+		logger.info(">> WorkpackageUserAllocation to be saved in DB: " + workPackageUserAllocation);
+
 		dao.save(workPackageUserAllocation);
 
 		return 1;

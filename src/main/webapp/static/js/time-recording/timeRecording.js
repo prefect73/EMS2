@@ -77,7 +77,7 @@ $(document).ready(function() {
 		timeRecordingToSave.forEach(function(value, key, map){
 			responseJsonObject.push({id:value.id, hours: value.hours, monthIndex:value.monthIndex});
 		});
-
+		console.log("Send data: "+ JSON.stringify(responseJsonObject));
 		$.ajax({
 			type: "POST",
 			url: '/EMS/timeRecording/save',
