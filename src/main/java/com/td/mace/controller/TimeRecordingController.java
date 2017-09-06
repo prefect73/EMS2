@@ -177,6 +177,7 @@ public class TimeRecordingController {
 						try {
 							doubleHours.add(Double.parseDouble(s));
 						} catch (Exception exception) {
+							exception.printStackTrace();
 							doubleHours.add(0d);
 						}
 					}
