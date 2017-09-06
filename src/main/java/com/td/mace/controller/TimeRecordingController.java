@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.joda.time.LocalDate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
@@ -50,6 +52,9 @@ import utils.DayOfWeek;
 @SessionAttributes({ "projectslist" })
 @PropertySource(value = { "classpath:application.properties" })
 public class TimeRecordingController {
+
+
+	static final Logger logger = LoggerFactory.getLogger(TimeRecordingController.class);
 
 	@Autowired
 	private Environment environment;
@@ -151,6 +156,8 @@ public class TimeRecordingController {
 				ReflectionUtils.makeAccessible(field);
 				String value = (String) field.get(userAllocation);
 				
+				logger.info("Month hours from database: " + value + " Workpackage id:" + workPackage.getId()
+						+ " UserAllocation id" + userAllocation);
 				if(value.length() > 0 && value.contains(",")) {					
 					List<String> foundHours = new ArrayList<>(tableHeader.size());
 					foundHours.addAll(Arrays.asList(value.split(",")));
@@ -189,8 +196,8 @@ public class TimeRecordingController {
 					tmWorkPackage.setHours(Arrays.asList(hours));
 				}
 				
+				logger.info("WorkPackage setup for UI: " + tmWorkPackage);
 				
-
 				tmWorkPackages.add(tmWorkPackage);
 			}
 			
