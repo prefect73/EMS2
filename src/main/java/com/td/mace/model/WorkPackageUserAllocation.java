@@ -84,51 +84,39 @@ public class WorkPackageUserAllocation implements Serializable {
 	@Column(name = "mdec", precision = 10, scale = 2)
 	private BigDecimal mDec = new BigDecimal("0.00");
 	
-	@DecimalMax(value = "31.00")
 	@Column(name = "emjan", precision = 10, scale = 2)
 	private BigDecimal emJan = new BigDecimal("0.00");
 
-	@DecimalMax(value = "29.00")
 	@Column(name = "emfeb", precision = 10, scale = 2)
 	private BigDecimal emFeb = new BigDecimal("0.00");
 
-	@DecimalMax(value = "31.00")
 	@Column(name = "emmar", precision = 10, scale = 2)
 	private BigDecimal emMar = new BigDecimal("0.00");
 
-	@DecimalMax(value = "31.00")
 	@Column(name = "emapr", precision = 10, scale = 2)
 	private BigDecimal emApr = new BigDecimal("0.00");
 
-	@DecimalMax(value = "31.00")
 	@Column(name = "emmay", precision = 10, scale = 2)
 	private BigDecimal emMay = new BigDecimal("0.00");
 
-	@DecimalMax(value = "31.00")
 	@Column(name = "emjun", precision = 10, scale = 2)
 	private BigDecimal emJun = new BigDecimal("0.00");
 
-	@DecimalMax(value = "31.00")
 	@Column(name = "emjul", precision = 10, scale = 2)
 	private BigDecimal emJul = new BigDecimal("0.00");
 
-	@DecimalMax(value = "31.00")
 	@Column(name = "emaug", precision = 10, scale = 2)
 	private BigDecimal emAug = new BigDecimal("0.00");
 
-	@DecimalMax(value = "31.00")
 	@Column(name = "emsep", precision = 10, scale = 2)
 	private BigDecimal emSep = new BigDecimal("0.00");
 
-	@DecimalMax(value = "31.00")
 	@Column(name = "emoct", precision = 10, scale = 2)
 	private BigDecimal emOct = new BigDecimal("0.00");
 
-	@DecimalMax(value = "31.00")
 	@Column(name = "emnov", precision = 10, scale = 2)
 	private BigDecimal emNov = new BigDecimal("0.00");
 
-	@DecimalMax(value = "31.00")
 	@Column(name = "emdec", precision = 10, scale = 2)
 	private BigDecimal emDec = new BigDecimal("0.00");
 
