@@ -172,8 +172,10 @@ public class WorkPackageUserAllocationServiceImpl implements
 			}
 		}
 
-		System.out.println("Number of hours: " + monthlySummary);
-		BigDecimal monthlyBigDecimalSummary = new BigDecimal(monthlySummary);
+		double numberOfDays = monthlySummary / 8;
+
+		System.out.println("Number of days: " + numberOfDays);
+		BigDecimal monthlyBigDecimalSummary = new BigDecimal(numberOfDays);
 		monthlyBigDecimalSummary = monthlyBigDecimalSummary.setScale(2, BigDecimal.ROUND_DOWN);
 		Field field = ReflectionUtils.findField(workPackageUserAllocation.getClass(),
 				"eem" + monthNames.get(monthIndex));
@@ -181,6 +183,7 @@ public class WorkPackageUserAllocationServiceImpl implements
 				"em" + monthNames.get(monthIndex));
 		ReflectionUtils.makeAccessible(field);
 		ReflectionUtils.makeAccessible(fieldEm);
+
 		try {
 			field.set(workPackageUserAllocation, hours);
 			fieldEm.set(workPackageUserAllocation, monthlyBigDecimalSummary);
