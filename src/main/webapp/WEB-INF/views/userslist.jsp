@@ -24,17 +24,21 @@ if($("#defaultLanguage").val() == 'german'){
 	$('#usersTable').DataTable({
         "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-        }
+        },
+        "order": [[ 0, "asc" ]]
     });
 	
 } else if ($("#defaultLanguage").val() == 'english'){
-	$('#usersTable').DataTable();
+	$('#usersTable').DataTable({
+        "order": [[ 0, "asc" ]]
+    });
 	
 } else {
 	$('#usersTable').DataTable({
         "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-        }
+        },
+        "order": [[ 0, "asc" ]]
     });
 }
 });

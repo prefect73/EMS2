@@ -105,17 +105,21 @@ $(document).ready(function() {
     	table = $('#projectReportTable').DataTable({
 	        "language": {
 	            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-	        }
+	        },
+            "order": [[ 0, "asc" ]]
 	    });
 		
 	} else if ($("#defaultLanguage").val() == 'english'){
-		table = $('#projectReportTable').DataTable();
+		table = $('#projectReportTable').DataTable({
+            "order": [[ 0, "asc" ]]
+        });
 		
 	} else {
 		table = $('#projectReportTable').DataTable({
 	        "language": {
 	            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-	        }
+	        },
+            "order": [[ 0, "asc" ]]
 	    });
 		
 	}
@@ -125,17 +129,21 @@ $(document).ready(function() {
     	workPackageDetailsTable = $('#workPackageDetailsTable').DataTable({
 	        "language": {
 	            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-	        }
+	        },
+            "order": [[ 0, "asc" ]]
 	    });
 		
 	} else if ($("#defaultLanguage").val() == 'english'){
-		workPackageDetailsTable = $('#workPackageDetailsTable').DataTable();
+		workPackageDetailsTable = $('#workPackageDetailsTable').DataTable({
+            "order": [[ 0, "asc" ]]
+        });
 		
 	} else {
 		workPackageDetailsTable = $('#workPackageDetailsTable').DataTable({
 	        "language": {
 	            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-	        }
+	        },
+            "order": [[ 0, "asc" ]]
 	    });
 		
 	}

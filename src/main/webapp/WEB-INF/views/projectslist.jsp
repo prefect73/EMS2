@@ -25,17 +25,21 @@
 			$('#projectsTable').DataTable({
 		        "language": {
 		            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-		        }
+		        },
+                "order": [[ 1, "asc" ]]
 		    });
 			
 		} else if ($("#defaultLanguage").val() == 'english'){
-			$('#projectsTable').DataTable();
+			$('#projectsTable').DataTable({
+                "order": [[ 1, "asc" ]]
+			});
 			
 		} else {
 			$('#projectsTable').DataTable({
 		        "language": {
 		            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-		        }
+		        },
+                "order": [[ 1, "asc" ]]
 		    });
 			
 		}

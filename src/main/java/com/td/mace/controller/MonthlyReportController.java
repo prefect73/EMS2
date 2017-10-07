@@ -1,6 +1,8 @@
 package com.td.mace.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,9 +78,27 @@ public class MonthlyReportController {
 					}
 				}
 			}
+			Collections.sort(monthlyAttendancesToDisplay, new Comparator<UserAttendance>() {
+                    @Override
+                    public int compare(UserAttendance o1, UserAttendance o2) {
+                        if(o1.getUser() == null || o2.getUser() == null){
+                            return 0;
+                        }
+                        return o1.getUser().getFirstName().toLowerCase().compareTo(o2.getUser().getFirstName().toLowerCase());
+                    }
+                });
 			model.addAttribute("monthlyAttendances", monthlyAttendancesToDisplay);
 			}else{
-			monthlyAttendances = userAttendanceService.findAllUserAttendancesBySSOId(getPrincipal());
+                monthlyAttendances = userAttendanceService.findAllUserAttendancesBySSOId(getPrincipal());
+                Collections.sort(monthlyAttendances, new Comparator<UserAttendance>() {
+                    @Override
+                    public int compare(UserAttendance o1, UserAttendance o2) {
+                        if(o1.getUser() == null || o2.getUser() == null){
+                            return 0;
+                        }
+                        return o1.getUser().getFirstName().toLowerCase().compareTo(o2.getUser().getFirstName().toLowerCase());
+                    }
+                });
 			workPackageUserAllocationsBySum = workPackageUserAllocationService.findAllWorkPackageUserAllocationsBySum(getPrincipal());
 			model.addAttribute("monthlyAttendances", monthlyAttendances);
 		}

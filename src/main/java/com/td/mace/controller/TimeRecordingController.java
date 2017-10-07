@@ -156,8 +156,7 @@ public class TimeRecordingController {
 				ReflectionUtils.makeAccessible(field);
 				String value = (String) field.get(userAllocation);
 				
-				logger.info("Month hours from database: " + value + " Workpackage id:" + workPackage.getId()
-						+ " UserAllocation id" + userAllocation);
+
 				if(value.length() > 0 && value.contains(",")) {					
 					List<String> foundHours = new ArrayList<>(tableHeader.size());
 					foundHours.addAll(Arrays.asList(value.split(",")));
@@ -195,8 +194,7 @@ public class TimeRecordingController {
 					Arrays.fill(hours, 0d);
 					tmWorkPackage.setHours(Arrays.asList(hours));
 				}
-				
-				logger.info("WorkPackage setup for UI: " + tmWorkPackage);
+
 				
 				tmWorkPackages.add(tmWorkPackage);
 			}
