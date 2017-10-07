@@ -31,7 +31,7 @@ $(document).ready(function() {
 		$('#'+selectedTableId+' thead tr:nth-child(2) th:nth-child('+(columnIndex + 1)+')').html(projectSummary);
 		
 		var totalSummary = 0.0;
-		var numberOfTables = $('table[id^=tmProjectDatatable').length;
+		var numberOfTables = $('table[id^=tmProjectDatatable]').length;
 		for(ji = 0; ji < numberOfTables; ji++){
 			totalSummary = totalSummary + parseFloat($('table#tmProjectDatatable'+ji+' thead tr:nth-child(2) th:nth-child('+(columnIndex + 1)+')').text());
 		}
