@@ -41,8 +41,7 @@ $(document).ready(function() {
 			totalSummary = totalSummary + '.0';
 		}
 		$('#summarytable tbody tr:nth-child(1) th:nth-child('+(columnIndex + 1)+')').html(totalSummary);
-		
-		console.log('Final result:'+totalSummary);
+
 		// end calculating summary
 
 		var id = updatedRow.node().id;
@@ -110,7 +109,12 @@ $(document).ready(function() {
 			"onUpdate": myCallbackFunction,
 			"inputCss":'inline-input-class'
 		});
-
-
 	});
+	$('td[data-hour]').on('keydown', 'input.inline-input-class', function(e){
+        var code = e.keyCode || e.which;
+        if(code === 9){
+            $(this).closest('td[data-hour]').next().trigger('click')
+
+        }
+    });
 });
