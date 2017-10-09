@@ -112,8 +112,7 @@ $(document).ready(function() {
 	$('td[data-hour]').on('keydown', 'input.inline-input-class', function(e){
         var code = e.keyCode || e.which;
         if(code === 9){
-            $(this).closest('td[data-hour]').next().trigger('click')
-
+            $(this).closest('td[data-hour]').next().trigger('click');
         }
     });
 });
