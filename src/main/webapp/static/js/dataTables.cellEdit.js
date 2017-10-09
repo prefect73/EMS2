@@ -28,7 +28,7 @@ jQuery.fn.dataTable.Api.register('MakeCellsEditable()', function (settings) {
         // UPDATE
         updateEditableCell: function (callingElement) {
             // Need to redeclare table here for situations where we have more than one datatable on the page. See issue6 on github
-            var table = $(callingElement.closest("table")).DataTable().table();
+            var table = $($(callingElement).closest("table")).DataTable().table();
             var row = table.row($(callingElement).parents('tr'));
             var cell = table.cell($(callingElement).parent());
             var columnIndex = cell.index().column;
@@ -196,7 +196,7 @@ function getInputHtml(currentColumnIndex, settings, oldValue) {
             input.html = "<textarea id='ejbeatycelledit' class='" + inputCss + "'>"+oldValue+"</textarea><a href='#' class='" + confirmCss + "' onclick='$(this).updateEditableCell(this)'>Confirm</a> <a href='#' class='" + cancelCss + "' onclick='$(this).cancelEditableCell(this)'>Cancel</a>";
             break;            
         default: // text input
-            input.html = "<input id='ejbeatycelledit' class='" + inputCss + "' onfocusout='$(this).updateEditableCell(this)' value='" + oldValue + "'></input>";
+            input.html = "<input id='ejbeatycelledit' class='" + inputCss + "' onblur='$(this).updateEditableCell(this)' value='" + oldValue + "'></input>";
             break;
     }
     return input;

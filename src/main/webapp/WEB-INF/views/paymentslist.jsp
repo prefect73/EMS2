@@ -25,17 +25,21 @@
 			$('#paymentsTable').DataTable({
 		        "language": {
 		            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-		        }
+		        },
+                "order": [[ 0, "asc" ]]
 		    });
 			
 		} else if ($("#defaultLanguage").val() == 'english'){
-			$('#paymentsTable').DataTable();
+			$('#paymentsTable').DataTable({
+                "order": [[ 0, "asc" ]]
+            });
 			
 		} else {
 			$('#paymentsTable').DataTable({
 		        "language": {
 		            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-		        }
+		        },
+                "order": [[ 0, "asc" ]]
 		    });
 			
 		}

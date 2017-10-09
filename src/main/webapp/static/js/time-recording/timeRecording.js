@@ -31,7 +31,7 @@ $(document).ready(function() {
 		$('#'+selectedTableId+' thead tr:nth-child(2) th:nth-child('+(columnIndex + 1)+')').html(projectSummary);
 		
 		var totalSummary = 0.0;
-		var numberOfTables = $('table[id^=tmProjectDatatable').length;
+		var numberOfTables = $('table[id^=tmProjectDatatable]').length;
 		for(ji = 0; ji < numberOfTables; ji++){
 			totalSummary = totalSummary + parseFloat($('table#tmProjectDatatable'+ji+' thead tr:nth-child(2) th:nth-child('+(columnIndex + 1)+')').text());
 		}
@@ -41,8 +41,7 @@ $(document).ready(function() {
 			totalSummary = totalSummary + '.0';
 		}
 		$('#summarytable tbody tr:nth-child(1) th:nth-child('+(columnIndex + 1)+')').html(totalSummary);
-		
-		console.log('Final result:'+totalSummary);
+
 		// end calculating summary
 
 		var id = updatedRow.node().id;
@@ -77,7 +76,6 @@ $(document).ready(function() {
 		timeRecordingToSave.forEach(function(value, key, map){
 			responseJsonObject.push({id:value.id, hours: value.hours, monthIndex:value.monthIndex});
 		});
-		console.log("Send data: "+ JSON.stringify(responseJsonObject));
 		$.ajax({
 			type: "POST",
 			url: '/EMS/timeRecording/save',
@@ -110,7 +108,11 @@ $(document).ready(function() {
 			"onUpdate": myCallbackFunction,
 			"inputCss":'inline-input-class'
 		});
-
-
 	});
+	$('td[data-hour]').on('keydown', 'input.inline-input-class', function(e){
+        var code = e.keyCode || e.which;
+        if(code === 9){
+            $(this).closest('td[data-hour]').next().trigger('click');
+        }
+    });
 });

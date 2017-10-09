@@ -28,17 +28,21 @@ $(document).ready(function() {
 		$('#workPackagesTable').DataTable({
 	        "language": {
 	            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-	        }
+	        },
+            "order": [[ 0, "asc" ]]
 	    });
 		
 	} else if ($("#defaultLanguage").val() == 'english'){
-		$('#workPackagesTable').DataTable();
+		$('#workPackagesTable').DataTable({
+            "order": [[ 0, "asc" ]]
+        });
 		
 	} else {
 		$('#workPackagesTable').DataTable({
 	        "language": {
 	            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-	        }
+	        },
+            "order": [[ 0, "asc" ]]
 	    });
 		
 	}

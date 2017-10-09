@@ -176,13 +176,15 @@ button.ui-datepicker-current {
 		var d = new Date();
 		var currentMonth = d.getMonth();
 		if (<c:out value="${selectedMonth}"/> == currentMonth) {
-			$('#monthNamesDropDown option[value=' + currentMonth + ']').attr(
-					'selected', 'selected');
+            $('#monthNamesDropDown').val(currentMonth);
+//			$('#monthNamesDropDown option[value=' + currentMonth + ']').attr(
+//					'selected', 'selected');
 		} else {
-			$(
-					'#monthNamesDropDown option[value='
-							+ <c:out value="${selectedMonth}"/> + ']').attr(
-					'selected', 'selected');
+            $('#monthNamesDropDown').val(<c:out value="${selectedMonth}"/>);
+			<%--$(--%>
+					<%--'#monthNamesDropDown option[value='--%>
+							<%--+ <c:out value="${selectedMonth}"/> + ']').attr(--%>
+					<%--'selected', 'selected');--%>
 		}
 	}
 
@@ -330,7 +332,7 @@ button.ui-datepicker-current {
 																	monthNames : [
 																		'Januar',
 																		'Februar',
-																		'MÃ¤rz',
+																		'März',
 																		'April',
 																		'Mai',
 																		'Juni',
@@ -343,7 +345,7 @@ button.ui-datepicker-current {
 																monthNamesShort : [
 																		'Jan',
 																		'Feb',
-																		'MÃ¤r',
+																		'Mär',
 																		'Apr',
 																		'Mai',
 																		'Jun',
