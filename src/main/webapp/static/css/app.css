@@ -129,4 +129,6 @@ li a:hover {
 .modal-dialog{
 	margin-top: 10%;
 }
-
+.hiddenWhenCollaped{
+	display: none;
+}

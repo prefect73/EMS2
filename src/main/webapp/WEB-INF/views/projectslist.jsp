@@ -11,12 +11,25 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
     <title><spring:message code="projectslist.title"/></title>
-    <link href="<c:url value='/static/css/bootstrap.css' />"
-          rel="stylesheet"></link>
+    <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
+    <link rel="stylesheet" type="text/css"  href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>   
+    <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>  
+    <script src="<c:url value='/static/js/tablesort/tablesort.js' />"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"></link>
     <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css"/>
-    <script type="text/javascript"
+    <script type="text/javascript">
+    $(document).ready(function () {
+   		$('td.hiddenWhenCollaped').on('show.bs.collapse', function (e) {
+   			$(this).removeClass("hiddenWhenCollaped")
+    	});
+   		$('td.hiddenWhenCollaped').on('hidden.bs.collapse', function (e) {
+   			$(this).addClass("hiddenWhenCollaped")
+    	});
+    });
+    </script>
+    
+   <!--   <script type="text/javascript"
             src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.js"></script>
     <script>
         $(document).ready(function () {
@@ -45,7 +58,7 @@
             }
 
         });
-    </script>
+    </script>-->
 </head>
 
 <body>
@@ -83,46 +96,139 @@
                         <th><spring:message code="project.label.totalCost"/></th>
                     </sec:authorize>
                     <th><spring:message code="project.label.effectiveCost"/></th>
-                    <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
-                        <th width="100"></th>
-                    </sec:authorize>
-                    <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
-                        <th width="100"></th>
-                    </sec:authorize>
-                    <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-                        <th width="100"></th>
-                    </sec:authorize>
+							<th><sec:authorize
+									access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
+								</sec:authorize> <sec:authorize
+									access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
+								</sec:authorize> <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 
-                </tr>
+								</sec:authorize></th>
+						</tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${projects}" var="project">
                     <tr>
                         <td>${project.projectNumber}</td>
-                        <td>${project.projectName}</td>
+                        <td><a role="button" data-toggle="collapse" href="#project${project.id}" aria-expanded="true" aria-controls="project${project.id}">${project.projectName}</a></td>
                         <td>${project.customerName}</td>
-                            <%-- <td>${project.yearName}</td> --%>
                         <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
                             <td><spring:message code="generic.currencySymbol"/>${project.offeredCost}</td>
                             <td><spring:message code="generic.currencySymbol"/>${project.totalCost}</td>
                         </sec:authorize>
                         <td><spring:message code="generic.currencySymbol"/>${project.effectiveCost}</td>
-                        <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-                            <td><a class="btn btn-primary floatRight"
-                                   href="<c:url value='/WorkPackage/newworkPackage?projectId=${project.id}' />"><spring:message
-                                    code="workPackageslist.addNewWorkPackage"/></a>
-                            </td>
-                        </sec:authorize>
-                        <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
-                            <td><a
-                                    href="<c:url value='/Project/edit-project-${project.projectNumber}' />"
-                                    class="btn btn-success "><spring:message code="button.edit"/></a></td>
-                        </sec:authorize>
-                        <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-                            <td><a
-                                    href="<c:url value='/Project/delete-project-${project.projectNumber}' />"
-                                    class="btn btn-danger"><spring:message code="button.delete"/></a></td>
-                        </sec:authorize>
+								<td style="text-align: center;"><sec:authorize
+										access="hasAnyRole('ADMIN', 'Projektleitung')">
+										<a class="btn btn-primary"
+											title="<spring:message code="workPackageslist.addNewWorkPackage"/>"
+											href="<c:url value='/WorkPackage/newworkPackage?projectId=${project.id}' />">
+											<i class="fa fa-plus" aria-hidden="true"></i>
+										</a>
+
+									</sec:authorize> <sec:authorize
+										access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
+										<a
+											href="<c:url value='/Project/edit-project-${project.projectNumber}' />"
+											title="<spring:message code="button.edit"/>"
+											class="btn btn-success ">
+											<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+										</a>
+									</sec:authorize> <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+										<a
+											href="<c:url value='/Project/delete-project-${project.projectNumber}' />"
+											title="<spring:message code="button.delete"/>"
+											class="btn btn-danger">
+											<i class="fa fa-trash" aria-hidden="true"></i>
+										</a>
+									</sec:authorize></td>
+							</tr>
+                    <tr data-sort-method='none'>
+                        <td colspan="100" class="hiddenWhenCollaped">
+                         <div class="collapse" id="project${project.id}">
+                            <table class="table table-striped table-bordered dt-responsive nowrap" style="font-size:100%;" cellspacing="0" width="100%" >
+											<thead>
+												<tr>
+													<th><spring:message code="workPackage.label.workPackageName" /></th>
+													<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+														<th><spring:message code="workPackage.label.offeredCost" /></th>
+														<th><spring:message code="workPackage.label.calculatedCost" /></th>
+														<th><spring:message code="workPackage.label.totalCost" /></th>
+														<th><spring:message code="workPackage.label.effectiveCost" /></th>
+														<th><spring:message code="workPackage.label.workDoneInPercent" /></th>
+														<th><spring:message code="workPackage.label.status" /></th>
+													</sec:authorize>
+													<th width="100"></th>
+													<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+														<th width="100"></th>
+													</sec:authorize>
+
+												</tr>
+											</thead>
+								<tbody>
+                                   <c:forEach items="${project.workPackages}" var="workPackage">
+                                    <tr>
+                                        <td>${workPackage.workPackageName}</td>
+                                        <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+                                            <td><spring:message
+                                                    code="generic.currencySymbol"/>${workPackage.offeredCost}</td>
+                                            <td><spring:message
+                                                    code="generic.currencySymbol"/>${workPackage.calculatedCost}</td>
+                                            <td><spring:message
+                                                    code="generic.currencySymbol"/>${workPackage.totalCost}</td>
+                                            <td><spring:message
+                                                    code="generic.currencySymbol"/>${workPackage.effectiveCost}</td>
+                                            <td>${workPackage.workDoneInPercent}</td>
+                                            <td>
+                                                <spring:message code="workPackage.status.select.scheduled"
+                                                                var="scheduled"/>
+                                                <spring:message code="workPackage.status.select.delayed" var="delayed"/>
+                                                <spring:message code="workPackage.status.select.problem" var="problem"/>
+                                                <spring:message code="workPackage.status.select.finished"
+                                                                var="finished"/>
+
+                                                <c:choose>
+                                                    <c:when test="${fn:containsIgnoreCase(workPackage.status,scheduled)}">
+                                                        <label style="color:lightgreen" class="form-control input-sm">
+                                                                ${workPackage.status}
+                                                        </label>
+                                                    </c:when>
+                                                    <c:when test="${fn:containsIgnoreCase(workPackage.status,delayed)}">
+                                                        <label style="color:orange" class="form-control input-sm">
+                                                                ${workPackage.status}
+                                                        </label>
+                                                    </c:when>
+                                                    <c:when test="${fn:containsIgnoreCase(workPackage.status,problem)}">
+                                                        <label style="color:red" class="form-control input-sm">
+                                                                ${workPackage.status}
+                                                        </label>
+                                                    </c:when>
+                                                    <c:when test="${fn:containsIgnoreCase(workPackage.status,finished)}">
+                                                        <label style="color:green" class="form-control input-sm">
+                                                                ${workPackage.status}
+                                                        </label>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        ${workPackage.status}
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                        </sec:authorize>
+                                            <%-- <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')"> --%>
+                                        <td><a
+                                                href="<c:url value='/WorkPackage/edit-workPackage-${workPackage.id}' />"
+                                                class="btn btn-success "><spring:message code="button.edit"/></a></td>
+                                            <%-- </sec:authorize> --%>
+                                        <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+                                            <td><a
+                                                    href="<c:url value='/WorkPackage/delete-workPackage-${workPackage.id}' />"
+                                                    class="btn btn-danger "><spring:message code="button.delete"/></a>
+                                            </td>
+                                        </sec:authorize>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                            </div>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

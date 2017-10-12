@@ -332,7 +332,7 @@ button.ui-datepicker-current {
 																	monthNames : [
 																		'Januar',
 																		'Februar',
-																		'März',
+																		'Mï¿½rz',
 																		'April',
 																		'Mai',
 																		'Juni',
@@ -345,7 +345,7 @@ button.ui-datepicker-current {
 																monthNamesShort : [
 																		'Jan',
 																		'Feb',
-																		'Mär',
+																		'Mï¿½r',
 																		'Apr',
 																		'Mai',
 																		'Jun',
