@@ -14,7 +14,8 @@
     <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
     <link rel="stylesheet" type="text/css"  href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css"/>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>   
-    <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>  
+    <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+    <script src="<c:url value='/static/js/number-parser.js' />"></script>
     <script src="<c:url value='/static/js/tablesort/tablesort.js' />"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"></link>
     <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
@@ -26,6 +27,13 @@
    		$('td.hiddenWhenCollaped').on('hidden.bs.collapse', function (e) {
    			$(this).addClass("hiddenWhenCollaped")
     	});
+
+   		// convert all numbers to german
+        $('.localeNumber').each(function(index, value){
+            var rawValue = $(this).text();
+            var parsedValue = parseToGermanNumber(rawValue);
+            $(this).text(parsedValue);
+        });
     });
     </script>
     
@@ -78,7 +86,7 @@
         </div>
         <div id="projectsTableWrapper" style="padding: 2%;">
             <table id="projectsTable"
-                   class="table table-striped table-bordered dt-responsive nowrap"
+                   class="table table-striped table-bordered dt-responsive nowrap  table-hover"
                    cellspacing="0" width="100%" style="font-size:100%;">
                 <thead>
                 <tr>
@@ -112,10 +120,10 @@
                         <td><a role="button" data-toggle="collapse" href="#project${project.id}" aria-expanded="true" aria-controls="project${project.id}">${project.projectName}</a></td>
                         <td>${project.customerName}</td>
                         <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-                            <td><spring:message code="generic.currencySymbol"/>${project.offeredCost}</td>
-                            <td><spring:message code="generic.currencySymbol"/>${project.totalCost}</td>
+                            <td><spring:message code="generic.currencySymbol"/><span class="localeNumber">${project.offeredCost}</span></td>
+                            <td><spring:message code="generic.currencySymbol"/><span class="localeNumber">${project.totalCost}</span></td>
                         </sec:authorize>
-                        <td><spring:message code="generic.currencySymbol"/>${project.effectiveCost}</td>
+                        <td><spring:message code="generic.currencySymbol"/><span class="localeNumber">${project.effectiveCost}</span></td>
 								<td style="text-align: center;"><sec:authorize
 										access="hasAnyRole('ADMIN', 'Projektleitung')">
 										<a class="btn btn-primary"
@@ -144,7 +152,7 @@
                     <tr data-sort-method='none'>
                         <td colspan="100" class="hiddenWhenCollaped">
                          <div class="collapse" id="project${project.id}">
-                            <table class="table table-striped table-bordered dt-responsive nowrap" style="font-size:100%;" cellspacing="0" width="100%" >
+                            <table class="table table-striped table-bordered dt-responsive nowrap table-hover" style="font-size:100%;" cellspacing="0" width="100%" >
 											<thead>
 												<tr>
 													<th><spring:message code="workPackage.label.workPackageName" /></th>
@@ -157,9 +165,9 @@
 														<th><spring:message code="workPackage.label.status" /></th>
 													</sec:authorize>
 													<th width="100"></th>
-													<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-														<th width="100"></th>
-													</sec:authorize>
+													<%--<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">--%>
+														<%--<th width="100"></th>--%>
+													<%--</sec:authorize>--%>
 
 												</tr>
 											</thead>
@@ -169,15 +177,15 @@
                                         <td>${workPackage.workPackageName}</td>
                                         <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
                                             <td><spring:message
-                                                    code="generic.currencySymbol"/>${workPackage.offeredCost}</td>
+                                                    code="generic.currencySymbol"/><span class="localeNumber">${workPackage.offeredCost}</span></td>
                                             <td><spring:message
-                                                    code="generic.currencySymbol"/>${workPackage.calculatedCost}</td>
+                                                    code="generic.currencySymbol"/><span class="localeNumber">${workPackage.calculatedCost}</span></td>
                                             <td><spring:message
-                                                    code="generic.currencySymbol"/>${workPackage.totalCost}</td>
+                                                    code="generic.currencySymbol"/><span class="localeNumber">${workPackage.totalCost}</span></td>
                                             <td><spring:message
-                                                    code="generic.currencySymbol"/>${workPackage.effectiveCost}</td>
+                                                    code="generic.currencySymbol"/><span class="localeNumber">${workPackage.effectiveCost}</span></td>
                                             <td>${workPackage.workDoneInPercent}</td>
-                                            <td>
+                                            <td style="text-align: center;">
                                                 <spring:message code="workPackage.status.select.scheduled"
                                                                 var="scheduled"/>
                                                 <spring:message code="workPackage.status.select.delayed" var="delayed"/>
@@ -187,24 +195,28 @@
 
                                                 <c:choose>
                                                     <c:when test="${fn:containsIgnoreCase(workPackage.status,scheduled)}">
-                                                        <label style="color:lightgreen" class="form-control input-sm">
-                                                                ${workPackage.status}
-                                                        </label>
+                                                        <%--<label style="color:lightgreen" class="form-control input-sm">--%>
+                                                                <%--${workPackage.status}--%>
+                                                        <%--</label>--%>
+                                                        <i class="fa fa-calendar-check-o fa-2x" style="color:lightgreen;" aria-hidden="true" title="${workPackage.status}"></i>
                                                     </c:when>
                                                     <c:when test="${fn:containsIgnoreCase(workPackage.status,delayed)}">
-                                                        <label style="color:orange" class="form-control input-sm">
-                                                                ${workPackage.status}
-                                                        </label>
+                                                        <%--<label style="color:orange" class="form-control input-sm">--%>
+                                                                <%--${workPackage.status}--%>
+                                                        <%--</label>--%>
+                                                        <i class="fa fa-clock-o fa-2x" style="color:orange;" aria-hidden="true" title="${workPackage.status}"></i>
                                                     </c:when>
                                                     <c:when test="${fn:containsIgnoreCase(workPackage.status,problem)}">
-                                                        <label style="color:red" class="form-control input-sm">
-                                                                ${workPackage.status}
-                                                        </label>
+                                                        <%--<label style="color:red" class="form-control input-sm">--%>
+                                                                <%--${workPackage.status}--%>
+                                                        <%--</label>--%>
+                                                        <i class="fa fa-exclamation-triangle fa-2x" style="color:red;" aria-hidden="true" title="${workPackage.status}"></i>
                                                     </c:when>
                                                     <c:when test="${fn:containsIgnoreCase(workPackage.status,finished)}">
-                                                        <label style="color:green" class="form-control input-sm">
-                                                                ${workPackage.status}
-                                                        </label>
+                                                        <%--<label style="color:green" class="form-control input-sm">--%>
+                                                                <%--${workPackage.status}--%>
+                                                        <%--</label>--%>
+                                                        <i class="fa fa-check-square fa-2x" style="color:green;" aria-hidden="true" title="${workPackage.status}"></i>
                                                     </c:when>
                                                     <c:otherwise>
                                                         ${workPackage.status}
@@ -212,17 +224,19 @@
                                                 </c:choose>
                                             </td>
                                         </sec:authorize>
+                                        <td colspan="2">
                                             <%-- <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')"> --%>
-                                        <td><a
+                                        <a
                                                 href="<c:url value='/WorkPackage/edit-workPackage-${workPackage.id}' />"
-                                                class="btn btn-success "><spring:message code="button.edit"/></a></td>
+                                                class="btn btn-success " title="<spring:message code="button.edit"/>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                             <%-- </sec:authorize> --%>
                                         <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-                                            <td><a
+                                            <a
                                                     href="<c:url value='/WorkPackage/delete-workPackage-${workPackage.id}' />"
-                                                    class="btn btn-danger "><spring:message code="button.delete"/></a>
-                                            </td>
+                                                    class="btn btn-danger " title="<spring:message code="button.delete"/>"><i class="fa fa-trash" aria-hidden="true"></i></a>
+
                                         </sec:authorize>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

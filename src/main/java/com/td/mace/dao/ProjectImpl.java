@@ -1,7 +1,10 @@
 package com.td.mace.dao;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import com.td.mace.model.WorkPackage;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -78,7 +81,15 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 		
 		  for(Project project : projects){
 			  Hibernate.initialize(project.getUsers());
-				Hibernate.initialize(project.getWorkPackages()); 
+				Hibernate.initialize(project.getWorkPackages());
+
+				// sort wp by name
+              Collections.sort(project.getWorkPackages(), new Comparator<WorkPackage>() {
+                  @Override
+                  public int compare(WorkPackage o1, WorkPackage o2) {
+                      return o1.getWorkPackageName().toLowerCase().compareTo(o2.getWorkPackageName().toLowerCase());
+                  }
+              });
 		  }
 		 
 		return projects;
