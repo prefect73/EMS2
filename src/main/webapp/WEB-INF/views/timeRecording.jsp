@@ -591,7 +591,7 @@ button.ui-datepicker-current {
 								.on(
 										'keypress',
 										function(event) {
-											var regex = new RegExp("^[^,]+$");
+											var regex = new RegExp("^[^.]+$");
 											var key = String
 													.fromCharCode(!event.charCode ? event.which
 															: event.charCode);
@@ -711,7 +711,7 @@ button.ui-datepicker-current {
 									<tr style="background: rgba(161, 175, 140, 0.19); font-weight: bold;">
 										<td><spring:message code="timeRecording.label.total" /></td>
 										<c:forEach items="${monthSummary.tableBody}" var="entry">
-											<th><c:out value="${entry}" /></th>
+											<th><c:out value="${fn:replace(entry, '.', ',')}" /></th>
 										</c:forEach>
 									</tr>
 								</tbody>
@@ -742,7 +742,7 @@ button.ui-datepicker-current {
 										<tr style="background: rgba(161, 175, 140, 0.19); font-weight: bold;">
 											<td><a data-toggle="collapse" aria-expanded="false" class="collapsed" href="<c:url value='#projectIndex${projectStatus.index}' />"> <spring:message code="timeRecording.label.totalProject" /></a></td>
 											<c:forEach items="${project.totalHours}" var="entry">
-												<th><c:out value="${entry}" /></th>
+												<th><c:out value="${fn:replace(entry, '.', ',')}" /></th>
 											</c:forEach>
 										</tr>
 									</thead>
@@ -751,7 +751,7 @@ button.ui-datepicker-current {
 											<tr id="${workPackage.wpUserId}">
 												<td><c:out value="${workPackage.name}" /></td>
 												<c:forEach items="${workPackage.hours}" var="hour">
-													<td data-hour><c:out value="${hour}" /></td>
+													<td data-hour><c:out value="${fn:replace(hour, '.', ',')}" /></td>
 												</c:forEach>
 											</tr>
 										</c:forEach>

@@ -10,7 +10,7 @@ $(document).ready(function() {
 	function myCallbackFunction (updatedCell, updatedRow, oldValue) {
 
 		// update summary table
-		var newValue = parseFloat(updatedCell.data());
+		var newValue = parseFloat(updatedCell.data().replace(',', '.'));
 		var floatOldValue = parseFloat(oldValue);	
 		var columnIndex = updatedCell.index().column;
 		var topSummaryTableColumn = $("table#summaryTable tbody tr th:nth-child("+((updatedCell.index().column) + 1 )+")");
@@ -21,26 +21,26 @@ $(document).ready(function() {
 
 		var projectSummary = 0.0;
 		for(ij = 1; ij <= numberOfRows; ij++ ){
-			projectSummary = projectSummary + parseFloat($('#'+selectedTableId+' tbody tr:nth-child('+ij+') td:nth-child('+(columnIndex +  1)+')').text())
+			projectSummary = projectSummary + parseFloat($('#'+selectedTableId+' tbody tr:nth-child('+ij+') td:nth-child('+(columnIndex +  1)+')').text().replace(',', '.'))
 		}
 		// set project summary
 		//  if number hasn't decimals, add zero
 		if((projectSummary % 1) == 0){
 			projectSummary = projectSummary + '.0';
 		}
-		$('#'+selectedTableId+' thead tr:nth-child(2) th:nth-child('+(columnIndex + 1)+')').html(projectSummary);
+		$('#'+selectedTableId+' thead tr:nth-child(2) th:nth-child('+(columnIndex + 1)+')').html(projectSummary.toString().replace('.', ','));
 		
 		var totalSummary = 0.0;
 		var numberOfTables = $('table[id^=tmProjectDatatable]').length;
 		for(ji = 0; ji < numberOfTables; ji++){
-			totalSummary = totalSummary + parseFloat($('table#tmProjectDatatable'+ji+' thead tr:nth-child(2) th:nth-child('+(columnIndex + 1)+')').text());
+			totalSummary = totalSummary + parseFloat($('table#tmProjectDatatable'+ji+' thead tr:nth-child(2) th:nth-child('+(columnIndex + 1)+')').text().replace(',', '.'));
 		}
 		
 		// set total summary
 		if((totalSummary % 1) == 0){
 			totalSummary = totalSummary + '.0';
 		}
-		$('#summarytable tbody tr:nth-child(1) th:nth-child('+(columnIndex + 1)+')').html(totalSummary);
+		$('#summarytable tbody tr:nth-child(1) th:nth-child('+(columnIndex + 1)+')').html(totalSummary.toString().replace('.', ','));
 
 		// end calculating summary
 
@@ -49,6 +49,9 @@ $(document).ready(function() {
 
 		//remove first column
 		rowCopy.shift();
+		rowCopy.forEach(function(item, index, srcArray){
+			srcArray[index] = item.replace(',', '.');
+		});
 		var hours = rowCopy.join(",");
 		var monthIndex = $("#monthNamesDropDown").val();
 
