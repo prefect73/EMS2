@@ -120,10 +120,10 @@
                         <td><a role="button" data-toggle="collapse" href="#project${project.id}" aria-expanded="true" aria-controls="project${project.id}">${project.projectName}</a></td>
                         <td>${project.customerName}</td>
                         <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-                            <td><spring:message code="generic.currencySymbol"/><span class="localeNumber">${project.offeredCost}</span></td>
-                            <td><spring:message code="generic.currencySymbol"/><span class="localeNumber">${project.totalCost}</span></td>
+                            <td><span class="localeNumber">${project.offeredCost}</span>&nbsp;<spring:message code="generic.currencySymbol"/></td>
+                            <td><span class="localeNumber">${project.totalCost}</span>&nbsp;<spring:message code="generic.currencySymbol"/></td>
                         </sec:authorize>
-                        <td><spring:message code="generic.currencySymbol"/><span class="localeNumber">${project.effectiveCost}</span></td>
+                        <td><span class="localeNumber">${project.effectiveCost}</span>&nbsp;<spring:message code="generic.currencySymbol"/></td>
 								<td style="text-align: center;"><sec:authorize
 										access="hasAnyRole('ADMIN', 'Projektleitung')">
 										<a class="btn btn-primary"
@@ -176,14 +176,10 @@
                                     <tr>
                                         <td>${workPackage.workPackageName}</td>
                                         <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-                                            <td><spring:message
-                                                    code="generic.currencySymbol"/><span class="localeNumber">${workPackage.offeredCost}</span></td>
-                                            <td><spring:message
-                                                    code="generic.currencySymbol"/><span class="localeNumber">${workPackage.calculatedCost}</span></td>
-                                            <td><spring:message
-                                                    code="generic.currencySymbol"/><span class="localeNumber">${workPackage.totalCost}</span></td>
-                                            <td><spring:message
-                                                    code="generic.currencySymbol"/><span class="localeNumber">${workPackage.effectiveCost}</span></td>
+                                            <td><span class="localeNumber">${workPackage.offeredCost}</span>&nbsp;<spring:message code="generic.currencySymbol"/></td>
+                                            <td><span class="localeNumber">${workPackage.calculatedCost}</span>&nbsp;<spring:message code="generic.currencySymbol"/></td>
+                                            <td><span class="localeNumber">${workPackage.totalCost}</span>&nbsp;<spring:message code="generic.currencySymbol"/></td>
+                                            <td><span class="localeNumber">${workPackage.effectiveCost}</span>&nbsp;<spring:message code="generic.currencySymbol"/></td>
                                             <td>${workPackage.workDoneInPercent}</td>
                                             <td style="text-align: center;">
                                                 <spring:message code="workPackage.status.select.scheduled"
