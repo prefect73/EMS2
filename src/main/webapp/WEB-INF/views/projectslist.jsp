@@ -10,17 +10,75 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+    <base href='<c:url value="${pageContext.request.localName}" />' />
     <title><spring:message code="projectslist.title"/></title>
     <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
     <link rel="stylesheet" type="text/css"  href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css"/>
-    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>   
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.js"></script>
     <script src="<c:url value='/static/js/bootstrap.min.js' />"></script>
     <script src="<c:url value='/static/js/number-parser.js' />"></script>
     <script src="<c:url value='/static/js/tablesort/tablesort.js' />"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"></link>
     <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+    <style>
+        /*.modal{*/
+            /*display: block !important; !* I added this to see the modal, you don't need this *!*/
+        /*}*/
+
+        /*!* Important part *!*/
+        /*.modal-dialog{*/
+            /*overflow-y: initial !important*/
+        /*}*/
+
+        body.modal-open .modal-dialog{
+            width: 990px;
+        }
+        body.modal-open .modal-body{
+            max-height: 550px;
+            overflow-y: auto;
+        }
+    </style>
     <script type="text/javascript">
+        function isNumeric(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        }
+        $.urlParam = function(name){
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if(results != null){
+                return results[1] || 0;
+            }else{
+                return null;
+            }
+        }
+        function showWorkPackageModal(projectId) {
+            $('.modal').load(projectId + '/findWorkingPackages', function( response, status, xhr ) {
+                if (status == "error") {
+                    var msg = "Sorry but there was an error: ";
+                    $("#error").html(msg + xhr.status + " " + xhr.statusText);
+                }else{
+                    $('#workPackageModalTable').dataTable({
+                        info: false,
+                        paging: false,
+                        ordering: false,
+                        language: {
+                            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+                        }
+                    });
+                    $('.modal').modal({
+                        keyboard: false,
+                        backdrop: false
+                    });
+                }
+            });
+        }
     $(document).ready(function () {
+        if(isNumeric($.urlParam('workPackageId'))){
+            showWorkPackageModal($.urlParam('workPackageId'));
+        }
+
+
    		$('td.hiddenWhenCollaped').on('show.bs.collapse', function (e) {
    			$(this).removeClass("hiddenWhenCollaped")
     	});
@@ -36,37 +94,38 @@
         });
     });
     </script>
-    
-   <!--   <script type="text/javascript"
-            src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.js"></script>
-    <script>
-        $(document).ready(function () {
 
-            if ($("#defaultLanguage").val() == 'german') {
-                $('#projectsTable').DataTable({
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-                    },
-                    "order": [[1, "asc"]]
-                });
+    <!--  <script>
+          $(document).ready(function () {
 
-            } else if ($("#defaultLanguage").val() == 'english') {
-                $('#projectsTable').DataTable({
-                    "order": [[1, "asc"]]
-                });
+              if ($("#defaultLanguage").val() == 'german') {
+                  $('#projectsTable').DataTable({
+                      "language": {
+                          "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+                      },
+                      "order": [[1, "asc"]]
+                  });
 
-            } else {
-                $('#projectsTable').DataTable({
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-                    },
-                    "order": [[1, "asc"]]
-                });
+              } else if ($("#defaultLanguage").val() == 'english') {
+                  $('#projectsTable').DataTable({
+                      "order": [[1, "asc"]]
+                  });
 
-            }
+              } else {
+                  $('#projectsTable').DataTable({
+                      "language": {
+                          "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
+                      },
+                      "order": [[1, "asc"]]
+                  });
 
-        });
-    </script>-->
+              }
+
+          });
+      </script>-->
+    <script type="text/javascript">
+
+    </script>
 </head>
 
 <body>
@@ -90,7 +149,7 @@
                    cellspacing="0" width="100%" style="font-size:100%;">
                 <thead>
                 <tr>
-                    <th><spring:message code="project.label.projectNumber"/>
+                    <%--<th><spring:message code="project.label.projectNumber"/>--%>
                     </th>
                     <th><spring:message code="project.label.projectName"/>
                     </th>
@@ -104,20 +163,21 @@
                         <th><spring:message code="project.label.totalCost"/></th>
                     </sec:authorize>
                     <th><spring:message code="project.label.effectiveCost"/></th>
-							<th><sec:authorize
-									access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
-								</sec:authorize> <sec:authorize
-									access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
-								</sec:authorize> <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+							<th><sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
+								</sec:authorize>
 
-								</sec:authorize></th>
+                                <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
+								</sec:authorize>
+                                <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+								</sec:authorize>
+                            </th>
 						</tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${projects}" var="project">
                     <tr>
-                        <td>${project.projectNumber}</td>
-                        <td><a role="button" data-toggle="collapse" href="#project${project.id}" aria-expanded="true" aria-controls="project${project.id}">${project.projectName}</a></td>
+                        <%--<td>${project.projectNumber}</td>--%>
+                        <td><a role="button" data-toggle="collapse" href="#project${project.id}" aria-expanded="true" aria-controls="project${project.id}" onclick="showWorkPackageModal('${project.id}')">${project.projectName}</a></td>
                         <td>${project.customerName}</td>
                         <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
                             <td><span class="localeNumber">${project.offeredCost}</span>&nbsp;<spring:message code="generic.currencySymbol"/></td>
@@ -246,5 +306,7 @@
         </div>
     </div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+</div><!-- /.modal -->
 </body>
 </html>

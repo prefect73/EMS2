@@ -261,6 +261,14 @@ public class ProjectController {
 		return "projectReport";
 	}
 
+    @RequestMapping(value = {"/{projectId}/findWorkingPackages"}, method = RequestMethod.GET)
+    public String listWorkPackagesInsideProject(@PathVariable("projectId") Integer projectId, ModelMap model) {
+
+        List<WorkPackageDTO> workPackageDTOList = workPackageService.findAllWorkPackagesByProjectId(projectId);
+        model.addAttribute("workpackages", workPackageDTOList);
+        return "workPackageTable";
+    }
+
 	/**
 	 * This method returns the principal[user-name] of logged-in user.
 	 */

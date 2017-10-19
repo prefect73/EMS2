@@ -1,8 +1,10 @@
 package com.td.mace.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.td.mace.controller.WorkPackageDTO;
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -314,5 +316,19 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 	  //workPackage.setCalculatedCost(totalPayments);
 	  //updateWorkPackage(workPackage);
 	  
-	 }	
+	 }
+
+	@Override
+	public List<WorkPackageDTO> findAllWorkPackagesByProjectId(Integer projectId) {
+		List<WorkPackage> workPackages =  dao.findByProjectID(projectId);
+		List<WorkPackageDTO> workPackageDTOList = new ArrayList<>();
+
+		if(workPackages != null && workPackages.size() > 0){
+		    for (WorkPackage workPackage: workPackages){
+		        workPackageDTOList.add(new WorkPackageDTO(workPackage));
+            }
+        }
+
+		return workPackageDTOList;
+	}
 }
