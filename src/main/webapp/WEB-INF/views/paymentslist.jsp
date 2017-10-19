@@ -69,7 +69,9 @@
 					cellspacing="0" width="100%">
 					<thead>
 						<tr>
-						<th><spring:message code="payment.label.workPackage" />
+							<th><spring:message code="payment.label.project" />
+							</th>
+							<th><spring:message code="payment.label.workPackage" />
 							</th>
 							<th><spring:message code="payment.label.billed" />
 							</th>
@@ -95,6 +97,7 @@
 					<tbody>
 						<c:forEach items="${payments}" var="payment">
 							<tr>
+								<td>${payment.workPackage.project.projectName}</td>
 								<td>${payment.workPackage.workPackageName}</td>
 								<td>${payment.billed}</td>
 								<td>${payment.billing}</td>
