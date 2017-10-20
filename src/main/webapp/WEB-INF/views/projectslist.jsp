@@ -34,7 +34,7 @@
 				</sec:authorize>
 			</div>
 			<div id="projectsTableWrapper" style="padding: 2%;">
-				<table id="projectsTable" class="table table-striped table-bordered dt-responsive nowrap  table-hover" style="font-size: 100%;">
+				<table id="projectsTable" data-selected-project="${selectedProject}" class="table table-striped table-bordered dt-responsive nowrap  table-hover" style="font-size: 100%;">
 					<thead>
 						<tr>
 							<th><spring:message code="project.label.projectName" /></th>
@@ -51,7 +51,7 @@
 						<c:forEach items="${projects}" var="project">
 							<tr>
 								<td><a role="button" data-toggle="collapse" href="#project${project.id}" aria-expanded="true" aria-controls="project${project.id}"
-									onclick="showWorkPackageModal('${project.id}', '${project.projectName}')">${project.projectName}</a></td>
+									onclick="showWorkPackageModal('${project.id}')">${project.projectName}</a></td>
 								<td>${project.customerName}</td>
 								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 									<td><span class="localeNumber">${project.offeredCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>

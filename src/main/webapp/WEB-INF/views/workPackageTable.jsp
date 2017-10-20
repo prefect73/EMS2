@@ -8,7 +8,7 @@
 <%@ taglib prefix="sec"
            uri="http://www.springframework.org/security/tags" %>
 
-<table id="workPackageModalTable" class="table table-striped table-bordered dt-responsive nowrap table-hover" style="font-size: 100%;" cellspacing="0"
+<table id="workPackageModalTable"  data-project-name="${projectName}" class="table table-striped table-bordered dt-responsive nowrap table-hover" style="font-size: 100%;" cellspacing="0"
 	width="100%">
 	<thead>
 		<tr>

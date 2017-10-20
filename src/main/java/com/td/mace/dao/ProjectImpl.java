@@ -104,7 +104,14 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 		query.setParameter("userId", user.getId());
 		List<Project> projects = query.list();
 		return projects;
-	}	
+	}
+
+	@Override
+	public Integer getProjectIdByByWorkPackageId(Integer workPackageId) {
+		Query query = getCurrentSession().createSQLQuery("select project_id from work_package wp where wp.id = :workPackageId");
+		query.setInteger("workPackageId", workPackageId);
+		return (Integer) query.uniqueResult();
+	}
 
 	public void save(Project project) {
 		persist(project);

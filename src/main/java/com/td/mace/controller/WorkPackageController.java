@@ -37,6 +37,7 @@ import com.td.mace.service.UserAttendanceService;
 import com.td.mace.service.UserService;
 import com.td.mace.service.WorkPackageService;
 import com.td.mace.service.WorkPackageUserAllocationService;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/WorkPackage")
@@ -254,7 +255,10 @@ public class WorkPackageController {
      */
     @RequestMapping(value = {"/edit-workPackage-{id}"}, method = RequestMethod.POST)
     public String updateWorkPackage(@Valid WorkPackage workPackage,
-                                    BindingResult result, ModelMap model, @PathVariable Integer id) {
+                                    BindingResult result,
+                                    ModelMap model,
+                                    RedirectAttributes redirectAttributes,
+                                    @PathVariable Integer id) {
 
         if (result.hasErrors()) {
             model.addAttribute("yearNameStart", environment.getProperty("year.name.start"));
@@ -269,7 +273,10 @@ public class WorkPackageController {
             workPackageService.updateWorkPackage(workPackage);
         }
 
-        return "redirect:/WorkPackage/workPackageslist";
+        Integer projectId = projectService.getProjectIdByByWorkPackageId(id);
+        redirectAttributes.addFlashAttribute("selectedProject", projectId);
+
+        return "redirect:/Project/projectslist";
     }
 
     /**

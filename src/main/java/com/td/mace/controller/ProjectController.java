@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,11 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import com.td.mace.model.Project;
 import com.td.mace.model.User;
@@ -263,6 +260,12 @@ public class ProjectController {
 
     @RequestMapping(value = {"/{projectId}/findWorkingPackages"}, method = RequestMethod.GET)
     public String listWorkPackagesInsideProject(@PathVariable("projectId") Integer projectId, ModelMap model) {
+
+
+	    Project project = projectService.findById(projectId);
+	    if(project != null){
+            model.addAttribute("projectName", project.getProjectName());
+        }
 
         List<WorkPackageDTO> workPackageDTOList = workPackageService.findAllWorkPackagesByProjectId(projectId);
         model.addAttribute("workpackages", workPackageDTOList);
