@@ -44,16 +44,6 @@
 		<li><a id="timeAndAttendanceLink" href="<c:url value='/TimeRecordingReport/timeRecording' />"><spring:message
 						code="authheader.menu.workPackage.timeRecording" /></a></li>
 
-		<!-- Bericht Projekte -->
-		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-			<li><a href="<c:url value='/Project/projectReport-0- ' />"><spring:message
-						code="authheader.menu.projectReport" /></a></li>
-		</sec:authorize>
-
-		<!-- Bericht Mitarbeiter -->		
-		<li><a href="<c:url value='/UserAttendance/monthlyReport' />"><spring:message
-					code="authheader.menu.monthlyReport" /></a></li>
-
 		<!-- Faktura -->		
 		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 			<li><a href="<c:url value="/Payment/paymentslist" />"><spring:message
