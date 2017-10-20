@@ -7,17 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -68,7 +58,13 @@ public class Project implements Serializable {
 	@OneToMany(mappedBy = "project")
 	private List<WorkPackage> workPackages = new ArrayList<WorkPackage>();
 
-	public Integer getId() {
+	@Transient
+	private Integer workDoneInPercent;
+
+	@Transient
+    private Boolean isWorkPackagesFinished;
+
+    public Integer getId() {
 		return id;
 	}
 
@@ -132,7 +128,15 @@ public class Project implements Serializable {
 		this.yearName = yearName;
 	}
 
-	@JsonIgnore
+    public Integer getWorkDoneInPercent() {
+        return workDoneInPercent;
+    }
+
+    public void setWorkDoneInPercent(Integer workDoneInPercent) {
+        this.workDoneInPercent = workDoneInPercent;
+    }
+
+    @JsonIgnore
 	public Set<User> getUsers() {
 		return users;
 	}
@@ -148,7 +152,13 @@ public class Project implements Serializable {
 	public void setWorkPackages(List<WorkPackage> workPackages) {
 		this.workPackages = workPackages;
 	}
-	
-	
 
+
+    public void setIsWorkPackagesFinished(Boolean isWorkPackagesFinished) {
+        this.isWorkPackagesFinished = isWorkPackagesFinished;
+    }
+
+    public Boolean getIsWorkPackagesFinished() {
+        return isWorkPackagesFinished;
+    }
 }

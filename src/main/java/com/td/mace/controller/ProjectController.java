@@ -67,6 +67,31 @@ public class ProjectController {
 	public String listProjects(ModelMap model) {
 
 		List<Project> projects = projectService.findAllProjects();
+
+        /**
+         * 1. calculate work done for each project
+         * 2. check if all work packages are finished
+         */
+
+        for(Project project : projects){
+            Integer projectPercentage = 0;
+            List<WorkPackage> workPackages = project.getWorkPackages();
+            if(workPackages != null && workPackages.size() > 0){
+                Integer sumOfPercentage = 0;
+                for(WorkPackage workPackage : project.getWorkPackages()){
+                    if(workPackage.getWorkDoneInPercent() != null) {
+                        sumOfPercentage += workPackage.getWorkDoneInPercent();
+                    }
+                }
+                projectPercentage = sumOfPercentage/workPackages.size();
+
+                Boolean isWorkPackagesFinished = checkIfAllPackagesFinished(workPackages);
+                project.setIsWorkPackagesFinished(isWorkPackagesFinished);
+            }
+            project.setWorkDoneInPercent(projectPercentage);
+        }
+
+
 		model.addAttribute("projects", projects);
 		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 		model.addAttribute("loggedinuser", getPrincipal());
@@ -270,6 +295,18 @@ public class ProjectController {
         List<WorkPackageDTO> workPackageDTOList = workPackageService.findAllWorkPackagesByProjectId(projectId);
         model.addAttribute("workpackages", workPackageDTOList);
         return "workPackageTable";
+    }
+
+    private Boolean checkIfAllPackagesFinished(List<WorkPackage> workPackages){
+        Boolean finished = true;
+
+        for(WorkPackage workPackage: workPackages){
+            if(workPackage.getStatus() == null || !workPackage.getStatus().equals("Abgeschlossen")){
+                return false;
+            }
+        }
+
+        return finished;
     }
 
 	/**

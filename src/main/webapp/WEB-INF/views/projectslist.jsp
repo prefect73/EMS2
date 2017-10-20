@@ -44,6 +44,8 @@
 								<th><spring:message code="project.label.totalCost" /></th>
 							</sec:authorize>
 							<th><spring:message code="project.label.effectiveCost" /></th>
+                            <th><spring:message code="project.label.workDoneInPercent" /></th>
+                            <th><spring:message code="project.label.status" /></th>
 							<th></th>
 						</tr>
 					</thead>
@@ -58,6 +60,11 @@
 									<td><span class="localeNumber">${project.totalCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
 								</sec:authorize>
 								<td><span class="localeNumber">${project.effectiveCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
+                                <td>${project.workDoneInPercent}</td>
+                                <td>
+                                    <c:if test="${project.isWorkPackagesFinished}">
+                                        <i class="fa fa-check-square fa-2x" style="color: green;" aria-hidden="true"></i>
+                                    </c:if></td>
 								<td style="text-align: center;"><sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 										<a class="btn btn-primary" title="<spring:message code="workPackageslist.addNewWorkPackage"/>"
 											href="<c:url value='/WorkPackage/newworkPackage?projectId=${project.id}' />"> <i class="fa fa-plus" aria-hidden="true"></i>

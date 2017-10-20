@@ -18,7 +18,6 @@
 				<th><spring:message code="workPackage.label.calculatedCost" /></th>
 				<th><spring:message code="workPackage.label.totalCost" /></th>
 				<th><spring:message code="workPackage.label.effectiveCost" /></th>
-				<th><spring:message code="workPackage.label.workDoneInPercent" /></th>
 				<th><spring:message code="workPackage.label.status" /></th>
 			</sec:authorize>
 			<th width="100"></th>
@@ -33,7 +32,6 @@
 					<td><span class="localeNumber">${workPackage.calculatedCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
 					<td><span class="localeNumber">${workPackage.totalCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
 					<td><span class="localeNumber">${workPackage.effectiveCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
-					<td>${workPackage.workDoneInPercent}</td>
 					<td style="text-align: center;"><spring:message code="workPackage.status.select.scheduled" var="scheduled" /> <spring:message
 							code="workPackage.status.select.delayed" var="delayed" /> <spring:message code="workPackage.status.select.problem" var="problem" /> <spring:message
 							code="workPackage.status.select.finished" var="finished" /> <c:choose>
