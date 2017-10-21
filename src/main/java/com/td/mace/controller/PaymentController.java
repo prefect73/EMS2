@@ -1,5 +1,6 @@
 package com.td.mace.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +17,8 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import com.td.mace.model.Payment;
 import com.td.mace.model.WorkPackage;
@@ -50,6 +48,11 @@ public class PaymentController {
 
 	@Autowired
 	AuthenticationTrustResolver authenticationTrustResolver;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(BigDecimal.class, new BigDecimalEditor());
+    }
 
 	/**
 	 * This method will list all existing payments.

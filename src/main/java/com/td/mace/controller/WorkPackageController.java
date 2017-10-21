@@ -1,5 +1,6 @@
 package com.td.mace.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +22,8 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import com.td.mace.model.Project;
 import com.td.mace.model.User;
@@ -74,6 +72,11 @@ public class WorkPackageController {
 
     @Autowired
     PaymentService paymentService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(BigDecimal.class, new BigDecimalEditor());
+    }
 
     /**
      * This method will list all existing workPackages.
@@ -189,6 +192,7 @@ public class WorkPackageController {
      */
     @RequestMapping(value = {"/newworkPackage"}, method = RequestMethod.POST)
     public String saveWorkPackage(@Valid WorkPackage workPackage,
+                                  RedirectAttributes redirectAttributes,
                                   BindingResult result, ModelMap model) {
 
         if (result.hasErrors()) {
@@ -200,7 +204,9 @@ public class WorkPackageController {
         workPackageService.saveWorkPackage(workPackage);
         workPackageService.updateWorkPackage(workPackage);
 
-        return "redirect:/WorkPackage/workPackageslist";
+        redirectAttributes.addFlashAttribute("selectedProject", workPackage.getProject().getId());
+
+        return "redirect:/Project/projectslist";
     }
 
     /**
@@ -381,9 +387,14 @@ public class WorkPackageController {
      * This method will delete an workPackage by it's SSOID value.
      */
     @RequestMapping(value = {"/delete-workPackage-{id}"}, method = RequestMethod.GET)
-    public String deleteWorkPackage(@PathVariable Integer id) {
+    public String deleteWorkPackage(@PathVariable Integer id,
+                                    RedirectAttributes redirectAttributes) {
+        Integer projectId = projectService.getProjectIdByByWorkPackageId(id);
+        redirectAttributes.addFlashAttribute("selectedProject", projectId);
+
         workPackageService.deleteWorkPackageById(id);
-        return "redirect:/WorkPackage/workPackageslist";
+
+        return "redirect:/Project/projectslist";
     }
 
     /**

@@ -9,6 +9,10 @@ import java.util.Locale;
 public class BigDecimalEditor extends PropertyEditorSupport {
 
     public void setAsText(String text) {
+        if("".equals(text)){
+            return;
+        }
+
         NumberFormat formatter;
         if(text.contains(",")){
             formatter = NumberFormat.getNumberInstance(Locale.GERMAN);

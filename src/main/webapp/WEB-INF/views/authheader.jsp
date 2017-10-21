@@ -35,11 +35,6 @@
 						code="authheader.menu.employee.workPackage.allocations" /></a></li>
 		</sec:authorize>
 
-		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-			<li><a href="<c:url value='/WorkPackage/workPackageslist' />"><spring:message
-						code="authheader.menu.employee.workPackage.allocations" /></a></li>
-		</sec:authorize>
-
 		<!-- Zeiterfassung -->
 		<li><a id="timeAndAttendanceLink" href="<c:url value='/TimeRecordingReport/timeRecording' />"><spring:message
 						code="authheader.menu.workPackage.timeRecording" /></a></li>

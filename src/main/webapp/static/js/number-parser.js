@@ -53,5 +53,8 @@ function parseNumber(strg) {
 
 function parseToGermanNumber( numberString){
     var temp = parseNumber(numberString);
+    if(isNaN(temp)){
+        return "";
+    }
     return temp.toLocaleString('de-DE', {minimumFractionDigits: 2})
 };

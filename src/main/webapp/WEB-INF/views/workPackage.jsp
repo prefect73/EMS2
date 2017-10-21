@@ -20,6 +20,9 @@
 </c:choose>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<script src="<c:url value='/static/js/number-parser.js' />"></script>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"></link>
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
@@ -152,7 +155,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		}
 		
 		$('input').on('keypress', function (event) {
-		    var regex = new RegExp("^[^,]+$");
+		    var regex = new RegExp("^[^.]+$");
 		    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
 		    if (!regex.test(key)) {
 		       event.preventDefault();
@@ -972,6 +975,25 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 	
 
 </script>
+<script>
+    $(document).ready(
+        function() {
+            // convert all numbers to German in form
+            $('.localeNumber').each(function (index, value) {
+                var rawValue = $(this).val();
+                var parsedValue = parseToGermanNumber(rawValue);
+                $(this).val(parsedValue);
+            });
+
+            // convert all numbers to German in table
+            $('.localeNumber').each(function (index, value) {
+                var rawValue = $(this).text();
+                var parsedValue = parseToGermanNumber(rawValue);
+                $(this).text(parsedValue);
+            });
+        });
+</script>
+
 </head>
 
 <body>
@@ -1108,7 +1130,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 								code="generic.inCurrency" /> </label>
 						<div class="col-md-3">
 							<form:input type="text" path="offeredCost" id="offeredCost"
-								class="form-control input-sm" />
+								class="form-control input-sm localeNumber" />
 							<div class="has-error">
 								<form:errors path="offeredCost" class="help-inline" />
 							</div>
@@ -1122,7 +1144,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 								code="generic.inCurrency" /> </label>
 						<div class="col-md-3">
 							<form:input type="text" path="calculatedCost" id="calculatedCost"
-								class="form-control input-sm" readonly="true" />
+								class="form-control input-sm localeNumber" readonly="true" />
 							<div class="has-error">
 								<form:errors path="calculatedCost" class="help-inline" />
 							</div>
@@ -1136,7 +1158,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 								code="generic.inCurrency" /> </label>
 						<div class="col-md-3">
 							<form:input type="text" path="totalCost" id="totalCost"
-								class="form-control input-sm" readonly="true" />
+								class="form-control input-sm localeNumber" readonly="true" />
 
 							<div class="has-error">
 								<form:errors path="totalCost" class="help-inline" />
@@ -1153,7 +1175,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 						</label>
 						<div class="col-md-3">
 							<form:input type="text" path="effectiveCost" id="effectiveCost"
-								class="form-control input-sm" readonly="true" />
+								class="form-control input-sm localeNumber" readonly="true" />
 							<div class="has-error">
 								<form:errors path="effectiveCost" class="help-inline" />
 							</div>
@@ -1244,14 +1266,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 										<th><spring:message code="payment.label.amount" /></th>
 										<th><spring:message code="payment.label.remarks" /></th>
 										<th><spring:message code="payment.label.finishedIn" /></th>
-										<sec:authorize
-											access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
-											<th width="100"></th>
-										</sec:authorize>
-										<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-											<th width="100"></th>
-										</sec:authorize>
-
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -1262,23 +1277,25 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 											<td>${payment.billed}</td>
 											<td>${payment.billing}</td>
 											<td>${payment.time}</td>
-											<td>${payment.amount}</td>
+                                            <td><span class="localeNumber">${payment.amount}</span></td>
 											<td>${payment.remarks}</td>
 											<td>${payment.finishedIn}</td>
-
+                                            <td>
 											<sec:authorize
 												access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
-												<td><a
+												<a
 													href="<c:url value='/Payment/edit-payment-${payment.id}' />"
-													class="btn btn-success "><spring:message
-															code="button.edit" /></a></td>
+													class="btn btn-success " title="<spring:message code="button.edit" />">
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                </a>
 											</sec:authorize>
 											<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-												<td><a
-													href="<c:url value='/Payment/delete-payment-${payment.id}' />"
-													class="btn btn-danger"><spring:message
-															code="button.delete" /></a></td>
+												<a href="<c:url value='/Payment/delete-payment-${payment.id}' />"
+													class="btn btn-danger" title="<spring:message code="button.delete" />">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </a>
 											</sec:authorize>
+                                            </td>
 										</tr>
 									</c:forEach>
 								</tbody>
