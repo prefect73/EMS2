@@ -1,5 +1,6 @@
 package com.td.mace.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 
@@ -71,20 +72,35 @@ public class ProjectController {
         /**
          * 1. calculate work done for each project
          * 2. check if all work packages are finished
+         * // TODO bellow is a temporary solution because of the old data in DB
+         * 3. calculate offered cost
          */
 
         for(Project project : projects){
             Integer projectPercentage = 0;
             List<WorkPackage> workPackages = project.getWorkPackages();
             if(workPackages != null && workPackages.size() > 0){
+
+                // (1)
                 Integer sumOfPercentage = 0;
+                BigDecimal projectOfferedCost = new BigDecimal(0);
                 for(WorkPackage workPackage : project.getWorkPackages()){
                     if(workPackage.getWorkDoneInPercent() != null) {
                         sumOfPercentage += workPackage.getWorkDoneInPercent();
                     }
+
+                    // (3)
+                    if(workPackage.getOfferedCost() != null){
+                        projectOfferedCost = projectOfferedCost.add(workPackage.getOfferedCost());
+                    }
+
                 }
+
+                project.setOfferedCost(projectOfferedCost);
+
                 projectPercentage = sumOfPercentage/workPackages.size();
 
+				// (2)
                 Boolean isWorkPackagesFinished = checkIfAllPackagesFinished(workPackages);
                 project.setIsWorkPackagesFinished(isWorkPackagesFinished);
             }

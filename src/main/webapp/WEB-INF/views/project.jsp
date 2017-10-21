@@ -199,7 +199,7 @@
 							code="generic.inCurrency" />
 					</label>
 					<div class="col-md-3">
-						<form:input type="text" path="offeredCost" id="offeredCost"
+						<form:input type="text" path="offeredCost" readonly="true" id="offeredCost"
 							class="form-control input-sm" />
 						<div class="has-error">
 							<form:errors path="offeredCost" class="help-inline" />

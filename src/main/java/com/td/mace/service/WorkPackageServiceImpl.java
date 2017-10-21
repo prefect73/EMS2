@@ -78,7 +78,7 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 				insertWorkPackageUserAllocation(workPackage,workPackageUserAllocation);
 			}
 		}
-		updateProjectTotalAndEffectiveCosts(workPackage.getProject().getId());
+		updateProjectTotalAndEffectiveAndOfferedCosts(workPackage.getProject().getId());
 	}
 	
 	/*
@@ -106,7 +106,7 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 				insertWorkPackageUserAllocation(workPackage,workPackageUserAllocation);
 			}
 		}
-		updateProjectTotalAndEffectiveCosts(entity.getProject().getId());
+		updateProjectTotalAndEffectiveAndOfferedCosts(entity.getProject().getId());
 		
 	}
 	
@@ -119,7 +119,7 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 			entity.setTotalCost(getWorkPackageTotalCost(workPackage));
 			entity.setEffectiveCost(getWorkPackageEffectiveCost(workPackage));
 			}
-		updateProjectTotalAndEffectiveCosts(entity.getProject().getId());
+		updateProjectTotalAndEffectiveAndOfferedCosts(entity.getProject().getId());
 		
 	}
 
@@ -149,9 +149,10 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void updateProjectTotalAndEffectiveCosts(int projectId) {
+	private void updateProjectTotalAndEffectiveAndOfferedCosts(int projectId) {
 		BigDecimal projectTotalCost = new BigDecimal("0.00");
 		BigDecimal projectEffectiveCost = new BigDecimal("0.00");
+		BigDecimal projectOfferedCost = new BigDecimal("0.00");
 		Query getAllWorkPackagesListByProjectId = dao
 				.getHibernateSession()
 				.createSQLQuery(
@@ -165,14 +166,16 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 		for (WorkPackage workPackage : workPackages) {
 			projectTotalCost = projectTotalCost.add(workPackage.getTotalCost() != null ? workPackage.getTotalCost() : new BigDecimal("0.00"));
 			projectEffectiveCost = projectEffectiveCost.add(workPackage.getEffectiveCost() != null ? workPackage.getEffectiveCost() : new BigDecimal("0.00"));
+            projectOfferedCost = projectOfferedCost.add(workPackage.getOfferedCost() != null ? workPackage.getOfferedCost() : new BigDecimal("0.00"));
 		}
 
 		Query updateProjectTotalCost = dao
 				.getHibernateSession()
 				.createSQLQuery(
-						"UPDATE project set total_cost = :total_cost ,effective_cost = :effective_cost WHERE id = :project_id");
+						"UPDATE project set total_cost = :total_cost ,effective_cost = :effective_cost, offered_cost = :offered_cost WHERE id = :project_id");
 		updateProjectTotalCost.setParameter("total_cost", projectTotalCost);
 		updateProjectTotalCost.setParameter("effective_cost", projectEffectiveCost);
+        updateProjectTotalCost.setParameter("offered_cost", projectOfferedCost);
 		updateProjectTotalCost.setParameter("project_id", projectId);
 		updateProjectTotalCost.executeUpdate();
 
@@ -269,7 +272,7 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 		WorkPackage workPackage = dao.findById(id);
 		deleteAllWorkPackageUserAllocations(workPackage);
 		dao.deleteById(id);
-		updateProjectTotalAndEffectiveCosts(workPackage.getProject().getId());
+		updateProjectTotalAndEffectiveAndOfferedCosts(workPackage.getProject().getId());
 
 	}
 
