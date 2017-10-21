@@ -20,6 +20,19 @@
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="<c:url value='/static/js/number-parser.js' />"></script>
+<script>
+    $(document).ready(
+        function() {
+            // convert all numbers to German
+            $('.localeNumber').each(function (index, value) {
+                var rawValue = $(this).val();
+                var parsedValue = parseToGermanNumber(rawValue);
+                $(this).val(parsedValue);
+            });
+        });
+</script>
 </head>
 <body>
 	<div class="generic-container">
@@ -127,7 +140,7 @@
 					
 					<div class="col-md-3">
 						<form:input type="text" path="perDayCost" id="perDayCost"
-							class="form-control input-sm" />
+							class="form-control input-sm localeNumber"/>
 						<div class="has-error">
 							<form:errors path="perDayCost" class="help-inline" />
 						</div>

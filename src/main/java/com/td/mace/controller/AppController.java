@@ -1,5 +1,6 @@
 package com.td.mace.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -21,11 +22,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import com.td.mace.model.User;
 import com.td.mace.model.UserAttendance;
@@ -62,7 +60,11 @@ public class AppController {
 	
 	@Autowired
 	AuthenticationTrustResolver authenticationTrustResolver;
-	
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(BigDecimal.class, new BigDecimalEditor());
+    }
 	
 	/**
 	 * This method will list all existing users.

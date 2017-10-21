@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import com.td.mace.model.Project;
@@ -60,6 +61,11 @@ public class ProjectController {
 
 	@Autowired
 	AuthenticationTrustResolver authenticationTrustResolver;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(BigDecimal.class, new BigDecimalEditor());
+    }
 
 	/**
 	 * This method will list all existing projects.

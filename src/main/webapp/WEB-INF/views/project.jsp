@@ -22,7 +22,7 @@
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-
+<script src="<c:url value='/static/js/number-parser.js' />"></script>
 <script>
 	function yearDropdownFill(startYear, endYear) {
 		console.log("start " + startYear + " end" + endYear);
@@ -50,6 +50,12 @@
 						$(this).attr("selected", "selected");
 					}
 				});
+                // convert all numbers to German
+                $('.localeNumber').each(function (index, value) {
+                    var rawValue = $(this).val();
+                    var parsedValue = parseToGermanNumber(rawValue);
+                    $(this).val(parsedValue);
+                });
 			});
 </script>
 </head>
@@ -200,7 +206,7 @@
 					</label>
 					<div class="col-md-3">
 						<form:input type="text" path="offeredCost" readonly="true" id="offeredCost"
-							class="form-control input-sm" />
+							class="form-control input-sm localeNumber" />
 						<div class="has-error">
 							<form:errors path="offeredCost" class="help-inline" />
 						</div>
@@ -215,7 +221,7 @@
 					</label>
 					<div class="col-md-3">
 						<form:input type="text" path="totalCost" id="totalCost"
-							class="form-control input-sm" readonly="true" />
+							class="form-control input-sm localeNumber" readonly="true" />
 						<div class="has-error">
 							<form:errors path="totalCost" class="help-inline" />
 						</div>
@@ -230,7 +236,7 @@
 					</label>
 					<div class="col-md-3">
 						<form:input type="text" path="effectiveCost" id="effectiveCost"
-							class="form-control input-sm" readonly="true" />
+							class="form-control input-sm localeNumber" readonly="true" />
 						<div class="has-error">
 							<form:errors path="effectiveCost" class="help-inline" />
 						</div>

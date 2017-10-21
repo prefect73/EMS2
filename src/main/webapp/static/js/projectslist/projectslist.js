@@ -41,6 +41,12 @@ function showWorkPackageModal(projectId, projectName) {
 
     $('#modalBody').load(projectId + '/findWorkingPackages',
         function (response, status, xhr) {
+            // convert all numbers to German
+            $('.localeNumber').each(function (index, value) {
+                var rawValue = $(this).text();
+                var parsedValue = parseToGermanNumber(rawValue);
+                $(this).text(parsedValue);
+            });
             $('#workPackageModalTable').dataTable(plUtils.datatableInitParams);
             $('#modalTitle').html($('#workPackageModalTable').attr('data-project-name'));
             $('.modal').modal({

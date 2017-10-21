@@ -18,6 +18,7 @@
 	href="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.css" />
 <script type="text/javascript"
 	src="https://cdn.datatables.net/v/bs/jq-2.2.4/dt-1.10.13/datatables.min.js"></script>
+<script src="<c:url value='/static/js/number-parser.js' />"></script>
 <script>
 $(document).ready(function() {
 if($("#defaultLanguage").val() == 'german'){
@@ -41,6 +42,12 @@ if($("#defaultLanguage").val() == 'german'){
         "order": [[ 0, "asc" ]]
     });
 }
+    // convert all numbers to German
+    $('.localeNumber').each(function (index, value) {
+        var rawValue = $(this).text();
+        var parsedValue = parseToGermanNumber(rawValue);
+        $(this).text(parsedValue);
+    });
 });
 </script>
 </head>
@@ -85,7 +92,7 @@ if($("#defaultLanguage").val() == 'german'){
 								<td>${user.lastName}</td>
 								<td>${user.email}</td>
 								<td>${user.ssoId}</td>
-								<td>${user.perDayCost}</td>
+								<td><span class="localeNumber">${user.perDayCost}</span></td>
 								<sec:authorize access="hasRole('ADMIN')">
 									<td><a href="<c:url value='/edit-user-${user.id}' />"
 										class="btn btn-success "><spring:message code="button.edit" /></a></td>
