@@ -35,24 +35,9 @@
 						code="authheader.menu.employee.workPackage.allocations" /></a></li>
 		</sec:authorize>
 
-		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-			<li><a href="<c:url value='/WorkPackage/workPackageslist' />"><spring:message
-						code="authheader.menu.employee.workPackage.allocations" /></a></li>
-		</sec:authorize>
-
 		<!-- Zeiterfassung -->
 		<li><a id="timeAndAttendanceLink" href="<c:url value='/TimeRecordingReport/timeRecording' />"><spring:message
 						code="authheader.menu.workPackage.timeRecording" /></a></li>
-
-		<!-- Bericht Projekte -->
-		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-			<li><a href="<c:url value='/Project/projectReport-0- ' />"><spring:message
-						code="authheader.menu.projectReport" /></a></li>
-		</sec:authorize>
-
-		<!-- Bericht Mitarbeiter -->		
-		<li><a href="<c:url value='/UserAttendance/monthlyReport' />"><spring:message
-					code="authheader.menu.monthlyReport" /></a></li>
 
 		<!-- Faktura -->		
 		<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">

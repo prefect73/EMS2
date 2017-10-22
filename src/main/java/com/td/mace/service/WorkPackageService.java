@@ -2,6 +2,7 @@ package com.td.mace.service;
 
 import java.util.List;
 
+import com.td.mace.controller.WorkPackageDTO;
 import com.td.mace.model.User;
 import com.td.mace.model.WorkPackage;
 
@@ -36,6 +37,7 @@ public interface WorkPackageService {
 	void updateCalculatedCost(WorkPackage workPackage);
 	
 	void updateWorkPackageCalculatedCost(WorkPackage workPackage);
-	
 
+
+	List<WorkPackageDTO> findAllWorkPackagesByProjectId(Integer projectId);
 }

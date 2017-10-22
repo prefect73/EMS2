@@ -24,6 +24,7 @@
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="<c:url value='/static/js/number-parser.js' />"></script>
 <script type="text/javascript">
 $( document ).ready(function() {
 	var billedVal = '<c:out value="${payment.billed}"/>';
@@ -41,6 +42,13 @@ $( document ).ready(function() {
 		$('#billed option[value=No]').attr('selected','selected');
 		
 	}
+
+            // convert all numbers to German in form
+            $('.localeNumber').each(function (index, value) {
+                var rawValue = $(this).val();
+                var parsedValue = parseToGermanNumber(rawValue);
+                $(this).val(parsedValue);
+            });
 	
 });
 </script>
@@ -141,20 +149,6 @@ $( document ).ready(function() {
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="billing"><spring:message
-							code="payment.label.billing" /> </label>
-					<div class="col-md-3">
-						<form:input type="text" path="billing" id="billing"
-							class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="billing" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="time"><spring:message
 							code="payment.label.time" /> </label>
 					<div class="col-md-3">
@@ -173,7 +167,7 @@ $( document ).ready(function() {
 							code="payment.label.amount" /> </label>
 					<div class="col-md-3">
 						<form:input type="text" path="amount" id="amount"
-							class="form-control input-sm" />
+							class="form-control input-sm localeNumber" />
 						<div class="has-error">
 							<form:errors path="amount" class="help-inline" />
 						</div>

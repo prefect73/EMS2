@@ -130,4 +130,9 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return allProjects;
 	}
+
+	@Override
+	public Integer getProjectIdByByWorkPackageId(Integer workPackageId) {
+		return projectDao.getProjectIdByByWorkPackageId(workPackageId);
+	}
 }

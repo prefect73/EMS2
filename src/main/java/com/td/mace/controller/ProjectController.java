@@ -1,5 +1,6 @@
 package com.td.mace.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,11 +20,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import com.td.mace.model.Project;
 import com.td.mace.model.User;
@@ -63,6 +62,11 @@ public class ProjectController {
 	@Autowired
 	AuthenticationTrustResolver authenticationTrustResolver;
 
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(BigDecimal.class, new BigDecimalEditor());
+    }
+
 	/**
 	 * This method will list all existing projects.
 	 */
@@ -70,6 +74,46 @@ public class ProjectController {
 	public String listProjects(ModelMap model) {
 
 		List<Project> projects = projectService.findAllProjects();
+
+        /**
+         * 1. calculate work done for each project
+         * 2. check if all work packages are finished
+         * // TODO bellow is a temporary solution because of the old data in DB
+         * 3. calculate offered cost
+         */
+
+        for(Project project : projects){
+            Integer projectPercentage = 0;
+            List<WorkPackage> workPackages = project.getWorkPackages();
+            if(workPackages != null && workPackages.size() > 0){
+
+                // (1)
+                Integer sumOfPercentage = 0;
+                BigDecimal projectOfferedCost = new BigDecimal(0);
+                for(WorkPackage workPackage : project.getWorkPackages()){
+                    if(workPackage.getWorkDoneInPercent() != null) {
+                        sumOfPercentage += workPackage.getWorkDoneInPercent();
+                    }
+
+                    // (3)
+                    if(workPackage.getOfferedCost() != null){
+                        projectOfferedCost = projectOfferedCost.add(workPackage.getOfferedCost());
+                    }
+
+                }
+
+                project.setOfferedCost(projectOfferedCost);
+
+                projectPercentage = sumOfPercentage/workPackages.size();
+
+				// (2)
+                Boolean isWorkPackagesFinished = checkIfAllPackagesFinished(workPackages);
+                project.setIsWorkPackagesFinished(isWorkPackagesFinished);
+            }
+            project.setWorkDoneInPercent(projectPercentage);
+        }
+
+
 		model.addAttribute("projects", projects);
 		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 		model.addAttribute("loggedinuser", getPrincipal());
@@ -260,6 +304,32 @@ public class ProjectController {
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "projectReport";
 	}
+
+    @RequestMapping(value = {"/{projectId}/findWorkingPackages"}, method = RequestMethod.GET)
+    public String listWorkPackagesInsideProject(@PathVariable("projectId") Integer projectId, ModelMap model) {
+
+
+	    Project project = projectService.findById(projectId);
+	    if(project != null){
+            model.addAttribute("projectName", project.getProjectName());
+        }
+
+        List<WorkPackageDTO> workPackageDTOList = workPackageService.findAllWorkPackagesByProjectId(projectId);
+        model.addAttribute("workpackages", workPackageDTOList);
+        return "workPackageTable";
+    }
+
+    private Boolean checkIfAllPackagesFinished(List<WorkPackage> workPackages){
+        Boolean finished = true;
+
+        for(WorkPackage workPackage: workPackages){
+            if(workPackage.getStatus() == null || !workPackage.getStatus().equals("Abgeschlossen")){
+                return false;
+            }
+        }
+
+        return finished;
+    }
 
 	/**
 	 * This method returns the principal[user-name] of logged-in user.

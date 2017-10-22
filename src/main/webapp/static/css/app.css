@@ -132,3 +132,11 @@ li a:hover {
 .hiddenWhenCollaped{
 	display: none;
 }
+body.modal-open .modal-dialog {
+	width: 990px;
+}
+
+body.modal-open .modal-body {
+	max-height: 550px;
+	overflow-y: auto;
+}

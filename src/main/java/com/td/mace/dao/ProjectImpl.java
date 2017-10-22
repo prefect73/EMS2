@@ -69,7 +69,7 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 	@SuppressWarnings("unchecked")
 	public List<Project> findAllProjects() {
 		Criteria criteria = createEntityCriteria().addOrder(
-				Order.asc("id"));
+				Order.asc("projectName"));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
 																		// duplicates.
 		List<Project> projects = (List<Project>) criteria.list();
@@ -82,14 +82,6 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 		  for(Project project : projects){
 			  Hibernate.initialize(project.getUsers());
 				Hibernate.initialize(project.getWorkPackages());
-
-				// sort wp by name
-              Collections.sort(project.getWorkPackages(), new Comparator<WorkPackage>() {
-                  @Override
-                  public int compare(WorkPackage o1, WorkPackage o2) {
-                      return o1.getWorkPackageName().toLowerCase().compareTo(o2.getWorkPackageName().toLowerCase());
-                  }
-              });
 		  }
 		 
 		return projects;
@@ -104,7 +96,14 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 		query.setParameter("userId", user.getId());
 		List<Project> projects = query.list();
 		return projects;
-	}	
+	}
+
+	@Override
+	public Integer getProjectIdByByWorkPackageId(Integer workPackageId) {
+		Query query = getCurrentSession().createSQLQuery("select project_id from work_package wp where wp.id = :workPackageId");
+		query.setInteger("workPackageId", workPackageId);
+		return (Integer) query.uniqueResult();
+	}
 
 	public void save(Project project) {
 		persist(project);

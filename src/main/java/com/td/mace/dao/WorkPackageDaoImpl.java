@@ -148,7 +148,7 @@ public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>
 	@SuppressWarnings("unchecked")
 	public List<WorkPackage> findByProjectID(int projectID) {
 		Query query = getCurrentSession().createSQLQuery(
-				"select * from work_package where project_id = :projectId")
+				"select * from work_package where project_id = :projectId order by work_package_name asc")
 				.addEntity(WorkPackage.class);
 		query.setParameter("projectId", projectID);
 		List<WorkPackage> workPackages = query.list();
