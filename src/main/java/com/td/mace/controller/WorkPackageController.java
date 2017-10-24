@@ -250,7 +250,7 @@ public class WorkPackageController {
         model.addAttribute("edit", true);
 
         model.addAttribute("payments", paymentService.findAllPaymentsByWorkPackage(workPackage));
-
+        model.addAttribute("projectId", workPackage.getProject().getId());
         model.addAttribute("loggedinuser", getPrincipal());
         return "workPackage";
     }
