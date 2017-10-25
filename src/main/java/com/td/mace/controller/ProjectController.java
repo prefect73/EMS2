@@ -71,7 +71,10 @@ public class ProjectController {
 	 * This method will list all existing projects.
 	 */
 	@RequestMapping(value = { "/projectslist" }, method = RequestMethod.GET)
-	public String listProjects(ModelMap model) {
+	public String listProjects(
+			@RequestParam(value = "openProject", defaultValue = "false", required = false) Boolean openProject,
+			@RequestParam(value = "projectId", required = false) Integer projectId,
+			ModelMap model) {
 
 		List<Project> projects = projectService.findAllProjects();
 
@@ -113,6 +116,9 @@ public class ProjectController {
             project.setWorkDoneInPercent(projectPercentage);
         }
 
+        if(openProject && projectId != null){
+            model.put("selectedProject", projectId);
+        }
 
 		model.addAttribute("projects", projects);
 		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));

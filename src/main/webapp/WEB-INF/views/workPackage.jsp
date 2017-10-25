@@ -1010,7 +1010,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 						<input type="submit"
 							value="<spring:message code="button.update"/>"
 							class="btn btn-primary btn-sm" /> or <a
-							href="<c:url value='/WorkPackage/workPackageslist' />"><spring:message
+							href="<c:url value='/Project/projectslist' />?openProject=true&projectId=${projectId}"><spring:message
 								code="button.cancel" /></a>
 					</div>
 				</c:when>
@@ -1020,9 +1020,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 					</div>
 					<div class="well col-md-2">
 						<input type="submit" value="<spring:message code="button.add"/>"
-							class="btn btn-primary btn-sm" /> or <a
-							href="<c:url value='/WorkPackage/workPackageslist' />"><spring:message
-								code="button.cancel" /></a>
+							class="btn btn-primary btn-sm" /> or
+						<a href="<c:url value='/Project/projectslist' />?openProject=true&projectId=${projectId}">
+                            <spring:message code="button.cancel" /></a>
 					</div>
 				</c:otherwise>
 			</c:choose>
