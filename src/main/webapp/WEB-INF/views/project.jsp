@@ -243,6 +243,57 @@
 					</div>
 				</div>
 			</div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="col-md-2 control-lable" for="workDoneInPercent">
+                        <spring:message code="project.label.workDoneInPercent" />
+                    </label>
+                    <div class="col-md-3">
+                        <form:select path="workDoneInPercent" cssClass="form-control input-sm">
+                            <form:option value="0" label="0" />
+                            <form:option value="10" label="10" />
+                            <form:option value="20" label="20" />
+                            <form:option value="30" label="30" />
+                            <form:option value="40" label="40" />
+                            <form:option value="50" label="50" />
+                            <form:option value="60" label="60" />
+                            <form:option value="70" label="70" />
+                            <form:option value="80" label="80" />
+                            <form:option value="90" label="90" />
+                            <form:option value="100" label="100" />
+                        </form:select>
+                        <div class="has-error">
+                            <form:errors path="workDoneInPercent" class="help-inline" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="col-md-2 control-lable" for="status">
+                        <spring:message code="project.label.status" />
+                    </label>
+                    <div class="col-md-3">
+                        <select class="form-control input-sm" id="status" name="status">
+                            <option class="form-control input-sm"
+                                    value="<spring:message code="workPackage.status.select.scheduled" />"><spring:message
+                                    code="workPackage.status.select.scheduled" /></option>
+                            <option class="form-control input-sm"
+                                    value="<spring:message code="workPackage.status.select.delayed" />"><spring:message
+                                    code="workPackage.status.select.delayed" /></option>
+                            <option class="form-control input-sm"
+                                    value="<spring:message code="workPackage.status.select.problem" />"><spring:message
+                                    code="workPackage.status.select.problem" /></option>
+                            <option class="form-control input-sm"
+                                    value="<spring:message code="workPackage.status.select.finished" />"><spring:message
+                                    code="workPackage.status.select.finished" /></option>
+                        </select>
+                        <div class="has-error">
+                            <form:errors path="status" class="help-inline" />
+                        </div>
+                    </div>
+                </div>
+            </div>
 		</form:form>
 	</div>
 </body>

@@ -62,6 +62,9 @@ public class Project implements Serializable {
 	private Integer workDoneInPercent;
 
 	@Transient
+	private String status;
+
+	@Transient
     private Boolean isWorkPackagesFinished;
 
 	@Transient
@@ -170,5 +173,13 @@ public class Project implements Serializable {
 
     public Boolean getIsWorkPackagesFinished() {
         return isWorkPackagesFinished;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

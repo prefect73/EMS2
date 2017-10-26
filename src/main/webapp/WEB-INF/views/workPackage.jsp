@@ -1182,34 +1182,35 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 						</div>
 					</div>
 				</div>
+				<%--<div class="row">--%>
+					<%--<div class="form-group col-md-12">--%>
+						<%--<label class="col-md-2 control-lable" for="workDoneInPercent"><spring:message--%>
+								<%--code="workPackage.label.workDoneInPercent" /> </label>--%>
+						<%--<div class="col-md-3">--%>
+							<%--<form:select path="workDoneInPercent" cssClass="form-control input-sm">--%>
+								<%--<form:option value="0" label="0" />--%>
+								<%--<form:option value="10" label="10" />--%>
+								<%--<form:option value="20" label="20" />--%>
+								<%--<form:option value="30" label="30" />--%>
+								<%--<form:option value="40" label="40" />--%>
+								<%--<form:option value="50" label="50" />--%>
+								<%--<form:option value="60" label="60" />--%>
+								<%--<form:option value="70" label="70" />--%>
+								<%--<form:option value="80" label="80" />--%>
+								<%--<form:option value="90" label="90" />--%>
+								<%--<form:option value="100" label="100" />--%>
+							<%--</form:select>--%>
+							<%--<div class="has-error">--%>
+								<%--<form:errors path="workDoneInPercent" class="help-inline" />--%>
+							<%--</div>--%>
+						<%--</div>--%>
+					<%--</div>--%>
+				<%--</div>--%>
 				<div class="row">
 					<div class="form-group col-md-12">
-						<label class="col-md-2 control-lable" for="workDoneInPercent"><spring:message
-								code="workPackage.label.workDoneInPercent" /> </label>
-						<div class="col-md-3">
-							<form:select path="workDoneInPercent" cssClass="form-control input-sm">
-								<form:option value="0" label="0" />
-								<form:option value="10" label="10" />
-								<form:option value="20" label="20" />
-								<form:option value="30" label="30" />
-								<form:option value="40" label="40" />
-								<form:option value="50" label="50" />
-								<form:option value="60" label="60" />
-								<form:option value="70" label="70" />
-								<form:option value="80" label="80" />
-								<form:option value="90" label="90" />
-								<form:option value="100" label="100" />
-							</form:select>
-							<div class="has-error">
-								<form:errors path="workDoneInPercent" class="help-inline" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="form-group col-md-12">
-						<label class="col-md-2 control-lable" for="status"><spring:message
-								code="workPackage.label.status" /> </label>
+						<label class="col-md-2 control-lable" for="status">
+							<spring:message code="workPackage.label.status" />
+                        </label>
 						<div class="col-md-3">
 							<%-- <form:input type="text" path="status" id="status"
 								class="form-control input-sm" />
