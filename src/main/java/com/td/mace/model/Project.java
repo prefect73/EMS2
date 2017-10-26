@@ -64,6 +64,9 @@ public class Project implements Serializable {
 	@Transient
     private Boolean isWorkPackagesFinished;
 
+	@Transient
+	private Boolean isAllocatedToLoggedUser;
+
     public Integer getId() {
 		return id;
 	}
@@ -153,6 +156,13 @@ public class Project implements Serializable {
 		this.workPackages = workPackages;
 	}
 
+    public Boolean getIsAllocatedToLoggedUser() {
+        return isAllocatedToLoggedUser;
+    }
+
+    public void setIsAllocatedToLoggedUser(Boolean allocatedToLoggedUser) {
+        isAllocatedToLoggedUser = allocatedToLoggedUser;
+    }
 
     public void setIsWorkPackagesFinished(Boolean isWorkPackagesFinished) {
         this.isWorkPackagesFinished = isWorkPackagesFinished;

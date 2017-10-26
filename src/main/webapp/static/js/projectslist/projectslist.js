@@ -25,13 +25,6 @@ function ProjectListUtils() {
         info: false,
         paging: false,
         ordering: false,
-        columnDefs: [
-            {
-                "targets": [ 0 ],
-                "visible": false,
-                "searchable": true
-            }
-        ],
         language: {
 //            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
         	  search: "Projekt-Suche:"
@@ -72,7 +65,7 @@ function showWorkPackageModal(projectId, projectName) {
                 	filterWorkpackage.val(workPackageName)
                 	filterWorkpackage.trigger(jQuery.Event( 'keyup', { which: 50 }))
                 }	
-            }
+            };
             $('#workPackageModalTable').dataTable(plUtils.datatableInitParams);
             $('#modalTitle').html($('#workPackageModalTable').attr('data-project-name'));
             
@@ -88,9 +81,21 @@ $(document).ready(function () {
 
     var plUtils = new ProjectListUtils();
 
+    plUtils.datatableInitParams.columnDefs = [
+        {
+            "targets": [ 0 ],
+            "visible": false,
+            "searchable": true
+        },
+        {
+            "targets": [ 1 ],
+            "visible": false,
+            "searchable": true
+        }
+    ];
+
    $('#projectsTable').dataTable(plUtils.datatableInitParams);
-    
-    
+
     // bind filter events
     $("#isFinishedProject").change(function() {
     	var projectsDataTable = $('#projectsTable').DataTable();
@@ -98,6 +103,14 @@ $(document).ready(function () {
         	projectsDataTable.columns(0).search('true').draw();
         }else{
         	projectsDataTable.columns(0).search('').draw();
+        }
+    });
+    $("#isUserProject").change(function() {
+    	var projectsDataTable = $('#projectsTable').DataTable();
+        if(this.checked) {
+        	projectsDataTable.columns(1).search('true').draw();
+        }else{
+        	projectsDataTable.columns(1).search('').draw();
         }
     });
 

@@ -95,6 +95,7 @@ public class ProjectController {
          * 2. check if all work packages are finished
          * // TODO bellow is a temporary solution because of the old data in DB
          * 3. calculate offered cost
+		 * 4. check if project is allocated to current logged user
          */
 
         for(Project project : projects){
@@ -125,6 +126,17 @@ public class ProjectController {
                 Boolean isWorkPackagesFinished = checkIfAllPackagesFinished(workPackages);
                 project.setIsWorkPackagesFinished(isWorkPackagesFinished);
             }
+
+            // (4)
+            Boolean isAllocatedToLoggedUser = false;
+            for(User user: project.getUsers()){
+               String loggedUserName =  getPrincipal();
+               if(user.getSsoId().equals(loggedUserName)){
+                   isAllocatedToLoggedUser = true;
+                   break;
+                }
+            }
+            project.setIsAllocatedToLoggedUser(isAllocatedToLoggedUser);
             project.setWorkDoneInPercent(projectPercentage);
         }
 
