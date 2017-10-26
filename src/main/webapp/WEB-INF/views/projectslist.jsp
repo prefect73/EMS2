@@ -34,6 +34,20 @@
 				</sec:authorize>
 			</div>
 			<div id="projectsTableWrapper" style="padding: 2%;">
+				<div class="row">
+					<div class="col-md-2">
+						<div class="form-group">
+							<label class="control-label" for="inputGroup">Input Group </label>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Search" id="searchWorkPackageText" /> 
+									<span class="input-group-addon">
+										<a href="#searchWorkpackage"><i class="fa fa-search"></i></a>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /input-group -->
 				<table id="projectsTable" data-selected-project="${selectedProject}" class="table table-striped table-bordered dt-responsive nowrap  table-hover" style="font-size: 100%;">
 					<thead>
 						<tr>

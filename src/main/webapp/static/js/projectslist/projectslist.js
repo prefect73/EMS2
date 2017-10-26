@@ -12,6 +12,10 @@ function ProjectListUtils() {
             return null;
         }
     };
+    
+    var filterProjectsByWorkPackageName = function(workPackageName){
+    	document.location.href = 'projectslist?workPackageName='+workPackageName;
+    };
 
     var selectedProject = function () {
         return $('#projectsTable').attr('data-selected-project');
@@ -23,14 +27,18 @@ function ProjectListUtils() {
         ordering: false,
         language: {
             url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-        }
+        },
+        dom: "<'row'<'col-sm-6'><'col-sm-6 safieBBine'f>>" +
+        	 "<'row'<'col-sm-12't>>" +
+        	 "<'row'<'col-sm-5'i><'col-sm-7'p>>",
     };
 
     return {
         isNumeric: isNumeric,
         urlParam: urlParam,
         selectedProject: selectedProject,
-        datatableInitParams: datatableInitParams
+        datatableInitParams: datatableInitParams,
+        filterProjectsByWorkPackageName: filterProjectsByWorkPackageName
     }
 
 }
@@ -76,6 +84,13 @@ $(document).ready(function () {
     });
     $('td.hiddenWhenCollaped').on('hidden.bs.collapse', function (e) {
         $(this).addClass("hiddenWhenCollaped")
+    });
+    
+    // filter projects by work package
+    $("a[href='#searchWorkpackage']").on('click', function(e){
+    	e.preventDefault();
+    	var filterValue = $('#searchWorkPackageText').val();
+    	plUtils.filterProjectsByWorkPackageName(filterValue);
     });
 
     // convert all numbers to German
