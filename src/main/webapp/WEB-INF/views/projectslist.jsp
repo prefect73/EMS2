@@ -40,13 +40,13 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-5">
-                                    <label class="control-label" for="isFinishedProject">Fertiggestelltes Projekt</label>
+                                    <label class="control-label" for="isFinishedProject"><spring:message code="project.label.finished" /></label>
                                 </div>
                                 <div class="col-md-1" style="padding-left: 0px;">
                                     <input id=isFinishedProject name="isFinishedProject" type="checkbox" value="" />
                                 </div>
                                 <div class="col-md-5">
-                                    <label class="control-label" for="isUserProject">Benutzerprojekt</label>
+                                    <label class="control-label" for="isUserProject"><spring:message code="project.label.isForLoggedUser" /></label>
                                 </div>
                                 <div class="col-md-1" style="padding-left: 0px;">
                                     <input id="isUserProject" name="isUserProject" type="checkbox" value="" />
