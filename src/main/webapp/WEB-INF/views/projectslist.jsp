@@ -33,26 +33,48 @@
 					<a class="btn btn-primary floatRight" href="<c:url value='/Project/newproject' />"><spring:message code="projectslist.addNewProject" /></a>
 				</sec:authorize>
 			</div>
-			<div id="projectsTableWrapper" style="padding: 2%;">
+			<div id="projectsTableWrapper" style="padding: 2%; padding-top:5px;">
+			<div class="row" style="padding-top: 10px;">
+                <div class="col-md-3">
+                    <div class="panel panel-default" style="margin-bottom: 0px; position: absolute; min-width: 390px">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <label class="control-label" for="isFinishedProject">Finished project</label>
+                                </div>
+                                <div class="col-md-1" style="padding-left: 0px;">
+                                    <input id=isFinishedProject name="isFinishedProject" type="checkbox" value="" />
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="control-label" for="isUserProject">User projects</label>
+                                </div>
+                                <div class="col-md-1" style="padding-left: 0px;">
+                                    <input id="isUserProject" name="isUserProject" type="checkbox" value="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 				<div class="row">
 					<div class="col-md-offset-9 col-md-3" style="text-align: right;">
-					<form class="form-inline">
-						<div class="form-group">
-							<span>Arbeitspaket-Suche:</span>
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Search" id="searchWorkPackageText" /> 
-									<span class="input-group-addon">
-										<a href="#searchWorkpackage"><i class="fa fa-search"></i></a>
-								</span>
+						<form class="form-inline">
+							<div class="form-group">
+								<span>Arbeitspaket-Suche:</span>
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="Search" id="searchWorkPackageText" /> <span class="input-group-addon"> <a
+										href="#searchWorkpackage"><i class="fa fa-search"></i></a>
+									</span>
+								</div>
 							</div>
-						</div>
 						</form>
 					</div>
-				</div>	
+				</div>
 				<!-- /input-group -->
 				<table id="projectsTable" data-selected-project="${selectedProject}" class="table table-striped table-bordered dt-responsive nowrap  table-hover" style="font-size: 100%;">
 					<thead>
 						<tr>
+							<th>isFinishedProject</th>
 							<th><spring:message code="project.label.projectName" /></th>
 							<th><spring:message code="project.label.customerName" /></th>
 							<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
@@ -68,6 +90,7 @@
 					<tbody>
 						<c:forEach items="${projects}" var="project">
 							<tr>
+								<td>${project.isWorkPackagesFinished}</td>
 								<td><a role="button" data-toggle="collapse" href="#project${project.id}" aria-expanded="true" aria-controls="project${project.id}"
 									onclick="showWorkPackageModal('${project.id}')">${project.projectName}</a></td>
 								<td>${project.customerName}</td>

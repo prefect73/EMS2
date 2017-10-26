@@ -25,6 +25,13 @@ function ProjectListUtils() {
         info: false,
         paging: false,
         ordering: false,
+        columnDefs: [
+            {
+                "targets": [ 0 ],
+                "visible": false,
+                "searchable": true
+            }
+        ],
         language: {
 //            url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
         	  search: "Projekt-Suche:"
@@ -81,7 +88,18 @@ $(document).ready(function () {
 
     var plUtils = new ProjectListUtils();
 
-    $('#projectsTable').dataTable(plUtils.datatableInitParams);
+   $('#projectsTable').dataTable(plUtils.datatableInitParams);
+    
+    
+    // bind filter events
+    $("#isFinishedProject").change(function() {
+    	var projectsDataTable = $('#projectsTable').DataTable();
+        if(this.checked) {
+        	projectsDataTable.columns(0).search('true').draw();
+        }else{
+        	projectsDataTable.columns(0).search('').draw();
+        }
+    });
 
     // if this page is an redirect -> open list of work packages
     var selectedProject = plUtils.selectedProject();
