@@ -62,7 +62,13 @@ public class Project implements Serializable {
 	private Integer workDoneInPercent;
 
 	@Transient
+	private String status;
+
+	@Transient
     private Boolean isWorkPackagesFinished;
+
+	@Transient
+	private Boolean isAllocatedToLoggedUser;
 
     public Integer getId() {
 		return id;
@@ -153,6 +159,13 @@ public class Project implements Serializable {
 		this.workPackages = workPackages;
 	}
 
+    public Boolean getIsAllocatedToLoggedUser() {
+        return isAllocatedToLoggedUser;
+    }
+
+    public void setIsAllocatedToLoggedUser(Boolean allocatedToLoggedUser) {
+        isAllocatedToLoggedUser = allocatedToLoggedUser;
+    }
 
     public void setIsWorkPackagesFinished(Boolean isWorkPackagesFinished) {
         this.isWorkPackagesFinished = isWorkPackagesFinished;
@@ -160,5 +173,13 @@ public class Project implements Serializable {
 
     public Boolean getIsWorkPackagesFinished() {
         return isWorkPackagesFinished;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

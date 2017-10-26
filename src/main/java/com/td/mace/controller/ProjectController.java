@@ -7,11 +7,12 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +22,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.td.mace.model.Project;
 import com.td.mace.model.User;
@@ -74,15 +81,21 @@ public class ProjectController {
 	public String listProjects(
 			@RequestParam(value = "openProject", defaultValue = "false", required = false) Boolean openProject,
 			@RequestParam(value = "projectId", required = false) Integer projectId,
+			@RequestParam(value = "workPackageName", required = false) final String workPackageName,
 			ModelMap model) {
 
 		List<Project> projects = projectService.findAllProjects();
+
+		if(workPackageName != null && workPackageName != "") {
+			CollectionUtils.filter(projects, new FilterProjects(workPackageName));
+		}
 
         /**
          * 1. calculate work done for each project
          * 2. check if all work packages are finished
          * // TODO bellow is a temporary solution because of the old data in DB
          * 3. calculate offered cost
+		 * 4. check if project is allocated to current logged user
          */
 
         for(Project project : projects){
@@ -113,6 +126,17 @@ public class ProjectController {
                 Boolean isWorkPackagesFinished = checkIfAllPackagesFinished(workPackages);
                 project.setIsWorkPackagesFinished(isWorkPackagesFinished);
             }
+
+            // (4)
+            Boolean isAllocatedToLoggedUser = false;
+            for(User user: project.getUsers()){
+               String loggedUserName =  getPrincipal();
+               if(user.getSsoId().equals(loggedUserName)){
+                   isAllocatedToLoggedUser = true;
+                   break;
+                }
+            }
+            project.setIsAllocatedToLoggedUser(isAllocatedToLoggedUser);
             project.setWorkDoneInPercent(projectPercentage);
         }
 
@@ -351,6 +375,29 @@ public class ProjectController {
 			userName = principal.toString();
 		}
 		return userName;
+	}
+
+	private class FilterProjects implements Predicate<Project> {
+
+		private String workPackageName;
+
+		public FilterProjects(String workPackageName) {
+			this.workPackageName = workPackageName;
+		}
+
+		@Override
+		public boolean evaluate(Project project) {
+			List<WorkPackage> workPackages = project.getWorkPackages();
+			if (workPackages != null) {
+				for (WorkPackage workPackage : workPackages) {
+					if (workPackage.getWorkPackageName() != null
+							&& workPackage.getWorkPackageName().contains(workPackageName)) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
 	}
 
 }
