@@ -70,7 +70,7 @@ function showWorkPackageModal(projectId, projectName) {
             $('#modalTitle').html($('#workPackageModalTable').attr('data-project-name'));
             
             // open modal
-            $('.modal').modal({
+            $('#workPackagesListModal').modal({
                 keyboard: false,
                 backdrop: false
             });
@@ -149,5 +149,21 @@ $(document).ready(function () {
         var rawValue = $(this).text();
         var parsedValue = parseToGermanNumber(rawValue);
         $(this).text(parsedValue);
+    });
+
+    // bind events for confirmation popup
+    $(document).on('click', 'a[href*="delete-project-"].btn-danger', function (e) {
+        e.preventDefault();
+        var targetLink = $(this)[0].href;
+        $("#confirmationDeleteModal.modal a#okModalAndReloadBtn").attr("href", targetLink);
+        $('#confirmationDeleteModal').modal({backdrop:false, keyboard:false})
+    });
+    $(document).on('click', 'a[href*="delete-workPackage-"].btn-danger' ,function (e) {
+        e.preventDefault();
+        var targetLink = $(this)[0].href;
+        var r = confirm("Soll das Projekt/Arbeitspaket wirklich gelöscht werden?");
+        if (r == true) {
+            location.href=targetLink;
+        }
     });
 });

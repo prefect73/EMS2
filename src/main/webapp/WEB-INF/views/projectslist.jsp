@@ -127,7 +127,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+	<div id="workPackagesListModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -145,5 +145,23 @@
 	</div>
 	<!-- /.modal-dialog -->
 	<!-- /.modal -->
+	<!-- Small modal -->
+
+	<%-- Confirmation modal --%>
+	<div id="confirmationDeleteModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		<div class="modal-dialog modal-sm" role="document" style="width: 376px;">
+            <div class="modal-content alert alert-success"><strong><p>Soll das Projekt/Arbeitspaket wirklich gelöscht werden?</p></strong>
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                        <a id="closeModalAndReloadBtn" data-dismiss="modal"  href="#"  class="btn btn-sm btn-default" style="margin-left:40px;">Abbrechen</a>
+                    </div>
+					<div class="col-md-6">
+                        <a id="okModalAndReloadBtn" href="#"  class="btn btn-sm btn-default" style="margin-left:40px;">OK</a>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import com.td.mace.dao.WorkPackageUserAllocationDao;
+import com.td.mace.model.Project;
 import com.td.mace.model.User;
 import com.td.mace.model.WorkPackage;
 import com.td.mace.model.WorkPackageUserAllocation;
@@ -197,11 +198,81 @@ public class WorkPackageUserAllocationServiceImpl implements
 			e.printStackTrace();
 		}
 		
-		logger.info(">> WorkpackageUserAllocation to be saved in DB: " + workPackageUserAllocation);
+		// calculate and set workPackage effective cost
+		WorkPackage workPackage = workPackageUserAllocation.getWorkPackage();
+		workPackage.setEffectiveCost(getWorkPackageEffectiveCost(workPackage));
+
+		// calculate and set project effective cost
+		Project project = workPackageUserAllocation.getWorkPackage().getProject();
+		project.setEffectiveCost(getProjectEffectiveCost(project));
 
 		dao.save(workPackageUserAllocation);
 
 		return 1;
+	}
+
+	private BigDecimal getProjectEffectiveCost(Project project) {
+		BigDecimal projectEffectiveCost = new BigDecimal("0.00");
+		
+		for(WorkPackage workPackage: project.getWorkPackages()) {
+			projectEffectiveCost = projectEffectiveCost.add(
+					workPackage.getEffectiveCost() != null ? workPackage.getEffectiveCost() : new BigDecimal("0.00"));
+		}
+		
+		
+		
+		return projectEffectiveCost;
+	}
+
+	private BigDecimal getWorkPackageEffectiveCost(WorkPackage workPackage) {
+		BigDecimal workPackageEffectiveCost = new BigDecimal("0.00");
+
+		for (WorkPackageUserAllocation workPackageUserAllocation : workPackage.getWorkPackageUserAllocations()) {
+			BigDecimal userEffectiveCost = new BigDecimal("0.00");
+			userEffectiveCost = userEffectiveCost
+					.add(workPackageUserAllocation.getEmJan() != null ? workPackageUserAllocation.getEmJan()
+							: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost
+					.add(workPackageUserAllocation.getEmFeb() != null ? workPackageUserAllocation.getEmFeb()
+							: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost
+					.add(workPackageUserAllocation.getEmMar() != null ? workPackageUserAllocation.getEmMar()
+							: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost
+					.add(workPackageUserAllocation.getEmApr() != null ? workPackageUserAllocation.getEmApr()
+							: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost
+					.add(workPackageUserAllocation.getEmMay() != null ? workPackageUserAllocation.getEmMay()
+							: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost
+					.add(workPackageUserAllocation.getEmJun() != null ? workPackageUserAllocation.getEmJun()
+							: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost
+					.add(workPackageUserAllocation.getEmJul() != null ? workPackageUserAllocation.getEmJul()
+							: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost
+					.add(workPackageUserAllocation.getEmAug() != null ? workPackageUserAllocation.getEmAug()
+							: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost
+					.add(workPackageUserAllocation.getEmSep() != null ? workPackageUserAllocation.getEmSep()
+							: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost
+					.add(workPackageUserAllocation.getEmOct() != null ? workPackageUserAllocation.getEmOct()
+							: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost
+					.add(workPackageUserAllocation.getEmNov() != null ? workPackageUserAllocation.getEmNov()
+							: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost
+					.add(workPackageUserAllocation.getEmDec() != null ? workPackageUserAllocation.getEmDec()
+							: new BigDecimal("0.00"));
+			userEffectiveCost = userEffectiveCost.multiply(workPackageUserAllocation.getUser() != null
+					&& workPackageUserAllocation.getUser().getPerDayCost() != null
+							? workPackageUserAllocation.getUser().getPerDayCost()
+							: new BigDecimal("0.00"));
+			workPackageEffectiveCost = workPackageEffectiveCost.add(userEffectiveCost);
+		}
+
+		return workPackageEffectiveCost;
 	}
 
 	/*@Override
