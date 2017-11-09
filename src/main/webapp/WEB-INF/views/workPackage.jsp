@@ -154,7 +154,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			$('#status').css('color','green');
 		}
 		
-		$('input').on('keypress', function (event) {
+		$('input#offeredCost').on('keypress', function (event) {
 		    var regex = new RegExp("^[^.]+$");
 		    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
 		    if (!regex.test(key)) {
