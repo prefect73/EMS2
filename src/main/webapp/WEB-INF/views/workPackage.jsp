@@ -20,9 +20,6 @@
 </c:choose>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-<script src="<c:url value='/static/js/number-parser.js' />"></script>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"></link>
 <link href="<c:url value='/static/css/bootstrap.css' />"
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
@@ -42,7 +39,6 @@
 	.ui-widget-header .ui-state-disabled {
 	opacity: 1.35;
 }
-
 .ui-datepicker {
 	width: 42%;
 	position: relative !important;
@@ -50,30 +46,24 @@
 	left: 30% !important;
 	z-index: 1000;
 }
-
 .ui-datepicker-year {
 	display: none;
 }
-
 button.ui-datepicker-current {
 	display: none;
 }
 </style>
 <script type="text/javascript">
-
 var userAttendance = new Map();
-
 <c:forEach items="${userAttendancesUpdated}" var="usrAttend">
 	userAttendance.set('${usrAttend.user.id}-${usrAttend.yearName}', {'mJan' : '${usrAttend.mJan}' , 'mFeb' : '${usrAttend.mFeb}', 'mMar' : '${usrAttend.mMar}', 'mApr' : '${usrAttend.mApr}', 'mMay' : '${usrAttend.mMay}', 'mJun' : '${usrAttend.mJun}', 'mJul' : '${usrAttend.mJul}', 'mAug' : '${usrAttend.mAug}', 'mSep' : '${usrAttend.mSep}', 'mOct' : '${usrAttend.mOct}', 'mNov' : '${usrAttend.mNov}', 'mDec' : '${usrAttend.mDec}' });
 </c:forEach>
-
 var allocatedDaysMap = new Map();
 <c:forEach items="${workPackage.workPackageUserAllocations}" var="workPackageUserAllocation">
  allocatedDaysMap.set('${workPackageUserAllocation.user.id}-${workPackageUserAllocation.yearName}', {'mJan' : '${workPackageUserAllocation.mJan}' , 'mFeb' : '${workPackageUserAllocation.mFeb}', 'mMar' : '${workPackageUserAllocation.mMar}', 'mApr' : '${workPackageUserAllocation.mApr}', 'mMay' : '${workPackageUserAllocation.mMay}', 'mJun' : '${workPackageUserAllocation.mJun}', 'mJul' : '${workPackageUserAllocation.mJul}', 'mAug' : '${workPackageUserAllocation.mAug}', 'mSep' : '${workPackageUserAllocation.mSep}', 'mOct' : '${workPackageUserAllocation.mOct}', 'mNov' : '${workPackageUserAllocation.mNov}', 'mDec' : '${workPackageUserAllocation.mDec}' });
 </c:forEach>
 var startYear = '<c:out value="${yearNameStart}"/>';
 var endYear = '<c:out value="${yearNameEnd}"/>';
-
 	var wPakAllocSize = '<c:out value="${fn:length(workPackage.workPackageUserAllocations)}"/>';
 	var editView = '<c:out value="${edit}"/>';
 	var globalYearName = "";
@@ -115,9 +105,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		}
 		
 		$( "#status" ).change(function() {
-			if($(this).val() == 'Planm‰ﬂig'){
+			if($(this).val() == 'Planm√§√üig'){
 				$(this).css('color','lightgreen');
-			} else if($(this).val() == 'Verzˆgert'){
+			} else if($(this).val() == 'Verz√∂gert'){
 				$(this).css('color','orange');
 			}  else if($(this).val() == 'Problem'){
 				$(this).css('color','red');
@@ -128,11 +118,11 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		
 		var statusVal = '<c:out value="${workPackage.status}"/>';
 		console.log("status " + statusVal);
-		if(statusVal == 'Planm‰ﬂig'){
-			$('#status option[value=Planm‰ﬂig]').attr('selected','selected');
+		if(statusVal == 'Planm√§√üig'){
+			$('#status option[value=Planm√§√üig]').attr('selected','selected');
 			$('#status').css('color','lightgreen');
-		} else if(statusVal == 'Verzˆgert'){
-			$('#status option[value=Verzˆgert]').attr('selected','selected');
+		} else if(statusVal == 'Verz√∂gert'){
+			$('#status option[value=Verz√∂gert]').attr('selected','selected');
 			$('#status').css('color','orange');
 		}  else if(statusVal == 'Problem'){
 			$('#status option[value=Problem]').attr('selected','selected');
@@ -154,8 +144,8 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			$('#status').css('color','green');
 		}
 		
-		$('input#offeredCost').on('keypress', function (event) {
-		    var regex = new RegExp("^[^.]+$");
+		$('input').on('keypress', function (event) {
+		    var regex = new RegExp("^[^,]+$");
 		    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
 		    if (!regex.test(key)) {
 		       event.preventDefault();
@@ -337,9 +327,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());	
 			
 			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
-				monthNames: ['Januar','Februar','M‰rz','April','Mai','Juni',
+				monthNames: ['Januar','Februar','M√§rz','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
-				             monthNamesShort: ['Jan','Feb','M‰r','Apr','Mai','Jun',
+				             monthNamesShort: ['Jan','Feb','M√§r','Apr','Mai','Jun',
 				             'Jul','Aug','Sep','Okt','Nov','Dez'],
 				             dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
 				             dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
@@ -374,9 +364,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			d.setMonth(1);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
-				monthNames: ['Januar','Februar','M‰rz','April','Mai','Juni',
+				monthNames: ['Januar','Februar','M√§rz','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
-				             monthNamesShort: ['Jan','Feb','M‰r','Apr','Mai','Jun',
+				             monthNamesShort: ['Jan','Feb','M√§r','Apr','Mai','Jun',
 				             'Jul','Aug','Sep','Okt','Nov','Dez'],
 				             dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
 				             dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
@@ -410,9 +400,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			d.setMonth(2);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
-				monthNames: ['Januar','Februar','M‰rz','April','Mai','Juni',
+				monthNames: ['Januar','Februar','M√§rz','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
-				             monthNamesShort: ['Jan','Feb','M‰r','Apr','Mai','Jun',
+				             monthNamesShort: ['Jan','Feb','M√§r','Apr','Mai','Jun',
 				             'Jul','Aug','Sep','Okt','Nov','Dez'],
 				             dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
 				             dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
@@ -446,9 +436,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			d.setMonth(3);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
-				monthNames: ['Januar','Februar','M‰rz','April','Mai','Juni',
+				monthNames: ['Januar','Februar','M√§rz','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
-				             monthNamesShort: ['Jan','Feb','M‰r','Apr','Mai','Jun',
+				             monthNamesShort: ['Jan','Feb','M√§r','Apr','Mai','Jun',
 				             'Jul','Aug','Sep','Okt','Nov','Dez'],
 				             dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
 				             dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
@@ -482,9 +472,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			d.setMonth(4);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
-				monthNames: ['Januar','Februar','M‰rz','April','Mai','Juni',
+				monthNames: ['Januar','Februar','M√§rz','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
-				             monthNamesShort: ['Jan','Feb','M‰r','Apr','Mai','Jun',
+				             monthNamesShort: ['Jan','Feb','M√§r','Apr','Mai','Jun',
 				             'Jul','Aug','Sep','Okt','Nov','Dez'],
 				             dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
 				             dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
@@ -518,9 +508,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			d.setMonth(5);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
-				monthNames: ['Januar','Februar','M‰rz','April','Mai','Juni',
+				monthNames: ['Januar','Februar','M√§rz','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
-				             monthNamesShort: ['Jan','Feb','M‰r','Apr','Mai','Jun',
+				             monthNamesShort: ['Jan','Feb','M√§r','Apr','Mai','Jun',
 				             'Jul','Aug','Sep','Okt','Nov','Dez'],
 				             dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
 				             dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
@@ -554,9 +544,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			d.setMonth(6);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
-				monthNames: ['Januar','Februar','M‰rz','April','Mai','Juni',
+				monthNames: ['Januar','Februar','M√§rz','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
-				             monthNamesShort: ['Jan','Feb','M‰r','Apr','Mai','Jun',
+				             monthNamesShort: ['Jan','Feb','M√§r','Apr','Mai','Jun',
 				             'Jul','Aug','Sep','Okt','Nov','Dez'],
 				             dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
 				             dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
@@ -590,9 +580,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			d.setMonth(7);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
-				monthNames: ['Januar','Februar','M‰rz','April','Mai','Juni',
+				monthNames: ['Januar','Februar','M√§rz','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
-				             monthNamesShort: ['Jan','Feb','M‰r','Apr','Mai','Jun',
+				             monthNamesShort: ['Jan','Feb','M√§r','Apr','Mai','Jun',
 				             'Jul','Aug','Sep','Okt','Nov','Dez'],
 				             dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
 				             dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
@@ -626,9 +616,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			d.setMonth(8);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
-				monthNames: ['Januar','Februar','M‰rz','April','Mai','Juni',
+				monthNames: ['Januar','Februar','M√§rz','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
-				             monthNamesShort: ['Jan','Feb','M‰r','Apr','Mai','Jun',
+				             monthNamesShort: ['Jan','Feb','M√§r','Apr','Mai','Jun',
 				             'Jul','Aug','Sep','Okt','Nov','Dez'],
 				             dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
 				             dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
@@ -662,9 +652,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			d.setMonth(9);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
-				monthNames: ['Januar','Februar','M‰rz','April','Mai','Juni',
+				monthNames: ['Januar','Februar','M√§rz','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
-				             monthNamesShort: ['Jan','Feb','M‰r','Apr','Mai','Jun',
+				             monthNamesShort: ['Jan','Feb','M√§r','Apr','Mai','Jun',
 				             'Jul','Aug','Sep','Okt','Nov','Dez'],
 				             dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
 				             dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
@@ -698,9 +688,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			d.setMonth(10);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
-				monthNames: ['Januar','Februar','M‰rz','April','Mai','Juni',
+				monthNames: ['Januar','Februar','M√§rz','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
-				             monthNamesShort: ['Jan','Feb','M‰r','Apr','Mai','Jun',
+				             monthNamesShort: ['Jan','Feb','M√§r','Apr','Mai','Jun',
 				             'Jul','Aug','Sep','Okt','Nov','Dez'],
 				             dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
 				             dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
@@ -734,9 +724,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			d.setMonth(11);
 			d.setYear($(this).closest('tr').find('td:eq(0)').find('[name$=yearName]').val());
 			$(this).datepicker({ beforeShowDay : function(date){ return [false, ''];},
-				monthNames: ['Januar','Februar','M‰rz','April','Mai','Juni',
+				monthNames: ['Januar','Februar','M√§rz','April','Mai','Juni',
 				             'Juli','August','September','Oktober','November','Dezember'],
-				             monthNamesShort: ['Jan','Feb','M‰r','Apr','Mai','Jun',
+				             monthNamesShort: ['Jan','Feb','M√§r','Apr','Mai','Jun',
 				             'Jul','Aug','Sep','Okt','Nov','Dez'],
 				             dayNames: ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'],
 				             dayNamesShort: ['So','Mo','Di','Mi','Do','Fr','Sa'],
@@ -764,7 +754,6 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
             $(this).attr( "disabled", "disabled");
 	    });
 	}
-
 	function poulateAvailableHours(){
 		$( ".userCombo" ).each(function( index , element) {			
 			yearNameVal = $(element).parent().prev().find('input').val() == undefined || null ? $(element).parent().prev().find('select').val() : $(element).parent().prev().find('input').val();
@@ -838,7 +827,6 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		var formTR = $('<tr></tr>');
 		formTR.append(formHtml);
 		//add Button
-
 		var addBTN = $('<input class="btn btn-primary btn-sm" type="button" name="add" id="add" value="<spring:message code="button.add"/>" onclick="addNewWPUallocRow(this);"/>');
 		
 		
@@ -879,7 +867,6 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 			  /* effectiveDistributionPopups(); */
 		     });
 	}
-
 		function addNewWPUallocRow(element) {
 			var index = wPakAllocSize;
 			//var yearNameTD ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ><option class="form-control input-sm" value="2017">2017</option><option class="form-control input-sm" value="2018">2018</option><option class="form-control input-sm" value="2019">2019</option><option class="form-control input-sm" value="2020">2020</option></select></td>';
@@ -958,8 +945,6 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 				  /* effectiveDistributionPopups(); */
 			     });
 		}
-
-
 	function deleteWpUsrAlloc(id, currentTr){
 		if(currentTr.parent().is(':last-child')){
 			var addBTN = $('<input class="btn btn-primary btn-sm" type="button" name="add" id="add" value="<spring:message code="button.add"/>" onclick="addNewWPUallocRow(this);"/>');
@@ -973,27 +958,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 		}
 	}
 	
-
 </script>
-<script>
-    $(document).ready(
-        function() {
-            // convert all numbers to German in form
-            $('.localeNumber').each(function (index, value) {
-                var rawValue = $(this).val();
-                var parsedValue = parseToGermanNumber(rawValue);
-                $(this).val(parsedValue);
-            });
-
-            // convert all numbers to German in table
-            $('.localeNumber').each(function (index, value) {
-                var rawValue = $(this).text();
-                var parsedValue = parseToGermanNumber(rawValue);
-                $(this).text(parsedValue);
-            });
-        });
-</script>
-
 </head>
 
 <body>
@@ -1020,9 +985,9 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 					</div>
 					<div class="well col-md-2">
 						<input type="submit" value="<spring:message code="button.add"/>"
-							class="btn btn-primary btn-sm" /> or
-						<a href="<c:url value='/Project/projectslist' />?openProject=true&projectId=${projectId}">
-                            <spring:message code="button.cancel" /></a>
+							class="btn btn-primary btn-sm" /> or <a
+							href="<c:url value='/Project/projectslist' />?openProject=true&projectId=${projectId}"><spring:message
+								code="button.cancel" /></a>
 					</div>
 				</c:otherwise>
 			</c:choose>
@@ -1070,7 +1035,6 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 									path="project.projectName" id="project"
 									class="form-control input-sm" />
 								<%-- <select class="form-control input-sm" name="project" id="project">
-
 							<c:forEach items="${projectslist}" var="proj">
 								<option class="form-control input-sm" value="${proj.id}"
 									${proj.id == workPackage.project.id  ? 'selected' : ''}>${proj.projectName}</option>
@@ -1130,7 +1094,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 								code="generic.inCurrency" /> </label>
 						<div class="col-md-3">
 							<form:input type="text" path="offeredCost" id="offeredCost"
-								class="form-control input-sm localeNumber" />
+								class="form-control input-sm" />
 							<div class="has-error">
 								<form:errors path="offeredCost" class="help-inline" />
 							</div>
@@ -1144,7 +1108,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 								code="generic.inCurrency" /> </label>
 						<div class="col-md-3">
 							<form:input type="text" path="calculatedCost" id="calculatedCost"
-								class="form-control input-sm localeNumber" readonly="true" />
+								class="form-control input-sm" readonly="true" />
 							<div class="has-error">
 								<form:errors path="calculatedCost" class="help-inline" />
 							</div>
@@ -1158,7 +1122,7 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 								code="generic.inCurrency" /> </label>
 						<div class="col-md-3">
 							<form:input type="text" path="totalCost" id="totalCost"
-								class="form-control input-sm localeNumber" readonly="true" />
+								class="form-control input-sm" readonly="true" />
 
 							<div class="has-error">
 								<form:errors path="totalCost" class="help-inline" />
@@ -1175,42 +1139,30 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 						</label>
 						<div class="col-md-3">
 							<form:input type="text" path="effectiveCost" id="effectiveCost"
-								class="form-control input-sm localeNumber" readonly="true" />
+								class="form-control input-sm" readonly="true" />
 							<div class="has-error">
 								<form:errors path="effectiveCost" class="help-inline" />
 							</div>
 						</div>
 					</div>
 				</div>
-				<%--<div class="row">--%>
-					<%--<div class="form-group col-md-12">--%>
-						<%--<label class="col-md-2 control-lable" for="workDoneInPercent"><spring:message--%>
-								<%--code="workPackage.label.workDoneInPercent" /> </label>--%>
-						<%--<div class="col-md-3">--%>
-							<%--<form:select path="workDoneInPercent" cssClass="form-control input-sm">--%>
-								<%--<form:option value="0" label="0" />--%>
-								<%--<form:option value="10" label="10" />--%>
-								<%--<form:option value="20" label="20" />--%>
-								<%--<form:option value="30" label="30" />--%>
-								<%--<form:option value="40" label="40" />--%>
-								<%--<form:option value="50" label="50" />--%>
-								<%--<form:option value="60" label="60" />--%>
-								<%--<form:option value="70" label="70" />--%>
-								<%--<form:option value="80" label="80" />--%>
-								<%--<form:option value="90" label="90" />--%>
-								<%--<form:option value="100" label="100" />--%>
-							<%--</form:select>--%>
-							<%--<div class="has-error">--%>
-								<%--<form:errors path="workDoneInPercent" class="help-inline" />--%>
-							<%--</div>--%>
-						<%--</div>--%>
-					<%--</div>--%>
-				<%--</div>--%>
 				<div class="row">
 					<div class="form-group col-md-12">
-						<label class="col-md-2 control-lable" for="status">
-							<spring:message code="workPackage.label.status" />
-                        </label>
+						<label class="col-md-2 control-lable" for="workDoneInPercent"><spring:message
+								code="workPackage.label.workDoneInPercent" /> </label>
+						<div class="col-md-3">
+							<form:input type="text" path="workDoneInPercent" value="0"
+								id="workDoneInPercent" class="form-control input-sm" />
+							<div class="has-error">
+								<form:errors path="workDoneInPercent" class="help-inline" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label class="col-md-2 control-lable" for="status"><spring:message
+								code="workPackage.label.status" /> </label>
 						<div class="col-md-3">
 							<%-- <form:input type="text" path="status" id="status"
 								class="form-control input-sm" />
@@ -1267,7 +1219,14 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 										<th><spring:message code="payment.label.amount" /></th>
 										<th><spring:message code="payment.label.remarks" /></th>
 										<th><spring:message code="payment.label.finishedIn" /></th>
-										<th></th>
+										<sec:authorize
+											access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
+											<th width="100"></th>
+										</sec:authorize>
+										<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+											<th width="100"></th>
+										</sec:authorize>
+
 									</tr>
 								</thead>
 								<tbody>
@@ -1278,25 +1237,23 @@ var endYear = '<c:out value="${yearNameEnd}"/>';
 											<td>${payment.billed}</td>
 											<td>${payment.billing}</td>
 											<td>${payment.time}</td>
-                                            <td><span class="localeNumber">${payment.amount}</span></td>
+											<td>${payment.amount}</td>
 											<td>${payment.remarks}</td>
 											<td>${payment.finishedIn}</td>
-                                            <td>
+
 											<sec:authorize
 												access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
-												<a
+												<td><a
 													href="<c:url value='/Payment/edit-payment-${payment.id}' />"
-													class="btn btn-success " title="<spring:message code="button.edit" />">
-                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                </a>
+													class="btn btn-success "><spring:message
+															code="button.edit" /></a></td>
 											</sec:authorize>
 											<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
-												<a href="<c:url value='/Payment/delete-payment-${payment.id}' />"
-													class="btn btn-danger" title="<spring:message code="button.delete" />">
-                                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                                </a>
+												<td><a
+													href="<c:url value='/Payment/delete-payment-${payment.id}' />"
+													class="btn btn-danger"><spring:message
+															code="button.delete" /></a></td>
 											</sec:authorize>
-                                            </td>
 										</tr>
 									</c:forEach>
 								</tbody>
