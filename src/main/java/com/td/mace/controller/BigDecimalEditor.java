@@ -16,8 +16,6 @@ public class BigDecimalEditor extends PropertyEditorSupport {
         NumberFormat formatter;
         if(text.contains(",") && text.contains(".") || text.contains(",")){
             formatter = NumberFormat.getNumberInstance(Locale.GERMAN);
-        }else if(text.contains(".")) {
-            formatter = NumberFormat.getNumberInstance(Locale.ENGLISH);
         }else{
             formatter = NumberFormat.getNumberInstance(Locale.ENGLISH);
         }
