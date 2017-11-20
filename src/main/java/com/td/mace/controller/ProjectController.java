@@ -391,7 +391,7 @@ public class ProjectController {
 			if (workPackages != null) {
 				for (WorkPackage workPackage : workPackages) {
 					if (workPackage.getWorkPackageName() != null
-							&& workPackage.getWorkPackageName().contains(workPackageName)) {
+							&& workPackage.getWorkPackageName().toLowerCase().contains(workPackageName.toLowerCase())) {
 						return true;
 					}
 				}

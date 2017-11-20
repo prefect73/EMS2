@@ -100,7 +100,7 @@ $(document).ready(function () {
     $("#isFinishedProject").change(function() {
     	var projectsDataTable = $('#projectsTable').DataTable();
         if(this.checked) {
-        	projectsDataTable.columns(0).search('true').draw();
+        	projectsDataTable.columns(0).search('false').draw();
         }else{
         	projectsDataTable.columns(0).search('').draw();
         }
