@@ -58,10 +58,10 @@ public class Project implements Serializable {
 	@OneToMany(mappedBy = "project")
 	private List<WorkPackage> workPackages = new ArrayList<WorkPackage>();
 
-	@Transient
+	@Column(name = "work_done_in_percent", nullable = false)
 	private Integer workDoneInPercent;
 
-	@Transient
+	@Column(name = "status")
 	private String status;
 
 	@Transient

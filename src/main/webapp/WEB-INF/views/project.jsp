@@ -56,7 +56,47 @@
                     var parsedValue = parseToGermanNumber(rawValue);
                     $(this).val(parsedValue);
                 });
-			});
+
+                $( "#status" ).change(function() {
+                    if($(this).val() == 'Planmäßig'){
+                        $(this).css('color','lightgreen');
+                    } else if($(this).val() == 'Verzögert'){
+                        $(this).css('color','orange');
+                    }  else if($(this).val() == 'Problem'){
+                        $(this).css('color','red');
+                    } else if($(this).val() == 'Abgeschlossen'){
+                        $(this).css('color','green');
+                    }
+                });
+
+                var statusVal = '<c:out value="${project.status}"/>';
+                if(statusVal == 'Planmäßig'){
+                    $('#status option[value=Planmäßig]').attr('selected','selected');
+                    $('#status').css('color','lightgreen');
+                } else if(statusVal == 'Verzögert'){
+                    $('#status option[value=Verzögert]').attr('selected','selected');
+                    $('#status').css('color','orange');
+                }  else if(statusVal == 'Problem'){
+                    $('#status option[value=Problem]').attr('selected','selected');
+                    $('#status').css('color','red');
+                } else if(statusVal == 'Abgeschlossen'){
+                    $('#status option[value=Abgeschlossen]').attr('selected','selected');
+                    $('#status').css('color','green');
+                } else if(statusVal == 'Scheduled'){
+                    $('#status option[value=Scheduled]').attr('selected','selected');
+                    $('#status').css('color','lightgreen');
+                } else if(statusVal == 'Delayed'){
+                    $('#status option[value=Delayed]').attr('selected','selected');
+                    $('#status').css('color','orange');
+                }  else if(statusVal == 'Problem'){
+                    $('#status option[value=Problem]').attr('selected','selected');
+                    $('#status').css('color','red');
+                } else if(statusVal == 'Finished'){
+                    $('#status option[value=Finished]').attr('selected','selected');
+                    $('#status').css('color','green');
+                }
+
+            });
 </script>
 </head>
 

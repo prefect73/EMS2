@@ -104,12 +104,12 @@ public class ProjectController {
             if(workPackages != null && workPackages.size() > 0){
 
                 // (1)
-                Integer sumOfPercentage = 0;
+//                Integer sumOfPercentage = 0;
                 BigDecimal projectOfferedCost = new BigDecimal(0);
                 for(WorkPackage workPackage : project.getWorkPackages()){
-                    if(workPackage.getWorkDoneInPercent() != null) {
-                        sumOfPercentage += workPackage.getWorkDoneInPercent();
-                    }
+//                    if(workPackage.getWorkDoneInPercent() != null) {
+//                        sumOfPercentage += workPackage.getWorkDoneInPercent();
+//                    }
 
                     // (3)
                     if(workPackage.getOfferedCost() != null){
@@ -120,7 +120,7 @@ public class ProjectController {
 
                 project.setOfferedCost(projectOfferedCost);
 
-                projectPercentage = sumOfPercentage/workPackages.size();
+//                projectPercentage = sumOfPercentage/workPackages.size();
 
 				// (2)
                 Boolean isWorkPackagesFinished = checkIfAllPackagesFinished(workPackages);
@@ -137,7 +137,7 @@ public class ProjectController {
                 }
             }
             project.setIsAllocatedToLoggedUser(isAllocatedToLoggedUser);
-            project.setWorkDoneInPercent(projectPercentage);
+//            project.setWorkDoneInPercent(projectPercentage);
         }
 
         if(openProject && projectId != null){

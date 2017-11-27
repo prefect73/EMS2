@@ -105,7 +105,8 @@
                                 <td>
                                     <c:if test="${project.isWorkPackagesFinished}">
                                         <i class="fa fa-check-square fa-2x" style="color: green;" aria-hidden="true"></i>
-                                    </c:if></td>
+                                    </c:if>
+								</td>
 								<td style="text-align: center;"><sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 										<a class="btn btn-primary" title="<spring:message code="workPackageslist.addNewWorkPackage"/>"
 											href="<c:url value='/WorkPackage/newworkPackage?projectId=${project.id}' />"> <i class="fa fa-plus" aria-hidden="true"></i>
@@ -119,7 +120,8 @@
 										<a href="<c:url value='/Project/delete-project-${project.projectNumber}' />" title="<spring:message code="button.delete"/>" class="btn btn-danger">
 											<i class="fa fa-trash" aria-hidden="true"></i>
 										</a>
-									</sec:authorize></td>
+									</sec:authorize>
+                                </td>
 							</tr>
 						</c:forEach>
 					</tbody>
