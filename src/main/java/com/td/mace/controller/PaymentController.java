@@ -1,11 +1,9 @@
 package com.td.mace.controller;
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
+import com.td.mace.model.Payment;
+import com.td.mace.model.WorkPackage;
+import com.td.mace.service.PaymentService;
+import com.td.mace.service.WorkPackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
@@ -20,10 +18,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import com.td.mace.model.Payment;
-import com.td.mace.model.WorkPackage;
-import com.td.mace.service.PaymentService;
-import com.td.mace.service.WorkPackageService;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/Payment")
@@ -83,8 +81,23 @@ public class PaymentController {
 			int workPackageId = (Integer
 					.parseInt(request.getParameter("workPackageId")));
 			WorkPackage workPackage = workPackageService.findById(workPackageId);
-			payment.setWorkPackage(workPackage);	
-		}
+			payment.setWorkPackage(workPackage);
+
+			// check if wp exists in model list
+            List<WorkPackage> currWPList = (List<WorkPackage>) model.get("workPackagesList");
+            Boolean wpExists = false;
+            for (WorkPackage workPackage1: currWPList) {
+                   if(workPackage1.getId() == workPackageId){
+                       wpExists = true;
+                       break;
+                   }
+            }
+
+            if(!wpExists){
+                currWPList.add(workPackage);
+            }
+        }
+
 		model.addAttribute("payment", payment);
 		model.addAttribute("edit", false);
 		/*
