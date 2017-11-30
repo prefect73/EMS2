@@ -123,8 +123,8 @@ public class ProjectController {
 //                projectPercentage = sumOfPercentage/workPackages.size();
 
 				// (2)
-                Boolean isWorkPackagesFinished = checkIfAllPackagesFinished(workPackages);
-                project.setIsWorkPackagesFinished(isWorkPackagesFinished);
+//                Boolean isWorkPackagesFinished = checkIfAllPackagesFinished(workPackages);
+//                project.setIsWorkPackagesFinished(isWorkPackagesFinished);
             }
 
             // (4)

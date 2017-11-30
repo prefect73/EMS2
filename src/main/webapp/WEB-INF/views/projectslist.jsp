@@ -102,11 +102,27 @@
 								</sec:authorize>
 								<td><span class="localeNumber">${project.effectiveCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
                                 <td>${project.workDoneInPercent}</td>
-                                <td>
-                                    <c:if test="${project.isWorkPackagesFinished}">
-                                        <i class="fa fa-check-square fa-2x" style="color: green;" aria-hidden="true"></i>
-                                    </c:if>
-								</td>
+                                <td style="text-align: center;">
+                                    <spring:message code="workPackage.status.select.scheduled" var="scheduled" />
+                                    <spring:message code="workPackage.status.select.delayed" var="delayed" />
+                                    <spring:message code="workPackage.status.select.problem" var="problem" />
+                                    <spring:message code="workPackage.status.select.finished" var="finished" /> <c:choose>
+                                    <c:when test="${fn:containsIgnoreCase(project.status,scheduled)}">
+                                        <i class="fa fa-calendar-check-o fa-2x" style="color: lightgreen;" aria-hidden="true" title="${project.status}"></i>
+                                    </c:when>
+                                    <c:when test="${fn:containsIgnoreCase(project.status,delayed)}">
+                                        <i class="fa fa-clock-o fa-2x" style="color: orange;" aria-hidden="true" title="${project.status}"></i>
+                                    </c:when>
+                                    <c:when test="${fn:containsIgnoreCase(project.status,problem)}">
+                                        <i class="fa fa-exclamation-triangle fa-2x" style="color: red;" aria-hidden="true" title="${project.status}"></i>
+                                    </c:when>
+                                    <c:when test="${fn:containsIgnoreCase(project.status,finished)}">
+                                        <i class="fa fa-check-square fa-2x" style="color: green;" aria-hidden="true" title="${project.status}"></i>
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${project.status}
+                                    </c:otherwise>
+                                </c:choose></td>
 								<td style="text-align: center;"><sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
                                         <input id="inputAddWpTemplate" type="hidden" value="<c:url value='/WorkPackage/newworkPackage?projectId={<projectId>}'/>">
 										<a class="btn btn-primary" title="<spring:message code="workPackageslist.addNewWorkPackage"/>"
