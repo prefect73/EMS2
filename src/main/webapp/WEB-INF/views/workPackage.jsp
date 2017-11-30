@@ -83,9 +83,9 @@
             console.log("teamLeadView=" + teamLeadView);
             console.log("if(teamLeadView == 'true') " +(teamLeadView == 'true'));
             if(teamLeadView == 'true'){
-                $( ".effectiveDays" ).attr('disabled','disabled');
+                $( ".effectiveDays" ).prop("disabled", true);
             }else{
-                $( ".effectiveDays" ).removeAttr('disabled');
+                $( ".effectiveDays" ).prop("disabled", false);
             }
         }
         $( document ).submit(function() {
@@ -957,6 +957,7 @@
                 //alert("857");
                 /* effectiveDistributionPopups(); */
             });
+            disabledFieldsForTeamLead();
         }
 
 
