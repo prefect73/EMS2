@@ -48,7 +48,7 @@ function showWorkPackageModal(projectId, projectName) {
 
     var plUtils = new ProjectListUtils();
 
-    $('#modalBody').load(projectId + '/findWorkingPackages',
+    $('#modalTableContainer').load(projectId + '/findWorkingPackages',
         function (response, status, xhr) {
             // convert all numbers to German
             $('.localeNumber').each(function (index, value) {
@@ -61,13 +61,15 @@ function showWorkPackageModal(projectId, projectName) {
                 // filter work packages, if needed
                 var workPackageName = plUtils.urlParam("workPackageName");
                 if(workPackageName != null && workPackageName != undefined && workPackageName != ""){
-                	var filterWorkpackage = $('#modalBody .dataTables_filter input[type="search"]');
+                	var filterWorkpackage = $('#modalTableContainer .dataTables_filter input[type="search"]');
                 	filterWorkpackage.val(workPackageName)
                 	filterWorkpackage.trigger(jQuery.Event( 'keyup', { which: 50 }))
                 }	
             };
             $('#workPackageModalTable').dataTable(plUtils.datatableInitParams);
             $('#modalTitle').html($('#workPackageModalTable').attr('data-project-name'));
+            var addNewWPTemplate = $('input#inputAddWpTemplate').val();
+            $('a#addNewWPFromPopup').attr('href', addNewWPTemplate.replace('{<projectId>}', projectId));
             
             // open modal
             $('#workPackagesListModal').modal({

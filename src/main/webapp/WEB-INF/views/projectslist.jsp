@@ -124,8 +124,9 @@
                                     </c:otherwise>
                                 </c:choose></td>
 								<td style="text-align: center;"><sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
+                                        <input id="inputAddWpTemplate" type="hidden" value="<c:url value='/WorkPackage/newworkPackage?projectId={<projectId>}'/>">
 										<a class="btn btn-primary" title="<spring:message code="workPackageslist.addNewWorkPackage"/>"
-											href="<c:url value='/WorkPackage/newworkPackage?projectId=${project.id}' />"> <i class="fa fa-plus" aria-hidden="true"></i>
+											href="#' />"> <i class="fa fa-plus" aria-hidden="true"></i>
 										</a>
 
 									</sec:authorize> <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
@@ -156,7 +157,12 @@
 						<span id="modalTitle"></span>
 					</h4>
 				</div>
-				<div id="modalBody" class="modal-body"></div>
+				<div id="modalBody" class="modal-body">
+                    <a id="addNewWPFromPopup" class="btn btn-primary" style="position: absolute;" title="<spring:message code="workPackageslist.addNewWorkPackage"/>"
+                       href="<c:url value='/WorkPackage/newworkPackage?projectId=${project.id}' />"> <i class="fa fa-plus" aria-hidden="true"></i>
+                    </a>
+                    <div id ="modalTableContainer"></div>
+				</div>
 			</div>
 		</div>
 		<!-- /.modal-content -->
