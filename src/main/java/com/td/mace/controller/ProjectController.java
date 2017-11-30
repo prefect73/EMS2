@@ -1,12 +1,13 @@
 package com.td.mace.controller;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
+import com.td.mace.model.Project;
+import com.td.mace.model.User;
+import com.td.mace.model.WorkPackage;
+import com.td.mace.model.WorkPackageUserAllocation;
+import com.td.mace.service.ProjectService;
+import com.td.mace.service.UserService;
+import com.td.mace.service.WorkPackageService;
+import com.td.mace.service.WorkPackageUserAllocationService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +23,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
-import com.td.mace.model.Project;
-import com.td.mace.model.User;
-import com.td.mace.model.WorkPackage;
-import com.td.mace.model.WorkPackageUserAllocation;
-import com.td.mace.service.ProjectService;
-import com.td.mace.service.UserService;
-import com.td.mace.service.WorkPackageService;
-import com.td.mace.service.WorkPackageUserAllocationService;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/Project")
@@ -123,8 +115,8 @@ public class ProjectController {
 //                projectPercentage = sumOfPercentage/workPackages.size();
 
 				// (2)
-//                Boolean isWorkPackagesFinished = checkIfAllPackagesFinished(workPackages);
-//                project.setIsWorkPackagesFinished(isWorkPackagesFinished);
+                Boolean isWorkPackagesFinished = "Abgeschlossen".equalsIgnoreCase(project.getStatus());
+                project.setIsWorkPackagesFinished(isWorkPackagesFinished);
             }
 
             // (4)
