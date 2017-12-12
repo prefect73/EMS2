@@ -16,6 +16,7 @@
 			<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 				<th><spring:message code="workPackage.label.offeredCost" /></th>
 				<th><spring:message code="workPackage.label.calculatedCost" /></th>
+				<th><spring:message code="workPackage.label.paymentPercentage"/></th>
 				<th><spring:message code="workPackage.label.totalCost" /></th>
 				<th><spring:message code="workPackage.label.effectiveCost" /></th>
 				<th><spring:message code="workPackage.label.status" /></th>
@@ -30,6 +31,7 @@
 				<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 					<td><span class="localeNumber">${workPackage.offeredCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
 					<td><span class="localeNumber">${workPackage.calculatedCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
+					<td><span class="localeNumber">${workPackage.paymentPercentage}</span></td>
 					<td><span class="localeNumber">${workPackage.totalCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
 					<td><span class="localeNumber">${workPackage.effectiveCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
 					<td style="text-align: center;"><spring:message code="workPackage.status.select.scheduled" var="scheduled" /> <spring:message

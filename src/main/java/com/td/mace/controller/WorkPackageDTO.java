@@ -20,6 +20,8 @@ public class WorkPackageDTO {
 
     private Integer workDoneInPercent;
 
+    private BigDecimal paymentPercentage;
+
     private String status;
 
 
@@ -31,6 +33,7 @@ public class WorkPackageDTO {
         this.totalCost = workPackage.getTotalCost();
         this.effectiveCost = workPackage.getEffectiveCost();
         this.workDoneInPercent = workPackage.getWorkDoneInPercent();
+        this.paymentPercentage = PaymentUtils.calculatePaymentPercentage(workPackage);
         this.status = workPackage.getStatus();
 
     }
@@ -91,6 +94,14 @@ public class WorkPackageDTO {
         this.workDoneInPercent = workDoneInPercent;
     }
 
+    public BigDecimal getPaymentPercentage() {
+        return paymentPercentage;
+    }
+
+    public void setPaymentPercentage(BigDecimal paymentPercentage) {
+        this.paymentPercentage = paymentPercentage;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -99,17 +110,20 @@ public class WorkPackageDTO {
         this.status = status;
     }
 
+
     @Override
     public String toString() {
-        return "WorkPackageDTO{" +
-                "id=" + id +
-                ", workPackageName='" + workPackageName + '\'' +
-                ", offeredCost=" + offeredCost +
-                ", calculatedCost=" + calculatedCost +
-                ", totalCost=" + totalCost +
-                ", effectiveCost=" + effectiveCost +
-                ", workDoneInPercent=" + workDoneInPercent +
-                ", status='" + status + '\'' +
-                '}';
+        final StringBuilder sb = new StringBuilder("WorkPackageDTO{");
+        sb.append("id=").append(id);
+        sb.append(", workPackageName='").append(workPackageName).append('\'');
+        sb.append(", offeredCost=").append(offeredCost);
+        sb.append(", calculatedCost=").append(calculatedCost);
+        sb.append(", totalCost=").append(totalCost);
+        sb.append(", effectiveCost=").append(effectiveCost);
+        sb.append(", workDoneInPercent=").append(workDoneInPercent);
+        sb.append(", paymentPercentage=").append(paymentPercentage);
+        sb.append(", status='").append(status).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }
