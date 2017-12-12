@@ -1,22 +1,13 @@
 package com.td.mace.model;
 
+import com.td.mace.controller.PaymentUtils;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "work_package")
@@ -52,10 +43,12 @@ public class WorkPackage implements Serializable {
 	@Column(name = "effective_cost", precision = 10, scale = 2)
 	private BigDecimal effectiveCost=  new BigDecimal("0.00");
 
-	
-	@Column(name = "work_done_in_percent", nullable = false)
+
+    @Column(name = "work_done_in_percent")
 	private Integer workDoneInPercent;
-	
+
+    @Transient
+    private BigDecimal paymentPercentage;
 	
 	@Column(name = "status", nullable = false)
 	private String status;
@@ -156,4 +149,11 @@ public class WorkPackage implements Serializable {
 		this.workPackageUserAllocations = workPackageUserAllocations;
 	}
 
+    public BigDecimal getPaymentPercentage() {
+        return PaymentUtils.calculatePaymentPercentage(this);
+    }
+
+    public void setPaymentPercentage(BigDecimal paymentPercentage) {
+        this.paymentPercentage = paymentPercentage;
+    }
 }

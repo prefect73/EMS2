@@ -1154,6 +1154,20 @@
 			</div>
 			<div class="row">
 				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="paymentPercentage">
+						<spring:message code="workPackage.label.paymentPercentage"/>
+					</label>
+					<div class="col-md-3">
+						<form:input type="text" path="paymentPercentage" id="paymentPercentage"
+									class="form-control input-sm localeNumber" readonly="true"/>
+						<div class="has-error">
+							<form:errors path="paymentPercentage" class="help-inline"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="totalCost"><spring:message
 							code="workPackage.label.totalCost" /> <spring:message
 							code="generic.inCurrency" /> </label>
@@ -1183,6 +1197,8 @@
 					</div>
 				</div>
 			</div>
+			<form:input type="hidden" path="workDoneInPercent" value="0"
+						id="workDoneInPercent" class="form-control input-sm"/>
 			<%--<div class="row">--%>
 			<%--<div class="form-group col-md-12">--%>
 			<%--<label class="col-md-2 control-lable" for="workDoneInPercent"><spring:message--%>
