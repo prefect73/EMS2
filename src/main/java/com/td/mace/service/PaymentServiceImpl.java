@@ -1,14 +1,14 @@
 package com.td.mace.service;
 
-import java.util.List;
-
+import com.td.mace.controller.PaymentUtils;
+import com.td.mace.dao.PaymentDao;
+import com.td.mace.model.Payment;
+import com.td.mace.model.WorkPackage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.td.mace.dao.PaymentDao;
-import com.td.mace.model.Payment;
-import com.td.mace.model.WorkPackage;
+import java.util.List;
 
 @Service("paymentService")
 @Transactional
@@ -62,7 +62,13 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 	
 	public List<Payment> findAllPaymentsByWorkPackage(WorkPackage workPackage) {
-		return paymentDao.findAllPaymentsByWorkPackage(workPackage);
+        List<Payment> payments = paymentDao.findAllPaymentsByWorkPackage(workPackage);
+        if (payments != null) {
+            for (Payment payment : payments) {
+                payment.setPaymentPercentage(PaymentUtils.calculatePaymentPercentage(payment));
+            }
+        }
+        return payments;
 	}
 
 }

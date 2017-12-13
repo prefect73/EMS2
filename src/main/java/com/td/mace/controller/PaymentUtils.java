@@ -1,5 +1,6 @@
 package com.td.mace.controller;
 
+import com.td.mace.model.Payment;
 import com.td.mace.model.Project;
 import com.td.mace.model.WorkPackage;
 
@@ -38,4 +39,11 @@ public class PaymentUtils {
         return paymentPercentage;
     }
 
+    public static BigDecimal calculatePaymentPercentage(Payment payment) {
+        WorkPackage workPackage = payment.getWorkPackage();
+        if (workPackage != null && workPackage.getOfferedCost() != null && payment.getAmount() != null) {
+            return payment.getAmount().multiply(new BigDecimal(100)).divide(workPackage.getOfferedCost(), 2, RoundingMode.HALF_UP);
+        }
+        return BigDecimal.ZERO;
+    }
 }

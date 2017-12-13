@@ -140,3 +140,8 @@ body.modal-open .modal-body {
 	max-height: 550px;
 	overflow-y: auto;
 }
+
+.projectName {
+    max-width: 270px;
+    white-space: normal !important;
+}

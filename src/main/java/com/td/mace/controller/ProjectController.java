@@ -220,6 +220,8 @@ public class ProjectController {
 	@RequestMapping(value = { "/edit-project-{projectNumber}" }, method = RequestMethod.GET)
 	public String editProject(@PathVariable String projectNumber, ModelMap model) {
 		Project project = projectService.findByProjectNumber(projectNumber);
+        projectService.updateCalculatedCost(project);
+        projectService.calculatePaymentPercentage(project);
 		model.addAttribute("project", project);
 		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));

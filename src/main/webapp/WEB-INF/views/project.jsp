@@ -270,19 +270,49 @@
 			</div>
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="effectiveCost">
-						<spring:message code="project.label.effectiveCost" /> <spring:message
-							code="generic.inCurrency" />
-					</label>
-					<div class="col-md-3">
-						<form:input type="text" path="effectiveCost" id="effectiveCost"
-							class="form-control input-sm localeNumber" readonly="true" />
-						<div class="has-error">
-							<form:errors path="effectiveCost" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div>
+                    <label class="col-md-2 control-lable" for="calculatedCost"> <spring:message
+                            code="project.label.calculatedCost"/> <spring:message
+                            code="generic.inCurrency"/>
+                    </label>
+                    <div class="col-md-3">
+                        <form:input type="text" path="calculatedCost" id="totalCost"
+                                    class="form-control input-sm localeNumber" readonly="true"/>
+                        <div class="has-error">
+                            <form:errors path="calculatedCost" class="help-inline"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="col-md-2 control-lable" for="effectiveCost">
+                        <spring:message code="project.label.effectiveCost" /> <spring:message
+                            code="generic.inCurrency" />
+                    </label>
+                    <div class="col-md-3">
+                        <form:input type="text" path="effectiveCost" id="effectiveCost"
+                                    class="form-control input-sm localeNumber" readonly="true" />
+                        <div class="has-error">
+                            <form:errors path="effectiveCost" class="help-inline" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="col-md-2 control-lable" for="effectiveCost">
+                        <spring:message code="project.label.paymentPercentage"/> <spring:message
+                            code="generic.inCurrency"/>
+                    </label>
+                    <div class="col-md-3">
+                        <form:input type="text" path="paymentPercentage" id="paymentPercentage"
+                                    class="form-control input-sm localeNumber" readonly="true"/>
+                        <div class="has-error">
+                            <form:errors path="paymentPercentage" class="help-inline"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="form-group col-md-12">
                     <label class="col-md-2 control-lable" for="workDoneInPercent">

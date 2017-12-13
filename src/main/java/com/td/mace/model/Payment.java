@@ -1,18 +1,8 @@
 package com.td.mace.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.Max;
 
 @Entity
 @Table(name = "payment")
@@ -39,9 +29,11 @@ public class Payment implements Serializable {
 	@Column(name = "billed")
 	private String billed;
 
-	@Max(value = 100)
-	@Column(name = "finished_in")
+    @Transient
 	private int finishedIn;
+
+    @Transient
+    private BigDecimal paymentPercentage;
 
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "work_package_id")
@@ -111,4 +103,11 @@ public class Payment implements Serializable {
 		this.workPackage = workPackage;
 	}
 
+    public BigDecimal getPaymentPercentage() {
+        return paymentPercentage;
+    }
+
+    public void setPaymentPercentage(BigDecimal paymentPercentage) {
+        this.paymentPercentage = paymentPercentage;
+    }
 }

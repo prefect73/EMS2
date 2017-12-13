@@ -82,7 +82,7 @@ public class PaymentController {
 					.parseInt(request.getParameter("workPackageId")));
 			WorkPackage workPackage = workPackageService.findById(workPackageId);
 			payment.setWorkPackage(workPackage);
-
+            payment.setPaymentPercentage(PaymentUtils.calculatePaymentPercentage(payment));
 			// check if wp exists in model list
             List<WorkPackage> currWPList = (List<WorkPackage>) model.get("workPackagesList");
             Boolean wpExists = false;
@@ -146,6 +146,7 @@ public class PaymentController {
 	@RequestMapping(value = { "/edit-payment-{id}" }, method = RequestMethod.GET)
 	public String editPayment(@PathVariable Integer id, ModelMap model) {
 		Payment payment = paymentService.findById(id);
+        payment.setPaymentPercentage(PaymentUtils.calculatePaymentPercentage(payment));
 		model.addAttribute("payment", payment);
 		model.addAttribute("yearNameStart",
 				environment.getProperty("year.name.start"));
