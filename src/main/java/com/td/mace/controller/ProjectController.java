@@ -88,6 +88,7 @@ public class ProjectController {
          * 3. calculate offered cost
 		 * 4. check if project is allocated to current logged user
 		 * 5. calculate Calculated Cost
+         * 6. calculate payment percentage
          */
 
         for(Project project : projects){
@@ -125,6 +126,9 @@ public class ProjectController {
 
             // (5)
             projectService.updateCalculatedCost(project);
+
+            // (6)
+            projectService.calculatePaymentPercentage(project);
 
             project.setIsAllocatedToLoggedUser(isAllocatedToLoggedUser);
         }

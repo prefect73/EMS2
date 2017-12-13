@@ -73,6 +73,9 @@ public class Project implements Serializable {
 	@Transient
 	private Boolean isAllocatedToLoggedUser;
 
+    @Transient
+    private BigDecimal paymentPercentage;
+
     public Integer getId() {
 		return id;
 	}
@@ -192,5 +195,13 @@ public class Project implements Serializable {
 
     public void setCalculatedCost(BigDecimal calculatedCost) {
         this.calculatedCost = calculatedCost;
+    }
+
+    public BigDecimal getPaymentPercentage() {
+        return paymentPercentage;
+    }
+
+    public void setPaymentPercentage(BigDecimal paymentPercentage) {
+        this.paymentPercentage = paymentPercentage;
     }
 }

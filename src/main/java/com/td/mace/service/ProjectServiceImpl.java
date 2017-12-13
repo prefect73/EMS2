@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.td.mace.controller.PaymentUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -150,5 +151,10 @@ public class ProjectServiceImpl implements ProjectService {
             }
         }
         project.setCalculatedCost(totalPayments);
+    }
+
+    @Override
+    public void calculatePaymentPercentage(Project project) {
+        project.setPaymentPercentage(PaymentUtils.calculatePaymentPercentage(project));
     }
 }

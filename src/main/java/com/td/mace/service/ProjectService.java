@@ -32,4 +32,6 @@ public interface ProjectService {
     Integer getProjectIdByByWorkPackageId(Integer id);
 
     void updateCalculatedCost(Project project);
+
+    void calculatePaymentPercentage(Project project);
 }

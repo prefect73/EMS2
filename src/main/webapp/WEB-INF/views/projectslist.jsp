@@ -84,6 +84,7 @@
 								<th><spring:message code="project.label.calculatedCost" /></th>
 							</sec:authorize>
 							<th><spring:message code="project.label.effectiveCost" /></th>
+							<th><spring:message code="project.label.paymentPercentage" /></th>
                             <th><spring:message code="project.label.workDoneInPercent" /></th>
                             <th><spring:message code="project.label.status" /></th>
 							<th></th>
@@ -103,6 +104,7 @@
 									<td><span class="localeNumber">${project.calculatedCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
 								</sec:authorize>
 								<td><span class="localeNumber">${project.effectiveCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
+								<td><span class="localeNumber">${project.paymentPercentage}</span></td>
                                 <td>${project.workDoneInPercent}</td>
                                 <td style="text-align: center;">
                                     <spring:message code="workPackage.status.select.scheduled" var="scheduled" />
