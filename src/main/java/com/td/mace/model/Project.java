@@ -47,6 +47,9 @@ public class Project implements Serializable {
 	@Column(name = "effective_cost", precision = 10, scale = 2)
 	private BigDecimal effectiveCost=  new BigDecimal("0.00");
 
+    @Transient
+    private BigDecimal calculatedCost = new BigDecimal("0.00");
+
 	@Column(name = "year_name", precision = 10, scale = 2)
 	private String yearName;
 	
@@ -181,5 +184,13 @@ public class Project implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public BigDecimal getCalculatedCost() {
+        return calculatedCost;
+    }
+
+    public void setCalculatedCost(BigDecimal calculatedCost) {
+        this.calculatedCost = calculatedCost;
     }
 }

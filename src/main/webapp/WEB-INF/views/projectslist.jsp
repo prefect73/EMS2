@@ -81,6 +81,7 @@
 							<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 								<th><spring:message code="project.label.offeredCost" /></th>
 								<th><spring:message code="project.label.totalCost" /></th>
+								<th><spring:message code="project.label.calculatedCost" /></th>
 							</sec:authorize>
 							<th><spring:message code="project.label.effectiveCost" /></th>
                             <th><spring:message code="project.label.workDoneInPercent" /></th>
@@ -99,6 +100,7 @@
 								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 									<td><span class="localeNumber">${project.offeredCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
 									<td><span class="localeNumber">${project.totalCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
+									<td><span class="localeNumber">${project.calculatedCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
 								</sec:authorize>
 								<td><span class="localeNumber">${project.effectiveCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
                                 <td>${project.workDoneInPercent}</td>

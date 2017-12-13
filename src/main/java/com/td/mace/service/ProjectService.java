@@ -30,4 +30,6 @@ public interface ProjectService {
 	List<Project> findAllProjectsByYearNameAndUser(User user, String yearName, String showAll);
 
     Integer getProjectIdByByWorkPackageId(Integer id);
+
+    void updateCalculatedCost(Project project);
 }
