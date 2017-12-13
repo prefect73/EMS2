@@ -85,9 +85,10 @@ public class ProjectController {
         /**
          * 1. calculate work done for each project
          * 2. check if all work packages are finished
-         * // TODO bellow is a temporary solution because of the old data in DB
          * 3. calculate offered cost
 		 * 4. check if project is allocated to current logged user
+		 * 5. calculate Calculated Cost
+         * 6. calculate payment percentage
          */
 
         for(Project project : projects){
@@ -96,12 +97,8 @@ public class ProjectController {
             if(workPackages != null && workPackages.size() > 0){
 
                 // (1)
-//                Integer sumOfPercentage = 0;
                 BigDecimal projectOfferedCost = new BigDecimal(0);
                 for(WorkPackage workPackage : project.getWorkPackages()){
-//                    if(workPackage.getWorkDoneInPercent() != null) {
-//                        sumOfPercentage += workPackage.getWorkDoneInPercent();
-//                    }
 
                     // (3)
                     if(workPackage.getOfferedCost() != null){
@@ -111,8 +108,6 @@ public class ProjectController {
                 }
 
                 project.setOfferedCost(projectOfferedCost);
-
-//                projectPercentage = sumOfPercentage/workPackages.size();
 
 				// (2)
                 Boolean isWorkPackagesFinished = "Abgeschlossen".equalsIgnoreCase(project.getStatus());
@@ -128,8 +123,14 @@ public class ProjectController {
                    break;
                 }
             }
+
+            // (5)
+            projectService.updateCalculatedCost(project);
+
+            // (6)
+            projectService.calculatePaymentPercentage(project);
+
             project.setIsAllocatedToLoggedUser(isAllocatedToLoggedUser);
-//            project.setWorkDoneInPercent(projectPercentage);
         }
 
         if(openProject && projectId != null){
@@ -219,6 +220,8 @@ public class ProjectController {
 	@RequestMapping(value = { "/edit-project-{projectNumber}" }, method = RequestMethod.GET)
 	public String editProject(@PathVariable String projectNumber, ModelMap model) {
 		Project project = projectService.findByProjectNumber(projectNumber);
+        projectService.updateCalculatedCost(project);
+        projectService.calculatePaymentPercentage(project);
 		model.addAttribute("project", project);
 		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));

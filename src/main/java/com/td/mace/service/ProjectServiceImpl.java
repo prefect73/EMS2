@@ -1,11 +1,13 @@
 package com.td.mace.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.td.mace.controller.PaymentUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +27,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Autowired
 	private WorkPackageService workPackageService;
-	
+
 	public Project findById(int id) {
 		return projectDao.findById(id);
 	}
@@ -75,13 +77,13 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<Project> findAllProjects() {
 		return projectDao.findAllProjects();
 	}
-	
-	
-	
+
+
+
 	public List<Project> findAllProjectsBySsoId(String ssoId) {
 		return projectDao.findAllProjectsBySsoId(ssoId);
-	}	
-	
+	}
+
 	@Override
 	public boolean isProjectNumberUnique(Integer id, String projectNumber) {
 		Project project = findByProjectNumber(projectNumber);
@@ -93,7 +95,7 @@ public class ProjectServiceImpl implements ProjectService {
 		Project project = findByProjectName(projectName);
 		return (project == null || ((id != null) && (project.getId() == id)));
 	}
-		
+
 	@Override
 	public List<Project> findAllProjectsByYearNameAndUser(User user, String yearName, String showAll) {
 		List<Project> allProjects = new ArrayList<Project>();
@@ -122,14 +124,14 @@ public class ProjectServiceImpl implements ProjectService {
 			}
 		}
 		allProjects.addAll(allProjectsSet);
-		
+
 		for (Iterator iterator = allProjects.iterator();  iterator.hasNext();) {
 			Project project = (Project) iterator.next();
 			if(project.getWorkPackages().size() == 0){
 				iterator.remove();
 			}
 		}
-		
+
 		return allProjects;
 	}
 
@@ -137,4 +139,22 @@ public class ProjectServiceImpl implements ProjectService {
 	public Integer getProjectIdByByWorkPackageId(Integer workPackageId) {
 		return projectDao.getProjectIdByByWorkPackageId(workPackageId);
 	}
+
+    @Override
+    public void updateCalculatedCost(Project project) {
+        List<WorkPackage> workPackages = project.getWorkPackages();
+        BigDecimal totalPayments = new BigDecimal("0.00");
+        for (WorkPackage workPackage: workPackages){
+            BigDecimal calculatedCost = workPackage.getCalculatedCost();
+            if(calculatedCost != null) {
+                totalPayments = totalPayments.add(calculatedCost);
+            }
+        }
+        project.setCalculatedCost(totalPayments);
+    }
+
+    @Override
+    public void calculatePaymentPercentage(Project project) {
+        project.setPaymentPercentage(PaymentUtils.calculatePaymentPercentage(project));
+    }
 }

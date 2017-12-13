@@ -76,13 +76,15 @@
 						<tr>
 							<th>isFinishedProject</th>
 							<th>isAllocatedToLoggedUser</th>
-							<th><spring:message code="project.label.projectName" /></th>
+                            <th class="projectName"><spring:message code="project.label.projectName"/></th>
 							<th><spring:message code="project.label.customerName" /></th>
 							<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 								<th><spring:message code="project.label.offeredCost" /></th>
 								<th><spring:message code="project.label.totalCost" /></th>
+								<th><spring:message code="project.label.calculatedCost" /></th>
 							</sec:authorize>
 							<th><spring:message code="project.label.effectiveCost" /></th>
+							<th><spring:message code="project.label.paymentPercentage" /></th>
                             <th><spring:message code="project.label.workDoneInPercent" /></th>
                             <th><spring:message code="project.label.status" /></th>
 							<th></th>
@@ -93,14 +95,18 @@
 							<tr>
 								<td>${project.isWorkPackagesFinished}</td>
 								<td>${project.isAllocatedToLoggedUser}</td>
-								<td><a role="button" data-toggle="collapse" href="#project${project.id}" aria-expanded="true" aria-controls="project${project.id}"
-									onclick="showWorkPackageModal('${project.id}')">${project.projectName}</a></td>
+                                <td class="projectName"><a role="button" data-toggle="collapse"
+                                                           href="#project${project.id}" aria-expanded="true"
+                                                           aria-controls="project${project.id}"
+                                                           onclick="showWorkPackageModal('${project.id}')">${project.projectName}</a></td>
 								<td>${project.customerName}</td>
 								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
 									<td><span class="localeNumber">${project.offeredCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
 									<td><span class="localeNumber">${project.totalCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
+									<td><span class="localeNumber">${project.calculatedCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
 								</sec:authorize>
 								<td><span class="localeNumber">${project.effectiveCost}</span>&nbsp;<spring:message code="generic.currencySymbol" /></td>
+								<td><span class="localeNumber">${project.paymentPercentage}</span></td>
                                 <td>${project.workDoneInPercent}</td>
                                 <td style="text-align: center;">
                                     <spring:message code="workPackage.status.select.scheduled" var="scheduled" />

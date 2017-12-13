@@ -193,13 +193,13 @@ $( document ).ready(function() {
 
 			<div class="row">
 				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="finishedIn"><spring:message
-							code="payment.label.finishedIn" /> </label>
+					<label class="col-md-2 control-lable" for="paymentPercentage"><spring:message
+							code="payment.label.paymentPercentage"/> </label>
 					<div class="col-md-3">
-						<form:input type="text" path="finishedIn" id="finishedIn"
-							class="form-control input-sm" />
+						<form:input type="text" path="paymentPercentage" id="paymentPercentage"
+									class="form-control input-sm localeNumber" readonly="true"/>
 						<div class="has-error">
-							<form:errors path="finishedIn" class="help-inline" />
+							<form:errors path="paymentPercentage" class="help-inline"/>
 						</div>
 					</div>
 				</div>

@@ -1279,11 +1279,10 @@
 								<th><spring:message code="payment.label.project" /></th>
 								<th><spring:message code="payment.label.workPackage" /></th>
 								<th><spring:message code="payment.label.billed" /></th>
-								<th><spring:message code="payment.label.billing" /></th>
 								<th><spring:message code="payment.label.time" /></th>
 								<th><spring:message code="payment.label.amount" /></th>
 								<th><spring:message code="payment.label.remarks" /></th>
-								<th><spring:message code="payment.label.finishedIn" /></th>
+								<th><spring:message code="payment.label.paymentPercentage"/></th>
 								<th></th>
 							</tr>
 							</thead>
@@ -1293,11 +1292,10 @@
 									<td>${payment.workPackage.project.projectName}</td>
 									<td>${payment.workPackage.workPackageName}</td>
 									<td>${payment.billed}</td>
-									<td>${payment.billing}</td>
 									<td>${payment.time}</td>
 									<td><span class="localeNumber">${payment.amount}</span></td>
 									<td>${payment.remarks}</td>
-									<td>${payment.finishedIn}</td>
+									<td>${payment.paymentPercentage}</td>
 									<td>
 										<sec:authorize
 												access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
