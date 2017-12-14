@@ -29,6 +29,12 @@ public class Payment implements Serializable {
 	@Column(name = "billed")
 	private String billed;
 
+    @Column(name = "consultant_in_charge")
+	private String consultantInCharge;
+
+    @Column(name = "created_by")
+	private String createdBy;
+
     @Transient
 	private int finishedIn;
 
@@ -109,5 +115,21 @@ public class Payment implements Serializable {
 
     public void setPaymentPercentage(BigDecimal paymentPercentage) {
         this.paymentPercentage = paymentPercentage;
+    }
+
+    public String getConsultantInCharge() {
+        return consultantInCharge;
+    }
+
+    public void setConsultantInCharge(String consultantInCharge) {
+        this.consultantInCharge = consultantInCharge;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 }

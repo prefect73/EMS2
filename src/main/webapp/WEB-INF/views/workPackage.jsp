@@ -1290,7 +1290,9 @@
 								<th><spring:message code="payment.label.amount" /></th>
 								<th><spring:message code="payment.label.remarks" /></th>
 								<th><spring:message code="payment.label.paymentPercentage"/></th>
-								<th></th>
+                                <th><spring:message code="payment.label.consultantInCharge"/></th>
+                                <th><spring:message code="payment.label.createdBy"/></th>
+                                <th></th>
 							</tr>
 							</thead>
 							<tbody>
@@ -1303,6 +1305,8 @@
 									<td><span class="localeNumber">${payment.amount}</span></td>
 									<td>${payment.remarks}</td>
 									<td>${payment.paymentPercentage}</td>
+                                    <td>${payment.consultantInCharge}</td>
+                                    <td>${payment.createdBy}</td>
 									<td>
 										<sec:authorize
 												access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
