@@ -22,6 +22,9 @@
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="<c:url value='/static/jquery-editable-select/jquery-editable-select.js' />"></script>
+<link href="<c:url value='/static/jquery-editable-select/jquery-editable-select.css' />"
+          rel="stylesheet"></link>
 <script src="<c:url value='/static/js/number-parser.js' />"></script>
 <script>
 	function yearDropdownFill(startYear, endYear) {
@@ -95,7 +98,12 @@
                     $('#status option[value=Finished]').attr('selected','selected');
                     $('#status').css('color','green');
                 }
+                // customer name selectbox
 
+
+
+                // transform selectbox
+                $('#customerNameDropDown').editableSelect();
             });
 </script>
 </head>
@@ -161,21 +169,19 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="row">
-				<div class="form-group col-md-12">
-					<label class="col-md-2 control-lable" for="customerName"><spring:message
-							code="project.label.customerName" /> </label>
-					<div class="col-md-3">
-						<form:input type="text" path="customerName" id="customerName"
-							class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="customerName" class="help-inline" />
-						</div>
-					</div>
-				</div>
-			</div>
-
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="col-md-2 control-lable" for="customerNameDropDown">
+                        <spring:message code="project.label.customerName"/> </label>
+                    <div class="col-md-3">
+                        <form:select class="form-control input-sm" name="customerNameDropDown" path="customerName" id="customerNameDropDown">
+                            <c:forEach items="${customers}" var="customer">
+                                <form:option cssClass="form-control input-sm" value="${customer}" label="${customer}"/>
+                            </c:forEach>
+                        </form:select>
+                    </div>
+                </div>
+            </div>
 
 			<c:choose>
 				<c:when test="${edit}">

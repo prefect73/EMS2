@@ -23,7 +23,7 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 		ProjectDao {
 
 	static final Logger logger = LoggerFactory.getLogger(ProjectImpl.class);
-	
+
 	@Autowired
 	private UserDao userDao;
 
@@ -78,15 +78,15 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 		// list page. Let them lazy load.
 		// Uncomment below lines for eagerly fetching of projectProfiles if you
 		// want.
-		
+
 		  for(Project project : projects){
 			  Hibernate.initialize(project.getUsers());
 				Hibernate.initialize(project.getWorkPackages());
 		  }
-		 
+
 		return projects;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Project> findAllProjectsBySsoId(String ssoId) {
 		User user = userDao.findBySSO(ssoId);
@@ -116,4 +116,8 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 		delete(project);
 	}
 
+	@Override
+	public List<String> findAllProjectsCustomers() {
+		return  getCurrentSession().createSQLQuery("SELECT distinct customer_name FROM project").list();
+	}
 }

@@ -34,4 +34,6 @@ public interface ProjectService {
     void updateCalculatedCost(Project project);
 
     void calculatePaymentPercentage(Project project);
+
+    List<String> findAllProjectsCustomers();
 }
