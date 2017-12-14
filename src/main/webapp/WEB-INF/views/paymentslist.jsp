@@ -53,6 +53,7 @@
                 paymentsTableToFilter.columns(2).search('').draw();
             }
         });
+        $("#isBilled").trigger('change');
 	});
 </script>
 </head>
@@ -81,7 +82,7 @@
                                     <label class="control-label" for="isBilled"><spring:message code="payment.label.billed" /> </label>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="isBilled" name="isBilled" type="checkbox" value="" />
+                                    <input id="isBilled" name="isBilled" type="checkbox" value="" checked/>
                                 </div>
                             </div>
                         </div>
