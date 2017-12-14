@@ -113,10 +113,9 @@
 							</th>
 							<th><spring:message code="payment.label.remarks" />
 							</th>
-							<th><spring:message code="payment.label.finishedIn" />
-							</th>
+                            <th><spring:message code="payment.label.paymentPercentage"/></th>
                             <th></th>
-							
+
 						</tr>
 					</thead>
 					<tbody>
@@ -128,8 +127,7 @@
 								<td>${payment.time}</td>
 								<td>${payment.amount}</td>
 								<td>${payment.remarks}</td>
-								<td>${payment.finishedIn}</td>
-
+                                <td>${payment.paymentPercentage}</td>
 								<td>
 								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
 									<a

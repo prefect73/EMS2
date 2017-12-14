@@ -41,7 +41,9 @@ public class PaymentUtils {
 
     public static BigDecimal calculatePaymentPercentage(Payment payment) {
         WorkPackage workPackage = payment.getWorkPackage();
-        if (workPackage != null && workPackage.getOfferedCost() != null && payment.getAmount() != null) {
+        if (workPackage != null && workPackage.getOfferedCost() != null
+                && workPackage.getOfferedCost().compareTo(BigDecimal.ZERO) != 0
+                && payment.getAmount() != null) {
             return payment.getAmount().multiply(new BigDecimal(100)).divide(workPackage.getOfferedCost(), 2, RoundingMode.HALF_UP);
         }
         return BigDecimal.ZERO;

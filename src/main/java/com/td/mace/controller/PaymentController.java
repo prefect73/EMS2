@@ -59,6 +59,11 @@ public class PaymentController {
 	public String listPayments(ModelMap model) {
 
 		List<Payment> payments = paymentService.findAllPayments();
+		if (payments != null) {
+			for (Payment payment : payments) {
+				payment.setPaymentPercentage(PaymentUtils.calculatePaymentPercentage(payment));
+			}
+		}
 		model.addAttribute("payments", payments);
 		model.addAttribute("defaultLanguage",
 				environment.getProperty("default.language"));
