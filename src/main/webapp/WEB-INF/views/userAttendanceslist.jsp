@@ -22,25 +22,29 @@
 $(document).ready(function() {
 if($("#defaultLanguage").val() == 'german'){
 	$('#userAttendancesTable').DataTable({
-		"bSort": false
-    },{
         "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-        }
+        },
+        "bSort": false,
+        "pageLength": 20,
+        "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
     });
 	
 } else if ($("#defaultLanguage").val() == 'english'){
 	$('#userAttendancesTable').DataTable({
-		"bSort": false
+		"bSort": false,
+        "pageLength": 20,
+        "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
     });
 	
 } else {
 	$('#userAttendancesTable').DataTable({
-		"bSort": false
-    },{
+        "bSort": false,
         "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-        }
+        },
+        "pageLength": 20,
+        "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
     });
 }
 $('.sorting_disabled').css({"font-size": "0.9em"});

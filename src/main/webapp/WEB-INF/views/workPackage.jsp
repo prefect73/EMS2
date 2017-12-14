@@ -99,17 +99,24 @@
                 $('#paymentsTable').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-                    }
+                    },
+                    "pageLength": 20,
+                    "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
                 });
 
             } else if ($("#defaultLanguage").val() == 'english'){
-                $('#paymentsTable').DataTable();
+                $('#paymentsTable').DataTable({
+                    "pageLength": 20,
+                    "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
+				});
 
             } else {
                 $('#paymentsTable').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-                    }
+                    },
+                    "pageLength": 20,
+                    "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
                 });
 
             }
