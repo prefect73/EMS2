@@ -145,3 +145,13 @@ body.modal-open .modal-body {
     max-width: 270px;
     white-space: normal !important;
 }
+table.dataTable {
+    border-collapse: collapse !important;
+}
+input#customerNameDropDown{
+    background-color: white;
+}
+
+ul.es-list > li.es-visible{
+    border: none;
+}

@@ -149,6 +149,8 @@ public class ProjectController {
 	@RequestMapping(value = { "/newproject" }, method = RequestMethod.GET)
 	public String newProject(ModelMap model) {
 		Project project = new Project();
+        List<String> customers = projectService.findAllProjectsCustomers();
+        model.addAttribute("customers", customers);
 		model.addAttribute("project", project);
 		model.addAttribute("edit", false);
 		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
@@ -222,6 +224,8 @@ public class ProjectController {
 		Project project = projectService.findByProjectNumber(projectNumber);
         projectService.updateCalculatedCost(project);
         projectService.calculatePaymentPercentage(project);
+        List<String> customers = projectService.findAllProjectsCustomers();
+		model.addAttribute("customers", customers);
 		model.addAttribute("project", project);
 		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
 		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));

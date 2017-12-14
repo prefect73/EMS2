@@ -26,12 +26,16 @@ if($("#defaultLanguage").val() == 'german'){
         "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
         },
-        "order": [[ 0, "asc" ]]
+        "order": [[ 0, "asc" ]],
+        "pageLength": 20,
+        "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
     });
 	
 } else if ($("#defaultLanguage").val() == 'english'){
 	$('#usersTable').DataTable({
-        "order": [[ 0, "asc" ]]
+        "order": [[ 0, "asc" ]],
+        "pageLength": 20,
+        "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
     });
 	
 } else {
@@ -39,7 +43,9 @@ if($("#defaultLanguage").val() == 'german'){
         "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
         },
-        "order": [[ 0, "asc" ]]
+        "order": [[ 0, "asc" ]],
+        "pageLength": 20,
+        "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
     });
 }
     // convert all numbers to German

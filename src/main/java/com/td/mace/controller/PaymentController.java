@@ -1,8 +1,10 @@
 package com.td.mace.controller;
 
 import com.td.mace.model.Payment;
+import com.td.mace.model.User;
 import com.td.mace.model.WorkPackage;
 import com.td.mace.service.PaymentService;
+import com.td.mace.service.UserService;
 import com.td.mace.service.WorkPackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -39,6 +41,9 @@ public class PaymentController {
 	WorkPackageService workPackageService;
 
 	@Autowired
+	UserService userService;
+
+	@Autowired
 	MessageSource messageSource;
 
 	@Autowired
@@ -59,6 +64,11 @@ public class PaymentController {
 	public String listPayments(ModelMap model) {
 
 		List<Payment> payments = paymentService.findAllPayments();
+		if (payments != null) {
+			for (Payment payment : payments) {
+				payment.setPaymentPercentage(PaymentUtils.calculatePaymentPercentage(payment));
+			}
+		}
 		model.addAttribute("payments", payments);
 		model.addAttribute("defaultLanguage",
 				environment.getProperty("default.language"));
@@ -77,6 +87,11 @@ public class PaymentController {
 	@RequestMapping(value = { "/newpayment" }, method = RequestMethod.GET)
 	public String newPayment(ModelMap model,HttpServletRequest request) {
 		Payment payment = new Payment();
+        // get first name of logged user
+        User loggedUser = userService.findBySSO(getPrincipal());
+        if(loggedUser != null){
+            payment.setCreatedBy(loggedUser.getFirstName());
+        }
 		if (request.getParameter("workPackageId") != null) {
 			int workPackageId = (Integer
 					.parseInt(request.getParameter("workPackageId")));

@@ -99,17 +99,24 @@
                 $('#paymentsTable').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-                    }
+                    },
+                    "pageLength": 20,
+                    "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
                 });
 
             } else if ($("#defaultLanguage").val() == 'english'){
-                $('#paymentsTable').DataTable();
+                $('#paymentsTable').DataTable({
+                    "pageLength": 20,
+                    "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
+				});
 
             } else {
                 $('#paymentsTable').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
-                    }
+                    },
+                    "pageLength": 20,
+                    "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
                 });
 
             }
@@ -1283,7 +1290,9 @@
 								<th><spring:message code="payment.label.amount" /></th>
 								<th><spring:message code="payment.label.remarks" /></th>
 								<th><spring:message code="payment.label.paymentPercentage"/></th>
-								<th></th>
+                                <th><spring:message code="payment.label.consultantInCharge"/></th>
+                                <th><spring:message code="payment.label.createdBy"/></th>
+                                <th></th>
 							</tr>
 							</thead>
 							<tbody>
@@ -1296,6 +1305,8 @@
 									<td><span class="localeNumber">${payment.amount}</span></td>
 									<td>${payment.remarks}</td>
 									<td>${payment.paymentPercentage}</td>
+                                    <td>${payment.consultantInCharge}</td>
+                                    <td>${payment.createdBy}</td>
 									<td>
 										<sec:authorize
 												access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">

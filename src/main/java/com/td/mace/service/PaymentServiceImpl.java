@@ -45,6 +45,8 @@ public class PaymentServiceImpl implements PaymentService {
 			entity.setRemarks(payment.getRemarks());
 			entity.setTime(payment.getTime());
 			entity.setWorkPackage((payment.getWorkPackage()));
+			entity.setConsultantInCharge(payment.getConsultantInCharge());
+			entity.setCreatedBy(payment.getCreatedBy());
 			/* entity.setWorkPackages(payment.getWorkPackages()); */
 		}
 	}

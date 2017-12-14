@@ -28,12 +28,16 @@
 		        "language": {
 		            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
 		        },
-                "order": [[ 0, "asc" ]]
+                "order": [[ 0, "asc" ]],
+                "pageLength": 20,
+                "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
 		    });
 			
 		} else if ($("#defaultLanguage").val() == 'english'){
 			$('#paymentsTable').DataTable({
-                "order": [[ 0, "asc" ]]
+                "order": [[ 0, "asc" ]],
+                "pageLength": 20,
+                "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
             });
 			
 		} else {
@@ -41,7 +45,9 @@
 		        "language": {
 		            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/German.json"
 		        },
-                "order": [[ 0, "asc" ]]
+                "order": [[ 0, "asc" ]],
+                "pageLength": 20,
+                "lengthMenu": [[10, 20, 50, -1], [10, 20, 50, "All"]]
 		    });
 			
 		}
@@ -53,6 +59,7 @@
                 paymentsTableToFilter.columns(2).search('').draw();
             }
         });
+        $("#isBilled").trigger('change');
 	});
 </script>
 </head>
@@ -81,7 +88,7 @@
                                     <label class="control-label" for="isBilled"><spring:message code="payment.label.billed" /> </label>
                                 </div>
                                 <div class="col-md-3">
-                                    <input id="isBilled" name="isBilled" type="checkbox" value="" />
+                                    <input id="isBilled" name="isBilled" type="checkbox" value="" checked/>
                                 </div>
                             </div>
                         </div>
@@ -106,10 +113,11 @@
 							</th>
 							<th><spring:message code="payment.label.remarks" />
 							</th>
-							<th><spring:message code="payment.label.finishedIn" />
-							</th>
+                            <th><spring:message code="payment.label.paymentPercentage"/></th>
+                            <th><spring:message code="payment.label.consultantInCharge"/></th>
+                            <th><spring:message code="payment.label.createdBy"/></th>
                             <th></th>
-							
+
 						</tr>
 					</thead>
 					<tbody>
@@ -121,8 +129,9 @@
 								<td>${payment.time}</td>
 								<td>${payment.amount}</td>
 								<td>${payment.remarks}</td>
-								<td>${payment.finishedIn}</td>
-
+                                <td>${payment.paymentPercentage}</td>
+                                <td>${payment.consultantInCharge}</td>
+                                <td>${payment.createdBy}</td>
 								<td>
 								<sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
 									<a

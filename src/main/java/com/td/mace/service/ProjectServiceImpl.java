@@ -157,4 +157,9 @@ public class ProjectServiceImpl implements ProjectService {
     public void calculatePaymentPercentage(Project project) {
         project.setPaymentPercentage(PaymentUtils.calculatePaymentPercentage(project));
     }
+
+    @Override
+    public List<String> findAllProjectsCustomers() {
+        return projectDao.findAllProjectsCustomers();
+    }
 }

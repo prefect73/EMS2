@@ -205,6 +205,34 @@ $( document ).ready(function() {
 				</div>
 			</div>
 
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2" for="consultantInCharge">
+						<spring:message code="payment.label.consultantInCharge"/> </label>
+					<div class="col-md-3">
+						<form:input type="text" path="consultantInCharge" id="consultantInCharge"
+									class="form-control input-sm" />
+						<div class="has-error">
+							<form:errors path="consultantInCharge" class="help-inline"/>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2" for="createdBy">
+                        <spring:message code="payment.label.createdBy"/> </label>
+					<div class="col-md-3">
+						<form:input type="text" path="createdBy" id="createdBy"
+									class="form-control input-sm" />
+						<div class="has-error">
+							<form:errors path="createdBy" class="help-inline"/>
+						</div>
+					</div>
+				</div>
+			</div>
+
 
 		</form:form>
 	</div>

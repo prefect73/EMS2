@@ -22,5 +22,7 @@ public interface ProjectDao {
 	List<Project> findAllProjectsBySsoId(String ssoId);
 
     Integer getProjectIdByByWorkPackageId(Integer workPackageId);
+
+    List<String> findAllProjectsCustomers();
 }
 
