@@ -1,10 +1,7 @@
 package com.td.mace.dao;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import com.td.mace.model.WorkPackage;
+import com.td.mace.model.Project;
+import com.td.mace.model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -15,8 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.td.mace.model.Project;
-import com.td.mace.model.User;
+import java.util.List;
 
 @Repository("projectDao")
 public class ProjectImpl extends AbstractDao<Integer, Project> implements
@@ -118,6 +114,6 @@ public class ProjectImpl extends AbstractDao<Integer, Project> implements
 
 	@Override
 	public List<String> findAllProjectsCustomers() {
-		return  getCurrentSession().createSQLQuery("SELECT distinct customer_name FROM project").list();
+		return getCurrentSession().createSQLQuery("SELECT distinct customer_name FROM project order by customer_name").list();
 	}
 }
