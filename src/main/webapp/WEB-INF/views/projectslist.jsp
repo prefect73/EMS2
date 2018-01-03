@@ -132,7 +132,8 @@
 								<td style="text-align: center;"><sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung')">
                                         <input id="inputAddWpTemplate" type="hidden" value="<c:url value='/WorkPackage/newworkPackage?projectId={<projectId>}'/>">
 										<a class="btn btn-primary" title="<spring:message code="workPackageslist.addNewWorkPackage"/>"
-											href="#' />"> <i class="fa fa-plus" aria-hidden="true"></i>
+                                           href="<c:url value='/WorkPackage/newworkPackage?projectId=${project.id}' />">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
 										</a>
 
 									</sec:authorize> <sec:authorize access="hasAnyRole('ADMIN', 'Projektleitung') or hasRole('DBA')">
