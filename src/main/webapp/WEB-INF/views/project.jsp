@@ -19,12 +19,18 @@
 	</c:otherwise>
 </c:choose>
 <link href="<c:url value='/static/css/bootstrap.css' />"
-	rel="stylesheet"></link>
-<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+	rel="stylesheet" />
+<link href="<c:url value='/static/jquery-editable-select/jquery-editable-select.css' />"
+          rel="stylesheet" />
+<link href="<c:url value='/static/jquery-multi-select/css/multi-select.css' />"
+          rel="stylesheet" />
+<link href="<c:url value='/static/css/app.css' />" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="<c:url value='/static/jquery-editable-select/jquery-editable-select.js' />"></script>
-<link href="<c:url value='/static/jquery-editable-select/jquery-editable-select.css' />"
-          rel="stylesheet"></link>
+<script src="<c:url value='/static/jquery-editable-select/jquery-editable-select.js' />"></script>
+<script src="<c:url value='/static/jquery-quicksearch/jquery.quicksearch.js' />"></script>
+<script src="<c:url value='/static/jquery-multi-select/js/jquery.multi-select.js' />"></script>
+<script src="<c:url value='/static/js/project/assign-multiple-users.js' />"></script>
 <script src="<c:url value='/static/js/number-parser.js' />"></script>
 <script>
 	function yearDropdownFill(startYear, endYear) {
@@ -241,6 +247,17 @@
 							<form:errors path="users" class="help-inline" />
 						</div>
 					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="users"><spring:message
+							code="project.label.projectLeads" /> </label>
+					<div class="col-md-3">
+                        <select id='custom-headers' multiple='multiple' class="searchable">
+
+                        </select>
 				</div>
 			</div>
 
