@@ -252,6 +252,9 @@
         }
 
         function validateAvailableAndAllocatedDays(updatedAllocatedDaysTextBoxValue) {
+            if(updatedAllocatedDaysTextBoxValue === undefined){
+                return ;
+            }
             var allocatedDaysTextBoxValue = updatedAllocatedDaysTextBoxValue.val();
             var availableDaysTextBoxValue = $(updatedAllocatedDaysTextBoxValue).closest('td').find('input:eq(0)').val();
             var yearNameValue = $(updatedAllocatedDaysTextBoxValue).parent().siblings(":first").find('input').val() == undefined || null ? $(updatedAllocatedDaysTextBoxValue).parent().siblings(":first").find('select').val() : $(updatedAllocatedDaysTextBoxValue).parent().siblings(":first").find('input').val();
@@ -887,7 +890,7 @@
             });
         }
 
-        function addNewWPUallocRow(element) {
+        function addNewWPUallocRow(element, userAndYear) {
             var index = wPakAllocSize;
             //var yearNameTD ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ><option class="form-control input-sm" value="2017">2017</option><option class="form-control input-sm" value="2018">2018</option><option class="form-control input-sm" value="2019">2019</option><option class="form-control input-sm" value="2020">2020</option></select></td>';
             var yearNameTDStart ='<td><select class="form-control input-sm yearCombo" style="width:72px;" name="workPackageUserAllocations['+index+'].yearName" >';
@@ -965,6 +968,12 @@
                 /* effectiveDistributionPopups(); */
             });
             disabledFieldsForTeamLead();
+
+            if(userAndYear !== undefined) {
+                // if this is a generated row, set year and user
+                $("select[name='workPackageUserAllocations[" + index + "].user']").val(userAndYear.user).change();
+                $("select[name='workPackageUserAllocations[" + index + "].yearName']").val(userAndYear.yearName).change();
+            }
         }
 
 
@@ -999,6 +1008,17 @@
                     var parsedValue = parseToGermanNumber(rawValue);
                     $(this).text(parsedValue);
                 });
+
+                // generate co workers when press button
+                $("input#generateEmployers").on('click', function(event){
+                   var selectedUsers = $('select#assignEmployeeList').val();
+                   if(selectedUsers !== null || selectedUsers !== undefined){
+                       selectedUsers.forEach(function(user){
+                           addNewWPUallocRow($('input#add'), {user: user, yearName:"2018"})
+                       });
+                   }
+                });
+
             });
 	</script>
 
@@ -1259,6 +1279,20 @@
 					</div>
 				</div>
 			</div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="col-md-2 control-lable" for="assignEmployeeList">
+                        <span>Mitarbeiter zuweisen</span>
+                    </label>
+                    <div class="col-md-3">
+                        <select class="form-control input-sm" id="assignEmployeeList" multiple="true" name="assignEmployeeList" size="8">
+                            <c:forEach items="${employeeslist}" var="emp"><option value="${emp.id}">${emp.firstName}</option>
+                            </c:forEach>
+                        </select>
+                        <input style="float:right; margin-top: 5px;" class="btn btn-primary btn-sm" type="button" name="generateEmployers" id="generateEmployers" value="Generieren">
+                    </div>
+                </div>
+            </div>
 		</sec:authorize>
 		<!-- Payments List Section -->
 		<c:choose>
