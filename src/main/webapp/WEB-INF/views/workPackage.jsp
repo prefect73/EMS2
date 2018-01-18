@@ -1289,7 +1289,7 @@
                             <c:forEach items="${employeeslist}" var="emp"><option value="${emp.id}">${emp.firstName}</option>
                             </c:forEach>
                         </select>
-                        <input style="float:right; margin-top: 5px;" class="btn btn-primary btn-sm" type="button" name="generateEmployers" id="generateEmployers" value="Generate">
+                        <input style="float:right; margin-top: 5px;" class="btn btn-primary btn-sm" type="button" name="generateEmployers" id="generateEmployers" value="Generieren">
                     </div>
                 </div>
             </div>
