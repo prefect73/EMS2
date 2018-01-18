@@ -155,16 +155,3 @@ input#customerNameDropDown{
 ul.es-list > li.es-visible{
     border: none;
 }
-input.search-input {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	width: 100%;
-	margin-bottom: 5px;
-	height: auto;
-}
-ul.ms-list{
-    background-color: white !important;
-}
-li.ms-elem-selectable, li.ms-elem-selection{
-    float: none;
-}
