@@ -53,6 +53,7 @@ public class UserServiceImpl implements UserService{
 			entity.setEmail(user.getEmail());
 			entity.setPerDayCost(user.getPerDayCost());
 			entity.setUserProfiles(user.getUserProfiles());
+			entity.setActive(user.getActive());
 		}
 	}
 
@@ -98,5 +99,5 @@ public class UserServiceImpl implements UserService{
 	public boolean isTLOnly(String ssoId){
 		return dao.isTLOnly(ssoId);
 	}
-	
+
 }

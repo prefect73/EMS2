@@ -160,6 +160,25 @@
 					</div>
 				</div>
 			</div>
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="col-md-2 control-lable" for="isActive">
+                        <%--<spring:message code="user.label.perDayCost"/>--%>
+                        Aktiv
+                    </label>
+
+                    <div class="col-md-3">
+                        <form:select id="isActive" path="active" class="form-control input-sm" >
+                            <form:option value="true" label="Aktiv"/>
+                            <form:option value="false" label="Inaktiv"/>
+                        </form:select>
+                        <div class="has-error">
+                            <form:errors path="active" class="help-inline" />
+                        </div>
+                    </div>
+                </div>
+            </div>
 		</form:form>
 	</div>
 </body>
