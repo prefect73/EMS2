@@ -1,0 +1,1 @@
+ALTER TABLE app_user ADD active BOOLEAN DEFAULT TRUE;

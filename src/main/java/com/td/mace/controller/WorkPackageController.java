@@ -172,6 +172,7 @@ public class WorkPackageController {
                 environment.getProperty("year.name.start"));
         model.addAttribute("yearNameEnd",
                 environment.getProperty("year.name.end"));
+        model.addAttribute("yearNameSelected",environment.getProperty("year.name.default"));
         model.addAttribute("userAttendancesUpdated",
                 userAttendanceService.findAllUserAttendancesUpdated());
         model.addAttribute("edit", false);
@@ -191,6 +192,7 @@ public class WorkPackageController {
         if (result.hasErrors()) {
             model.addAttribute("yearNameStart", environment.getProperty("year.name.start"));
             model.addAttribute("yearNameEnd", environment.getProperty("year.name.end"));
+            model.addAttribute("yearNameSelected",environment.getProperty("year.name.default"));
             return "workPackage";
         }
 
@@ -238,6 +240,7 @@ public class WorkPackageController {
                 environment.getProperty("year.name.start"));
         model.addAttribute("yearNameEnd",
                 environment.getProperty("year.name.end"));
+        model.addAttribute("yearNameSelected",environment.getProperty("year.name.default"));
         model.addAttribute("userAttendancesUpdated",
                 userAttendanceService.findAllUserAttendancesUpdated());
         model.addAttribute("edit", true);
@@ -262,6 +265,7 @@ public class WorkPackageController {
         if (result.hasErrors()) {
             model.addAttribute("yearNameStart", environment.getProperty("year.name.start"));
             model.addAttribute("yearNameEnd", environment.getProperty("year.name.end"));
+            model.addAttribute("yearNameSelected",environment.getProperty("year.name.default"));
             model.addAttribute("projectslist", projectService.findAllProjects());
             return "workPackage";
         }
@@ -325,6 +329,7 @@ public class WorkPackageController {
         model.addAttribute("selectedWorkPackageNumber", workPackageId);
         model.addAttribute("yearNameStart", environment.getProperty("year.name.start"));
         model.addAttribute("yearNameEnd", environment.getProperty("year.name.end"));
+        model.addAttribute("yearNameSelected",environment.getProperty("year.name.default"));
         model.addAttribute("userAttendancesUpdated", userAttendanceService.findAllUserAttendancesUpdated());
         model.addAttribute("edit", true);
         model.addAttribute("loggedinuser", getPrincipal());
@@ -344,6 +349,7 @@ public class WorkPackageController {
         if (result.hasErrors()) {
             model.addAttribute("yearNameStart", environment.getProperty("year.name.start"));
             model.addAttribute("yearNameEnd", environment.getProperty("year.name.end"));
+            model.addAttribute("yearNameSelected",environment.getProperty("year.name.default"));
 	   /*model.addAttribute("projectslist", projectService.findAllProjects());*/
             return "normalUserWorkPackage";
         }
@@ -370,6 +376,7 @@ public class WorkPackageController {
         model.addAttribute("selectedWorkPackageNumber", workPackageId);
         model.addAttribute("yearNameStart", environment.getProperty("year.name.start"));
         model.addAttribute("yearNameEnd", environment.getProperty("year.name.end"));
+        model.addAttribute("yearNameSelected",environment.getProperty("year.name.default"));
         model.addAttribute("userAttendancesUpdated", userAttendanceService.findAllUserAttendancesUpdated());
         model.addAttribute("edit", true);
         model.addAttribute("loggedinuser", getPrincipal());

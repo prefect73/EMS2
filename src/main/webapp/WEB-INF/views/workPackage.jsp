@@ -60,6 +60,7 @@
 		}
 	</style>
 	<script type="text/javascript">
+        var defaultYear = parseInt('<c:out value="${yearNameSelected}"/>');
 
         var userAttendance = new Map();
 
@@ -818,7 +819,7 @@
         }
 
 
-        function addFirstRow(){
+			function addFirstRow(){
             var index = wPakAllocSize;
             //var yearNameTD ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ><option class="form-control input-sm" value="2017">2017</option><option class="form-control input-sm" value="2018">2018</option><option class="form-control input-sm" value="2019">2019</option><option class="form-control input-sm" value="2020">2020</option></select></td>';
             var yearNameTDStart ='<td><select class="form-control input-sm yearCombo" style="width:72px;" name="workPackageUserAllocations['+index+'].yearName" >';
@@ -828,7 +829,7 @@
                 optionsAsString += '<option value="'+i+'">'+i+'</option>';
             }
             var yearNameTD = yearNameTDStart + optionsAsString + yearNameTdEnd ;
-            var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';
+            var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><c:if test="${theBooleanVariable ne true}"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:if></c:forEach> </select></td>';
             var totalPlannedDaysTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].totalPlannedDays" /></td>';
             var rowHeaderOM = '<td><p style="padding-top:5px"/>Verf&uuml;gbar<p style="padding-top:23px"/>Geplant<p style="padding-top:17px"/>Zeiterfassung</td>';
             var mJanTD ='<td><input class="form-control input-sm availableDays" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input id="workPackageUserAllocations'+index+'emJan" class="form-control input-sm effectiveDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" />&nbsp;<input type="hidden" id="workPackageUserAllocations['+index+'].eemJan" class="form-control input-sm effectiveDaysDistribution" style="width:55px;" name="workPackageUserAllocations['+index+'].eemJan" value="" /></td>';
@@ -897,12 +898,21 @@
             var yearNameTdEnd = '</select></td>';
             var optionsAsString = '';
             for (i = startYear; i <= endYear; i++){
-                optionsAsString += '<option value="'+i+'">'+i+'</option>';
+
+                var ifIsSelected = '';
+
+                if(i === defaultYear){
+                    ifIsSelected = 'selected';
+                } else {
+                    ifIsSelected = '';
+                }
+
+                optionsAsString += '<option value="'+i+'" '+ifIsSelected+'>'+i+'</option>';
             }
 
             var yearNameTD = yearNameTDStart + optionsAsString + yearNameTdEnd ;
 
-            var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:forEach> </select></td>';
+            var userTD ='<td><select class="form-control input-sm userCombo" name="workPackageUserAllocations['+index+'].user"><c:forEach items="${employeeslist}" var="emp"><c:if test="${emp.active eq true}"><option class="form-control input-sm" value="${emp.id}">${emp.firstName}</option> </c:if></c:forEach> </select></td>';
             var totalPlannedDaysTD ='<td><input class="form-control input-sm" style="width:55px;" name="workPackageUserAllocations['+index+'].totalPlannedDays" /></td>';
             var rowHeaderOM = '<td><p style="padding-top:5px"/>Verf&uuml;gbar<p style="padding-top:23px"/>Geplant<p style="padding-top:17px"/>Zeiterfassung</td>';
             var mJanTD ='<td><input class="form-control input-sm availableDays" style="width:55px;" disabled id="workPackageUserAllocations['+index+'].mJanAvailableHrs" />&nbsp;<input class="form-control input-sm allocatedDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].mJan" />&nbsp;<input id="workPackageUserAllocations'+index+'emJan" class="form-control input-sm effectiveDays" value="0.00" style="width:55px;" name="workPackageUserAllocations['+index+'].emJan" />&nbsp;<input type="hidden" id="workPackageUserAllocations['+index+'].eemJan" class="form-control input-sm effectiveDaysDistribution" style="width:55px;" name="workPackageUserAllocations['+index+'].eemJan" value="" /></td>';

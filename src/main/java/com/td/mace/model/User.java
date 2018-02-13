@@ -67,6 +67,9 @@ public class User implements Serializable {
 	@JoinTable(name = "app_user_user_profile", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = { @JoinColumn(name = "user_profile_id") })
 	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();
 
+	@Column(name = "active", nullable = false)
+	private Boolean active;
+
 	public Integer getId() {
 		return id;
 	}
@@ -142,4 +145,11 @@ public class User implements Serializable {
 		this.userProfiles = userProfiles;
 	}
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }
