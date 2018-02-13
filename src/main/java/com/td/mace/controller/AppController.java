@@ -127,7 +127,7 @@ public class AppController {
 		
 		userService.saveUser(user);
 		userAttendance.setUser(user);
-		userAttendance.setYearName(environment.getProperty("year.name.default") != null ? environment.getProperty("year.name.default") : "2017" );
+		userAttendance.setYearName(environment.getProperty("year.name.default") != null ? environment.getProperty("year.name.default") : "2018" );
 		userAttendanceService.saveUserAttendance(userAttendance);
 
 		//model.addAttribute("success", "User " + user.getFirstName() + " "+ user.getLastName() + " registered successfully");

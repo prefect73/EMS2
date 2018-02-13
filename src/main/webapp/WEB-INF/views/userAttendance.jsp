@@ -22,15 +22,25 @@
 	rel="stylesheet"></link>
 <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 <script>
-function yearDropdownFill(startYear, endYear){
+function yearDropdownFill(startYear, endYear, defaultYear){
 	for (i = startYear; i <= endYear; i++){
-	    $('#yearName').append($('<option />').val(i).html(i));
+
+	    var ifIsSelected = '';
+
+	    if(i === parseInt(defaultYear)){
+	        ifIsSelected = 'selected';
+        } else {
+	        ifIsSelected = '';
+        }
+
+	    $('#yearName').append($('<option '+ ifIsSelected + '/>').val(i).html(i));
 	}
 }
 $(document).ready(function() {
 	var startYear = '<c:out value="${yearNameStart}"/>';
 	var endYear = '<c:out value="${yearNameEnd}"/>';
-	yearDropdownFill(startYear, endYear);
+	var defaultYear = '<c:out value="${yearNameSelected}"/>';
+	yearDropdownFill(startYear, endYear, defaultYear);
 	});
 </script>
 </head>

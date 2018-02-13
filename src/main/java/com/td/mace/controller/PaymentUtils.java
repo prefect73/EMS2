@@ -14,7 +14,7 @@ public class PaymentUtils {
         // if offeredCost/calculatedCost is equal to null or zero -> return 0
         if ((workPackage.getOfferedCost() == null || workPackage.getOfferedCost().compareTo(BigDecimal.ZERO) == 0) ||
                 (workPackage.getCalculatedCost() == null || workPackage.getCalculatedCost().compareTo(BigDecimal.ZERO) == 0)) {
-            System.err.println(String.format("Cannot calculate the payment percentage for %s", workPackage.getWorkPackageName()));
+//            System.err.println(String.format("Cannot calculate the payment percentage for %s", workPackage.getWorkPackageName()));
             return BigDecimal.ZERO;
         }
 

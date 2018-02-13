@@ -60,6 +60,7 @@
 		}
 	</style>
 	<script type="text/javascript">
+        var defaultYear = parseInt('<c:out value="${yearNameSelected}"/>');
 
         var userAttendance = new Map();
 
@@ -818,7 +819,7 @@
         }
 
 
-        function addFirstRow(){
+			function addFirstRow(){
             var index = wPakAllocSize;
             //var yearNameTD ='<td><select class="form-control input-sm yearCombo" style="width:55px;" name="workPackageUserAllocations['+index+'].yearName" ><option class="form-control input-sm" value="2017">2017</option><option class="form-control input-sm" value="2018">2018</option><option class="form-control input-sm" value="2019">2019</option><option class="form-control input-sm" value="2020">2020</option></select></td>';
             var yearNameTDStart ='<td><select class="form-control input-sm yearCombo" style="width:72px;" name="workPackageUserAllocations['+index+'].yearName" >';
@@ -897,7 +898,16 @@
             var yearNameTdEnd = '</select></td>';
             var optionsAsString = '';
             for (i = startYear; i <= endYear; i++){
-                optionsAsString += '<option value="'+i+'">'+i+'</option>';
+
+                var ifIsSelected = '';
+
+                if(i === defaultYear){
+                    ifIsSelected = 'selected';
+                } else {
+                    ifIsSelected = '';
+                }
+
+                optionsAsString += '<option value="'+i+'" '+ifIsSelected+'>'+i+'</option>';
             }
 
             var yearNameTD = yearNameTDStart + optionsAsString + yearNameTdEnd ;
