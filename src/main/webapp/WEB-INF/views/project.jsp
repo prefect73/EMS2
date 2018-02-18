@@ -27,10 +27,19 @@
           rel="stylesheet"></link>
 <script src="<c:url value='/static/js/number-parser.js' />"></script>
 <script>
-	function yearDropdownFill(startYear, endYear) {
+	function yearDropdownFill(startYear, endYear, defaultYear) {
 		console.log("start " + startYear + " end" + endYear);
 		for (i = startYear; i <= endYear; i++) {
-			$('#yearName').append($('<option />').val(i).html(i));
+
+            var ifIsSelected = '';
+
+            if(i === parseInt(defaultYear)){
+                ifIsSelected = 'selected';
+            } else {
+                ifIsSelected = '';
+            }
+
+			$('#yearName').append($('<option '+ ifIsSelected + '/>').val(i).html(i));
 		}
 
 	}
@@ -39,7 +48,8 @@
 			function() {
 				var startYear = '<c:out value="${yearNameStart}"/>';
 				var endYear = '<c:out value="${yearNameEnd}"/>';
-				yearDropdownFill(startYear, endYear);
+                var defaultYear = '<c:out value="${yearNameSelected}"/>';
+				yearDropdownFill(startYear, endYear, defaultYear);
 				var projectYear = '<c:out value="${project.yearName}"/>';
 				//$('#yearName option[value="' + projectYear +'"]').prop('selected', true);
 				$('#yearName option[value="' + projectYear + '"]').attr(
