@@ -1,6 +1,7 @@
 package com.td.mace.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -155,7 +156,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void calculatePaymentPercentage(Project project) {
-        project.setPaymentPercentage(PaymentUtils.calculatePaymentPercentage(project));
+        if ((project.getOfferedCost() == null || project.getOfferedCost().compareTo(BigDecimal.ZERO) == 0) ||
+                (project.getCalculatedCost() == null || project.getCalculatedCost().compareTo(BigDecimal.ZERO) == 0)) {
+            project.setPaymentPercentage(BigDecimal.ZERO);
+        }else{
+            BigDecimal paymentPercentage = project.getCalculatedCost().multiply(new BigDecimal(100)).divide(project.getOfferedCost(), 2, RoundingMode.HALF_UP);
+            project.setPaymentPercentage(paymentPercentage);
+        }
     }
 
     @Override

@@ -154,6 +154,7 @@ public class ProjectController {
 		model.addAttribute("project", project);
 		model.addAttribute("edit", false);
 		model.addAttribute("yearNameStart",environment.getProperty("year.name.start"));
+		model.addAttribute("yearNameSelected",environment.getProperty("year.name.default"));
 		model.addAttribute("yearNameEnd",environment.getProperty("year.name.end"));
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "project";
