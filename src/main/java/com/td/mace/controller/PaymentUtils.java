@@ -22,6 +22,7 @@ public class PaymentUtils {
 
     }
 
+    @Deprecated
     public static BigDecimal calculatePaymentPercentage(Project project){
         BigDecimal paymentPercentage = BigDecimal.ZERO;
         if(project.getWorkPackages() != null && project.getWorkPackages().size() > 0){
