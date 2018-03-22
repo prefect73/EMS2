@@ -114,6 +114,15 @@
 
                 // transform selectbox
                 $('#customerNameDropDown').editableSelect();
+
+                $("input#progressPaymentBtn").on("click", function(){
+                    var percentage = $("input#progressPayment").val();
+                    var projectid = $("input#id").val();
+                    $.get("distributePayments/" + projectid + "/" + percentage, function(){
+                        alert("s-a facut!");
+                        location.reload();
+					});
+				});
             });
 </script>
 </head>
@@ -380,6 +389,18 @@
                     </div>
                 </div>
             </div>
+			<div class="row form-inline">
+				<div class="form-group col-md-12">
+					<label class="col-md-2 control-lable" for="progressPayment">
+						<spring:message code="project.label.paymentPercentage"/>
+					</label>
+					<div class="col-md-3">
+						<input type="text"  id="progressPayment"
+									class="form-control input-sm localeNumber"/>
+						<input style="float:right; margin-top: 5px;" class="btn btn-primary btn-sm" type="button" name="progressPaymentBtn" id="progressPaymentBtn" value="Abschlagszahlung">
+					</div>
+				</div>
+			</div>
 		</form:form>
 	</div>
 </body>
