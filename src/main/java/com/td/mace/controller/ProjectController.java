@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -141,6 +143,18 @@ public class ProjectController {
 		model.addAttribute("defaultLanguage",environment.getProperty("default.language"));
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "projectslist";
+	}
+
+
+	/**
+	 * Distribute payment to work packages
+	 */
+	@RequestMapping(value = "/distributePayments/{projectId}/{percentage}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<Void> distributePaymentsToWorkPackages(@PathVariable("projectId") Integer projectId,
+																 @PathVariable("percentage") int percentage){
+		workPackageService.distributePaymentPercentage(projectId, percentage);
+		return ResponseEntity.ok().build();
 	}
 
 	/**
