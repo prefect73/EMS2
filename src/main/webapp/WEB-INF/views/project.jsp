@@ -119,7 +119,7 @@
                     var percentage = $("input#progressPayment").val();
                     var projectid = $("input#id").val();
                     $.get("distributePayments/" + projectid + "/" + percentage, function(){
-                        alert("s-a facut!");
+                        alert("Gespeichert!");
                         location.reload();
 					});
 				});
@@ -392,7 +392,7 @@
 			<div class="row form-inline">
 				<div class="form-group col-md-12">
 					<label class="col-md-2 control-lable" for="progressPayment">
-						<spring:message code="project.label.paymentPercentage"/>
+						<spring:message code="project.label.progressPayment" />&nbsp;(%)
 					</label>
 					<div class="col-md-3">
 						<input type="text"  id="progressPayment"
