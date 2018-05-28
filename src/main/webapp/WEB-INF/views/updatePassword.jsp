@@ -21,13 +21,13 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <label>Forgot password</label>
+                    <label><spring:message code="login.forgotPassword"/></label>
                 </div>
                 <div class="panel-body">
                     <form:form method="POST" class="form-horizontal" role="form">
                         <div class="row">
                             <div class="form-group col-md-12 has-feedback">
-                                <label class="col-md-2 control-lable" for="password">New Password</label>
+                                <label class="col-md-2 control-lable" for="password"><spring:message code="login.newPassword"/></label>
                                 <div class="col-md-6">
                                     <input type="password" id="password" name="password" class="form-control input-sm"/>
                                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
@@ -39,7 +39,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-2">
-                                <input type="submit" value="<spring:message code="button.add"/>"
+                                <input type="submit" value="<spring:message code="button.update"/>"
                                        class="btn btn-primary btn-sm"/>
                             </div>
                         </div>

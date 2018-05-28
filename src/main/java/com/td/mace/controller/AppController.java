@@ -322,8 +322,10 @@ public class AppController {
 
 	private SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, User user) {
 		String url = contextPath + "/user/changePassword?id=" + user.getId() + "&token=" + token;
-		String message = messageSource.getMessage("login.resetPassword", null, locale);
-		return constructEmail("Reset Password", message + " \r\n" + url, user);
+		String subject = messageSource.getMessage("login.emailSubject", null, locale);
+		String message = messageSource.getMessage("login.emailMessage", null, locale);
+
+		return constructEmail(subject, message + " \r\n" + url, user);
 	}
 
 	private SimpleMailMessage constructEmail(String subject, String body, User user) {

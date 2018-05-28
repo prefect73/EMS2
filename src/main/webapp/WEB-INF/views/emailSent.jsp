@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
-    <title>Forgot password</title>
+    <title><spring:message code="login.forgotPassword"/></title>
     <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
