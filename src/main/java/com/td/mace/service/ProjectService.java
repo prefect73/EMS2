@@ -1,9 +1,9 @@
 package com.td.mace.service;
 
-import java.util.List;
-
 import com.td.mace.model.Project;
 import com.td.mace.model.User;
+
+import java.util.List;
 
 public interface ProjectService {
 

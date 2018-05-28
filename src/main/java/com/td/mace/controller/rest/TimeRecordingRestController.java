@@ -1,18 +1,13 @@
 package com.td.mace.controller.rest;
 
-import java.util.List;
-
+import com.td.mace.controller.TimeRecordingDTO;
+import com.td.mace.service.WorkPackageUserAllocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.td.mace.controller.TimeRecordingDTO;
-import com.td.mace.service.WorkPackageUserAllocationService;
+import java.util.List;
 
 @RestController
 @RequestMapping("/timeRecording")

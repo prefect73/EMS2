@@ -1,37 +1,39 @@
 package com.td.mace.controller;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
-import org.springframework.security.authentication.AuthenticationTrustResolver;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
-
 import com.td.mace.model.User;
 import com.td.mace.model.UserAttendance;
 import com.td.mace.model.UserProfile;
 import com.td.mace.service.UserAttendanceService;
 import com.td.mace.service.UserProfileService;
 import com.td.mace.service.UserService;
+import org.hibernate.validator.constraints.Email;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.AuthenticationTrustResolver;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 
 @Controller
@@ -51,6 +53,12 @@ public class AppController {
 		
 	@Autowired
 	UserProfileService userProfileService;
+
+	@Autowired
+	private JavaMailSender mailSender;
+
+	@Autowired
+	private Environment env;
 	
 	@Autowired
 	MessageSource messageSource;
@@ -65,6 +73,51 @@ public class AppController {
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(BigDecimal.class, new BigDecimalEditor());
     }
+
+    @RequestMapping(value = "/user/resetPassword", method = RequestMethod.GET)
+    public String forgotPasswordPage(){
+    	return "forgotPassword";
+	}
+
+	// Reset password
+	@RequestMapping(value = "/user/resetPassword", method = RequestMethod.POST)
+	public String resetPassword(Model model, final HttpServletRequest request, @RequestParam("email") @Valid @Email String userEmail) {
+		final User user = userService.findUserByEmail(userEmail);
+		if (user != null) {
+			final String token = UUID.randomUUID().toString();
+			userService.createPasswordResetTokenForUser(user, token);
+			mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, user));
+		}else{
+			model.addAttribute("error", true);
+		}
+		model.addAttribute("email", userEmail);
+
+		return "emailSent";
+	}
+
+
+	@RequestMapping(value = "/user/changePassword", method = RequestMethod.GET)
+	public String showChangePasswordPage(Locale locale, Model model, @RequestParam("id") long id, @RequestParam("token") String token) {
+		String result = userService.validatePasswordResetToken(id, token);
+		if (result != null) {
+			model.addAttribute("message", messageSource.getMessage("auth.message." + result, null, locale));
+			return "redirect:/login";
+		}
+		return "redirect:/user/updatePassword";
+	}
+
+	@RequestMapping(value = "/user/updatePassword", method = RequestMethod.GET)
+	public String showUpdatePasswordPage(){
+		return "updatePassword";
+	}
+
+	@RequestMapping(value = "/user/updatePassword", method = RequestMethod.POST)
+	public String savePassword(String password) {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		userService.changeUserPassword(user, password);
+		return "redirect:/";
+	}
 	
 	/**
 	 * This method will list all existing users.
@@ -250,7 +303,10 @@ public class AppController {
 
 		if (principal instanceof UserDetails) {
 			userName = ((UserDetails)principal).getUsername();
-		} else {
+		}else if(principal instanceof User){
+			userName = ((User) principal).getSsoId();
+		}
+		else {
 			userName = principal.toString();
 		}
 		return userName;
@@ -264,5 +320,25 @@ public class AppController {
 	    return authenticationTrustResolver.isAnonymous(authentication);
 	}
 
+	private SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, User user) {
+		String url = contextPath + "/user/changePassword?id=" + user.getId() + "&token=" + token;
+		String subject = messageSource.getMessage("login.emailSubject", null, locale);
+		String message = messageSource.getMessage("login.emailMessage", null, locale);
+
+		return constructEmail(subject, message + " \r\n" + url, user);
+	}
+
+	private SimpleMailMessage constructEmail(String subject, String body, User user) {
+		SimpleMailMessage email = new SimpleMailMessage();
+		email.setSubject(subject);
+		email.setText(body);
+		email.setTo(user.getEmail());
+		email.setFrom(env.getProperty("support.email.from"));
+		return email;
+	}
+
+	private String getAppUrl(HttpServletRequest request) {
+		return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+	}
 
 }

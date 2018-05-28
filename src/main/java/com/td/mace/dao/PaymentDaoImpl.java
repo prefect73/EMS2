@@ -1,7 +1,7 @@
 package com.td.mace.dao;
 
-import java.util.List;
-
+import com.td.mace.model.Payment;
+import com.td.mace.model.WorkPackage;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.td.mace.model.Payment;
-import com.td.mace.model.WorkPackage;
+import java.util.List;
 
 @Repository("paymentDao")
 public class PaymentDaoImpl extends AbstractDao<Integer, Payment> implements

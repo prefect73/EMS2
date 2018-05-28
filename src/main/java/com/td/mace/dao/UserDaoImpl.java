@@ -1,8 +1,7 @@
 package com.td.mace.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.td.mace.model.User;
+import com.td.mace.model.UserProfile;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -15,9 +14,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
 
-import com.td.mace.model.User;
-import com.td.mace.model.UserAttendance;
-import com.td.mace.model.UserProfile;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -147,4 +145,13 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		
 		return isAdmin;
 	}
+
+
+	@Override
+	public User findByEmail(String userEmail) {
+		Criteria criteria = createEntityCriteria();
+		criteria.add(Restrictions.eq("email", userEmail));
+		return (User) criteria.uniqueResult();
+	}
+
 }

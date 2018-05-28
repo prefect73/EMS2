@@ -1,17 +1,16 @@
 package com.td.mace.controller;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
+import com.td.mace.model.Project;
+import com.td.mace.model.User;
+import com.td.mace.model.WorkPackage;
+import com.td.mace.model.WorkPackageUserAllocation;
+import com.td.mace.service.ProjectService;
+import com.td.mace.service.UserService;
+import com.td.mace.service.WorkPackageService;
+import com.td.mace.service.WorkPackageUserAllocationService;
+import com.td.mace.wrapper.ProjectsWrapper;
+import com.td.mace.wrapper.TMProject;
+import com.td.mace.wrapper.TMWorkPackage;
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,25 +26,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
-
-import com.td.mace.model.Project;
-import com.td.mace.model.User;
-import com.td.mace.model.WorkPackage;
-import com.td.mace.model.WorkPackageUserAllocation;
-import com.td.mace.service.ProjectService;
-import com.td.mace.service.UserService;
-import com.td.mace.service.WorkPackageService;
-import com.td.mace.service.WorkPackageUserAllocationService;
-import com.td.mace.wrapper.ProjectsWrapper;
-import com.td.mace.wrapper.TMProject;
-import com.td.mace.wrapper.TMWorkPackage;
-
+import org.springframework.web.bind.annotation.*;
 import utils.DayOfWeek;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.lang.reflect.Field;
+import java.util.*;
 
 @Controller
 @RequestMapping("/TimeRecordingReport")

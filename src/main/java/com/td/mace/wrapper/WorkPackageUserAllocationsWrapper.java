@@ -1,9 +1,9 @@
 package com.td.mace.wrapper;
 
+import com.td.mace.model.WorkPackageUserAllocation;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.td.mace.model.WorkPackageUserAllocation;
 
 public class WorkPackageUserAllocationsWrapper {
 	public List<WorkPackageUserAllocation> workPackageUserAllocations = new ArrayList<WorkPackageUserAllocation>();

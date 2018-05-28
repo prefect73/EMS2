@@ -1,9 +1,9 @@
 package com.td.mace.wrapper;
 
+import com.td.mace.model.Project;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.td.mace.model.Project;
 
 public class ProjectsWrapper {
 	public List<Project> projects = new ArrayList<Project>();

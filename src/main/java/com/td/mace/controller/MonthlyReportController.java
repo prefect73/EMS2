@@ -1,10 +1,12 @@
 package com.td.mace.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
+import com.td.mace.model.User;
+import com.td.mace.model.UserAttendance;
+import com.td.mace.model.WorkPackageUserAllocation;
+import com.td.mace.service.UserAttendanceService;
+import com.td.mace.service.UserService;
+import com.td.mace.service.WorkPackageService;
+import com.td.mace.service.WorkPackageUserAllocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
@@ -18,13 +20,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.td.mace.model.User;
-import com.td.mace.model.UserAttendance;
-import com.td.mace.model.WorkPackageUserAllocation;
-import com.td.mace.service.UserAttendanceService;
-import com.td.mace.service.UserService;
-import com.td.mace.service.WorkPackageService;
-import com.td.mace.service.WorkPackageUserAllocationService;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 @Controller
 @RequestMapping("/UserAttendance")

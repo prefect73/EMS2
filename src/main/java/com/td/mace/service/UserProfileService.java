@@ -1,8 +1,8 @@
 package com.td.mace.service;
 
-import java.util.List;
-
 import com.td.mace.model.UserProfile;
+
+import java.util.List;
 
 
 public interface UserProfileService {

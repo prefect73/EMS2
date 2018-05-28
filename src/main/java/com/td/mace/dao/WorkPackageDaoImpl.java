@@ -1,9 +1,8 @@
 package com.td.mace.dao;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.td.mace.model.User;
+import com.td.mace.model.WorkPackage;
+import com.td.mace.model.WorkPackageUserAllocation;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -15,9 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.td.mace.model.User;
-import com.td.mace.model.WorkPackage;
-import com.td.mace.model.WorkPackageUserAllocation;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository("workPackageDao")
 public class WorkPackageDaoImpl extends AbstractDao<Integer, WorkPackage>

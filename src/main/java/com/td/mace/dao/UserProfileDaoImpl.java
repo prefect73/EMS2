@@ -1,13 +1,12 @@
 package com.td.mace.dao;
 
-import java.util.List;
-
+import com.td.mace.model.UserProfile;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import com.td.mace.model.UserProfile;
+import java.util.List;
 
 
 

@@ -1,11 +1,10 @@
 package com.td.mace.service;
 
-import java.lang.reflect.Field;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import com.td.mace.dao.WorkPackageUserAllocationDao;
+import com.td.mace.model.Project;
+import com.td.mace.model.User;
+import com.td.mace.model.WorkPackage;
+import com.td.mace.model.WorkPackageUserAllocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
-import com.td.mace.dao.WorkPackageUserAllocationDao;
-import com.td.mace.model.Project;
-import com.td.mace.model.User;
-import com.td.mace.model.WorkPackage;
-import com.td.mace.model.WorkPackageUserAllocation;
+import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Service("workPackageUserAllocationService")
 @Transactional
