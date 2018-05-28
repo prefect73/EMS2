@@ -1,12 +1,16 @@
 package com.td.mace.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
-public class PasswordResetToken {
+@Table(name = "password_reset_token")
+public class PasswordResetToken implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private static final int EXPIRATION = 60 * 24;
 
