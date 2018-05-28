@@ -38,6 +38,9 @@
 								<label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label> 
 								<input type="password" class="form-control" id="password" name="password" placeholder="<spring:message code="login.enterPassword.placeHolder"/>" required>
 							</div>
+							<div class="input-group input-sm" style="float:right;">
+								<a href="<c:url value='/user/resetPassword' />"><spring:message code="login.forgotPassword"/></a>
+							</div>
 							<div class="input-group input-sm">
                               <div class="checkbox">
                                 <label><input type="checkbox" id="rememberme" name="remember-me"><spring:message code="login.rememberMe.label"/></label>  

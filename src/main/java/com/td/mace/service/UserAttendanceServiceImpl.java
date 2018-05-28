@@ -1,14 +1,13 @@
 package com.td.mace.service;
 
-import java.util.List;
-
+import com.td.mace.dao.UserAttendanceDao;
+import com.td.mace.dao.UserDao;
+import com.td.mace.model.UserAttendance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.td.mace.dao.UserAttendanceDao;
-import com.td.mace.dao.UserDao;
-import com.td.mace.model.UserAttendance;
+import java.util.List;
 
 @Service("userAttendanceService")
 @Transactional

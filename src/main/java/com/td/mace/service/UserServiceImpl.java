@@ -1,15 +1,23 @@
 package com.td.mace.service;
 
-import java.util.List;
-
+import com.td.mace.dao.PasswordResetTokenDao;
+import com.td.mace.dao.UserDao;
+import com.td.mace.model.PasswordResetToken;
+import com.td.mace.model.User;
+import com.td.mace.model.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.td.mace.dao.UserDao;
-import com.td.mace.model.User;
-import com.td.mace.model.UserAttendance;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 
 @Service("userService")
@@ -21,6 +29,9 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
     private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private PasswordResetTokenDao passwordTokenRepository;
 	
 	public User findById(int id) {
 		return dao.findById(id);
@@ -100,4 +111,43 @@ public class UserServiceImpl implements UserService{
 		return dao.isTLOnly(ssoId);
 	}
 
+	@Override
+	public User findUserByEmail(String userEmail) {
+		return dao.findByEmail(userEmail);
+	}
+
+	@Override
+	public void createPasswordResetTokenForUser(final User user, final String token) {
+		final PasswordResetToken myToken = new PasswordResetToken(token, user);
+		passwordTokenRepository.save(myToken);
+	}
+
+	@Override
+	public String validatePasswordResetToken(long id, String token) {
+		final PasswordResetToken passToken = passwordTokenRepository.findByToken(token);
+		if ((passToken == null) || (passToken.getUser().getId() != id)) {
+			return "invalidToken";
+		}
+
+		final Calendar cal = Calendar.getInstance();
+		if ((passToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+			return "expired";
+		}
+
+		final User user = passToken.getUser();
+		List<GrantedAuthority> userProfiles = new ArrayList<>();
+		for(UserProfile userProfile: user.getUserProfiles()){
+			userProfiles.add(new SimpleGrantedAuthority(userProfile.getType()));
+		}
+
+		final Authentication auth = new UsernamePasswordAuthenticationToken(user, null, userProfiles);
+		SecurityContextHolder.getContext().setAuthentication(auth);
+		return null;
+	}
+
+	@Override
+	public void changeUserPassword(User user, String password) {
+		user.setPassword(passwordEncoder.encode(password));
+		dao.save(user);
+	}
 }

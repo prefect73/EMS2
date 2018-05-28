@@ -1,7 +1,11 @@
 package com.td.mace.configuration;
 
-import java.util.Locale;
-
+import com.td.mace.converter.ProjectLeadsListToUserConverter;
+import com.td.mace.converter.ProjectsListToProjectConverter;
+import com.td.mace.converter.RoleToUserProfileConverter;
+import com.td.mace.converter.WorkPackagesListToWorkPackageConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -11,28 +15,24 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
-import com.td.mace.converter.ProjectLeadsListToUserConverter;
-import com.td.mace.converter.ProjectsListToProjectConverter;
-import com.td.mace.converter.RoleToUserProfileConverter;
-import com.td.mace.converter.WorkPackagesListToWorkPackageConverter;
+import java.util.Locale;
+import java.util.Properties;
 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.td.mace")
 @PropertySource(value = { "classpath:application.properties" })
 public class AppConfig extends WebMvcConfigurerAdapter {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(AppConfig.class);
 
 	@Autowired
 	private Environment environment;
@@ -126,6 +126,26 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
 		return cookieLocaleResolver;
 	}
+
+	    @Bean
+   public JavaMailSenderImpl javaMailSenderImpl() {
+		       final JavaMailSenderImpl mailSenderImpl = new JavaMailSenderImpl();
+
+				        try {
+			            mailSenderImpl.setHost(environment.getRequiredProperty("support.email.host"));
+			            mailSenderImpl.setPort(environment.getRequiredProperty("support.email.port", Integer.class));
+			            mailSenderImpl.setUsername(environment.getRequiredProperty("support.email.username"));
+			            mailSenderImpl.setPassword(environment.getRequiredProperty("support.email.password"));
+			        } catch (IllegalStateException ise) {
+			            LOGGER.error("Could not resolve email.properties.  See email.properties.sample");
+			            throw ise;
+			        }
+		        final Properties javaMailProps = new Properties();
+		        javaMailProps.put("mail.smtp.auth", true);
+		        javaMailProps.put("mail.smtp.starttls.enable", true);
+		        mailSenderImpl.setJavaMailProperties(javaMailProps);
+		        return mailSenderImpl;
+		    }
 
 	/**
 	 * Optional. It's only required when handling '.' in @PathVariables which

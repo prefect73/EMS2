@@ -1,8 +1,6 @@
 package com.td.mace.dao;
 
-import java.util.Date;
-import java.util.List;
-
+import com.td.mace.model.PersistentLogin;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -12,8 +10,8 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.td.mace.dao.AbstractDao;
-import com.td.mace.model.PersistentLogin;
+import java.util.Date;
+import java.util.List;
 
 @Repository("tokenRepositoryDao")
 @Transactional

@@ -1,8 +1,8 @@
 package com.td.mace.dao;
 
-import java.util.HashMap;
-import java.util.List;
-
+import com.td.mace.model.User;
+import com.td.mace.model.WorkPackage;
+import com.td.mace.model.WorkPackageUserAllocation;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -12,9 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.td.mace.model.User;
-import com.td.mace.model.WorkPackage;
-import com.td.mace.model.WorkPackageUserAllocation;
+import java.util.HashMap;
+import java.util.List;
 
 @Repository("workPackageUserAllocationDao")
 public class WorkPackageUserAllocationDaoImpl extends

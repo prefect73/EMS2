@@ -1,8 +1,8 @@
 package com.td.mace.dao;
 
-import java.util.List;
-
 import com.td.mace.model.User;
+
+import java.util.List;
 
 
 public interface UserDao {
@@ -29,5 +29,6 @@ public interface UserDao {
 
 	List<User> findAllUsersBySSOId(String ssoId);
 
+    User findByEmail(String userEmail);
 }
 

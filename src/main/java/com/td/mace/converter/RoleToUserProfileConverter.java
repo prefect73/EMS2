@@ -1,13 +1,12 @@
 package com.td.mace.converter;
 
+import com.td.mace.model.UserProfile;
+import com.td.mace.service.UserProfileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
-import com.td.mace.model.UserProfile;
-import com.td.mace.service.UserProfileService;
 
 /**
  * A converter class used in views to map id's to actual userProfile objects.

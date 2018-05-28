@@ -1,23 +1,12 @@
 package com.td.mace.model;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.DecimalMax;
-
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "app_user_attendance", uniqueConstraints = @UniqueConstraint(columnNames = {

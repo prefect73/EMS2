@@ -1,8 +1,8 @@
 package com.td.mace.service;
 
-import java.util.List;
-
 import com.td.mace.model.User;
+
+import java.util.List;
 
 
 public interface UserService {
@@ -33,4 +33,11 @@ public interface UserService {
 	
 	boolean isTLOnly(String ssoId);
 
+    User findUserByEmail(String userEmail);
+
+	void createPasswordResetTokenForUser(User user, String token);
+
+	String validatePasswordResetToken(long id, String token);
+
+	void changeUserPassword(User user, String password);
 }
