@@ -41,5 +41,5 @@ public interface WorkPackageService {
 
 	List<WorkPackageDTO> findAllWorkPackagesByProjectId(Integer projectId);
 
-    void distributePaymentPercentage(Integer projectId, long percentage);
+    void distributePaymentPercentage(Integer projectId, Double percentage);
 }

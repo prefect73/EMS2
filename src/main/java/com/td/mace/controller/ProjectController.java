@@ -152,7 +152,7 @@ public class ProjectController {
 	@RequestMapping(value = "/distributePayments/{projectId}/{percentage}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<Void> distributePaymentsToWorkPackages(@PathVariable("projectId") Integer projectId,
-																 @PathVariable("percentage") int percentage){
+																 @PathVariable("percentage") Double percentage){
 		workPackageService.distributePaymentPercentage(projectId, percentage);
 		return ResponseEntity.ok().build();
 	}

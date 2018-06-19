@@ -9,9 +9,11 @@ import com.td.mace.model.User;
 import com.td.mace.model.WorkPackage;
 import com.td.mace.model.WorkPackageUserAllocation;
 import org.hibernate.Query;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import utils.UserUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -335,38 +337,73 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 		return workPackageDTOList;
 	}
 
+	public void distributePayment(Integer projectId, Double percentage){
+
+	    List<WorkPackage> workPackages = dao.findByProjectID(projectId);
+
+	    for (WorkPackage workPackage: workPackages){
+
+            Payment payment = new Payment();
+            payment.setTime(LocalDateTime.now().toString());
+            payment.setRemarks("Generated Faktura");
+            payment.setBilled("Ja");
+            payment.setCreatedBy(UserUtils.getCurrentUser());
+            
+            BigDecimal wpOfferedCost = workPackage.getOfferedCost();
+            BigDecimal ONE_HUNDRED = new BigDecimal(100);
+            BigDecimal AMOUNT_PERCENTAGE = BigDecimal.valueOf(percentage);
+
+            BigDecimal increasedValue = AMOUNT_PERCENTAGE.divide(ONE_HUNDRED, 2, RoundingMode.HALF_UP).multiply(wpOfferedCost);
+            
+            payment.setAmount(increasedValue);
+            
+			payment.setWorkPackage(workPackage);
+
+			paymentDao.save(payment);
+
+			updateCalculatedCost(workPackage);
+
+
+        }
+	}
+
 	@Override
-	public void distributePaymentPercentage(Integer projectId, long percentage) {
-		List<WorkPackage> workPackages =  dao.findByProjectID(projectId);
+	public void distributePaymentPercentage(Integer projectId, Double percentage) {
 
-		for (WorkPackage workPackage: workPackages){
-			BigDecimal offeredCost = workPackage.getOfferedCost();
-			BigDecimal calculatedCost = BigDecimal.ZERO;
 
-			// increase percentage
-			BigDecimal paymentPercentage = workPackage.getPaymentPercentage();
-			paymentPercentage = paymentPercentage.add(BigDecimal.valueOf(percentage));
+		distributePayment(projectId, percentage);
 
-			if (offeredCost.compareTo(BigDecimal.ZERO) > 0){
-					// calculate percentage
-					calculatedCost = offeredCost.divide(new BigDecimal(100).divide(BigDecimal.valueOf(percentage)),2, RoundingMode.HALF_UP);
-			}
 
-			BigDecimal wpCalculatedCost = BigDecimal.ZERO;
+//		List<WorkPackage> workPackages =  dao.findByProjectID(projectId);
+//
+//		for (WorkPackage workPackage: workPackages){
+//			BigDecimal offeredCost = workPackage.getOfferedCost();
+//			BigDecimal calculatedCost = BigDecimal.ZERO;
+//
+//			// increase percentage
+//			BigDecimal paymentPercentage = workPackage.getPaymentPercentage();
+//			paymentPercentage = paymentPercentage.add(BigDecimal.valueOf(percentage));
+//
+//			if (offeredCost.compareTo(BigDecimal.ZERO) > 0){
+//					// calculate percentage
+//					calculatedCost = offeredCost.divide(new BigDecimal(100).divide(BigDecimal.valueOf(percentage)),2, RoundingMode.HALF_UP);
+//			}
+//
+//			BigDecimal wpCalculatedCost = BigDecimal.ZERO;
+//
+//			if(workPackage.getCalculatedCost() != null){
+//				wpCalculatedCost = workPackage.getCalculatedCost();
+//			}
+//
+//			calculatedCost = calculatedCost.add(wpCalculatedCost);
+//
+//			workPackage.setPaymentPercentage(paymentPercentage);
+//
+//			workPackage.setCalculatedCost(calculatedCost);
+//
+//			dao.save(workPackage);
 
-			if(workPackage.getCalculatedCost() != null){
-				wpCalculatedCost = workPackage.getCalculatedCost();
-			}
-
-			calculatedCost = calculatedCost.add(wpCalculatedCost);
-
-			workPackage.setPaymentPercentage(paymentPercentage);
-
-			workPackage.setCalculatedCost(calculatedCost);
-
-			dao.save(workPackage);
-
-		}
+//		}
 
 	}
 }
