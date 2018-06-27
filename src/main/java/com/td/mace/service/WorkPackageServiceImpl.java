@@ -17,7 +17,9 @@ import utils.UserUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service("workPackageService")
@@ -344,9 +346,9 @@ public class WorkPackageServiceImpl implements WorkPackageService {
 	    for (WorkPackage workPackage: workPackages){
 
             Payment payment = new Payment();
-            payment.setTime(LocalDateTime.now().toString());
-            payment.setRemarks("Generated Faktura");
-            payment.setBilled("Ja");
+            payment.setTime(new SimpleDateFormat("dd.MM.yyy").format(new Date()));
+            payment.setRemarks("Abschlagszahlung");
+            payment.setBilled("Nein");
             payment.setCreatedBy(UserUtils.getCurrentUser());
             
             BigDecimal wpOfferedCost = workPackage.getOfferedCost();
